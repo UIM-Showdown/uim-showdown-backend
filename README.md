@@ -42,3 +42,24 @@ Due to Maven's design, elements are inherited from the parent POM to the project
 While most of the inheritance is fine, it also inherits unwanted elements like `<license>` and `<developers>` from the parent.
 To prevent this, the project POM contains empty overrides for these elements.
 If you manually switch to a different parent and actually want the inheritance, you need to remove those overrides.
+
+# Local Development
+
+### Dependencies
+- [Java SE 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) or [OpenJDK 17](https://formulae.brew.sh/formula/openjdk@17)
+- [Docker Desktop](https://www.docker.com/get-started/) (if using Docker)
+- [Redis 7.4.2](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/) (if not using Docker)
+- [MySQL 8.4.4](https://dev.mysql.com/downloads/mysql/8.4.html) (if not using Docker)
+
+### Serving the Application via Docker
+**NOTE:** Everytime changes are made, a new image build and container build are required.
+
+1. Build the application image using the [`build-image` maven plugin](https://docs.spring.io/spring-boot/maven-plugin/build-image.html)
+```
+./mvnw spring-boot:build-image
+```
+
+2. Spin up running containers for dependencies (including the image created in step 1)
+```
+docker-compose up
+```
