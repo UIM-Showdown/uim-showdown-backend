@@ -3,6 +3,6 @@ CREATE TABLE `teams` (
     `name` VARCHAR(128) NOT NULL,
     `abbreviation` VARCHAR(8) NOT NULL,
     `color` CHAR(6) NOT NULL,
-    PRIMARY KEY (id),
-    INDEX `name_idx` (`name`)
+    PRIMARY KEY (`id`),
+    UNIQUE (`name`)
 );
