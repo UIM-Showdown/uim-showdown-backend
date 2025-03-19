@@ -27,3 +27,6 @@ target/
 
 # Spring Boot files
 src/main/resources/application.properties
+
+# Code editor files
+.vscode/
