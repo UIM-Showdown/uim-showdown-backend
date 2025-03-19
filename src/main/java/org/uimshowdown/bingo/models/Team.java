@@ -20,7 +20,7 @@ public class Team {
     @Column(length = 6)
     private String color;
 
-    @Column(length = 128)
+    @Column(length = 128, unique = true)
     private String name;
 
     public String getAbbreviation() {

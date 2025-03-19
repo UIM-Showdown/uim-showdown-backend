@@ -4,5 +4,5 @@ CREATE TABLE `teams` (
     `abbreviation` VARCHAR(8) NOT NULL,
     `color` CHAR(6) NOT NULL,
     PRIMARY KEY (`id`),
-    UNIQUE (`name`)
+    CONSTRAINT name_unique_idx UNIQUE (`name`)
 );
