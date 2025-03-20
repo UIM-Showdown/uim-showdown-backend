@@ -1,10 +1,13 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,6 +26,9 @@ public class Team {
     @Column(length = 128, unique = true)
     private String name;
 
+    @OneToMany(mappedBy = "team")
+    private Set<Player> players;
+
     public String getAbbreviation() {
         return abbreviation;
     }
@@ -37,6 +43,10 @@ public class Team {
 
     public String getName() {
         return name;
+    }
+    
+    public Set<Player> getPlayers() {
+        return players;
     }
 
     public void setAbbreviation(String abbreviation) {
