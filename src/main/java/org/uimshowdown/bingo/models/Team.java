@@ -1,5 +1,6 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -62,5 +63,29 @@ public class Team {
     public Team setName(String name) {
         this.name = name;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if ((obj instanceof Team) == false) {
+            return false;
+        }
+
+        Team otherTeam = (Team) obj;
+        return (
+            this.getId() == otherTeam.getId()
+            && this.getAbbreviation() == otherTeam.getAbbreviation()
+            && this.getColor() == otherTeam.getColor()
+            && this.getName() == otherTeam.getName()
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, abbreviation, color, name);
     }
 }

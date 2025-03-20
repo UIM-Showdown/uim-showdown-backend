@@ -1,5 +1,6 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -32,6 +33,9 @@ public class Player {
     @Column(length = 64, unique = true)
     private String rsn;
 
+    @OneToMany(mappedBy = "player")
+    private Set<Submission> submissions;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
@@ -50,6 +54,10 @@ public class Player {
 
     public String getRsn() {
         return rsn;
+    }
+
+    public Set<Submission> getSubmissions() {
+        return submissions;
     }
 
     public Team getTeam() {
@@ -78,5 +86,29 @@ public class Player {
     public Player setTeam(Team team) {
         this.team = team;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if ((obj instanceof Player) == false) {
+            return false;
+        }
+
+        Player otherPlayer = (Player) obj;
+        return (
+            this.getId() == otherPlayer.getId()
+            && this.getDiscordName() == otherPlayer.getDiscordName()
+            && this.getRsn() == otherPlayer.getRsn()
+            && this.getTeam() == otherPlayer.getTeam()
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, discordName, rsn, team);
     }
 }
