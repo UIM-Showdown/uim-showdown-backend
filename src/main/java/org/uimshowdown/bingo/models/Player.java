@@ -61,4 +61,8 @@ public class Player {
     public void setRsn(String rsn) {
         this.rsn = rsn;
     }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
 }
