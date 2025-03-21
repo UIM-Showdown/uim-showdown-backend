@@ -30,41 +30,37 @@ public class SubmissionRepositoryTests {
 
     @BeforeEach
     public void setUp() {
-        testTeam = new Team()
-            .setAbbreviation("ffs")
-            .setColor("c97632")
-            .setName("Falador Fullsends");
-        testTeam = teamRepository.save(testTeam);
-
-        testPlayer = new Player()
-            .setCaptainStatus(true)
-            .setDiscordName("flashcards")
-            .setRsn("Flashcards")
-            .setTeam(testTeam);
-        testPlayer = playerRepository.save(testPlayer);
-
-        testSubmission = new Submission()
-            .setPlayer(testPlayer)
-            .setSubmissionState(SubmissionState.OPEN);
-        testSubmission = submissionRepostiory.save(testSubmission);
+        testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
+        testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
+        testSubmission = submissionRepostiory.save(SharedTestVariables.makeTestSubmission(testPlayer));
     }
 
     @AfterEach
     public void tearDown() {
-        teamRepository.delete(testTeam);
-        playerRepository.delete(testPlayer);
         submissionRepostiory.delete(testSubmission);
+        playerRepository.delete(testPlayer);
+        teamRepository.delete(testTeam);
     }
 
     @Test
     @Transactional
-    public void Should_FindTestSubmission_When_GivenTestPlayer() {
+    public void Should_FindTestSubmission_When_GivenTestPlayerId() {
         Iterable<Submission> submissions = submissionRepostiory.findAllByPlayerId(testPlayer.getId());
 
         assertThat(submissions)
             .isNotNull()
             .isNotEmpty()
             .contains(testSubmission);
+    }
+
+    @Test
+    @Transactional
+    public void Should_NotFindTestSubmission_When_GivenIncorrectPlayerId() {
+        Iterable<Submission> submissions = submissionRepostiory.findAllByPlayerId(0);
+
+        assertThat(submissions)
+            .isNotNull()
+            .doesNotContain(testSubmission);
     }
 
     @Test

@@ -1,5 +1,7 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.Objects;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -117,5 +119,32 @@ public class Contribution {
     public Contribution setUnrankedStartingValue(Integer unrankedStartingValue) {
         this.unrankedStartingValue = unrankedStartingValue;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if ((obj instanceof Contribution) == false) {
+            return false;
+        }
+
+        Contribution otherContribution = (Contribution) obj;
+        return (
+            getId() == otherContribution.getId()
+            && getFinalValue() == otherContribution.getFinalValue()
+            && getFinalValueScreenshotUrl() == otherContribution.getFinalValueScreenshotUrl()
+            && getInitialValue() == otherContribution.getInitialValue()
+            && getInitialValueScreenshotUrl() == otherContribution.getInitialValueScreenshotUrl()
+            && getStaffAdjustment() == otherContribution.getStaffAdjustment()
+            && getUnrankedStartingValue() == otherContribution.getUnrankedStartingValue()
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, finalValue, finalValueScreenshotUrl, initialValue, initialValueScreenshotUrl, staffAdjustment, unrankedStartingValue);
     }
 }

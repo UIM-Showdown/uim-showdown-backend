@@ -1,5 +1,6 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.Objects;
 import java.util.Set;
 
 import org.uimshowdown.bingo.enums.ContributionMethodCategory;
@@ -41,7 +42,7 @@ public class ContributionMethod {
     private ContributionMethodType contributionMethodType;
 
     @Column(name = "eht_rate")
-    private Float ehtRate;
+    private Double ehtRate;
 
     @Column(length = 64)
     private String name;
@@ -66,7 +67,7 @@ public class ContributionMethod {
         return contributionMethodType;
     }
 
-    public Float getEhtRate() {
+    public Double getEhtRate() {
         return ehtRate;
     }
 
@@ -89,7 +90,7 @@ public class ContributionMethod {
         return this;
     }
 
-    public ContributionMethod setEhtRate(Float ehtRate) {
+    public ContributionMethod setEhtRate(Double ehtRate) {
         this.ehtRate = ehtRate;
         return this;
     }
@@ -97,5 +98,30 @@ public class ContributionMethod {
     public ContributionMethod setName(String name) {
         this.name = name;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if ((obj instanceof ContributionMethod) == false) {
+            return false;
+        }
+
+        ContributionMethod otherContributionMethod = (ContributionMethod) obj;
+        return (
+            getId() == otherContributionMethod.getId()
+            && getContributionMethodCategory() == otherContributionMethod.getContributionMethodCategory()
+            && getContributionMethodType() == otherContributionMethod.getContributionMethodType()
+            && Double.compare(getEhtRate(), otherContributionMethod.getEhtRate()) == 0
+            && getName() == otherContributionMethod.getName()
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, contributionMethodCategory, contributionMethodType, ehtRate, name);
     }
 }
