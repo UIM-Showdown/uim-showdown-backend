@@ -4,10 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
@@ -15,6 +17,7 @@ import org.uimshowdown.bingo.models.Team;
 import org.uimshowdown.bingo.models.Tile;
 
 @SpringBootTest
+@Tag(TestTag.INTEGRATION_TEST)
 public class ContributionRepositoryTests {
     @Autowired
     private ContributionRepository contributionRepository;
