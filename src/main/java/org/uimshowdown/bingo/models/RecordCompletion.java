@@ -1,6 +1,6 @@
 package org.uimshowdown.bingo.models;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,7 +31,7 @@ public class RecordCompletion {
 
     @Column(name = "completed_at")
     @Temporal(TemporalType.TIMESTAMP)
-    public Date completedAt;
+    public Timestamp completedAt;
 
     @Column(name = "raw_value")
     public Integer rawValue;
@@ -47,7 +47,7 @@ public class RecordCompletion {
         return id;
     }
 
-    public Date getCompletedAt() {
+    public Timestamp getCompletedAt() {
         return completedAt;
     }
 
@@ -71,7 +71,7 @@ public class RecordCompletion {
         return videoUrl;
     }
 
-    public RecordCompletion setCompletedAt(Date completedAt) {
+    public RecordCompletion setCompletedAt(Timestamp completedAt) {
         this.completedAt = completedAt;
         return this;
     }

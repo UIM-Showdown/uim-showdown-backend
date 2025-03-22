@@ -1,6 +1,6 @@
 package org.uimshowdown.bingo.models;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 import org.uimshowdown.bingo.enums.SubmissionState;
@@ -36,7 +36,7 @@ public class Submission {
 
     @Column(name = "decision_made_at", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date decisionTimestamp;
+    private Timestamp decisionMadeAt;
 
     @Column(name = "decision_maker", nullable = true, length = 64)
     private String decisionMaker;
@@ -53,8 +53,8 @@ public class Submission {
         return state;
     }
 
-    public Date getDecisionTimestamp() {
-        return decisionTimestamp;
+    public Timestamp getDecisionMadeAt() {
+        return decisionMadeAt;
     }
 
     public String getDecisionMaker() {
@@ -71,8 +71,8 @@ public class Submission {
         return this;
     }
 
-    public Submission setDecisionTimestamp(Date decisionTimestamp) {
-        this.decisionTimestamp = decisionTimestamp;
+    public Submission setDecisionMadeAt(Timestamp decisionMadeAt) {
+        this.decisionMadeAt = decisionMadeAt;
         return this;
     }
 
@@ -95,7 +95,7 @@ public class Submission {
         return (
             this.getId() == otherSubmission.getId()
             && this.getDecisionMaker() == otherSubmission.getDecisionMaker()
-            && this.getDecisionTimestamp() == otherSubmission.getDecisionTimestamp()
+            && this.getDecisionMadeAt() == otherSubmission.getDecisionMadeAt()
             && this.getPlayer() == otherSubmission.getPlayer()
             && this.getSubmissionState() == otherSubmission.getSubmissionState()
         );
@@ -103,6 +103,6 @@ public class Submission {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, decisionMaker, decisionTimestamp, player, state);
+        return Objects.hash(id, decisionMaker, decisionMadeAt, player, state);
     }
 }
