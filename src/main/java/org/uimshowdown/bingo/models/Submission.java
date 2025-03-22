@@ -42,6 +42,9 @@ public class Submission {
     @OneToMany(mappedBy = "submission")
     private Set<RecordSubmission> recordSubmissions;
 
+    @OneToMany(mappedBy = "submission")
+    private Set<SubmissionScreenshotUrl> screenshotUrls;
+
     @Column
     @Enumerated(EnumType.STRING)
     private SubmissionState state;
@@ -64,6 +67,10 @@ public class Submission {
 
     public Set<RecordSubmission> getRecordSubmissions() {
         return recordSubmissions;
+    }
+
+    public Set<SubmissionScreenshotUrl> getScreenshotUrls() {
+        return screenshotUrls;
     }
 
     public Submission setDecisionMadeAt(Timestamp decisionMadeAt) {
