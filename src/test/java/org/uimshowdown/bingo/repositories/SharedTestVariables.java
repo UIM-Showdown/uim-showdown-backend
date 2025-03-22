@@ -6,6 +6,8 @@ import org.uimshowdown.bingo.enums.SubmissionState;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
+import org.uimshowdown.bingo.models.Record;
+import org.uimshowdown.bingo.models.RecordHandicap;
 import org.uimshowdown.bingo.models.Submission;
 import org.uimshowdown.bingo.models.Team;
 import org.uimshowdown.bingo.models.Tile;
@@ -26,6 +28,19 @@ public class SharedTestVariables {
             .setEhtRate(25.0)
             .setName("Calvar'ion")
             .setTile(tile);
+    }
+
+    public static Record makeTestRecord() {
+        return new Record()
+            .setDescription("Six hour woodcutting record")
+            .setSkill("Woodcutting");
+    }
+
+    public static RecordHandicap makeTestRecordHandicap(Record record) {
+        return new RecordHandicap()
+            .setMultiplier(1.25)
+            .setName("Two-handed axe modifier")
+            .setRecord(record);
     }
 
     public static Player makeTestPlayer(Team team) {
