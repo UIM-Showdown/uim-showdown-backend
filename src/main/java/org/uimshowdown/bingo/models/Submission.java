@@ -2,6 +2,7 @@ package org.uimshowdown.bingo.models;
 
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.Set;
 
 import org.uimshowdown.bingo.enums.SubmissionState;
 
@@ -15,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -30,10 +32,6 @@ public class Submission {
     @JoinColumn(name = "player_id")
     private Player player;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private SubmissionState state;
-
     @Column(name = "decision_made_at", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp decisionMadeAt;
@@ -41,16 +39,15 @@ public class Submission {
     @Column(name = "decision_maker", nullable = true, length = 64)
     private String decisionMaker;
 
+    @OneToMany(mappedBy = "submission")
+    private Set<RecordSubmission> recordSubmissions;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private SubmissionState state;
+
     public Integer getId() {
         return id;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public SubmissionState getSubmissionState() {
-        return state;
     }
 
     public Timestamp getDecisionMadeAt() {
@@ -61,14 +58,12 @@ public class Submission {
         return decisionMaker;
     }
 
-    public Submission setPlayer(Player player) {
-        this.player = player;
-        return this;
+    public Player getPlayer() {
+        return player;
     }
 
-    public Submission setSubmissionState(SubmissionState submissionState) {
-        state = submissionState;
-        return this;
+    public Set<RecordSubmission> getRecordSubmissions() {
+        return recordSubmissions;
     }
 
     public Submission setDecisionMadeAt(Timestamp decisionMadeAt) {
@@ -78,6 +73,20 @@ public class Submission {
 
     public Submission setDecisionMaker(String decisionMaker) {
         this.decisionMaker = decisionMaker;
+        return this;
+    }
+
+    public SubmissionState getSubmissionState() {
+        return state;
+    }
+
+    public Submission setPlayer(Player player) {
+        this.player = player;
+        return this;
+    }
+
+    public Submission setSubmissionState(SubmissionState submissionState) {
+        state = submissionState;
         return this;
     }
 

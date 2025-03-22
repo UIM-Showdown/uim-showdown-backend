@@ -30,6 +30,9 @@ public class Record {
     @Column(length = 16)
     private String skill;
 
+    @OneToMany(mappedBy = "record")
+    private Set<RecordSubmission> submissions;
+
     public Integer getId() {
         return id;
     }
@@ -40,6 +43,10 @@ public class Record {
 
     public String getSkill() {
         return skill;
+    }
+
+    public Set<RecordSubmission> getSubmissions() {
+        return submissions;
     }
 
     public Record setDescription(String description) {

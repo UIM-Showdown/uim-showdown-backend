@@ -34,6 +34,9 @@ public class RecordHandicap {
     @JoinColumn(name = "record_id")
     private Record record;
 
+    @OneToMany(mappedBy = "handicap")
+    private Set<RecordSubmission> submissions;
+
     public Integer getId() {
         return id;
     }
@@ -52,6 +55,10 @@ public class RecordHandicap {
 
     public Record getRecord() {
         return record;
+    }
+
+    public Set<RecordSubmission> getSubmissions() {
+        return submissions;
     }
 
     public RecordHandicap setMultiplier(Double multiplier) {
