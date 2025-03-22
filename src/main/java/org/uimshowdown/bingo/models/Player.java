@@ -30,6 +30,9 @@ public class Player {
     @Column(length = 64, name="discord_name", unique = true)
     private String discordName;
 
+    @OneToMany(mappedBy = "player")
+    private Set<RecordCompletion> recordCompletions;
+
     @Column(length = 64, unique = true)
     private String rsn;
 
@@ -54,6 +57,10 @@ public class Player {
 
     public String getRsn() {
         return rsn;
+    }
+
+    public Set<RecordCompletion> getRecordCompletions() {
+        return recordCompletions;
     }
 
     public Set<Submission> getSubmissions() {

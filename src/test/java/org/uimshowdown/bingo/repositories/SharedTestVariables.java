@@ -1,5 +1,7 @@
 package org.uimshowdown.bingo.repositories;
 
+import java.util.Date;
+
 import org.uimshowdown.bingo.enums.ContributionMethodCategory;
 import org.uimshowdown.bingo.enums.ContributionMethodType;
 import org.uimshowdown.bingo.enums.SubmissionState;
@@ -7,6 +9,7 @@ import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.Record;
+import org.uimshowdown.bingo.models.RecordCompletion;
 import org.uimshowdown.bingo.models.RecordHandicap;
 import org.uimshowdown.bingo.models.Submission;
 import org.uimshowdown.bingo.models.Team;
@@ -34,6 +37,14 @@ public class SharedTestVariables {
         return new Record()
             .setDescription("Six hour woodcutting record")
             .setSkill("Woodcutting");
+    }
+
+    public static RecordCompletion makeTestRecordCompletion(Player player, Record record, RecordHandicap recordHandicap) {
+        return new RecordCompletion()
+            .setHandicap(recordHandicap)
+            .setPlayer(player)
+            .setRawValue(600000)
+            .setRecord(record);
     }
 
     public static RecordHandicap makeTestRecordHandicap(Record record) {

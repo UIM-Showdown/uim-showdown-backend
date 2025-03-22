@@ -17,6 +17,9 @@ public class Record {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @OneToMany(mappedBy = "record")
+    private Set<RecordCompletion> completions;
+
     @Column(length = 512)
     private String description;
 
