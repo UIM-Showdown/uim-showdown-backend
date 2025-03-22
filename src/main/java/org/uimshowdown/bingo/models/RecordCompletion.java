@@ -1,6 +1,7 @@
 package org.uimshowdown.bingo.models;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -99,5 +100,29 @@ public class RecordCompletion {
     public RecordCompletion setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if ((obj instanceof RecordCompletion) == false) {
+            return false;
+        }
+
+        RecordCompletion otherRecordCompletion = (RecordCompletion) obj;
+        return (
+            getCompletedAt() == otherRecordCompletion.getCompletedAt()
+            && getId() == otherRecordCompletion.getId()
+            && getRawValue() == otherRecordCompletion.getRawValue()
+            && getVideoUrl() == otherRecordCompletion.getVideoUrl()
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, completedAt, rawValue, videoUrl);
     }
 }

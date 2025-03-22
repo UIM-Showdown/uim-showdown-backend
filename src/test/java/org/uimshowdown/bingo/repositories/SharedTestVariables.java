@@ -1,7 +1,5 @@
 package org.uimshowdown.bingo.repositories;
 
-import java.util.Date;
-
 import org.uimshowdown.bingo.enums.ContributionMethodCategory;
 import org.uimshowdown.bingo.enums.ContributionMethodType;
 import org.uimshowdown.bingo.enums.SubmissionState;

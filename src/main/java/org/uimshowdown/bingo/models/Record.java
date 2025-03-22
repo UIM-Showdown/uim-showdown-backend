@@ -1,5 +1,6 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -49,5 +50,28 @@ public class Record {
     public Record setSkill(String skill) {
         this.skill = skill;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if ((obj instanceof Record) == false) {
+            return false;
+        }
+
+        Record otherRecord = (Record) obj;
+        return (
+            getId() == otherRecord.getId()
+            && getDescription() == otherRecord.getDescription()
+            && getSkill() == otherRecord.getSkill()
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, description, skill);
     }
 }

@@ -1,5 +1,6 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -66,5 +67,28 @@ public class RecordHandicap {
     public RecordHandicap setRecord(Record record) {
         this.record = record;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if ((obj instanceof RecordHandicap) == false) {
+            return false;
+        }
+
+        RecordHandicap otherRecordHandicap = (RecordHandicap) obj;
+        return (
+            getId() == otherRecordHandicap.getId()
+            && Double.compare(getMultiplier(), otherRecordHandicap.getMultiplier()) == 0
+            && getName() == otherRecordHandicap.getName()  
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, multiplier, name);
     }
 }
