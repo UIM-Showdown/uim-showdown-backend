@@ -2,10 +2,11 @@ package org.uimshowdown.bingo.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,18 +15,19 @@ import org.uimshowdown.bingo.models.Team;
 
 @SpringBootTest
 @Tag(TestTag.INTEGRATION_TEST)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TeamRepositoryTests {
     @Autowired
     private TeamRepository teamRepository;
 
     private Team testTeam;
 
-    @BeforeEach
+    @BeforeAll
     public void setUp() {
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
     }
 
-    @AfterEach
+    @AfterAll
     public void tearDown() {
         teamRepository.delete(testTeam);
     }
@@ -33,7 +35,7 @@ public class TeamRepositoryTests {
     @Test
     @Transactional
     public void Should_FindTestTeam_When_GivenTestTeamName() {
-        Team team = teamRepository.findByName(testTeam.getName()).orElse(new Team());
+        Team team = teamRepository.findByName(testTeam.getName()).orElse(null);
 
         assertThat(team)
             .isNotNull()
@@ -43,10 +45,8 @@ public class TeamRepositoryTests {
     @Test
     @Transactional
     public void Should_NotFindTestTeam_When_GivenWrongTestName() {
-        Team team = teamRepository.findByName("Unlikely To Be Found").orElse(new Team());
+        Team team = teamRepository.findByName("Unlikely To Be Found").orElse(null);
 
-        assertThat(team)
-            .isNotNull()
-            .isNotEqualTo(testTeam);
+        assertThat(team).isNull();
     }
 }

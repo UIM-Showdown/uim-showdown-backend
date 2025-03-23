@@ -2,10 +2,11 @@ package org.uimshowdown.bingo.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import org.uimshowdown.bingo.models.Team;
 
 @SpringBootTest
 @Tag(TestTag.INTEGRATION_TEST)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PlayerRepositoryTests {
     @Autowired
     private PlayerRepository playerRepository;
@@ -25,13 +27,13 @@ public class PlayerRepositoryTests {
     private Player testPlayer;
     private Team testTeam;
 
-    @BeforeEach
+    @BeforeAll
     public void setUp() {
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
     }
 
-    @AfterEach
+    @AfterAll
     public void tearDown() {
         playerRepository.delete(testPlayer);
         teamRepository.delete(testTeam);
@@ -40,7 +42,7 @@ public class PlayerRepositoryTests {
     @Test
     @Transactional
     public void Should_FindTestPlayer_When_GivenTestDiscordName() {
-        Player player = playerRepository.findByDiscordName(testPlayer.getDiscordName()).orElse(new Player());
+        Player player = playerRepository.findByDiscordName(testPlayer.getDiscordName()).orElse(null);
 
         assertThat(player)
             .isNotNull()
@@ -50,17 +52,15 @@ public class PlayerRepositoryTests {
     @Test
     @Transactional
     public void Should_NotFindTestPlayer_When_GivenWrongDiscordName() {
-        Player player = playerRepository.findByDiscordName("not.likely.to.be.found").orElse(new Player());
+        Player player = playerRepository.findByDiscordName("not.likely.to.be.found").orElse(null);
 
-        assertThat(player)
-            .isNotNull()
-            .isNotEqualTo(testPlayer);
+        assertThat(player).isNull();
     }
 
     @Test
     @Transactional
     public void Should_FindTestPlayer_When_GivenTestRsn() {
-        Player player = playerRepository.findByRsn(testPlayer.getRsn()).orElse(new Player());
+        Player player = playerRepository.findByRsn(testPlayer.getRsn()).orElse(null);
 
         assertThat(player)
             .isNotNull()
@@ -70,10 +70,8 @@ public class PlayerRepositoryTests {
     @Test
     @Transactional
     public void Should_NotFindTestPlayer_When_GivenWrongRsn() {
-        Player player = playerRepository.findByRsn("Not Likely To Be Found").orElse(new Player());
+        Player player = playerRepository.findByRsn("Not Likely To Be Found").orElse(null);
 
-        assertThat(player)
-            .isNotNull()
-            .isNotEqualTo(testPlayer);
+        assertThat(player).isNull();
     }
 }

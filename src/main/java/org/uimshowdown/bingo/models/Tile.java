@@ -65,9 +65,9 @@ public class Tile {
 
         Tile otherTile = (Tile) obj;
         return (
-            getId() == otherTile.getId()
-            && getName() == otherTile.getName()
-            && getPointsPerTier() == otherTile.getPointsPerTier()
+            getId() instanceof Integer ? getId().equals(otherTile.getId()) : getId() == otherTile.getId()
+            && getName() instanceof String ? getName().equals(otherTile.getName()) : getName() == otherTile.getName()
+            && getPointsPerTier() instanceof Integer ? getPointsPerTier().equals(otherTile.getPointsPerTier()) : getPointsPerTier() == otherTile.getPointsPerTier()
         );
     }
 

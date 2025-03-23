@@ -112,11 +112,11 @@ public class ContributionMethod {
 
         ContributionMethod otherContributionMethod = (ContributionMethod) obj;
         return (
-            getId() == otherContributionMethod.getId()
-            && getContributionMethodCategory() == otherContributionMethod.getContributionMethodCategory()
-            && getContributionMethodType() == otherContributionMethod.getContributionMethodType()
+            getId() instanceof Integer ? getId().equals(otherContributionMethod.getId()) : getId() == otherContributionMethod.getId()
+            && getContributionMethodCategory() instanceof ContributionMethodCategory ? getContributionMethodCategory().equals(otherContributionMethod.getContributionMethodCategory()) : getContributionMethodCategory() == otherContributionMethod.getContributionMethodCategory()
+            && getContributionMethodType() instanceof ContributionMethodType ? getContributionMethodType().equals(otherContributionMethod.getContributionMethodType()) : getContributionMethodType() == otherContributionMethod.getContributionMethodType()
             && Double.compare(getEhtRate(), otherContributionMethod.getEhtRate()) == 0
-            && getName() == otherContributionMethod.getName()
+            && getName() instanceof String ? getName().equals(otherContributionMethod.getName()) : getName() == otherContributionMethod.getName()
         );
     }
 

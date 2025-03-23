@@ -77,10 +77,10 @@ public class Team {
 
         Team otherTeam = (Team) obj;
         return (
-            this.getId() == otherTeam.getId()
-            && this.getAbbreviation() == otherTeam.getAbbreviation()
-            && this.getColor() == otherTeam.getColor()
-            && this.getName() == otherTeam.getName()
+            getId() instanceof Integer ? getId().equals(otherTeam.getId()) : getId() == otherTeam.getId()
+            && getAbbreviation() instanceof String ? getAbbreviation().equals(otherTeam.getAbbreviation()) : getAbbreviation() == otherTeam.getAbbreviation()
+            && getColor() instanceof String ? getColor().equals(otherTeam.getColor()) : getColor() == otherTeam.getColor()
+            && getName() instanceof String ? getName().equals(otherTeam.getName()) : getName() == otherTeam.getName()
         );
     }
 

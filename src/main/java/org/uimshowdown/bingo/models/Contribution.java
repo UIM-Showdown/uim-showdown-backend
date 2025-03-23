@@ -133,13 +133,13 @@ public class Contribution {
 
         Contribution otherContribution = (Contribution) obj;
         return (
-            getId() == otherContribution.getId()
-            && getFinalValue() == otherContribution.getFinalValue()
-            && getFinalValueScreenshotUrl() == otherContribution.getFinalValueScreenshotUrl()
-            && getInitialValue() == otherContribution.getInitialValue()
-            && getInitialValueScreenshotUrl() == otherContribution.getInitialValueScreenshotUrl()
-            && getStaffAdjustment() == otherContribution.getStaffAdjustment()
-            && getUnrankedStartingValue() == otherContribution.getUnrankedStartingValue()
+            getId() instanceof Integer ? getId().equals(otherContribution.getId()) : getId() == otherContribution.getId()
+            && getFinalValue() instanceof Integer ? getFinalValue().equals(otherContribution.getFinalValue()) : getFinalValue() == otherContribution.getFinalValue()
+            && getFinalValueScreenshotUrl() instanceof String ? getFinalValueScreenshotUrl().equals(otherContribution.getFinalValueScreenshotUrl()) : getFinalValueScreenshotUrl() == otherContribution.getFinalValueScreenshotUrl()
+            && getInitialValue() instanceof Integer ? getInitialValue().equals(otherContribution.getInitialValue()) : getInitialValue() == otherContribution.getInitialValue()
+            && getInitialValueScreenshotUrl() instanceof String ? getInitialValueScreenshotUrl().equals(otherContribution.getInitialValueScreenshotUrl()) : getInitialValueScreenshotUrl() == otherContribution.getInitialValueScreenshotUrl()
+            && getStaffAdjustment() instanceof Integer ? getStaffAdjustment().equals(otherContribution.getStaffAdjustment()) : getStaffAdjustment() == otherContribution.getStaffAdjustment()
+            && getUnrankedStartingValue() instanceof Integer ? getUnrankedStartingValue().equals(otherContribution.getUnrankedStartingValue()) : getUnrankedStartingValue() == otherContribution.getUnrankedStartingValue()
         );
     }
 

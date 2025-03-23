@@ -1,11 +1,13 @@
 package org.uimshowdown.bingo.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,7 @@ import org.uimshowdown.bingo.models.Team;
 
 @SpringBootTest
 @Tag(TestTag.INTEGRATION_TEST)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RecordCompletionRepositoryTests {
     @Autowired
     private PlayerRepository playerRepository;
@@ -40,7 +43,7 @@ public class RecordCompletionRepositoryTests {
     private RecordHandicap testRecordHandicap;
     private Team testTeam;
 
-    @BeforeEach
+    @BeforeAll
     public void setUp() {
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
@@ -49,7 +52,7 @@ public class RecordCompletionRepositoryTests {
         testRecordCompletion = recordCompletionRepository.save(SharedTestVariables.makeTestRecordCompletion(testPlayer, testRecord, testRecordHandicap));
     }
 
-    @AfterEach
+    @AfterAll
     public void tearDown() {
         recordCompletionRepository.delete(testRecordCompletion);
         recordHandicapRepository.delete(testRecordHandicap);

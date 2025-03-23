@@ -1,11 +1,13 @@
 package org.uimshowdown.bingo.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,7 @@ import org.uimshowdown.bingo.models.Tile;
 
 @SpringBootTest
 @Tag(TestTag.INTEGRATION_TEST)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ContributionMethodRepositoryTests {
     @Autowired
     private ContributionMethodRepository contributionMethodRepository;
@@ -25,13 +28,13 @@ public class ContributionMethodRepositoryTests {
     private ContributionMethod testContributionMethod;
     private Tile testTile;
 
-    @BeforeEach
+    @BeforeAll
     public void setUp() {
         testTile = tileRepository.save(SharedTestVariables.makeTestTile());
         testContributionMethod = contributionMethodRepository.save(SharedTestVariables.makeTestContributionMethod(testTile));
     }
 
-    @AfterEach
+    @AfterAll
     public void tearDown() {
         contributionMethodRepository.delete(testContributionMethod);
         tileRepository.delete(testTile);
@@ -40,7 +43,7 @@ public class ContributionMethodRepositoryTests {
     @Test
     @Transactional
     public void Should_FindTestContributionMethod_When_GivenTestContributionName() {
-        ContributionMethod contributionMethod = contributionMethodRepository.findByName(testContributionMethod.getName()).orElse(new ContributionMethod());
+        ContributionMethod contributionMethod = contributionMethodRepository.findByName(testContributionMethod.getName()).orElse(null);
 
         assertThat(contributionMethod)
             .isNotNull()
@@ -50,11 +53,9 @@ public class ContributionMethodRepositoryTests {
     @Test
     @Transactional
     public void Should_NotFindTestContributionMethod_When_GivenWrongContributionName() {
-        ContributionMethod contributionMethod = contributionMethodRepository.findByName("Not Likely to be Found").orElse(new ContributionMethod());
+        ContributionMethod contributionMethod = contributionMethodRepository.findByName("Not Likely to be Found").orElse(null);
 
-        assertThat(contributionMethod)
-            .isNotNull()
-            .isNotEqualTo(testContributionMethod);
+        assertThat(contributionMethod).isNull();
     }
 
     @Test

@@ -1,20 +1,26 @@
 package org.uimshowdown.bingo.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import java.util.Iterator;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.Record;
+import org.uimshowdown.bingo.models.RecordCompletion;
 import org.uimshowdown.bingo.models.RecordHandicap;
 
 @SpringBootTest
 @Tag(TestTag.INTEGRATION_TEST)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RecordHandicapRepositoryTests {
     @Autowired
     private RecordRepository recordRepository;
@@ -25,13 +31,13 @@ public class RecordHandicapRepositoryTests {
     private Record testRecord;
     private RecordHandicap testRecordHandicap;
 
-    @BeforeEach
+    @BeforeAll
     public void setUp() {
         testRecord = recordRepository.save(SharedTestVariables.makeTestRecord());
         testRecordHandicap = recordHandicapRepository.save(SharedTestVariables.makeTestRecordHandicap(testRecord));
     }
 
-    @AfterEach
+    @AfterAll
     public void tearDown() {
         recordHandicapRepository.delete(testRecordHandicap);
         recordRepository.delete(testRecord);

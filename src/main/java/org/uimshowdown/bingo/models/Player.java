@@ -107,15 +107,14 @@ public class Player {
 
         Player otherPlayer = (Player) obj;
         return (
-            this.getId() == otherPlayer.getId()
-            && this.getDiscordName() == otherPlayer.getDiscordName()
-            && this.getRsn() == otherPlayer.getRsn()
-            && this.getTeam() == otherPlayer.getTeam()
+            getId() instanceof Integer ? getId().equals(otherPlayer.getId()) : getId() == otherPlayer.getId()
+            && getDiscordName() instanceof String ? getDiscordName().equals(otherPlayer.getDiscordName()) : getDiscordName() == otherPlayer.getDiscordName()
+            && getRsn() instanceof String ? getRsn().equals(otherPlayer.getRsn()) : getRsn() == otherPlayer.getRsn()
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, discordName, rsn, team);
+        return Objects.hash(id, discordName, rsn);
     }
 }

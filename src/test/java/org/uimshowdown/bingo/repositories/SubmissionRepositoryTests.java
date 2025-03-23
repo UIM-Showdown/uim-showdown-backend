@@ -2,10 +2,11 @@ package org.uimshowdown.bingo.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import org.uimshowdown.bingo.models.Team;
 
 @SpringBootTest
 @Tag(TestTag.INTEGRATION_TEST)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SubmissionRepositoryTests {
     @Autowired
     private TeamRepository teamRepository;
@@ -31,14 +33,14 @@ public class SubmissionRepositoryTests {
     private Player testPlayer;
     private Submission testSubmission;
 
-    @BeforeEach
+    @BeforeAll
     public void setUp() {
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
         testSubmission = submissionRepostiory.save(SharedTestVariables.makeTestSubmission(testPlayer));
     }
 
-    @AfterEach
+    @AfterAll
     public void tearDown() {
         submissionRepostiory.delete(testSubmission);
         playerRepository.delete(testPlayer);

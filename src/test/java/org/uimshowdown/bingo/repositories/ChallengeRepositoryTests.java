@@ -35,19 +35,18 @@ public class ChallengeRepositoryTests {
     @Test
     @Transactional
     public void Should_FindTestChallenge_When_GivenTestChallengeName() {
-        Challenge challenge = challengeRepository.findByName(testChallenge.getName()).orElse(new Challenge());
+        Challenge challenge = challengeRepository.findByName(testChallenge.getName()).orElse(null);
 
-        assertThat(challenge).isNotNull();
-        assertThat(challenge.getId()).isEqualTo(testChallenge.getId());
+        assertThat(challenge)
+            .isNotNull()
+            .isEqualTo(testChallenge);
     }
 
     @Test
     @Transactional
     public void Should_NotFindTestChallenge_When_GivenWrongChallengeName() {
-        Challenge challenge = challengeRepository.findByName("Not Likely To Be Found").orElse(new Challenge());
+        Challenge challenge = challengeRepository.findByName("Not Likely To Be Found").orElse(null);
 
-        assertThat(challenge)
-            .isNotNull()
-            .isNotEqualTo(testChallenge);
+        assertThat(challenge).isNull();
     }
 }

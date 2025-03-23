@@ -109,16 +109,15 @@ public class Submission {
 
         Submission otherSubmission = (Submission) obj;
         return (
-            this.getId() == otherSubmission.getId()
-            && this.getDecisionMaker() == otherSubmission.getDecisionMaker()
-            && this.getDecisionMadeAt() == otherSubmission.getDecisionMadeAt()
-            && this.getPlayer() == otherSubmission.getPlayer()
-            && this.getSubmissionState() == otherSubmission.getSubmissionState()
+            getId() instanceof Integer ? getId().equals(otherSubmission.getId()) : getId() == otherSubmission.getId()
+            && getDecisionMadeAt() instanceof Timestamp ? getDecisionMadeAt().equals(otherSubmission.getDecisionMadeAt()) : getDecisionMadeAt() == otherSubmission.getDecisionMadeAt()
+            && getDecisionMaker() instanceof String ? getDecisionMaker().equals(otherSubmission.getDecisionMaker()) : getDecisionMaker() == otherSubmission.getDecisionMaker()
+            && getSubmissionState() instanceof SubmissionState ? getSubmissionState().equals(otherSubmission.getSubmissionState()) : getSubmissionState() == otherSubmission.getSubmissionState()
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, decisionMaker, decisionMadeAt, player, state);
+        return Objects.hash(id, decisionMadeAt, decisionMaker, state);
     }
 }

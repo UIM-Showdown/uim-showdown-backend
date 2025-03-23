@@ -1,6 +1,7 @@
 package org.uimshowdown.bingo.models;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -84,5 +85,28 @@ public class RecordSubmission {
     public RecordSubmission setValue(Integer value) {
         this.value = value;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if ((obj instanceof RecordSubmission) == false) {
+            return false;
+        }
+
+        RecordSubmission otherRecordSubmission = (RecordSubmission) obj;
+        return (
+            getId() instanceof Integer ? getId().equals(otherRecordSubmission.getId()) : getId() == otherRecordSubmission.getId()
+            && getSubmittedAt() instanceof Timestamp ? getSubmittedAt().equals(otherRecordSubmission.getSubmittedAt()) : getSubmittedAt() == otherRecordSubmission.getSubmittedAt()
+            && getValue() instanceof Integer ? getValue().equals(otherRecordSubmission.getValue()) : getValue() == otherRecordSubmission.getValue()
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, submittedAt, value);
     }
 }

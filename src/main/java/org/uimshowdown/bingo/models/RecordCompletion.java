@@ -114,10 +114,10 @@ public class RecordCompletion {
 
         RecordCompletion otherRecordCompletion = (RecordCompletion) obj;
         return (
-            getCompletedAt() == otherRecordCompletion.getCompletedAt()
-            && getId() == otherRecordCompletion.getId()
-            && getRawValue() == otherRecordCompletion.getRawValue()
-            && getVideoUrl() == otherRecordCompletion.getVideoUrl()
+            getId() instanceof Integer ? getId().equals(otherRecordCompletion.getId()) : getId() == otherRecordCompletion.getId()
+            && getCompletedAt() instanceof Timestamp ? getCompletedAt().equals(otherRecordCompletion.getCompletedAt()) : getCompletedAt() == otherRecordCompletion.getCompletedAt()
+            && getRawValue() instanceof Integer ? getRawValue().equals(otherRecordCompletion.getRawValue()) : getRawValue() == otherRecordCompletion.getRawValue()
+            && getVideoUrl() instanceof String ? getVideoUrl().equals(otherRecordCompletion.getVideoUrl()) : getVideoUrl() == otherRecordCompletion.getVideoUrl()
         );
     }
 
