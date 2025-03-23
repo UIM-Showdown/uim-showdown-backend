@@ -1,8 +1,10 @@
 package org.uimshowdown.bingo.repositories;
 
+import org.uimshowdown.bingo.enums.ChallengeType;
 import org.uimshowdown.bingo.enums.ContributionMethodCategory;
 import org.uimshowdown.bingo.enums.ContributionMethodType;
 import org.uimshowdown.bingo.enums.SubmissionState;
+import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
@@ -15,6 +17,14 @@ import org.uimshowdown.bingo.models.Team;
 import org.uimshowdown.bingo.models.Tile;
 
 public class SharedTestVariables {
+    public static Challenge makeTestChallenge() {
+        return new Challenge()
+            .setDescription("Four player relay for each of the Desert Treasure II bosses.")
+            .setName("DT2 Boss Relay")
+            .setTeamSize(4)
+            .setType(ChallengeType.RELAY);
+    }
+
     public static Contribution makeTestContribution(ContributionMethod contributionMethod, Player player) {
         return new Contribution()
             .setContributionMethod(contributionMethod)
