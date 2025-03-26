@@ -1,6 +1,7 @@
 package org.uimshowdown.bingo.models;
 
 import java.util.Objects;
+import java.util.Set;
 
 import org.uimshowdown.bingo.enums.ChallengeType;
 
@@ -11,6 +12,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,6 +27,9 @@ public class Challenge {
 
     @Column(length = 64)
     private String name;
+
+    @OneToMany(mappedBy = "challenge")
+    private Set<ChallengeRelayComponent> relayComponents;
 
     @Column(name = "team_size")
     private Integer teamSize;

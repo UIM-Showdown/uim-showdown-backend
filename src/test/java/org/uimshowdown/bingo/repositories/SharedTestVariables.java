@@ -5,6 +5,7 @@ import org.uimshowdown.bingo.enums.ContributionMethodCategory;
 import org.uimshowdown.bingo.enums.ContributionMethodType;
 import org.uimshowdown.bingo.enums.SubmissionState;
 import org.uimshowdown.bingo.models.Challenge;
+import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
@@ -23,6 +24,12 @@ public class SharedTestVariables {
             .setName("DT2 Boss Relay")
             .setTeamSize(4)
             .setType(ChallengeType.RELAY);
+    }
+
+    public static ChallengeRelayComponent makeTestChallengeRelayComponent(Challenge challenge) {
+        return new ChallengeRelayComponent()
+            .setChallenge(challenge)
+            .setName("Duke Sucellus");
     }
 
     public static Contribution makeTestContribution(ContributionMethod contributionMethod, Player player) {
