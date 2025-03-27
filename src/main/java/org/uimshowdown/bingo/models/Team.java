@@ -21,6 +21,9 @@ public class Team {
     @Column(length = 8)
     private String abbreviation;
 
+    @OneToMany(mappedBy = "team")
+    private Set<ChallengeCompletion> challengeCompletions;
+
     @Column(length = 6)
     private String color;
 
@@ -32,6 +35,10 @@ public class Team {
 
     public String getAbbreviation() {
         return abbreviation;
+    }
+
+    public Set<ChallengeCompletion> getChallengeCompletions() {
+        return challengeCompletions;
     }
 
     public String getColor() {

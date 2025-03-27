@@ -22,6 +22,9 @@ public class Challenge {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @OneToMany(mappedBy = "challenge")
+    private Set<ChallengeCompletion> completions;
+
     @Column(length = 512)
     private String description;
 
@@ -42,12 +45,20 @@ public class Challenge {
         return id;
     }
 
+    public Set<ChallengeCompletion> getCompletions() {
+        return completions;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public String getName() {
         return name;
+    }
+
+    public Set<ChallengeRelayComponent> getRelayComponents() {
+        return relayComponents;
     }
 
     public Integer getTeamSize() {

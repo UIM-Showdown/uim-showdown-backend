@@ -1,10 +1,14 @@
 package org.uimshowdown.bingo.repositories;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+
 import org.uimshowdown.bingo.enums.ChallengeType;
 import org.uimshowdown.bingo.enums.ContributionMethodCategory;
 import org.uimshowdown.bingo.enums.ContributionMethodType;
 import org.uimshowdown.bingo.enums.SubmissionState;
 import org.uimshowdown.bingo.models.Challenge;
+import org.uimshowdown.bingo.models.ChallengeCompletion;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
@@ -24,6 +28,15 @@ public class SharedTestVariables {
             .setName("DT2 Boss Relay")
             .setTeamSize(4)
             .setType(ChallengeType.RELAY);
+    }
+
+    public static ChallengeCompletion makeTestChallengeCompletion(Challenge challenge, Team team) {
+        ChallengeCompletion challengeCompletion =  new ChallengeCompletion();
+        challengeCompletion.setChallenge(challenge);
+        challengeCompletion.setCompletedAt(new Timestamp(Instant.now().toEpochMilli()));
+        challengeCompletion.setSeconds(75.0);
+        challengeCompletion.setTeam(team);
+        return challengeCompletion;
     }
 
     public static ChallengeRelayComponent makeTestChallengeRelayComponent(Challenge challenge) {
