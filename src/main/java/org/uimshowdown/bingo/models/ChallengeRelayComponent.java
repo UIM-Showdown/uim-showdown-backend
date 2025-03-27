@@ -36,14 +36,12 @@ public class ChallengeRelayComponent {
         return name;
     }
 
-    public ChallengeRelayComponent setChallenge(Challenge challenge) {
+    public void setChallenge(Challenge challenge) {
         this.challenge = challenge;
-        return this;
     }
 
-    public ChallengeRelayComponent setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
     public boolean equals(Object obj) {

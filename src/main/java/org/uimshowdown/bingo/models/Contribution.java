@@ -81,44 +81,36 @@ public class Contribution {
         return unrankedStartingValue;
     }
 
-    public Contribution setContributionMethod(ContributionMethod contributionMethod) {
+    public void setContributionMethod(ContributionMethod contributionMethod) {
         this.contributionMethod = contributionMethod;
-        return this;
     }
 
-    public Contribution setPlayer(Player player) {
+    public void setPlayer(Player player) {
         this.player = player;
-        return this;
     }
 
-    public Contribution setInitialValue(Integer initialValue) {
+    public void setInitialValue(Integer initialValue) {
         this.initialValue = initialValue;
-        return this;
     }
 
-    public Contribution setInitialValueScreenshotUrl(String initialValueScreenshotUrl) {
+    public void setInitialValueScreenshotUrl(String initialValueScreenshotUrl) {
         this.initialValueScreenshotUrl = initialValueScreenshotUrl;
-        return this;
     }
 
-    public Contribution setFinalValue(Integer finalValue) {
+    public void setFinalValue(Integer finalValue) {
         this.finalValue = finalValue;
-        return this;
     }
 
-    public Contribution setFinalValueScreenshotUrl(String finalValueScreenshotUrl) {
+    public void setFinalValueScreenshotUrl(String finalValueScreenshotUrl) {
         this.finalValueScreenshotUrl = finalValueScreenshotUrl;
-        return this;
     }
 
-    public Contribution setStaffAdjustment(Integer staffAdjustment) {
+    public void setStaffAdjustment(Integer staffAdjustment) {
         this.staffAdjustment = staffAdjustment;
-        return this;
     }
 
-    public Contribution setUnrankedStartingValue(Integer unrankedStartingValue) {
+    public void setUnrankedStartingValue(Integer unrankedStartingValue) {
         this.unrankedStartingValue = unrankedStartingValue;
-        return this;
     }
 
     @Override

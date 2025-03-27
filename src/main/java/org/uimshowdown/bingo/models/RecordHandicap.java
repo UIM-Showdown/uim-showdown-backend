@@ -61,19 +61,16 @@ public class RecordHandicap {
         return submissions;
     }
 
-    public RecordHandicap setMultiplier(Double multiplier) {
+    public void setMultiplier(Double multiplier) {
         this.multiplier = multiplier;
-        return this;
     }
 
-    public RecordHandicap setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
-    public RecordHandicap setRecord(Record record) {
+    public void setRecord(Record record) {
         this.record = record;
-        return this;
     }
 
     @Override

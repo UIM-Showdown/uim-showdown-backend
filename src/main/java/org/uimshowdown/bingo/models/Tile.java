@@ -43,14 +43,12 @@ public class Tile {
         return contributionMethods;
     }
     
-    public Tile setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
-    public Tile setPointsPerTier(Integer pointsPerTier) {
+    public void setPointsPerTier(Integer pointsPerTier) {
         this.pointsPerTier = pointsPerTier;
-        return this;
     }
 
     @Override

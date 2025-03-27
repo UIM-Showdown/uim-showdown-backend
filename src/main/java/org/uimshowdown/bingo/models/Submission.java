@@ -73,28 +73,24 @@ public class Submission {
         return screenshotUrls;
     }
 
-    public Submission setDecisionMadeAt(Timestamp decisionMadeAt) {
-        this.decisionMadeAt = decisionMadeAt;
-        return this;
-    }
-
-    public Submission setDecisionMaker(String decisionMaker) {
-        this.decisionMaker = decisionMaker;
-        return this;
-    }
-
     public SubmissionState getSubmissionState() {
         return state;
     }
 
-    public Submission setPlayer(Player player) {
-        this.player = player;
-        return this;
+    public void setDecisionMadeAt(Timestamp decisionMadeAt) {
+        this.decisionMadeAt = decisionMadeAt;
     }
 
-    public Submission setSubmissionState(SubmissionState submissionState) {
+    public void setDecisionMaker(String decisionMaker) {
+        this.decisionMaker = decisionMaker;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void setSubmissionState(SubmissionState submissionState) {
         state = submissionState;
-        return this;
     }
 
     @Override

@@ -75,29 +75,24 @@ public class ContributionMethod {
         return name;
     }
 
-    public ContributionMethod setTile(Tile tile) {
+    public void setTile(Tile tile) {
         this.tile = tile;
-        return this;
     }
 
-    public ContributionMethod setContributionMethodCategory(ContributionMethodCategory category) {
+    public void setContributionMethodCategory(ContributionMethodCategory category) {
         contributionMethodCategory = category;
-        return this;
     }
 
-    public ContributionMethod setContributionMethodType(ContributionMethodType type) {
+    public void setContributionMethodType(ContributionMethodType type) {
         contributionMethodType = type;
-        return this;
     }
 
-    public ContributionMethod setEhtRate(Double ehtRate) {
+    public void setEhtRate(Double ehtRate) {
         this.ehtRate = ehtRate;
-        return this;
     }
 
-    public ContributionMethod setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
     @Override

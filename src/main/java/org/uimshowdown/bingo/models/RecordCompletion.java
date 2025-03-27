@@ -72,34 +72,28 @@ public class RecordCompletion {
         return videoUrl;
     }
 
-    public RecordCompletion setCompletedAt(Timestamp completedAt) {
+    public void setCompletedAt(Timestamp completedAt) {
         this.completedAt = completedAt;
-        return this;
     }
 
-    public RecordCompletion setHandicap(RecordHandicap recordHandicap) {
+    public void setHandicap(RecordHandicap recordHandicap) {
         handicap = recordHandicap;
-        return this;
     }
 
-    public RecordCompletion setPlayer(Player player) {
+    public void setPlayer(Player player) {
         this.player = player;
-        return this;
     }
 
-    public RecordCompletion setRawValue(Integer rawValue) {
+    public void setRawValue(Integer rawValue) {
         this.rawValue = rawValue;
-        return this;
     }
 
-    public RecordCompletion setRecord(Record record) {
+    public void setRecord(Record record) {
         this.record = record;
-        return this;
     }
 
-    public RecordCompletion setVideoUrl(String videoUrl) {
+    public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
-        return this;
     }
 
     @Override

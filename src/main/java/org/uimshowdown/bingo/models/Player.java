@@ -75,24 +75,20 @@ public class Player {
         return captain;
     }
 
-    public Player setCaptainStatus(Boolean isCaptain) {
+    public void setCaptainStatus(Boolean isCaptain) {
         captain = isCaptain;
-        return this;
     }
 
-    public Player setDiscordName(String discordName) {
+    public void setDiscordName(String discordName) {
         this.discordName = discordName;
-        return this;
     }
 
-    public Player setRsn(String rsn) {
+    public void setRsn(String rsn) {
         this.rsn = rsn;
-        return this;
     }
 
-    public Player setTeam(Team team) {
+    public void setTeam(Team team) {
         this.team = team;
-        return this;
     }
 
     @Override

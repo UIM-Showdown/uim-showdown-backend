@@ -3,6 +3,7 @@ package org.uimshowdown.bingo.repositories;
 import java.sql.Timestamp;
 import java.time.Instant;
 
+import org.uimshowdown.bingo.constants.PlayerSkill;
 import org.uimshowdown.bingo.enums.ChallengeType;
 import org.uimshowdown.bingo.enums.ContributionMethodCategory;
 import org.uimshowdown.bingo.enums.ContributionMethodType;
@@ -23,11 +24,12 @@ import org.uimshowdown.bingo.models.Tile;
 
 public class SharedTestVariables {
     public static Challenge makeTestChallenge() {
-        return new Challenge()
-            .setDescription("Four player relay for each of the Desert Treasure II bosses.")
-            .setName("DT2 Boss Relay")
-            .setTeamSize(4)
-            .setType(ChallengeType.RELAY);
+        Challenge testChallenge = new Challenge();
+        testChallenge.setDescription("Four player relay for each of the Desert Treasure II bosses.");
+        testChallenge.setName("DT2 Boss Relay");
+        testChallenge.setTeamSize(4);
+        testChallenge.setType(ChallengeType.RELAY);
+        return testChallenge;
     }
 
     public static ChallengeCompletion makeTestChallengeCompletion(Challenge challenge, Team team) {
@@ -40,81 +42,92 @@ public class SharedTestVariables {
     }
 
     public static ChallengeRelayComponent makeTestChallengeRelayComponent(Challenge challenge) {
-        return new ChallengeRelayComponent()
-            .setChallenge(challenge)
-            .setName("Duke Sucellus");
+        ChallengeRelayComponent testChallengeRelayComponent = new ChallengeRelayComponent();
+        testChallengeRelayComponent.setChallenge(challenge);
+        testChallengeRelayComponent.setName("Duke Sucellus");
+        return testChallengeRelayComponent;
     }
 
     public static Contribution makeTestContribution(ContributionMethod contributionMethod, Player player) {
-        return new Contribution()
-            .setContributionMethod(contributionMethod)
-            .setPlayer(player)
-            .setStaffAdjustment(0)
-            .setUnrankedStartingValue(4);
+        Contribution testContribution = new Contribution();
+        testContribution.setContributionMethod(contributionMethod);
+        testContribution.setPlayer(player);
+        testContribution.setStaffAdjustment(0);
+        testContribution.setUnrankedStartingValue(4);
+        return testContribution;
     }
 
     public static ContributionMethod makeTestContributionMethod(Tile tile) {
-        return new ContributionMethod()
-            .setContributionMethodCategory(ContributionMethodCategory.PVM)
-            .setContributionMethodType(ContributionMethodType.KC)
-            .setEhtRate(25.0)
-            .setName("Calvar'ion")
-            .setTile(tile);
+        ContributionMethod testContributionMethod = new ContributionMethod();
+        testContributionMethod.setContributionMethodCategory(ContributionMethodCategory.PVM);
+        testContributionMethod.setContributionMethodType(ContributionMethodType.KC);
+        testContributionMethod.setEhtRate(25.0);
+        testContributionMethod.setName("Calvar'ion");
+        testContributionMethod.setTile(tile);
+        return testContributionMethod;
     }
 
     public static Record makeTestRecord() {
-        return new Record()
-            .setDescription("Six hour woodcutting record")
-            .setSkill("Woodcutting");
+        Record testRecord = new Record();
+        testRecord.setDescription("Six hour woodcutting record");
+        testRecord.setSkill(PlayerSkill.WOODCUTTING);
+        return testRecord;
     }
 
     public static RecordCompletion makeTestRecordCompletion(Player player, Record record, RecordHandicap recordHandicap) {
-        return new RecordCompletion()
-            .setHandicap(recordHandicap)
-            .setPlayer(player)
-            .setRawValue(600000)
-            .setRecord(record);
+        RecordCompletion testRecordCompletion = new RecordCompletion();
+        testRecordCompletion.setHandicap(recordHandicap);
+        testRecordCompletion.setPlayer(player);
+        testRecordCompletion.setRawValue(600000);
+        testRecordCompletion.setRecord(record);
+        return testRecordCompletion;
     }
 
     public static RecordHandicap makeTestRecordHandicap(Record record) {
-        return new RecordHandicap()
-            .setMultiplier(1.25)
-            .setName("Two-handed axe modifier")
-            .setRecord(record);
+        RecordHandicap testRecordHandicap = new RecordHandicap();
+        testRecordHandicap.setMultiplier(1.25);
+        testRecordHandicap.setName("Two-handed axe modifier");
+        testRecordHandicap.setRecord(record);
+        return testRecordHandicap;
     }
 
     public static RecordSubmission makeTestRecordSubmission(RecordHandicap recordHandicap, Record record, Submission submission) {
-        return new RecordSubmission()
-            .setHandicap(recordHandicap)
-            .setRecord(record)
-            .setSubmission(submission)
-            .setValue(1);
+        RecordSubmission testRecordSubmission = new RecordSubmission();
+        testRecordSubmission.setHandicap(recordHandicap);
+        testRecordSubmission.setRecord(record);
+        testRecordSubmission.setSubmission(submission);
+        testRecordSubmission.setValue(1);
+        return testRecordSubmission;
     }
 
     public static Player makeTestPlayer(Team team) {
-        return new Player()
-            .setCaptainStatus(true)
-            .setDiscordName("flashcards")
-            .setRsn("Flashcards")
-            .setTeam(team);
+        Player testPlayer = new Player();
+        testPlayer.setCaptainStatus(true);
+        testPlayer.setDiscordName("flashcards");
+        testPlayer.setRsn("Flashcards");
+        testPlayer.setTeam(team);
+        return testPlayer;
     }
 
     public static Submission makeTestSubmission(Player player) {
-        return new Submission()
-            .setSubmissionState(SubmissionState.OPEN)
-            .setPlayer(player);
+        Submission testSubmission = new Submission();
+        testSubmission.setSubmissionState(SubmissionState.OPEN);
+        testSubmission.setPlayer(player);
+        return testSubmission;
     }
 
     public static Team makeTestTeam() {
-        return new Team()
-            .setAbbreviation("ffs")
-            .setColor("c97632")
-            .setName("Falador Fullsends");
+        Team testTeam = new Team();
+        testTeam.setAbbreviation("ffs");
+        testTeam.setColor("c97632");
+        testTeam.setName("Falador Fullsends");
+        return testTeam;
     }
 
     public static Tile makeTestTile() {
-        return new Tile()
-            .setName("Looting Bag Management")
-            .setPointsPerTier(100000);
+        Tile testTile = new Tile();
+        testTile.setName("Looting Bag Management");
+        testTile.setPointsPerTier(100000);
+        return testTile;
     }
 }

@@ -38,14 +38,12 @@ public class SubmissionScreenshotUrl {
         return submission;
     }
 
-    public SubmissionScreenshotUrl setScreenshotUrl(String screenshotUrl) {
+    public void setScreenshotUrl(String screenshotUrl) {
         this.screenshotUrl = screenshotUrl;
-        return this;
     }
 
-    public SubmissionScreenshotUrl setSubmission(Submission submission) {
+    public void setSubmission(Submission submission) {
         this.submission = submission;
-        return this;
     }
 
     @Override

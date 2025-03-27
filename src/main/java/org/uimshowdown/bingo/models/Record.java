@@ -49,14 +49,12 @@ public class Record {
         return submissions;
     }
 
-    public Record setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
-        return this;
     }
 
-    public Record setSkill(String skill) {
+    public void setSkill(String skill) {
         this.skill = skill;
-        return this;
     }
 
     @Override

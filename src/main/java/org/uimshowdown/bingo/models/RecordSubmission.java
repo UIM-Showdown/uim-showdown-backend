@@ -62,29 +62,24 @@ public class RecordSubmission {
         return value;
     }
 
-    public RecordSubmission setHandicap(RecordHandicap recordHandicap) {
+    public void setHandicap(RecordHandicap recordHandicap) {
         this.handicap = recordHandicap;
-        return this;
     }
 
-    public RecordSubmission setRecord(Record record) {
+    public void setRecord(Record record) {
         this.record = record;
-        return this;
     }
 
-    public RecordSubmission setSubmission(Submission submission) {
+    public void setSubmission(Submission submission) {
         this.submission = submission;
-        return this;
     }
 
-    public RecordSubmission setSubmittedAt(Timestamp submittedAt) {
+    public void setSubmittedAt(Timestamp submittedAt) {
         this.submittedAt = submittedAt;
-        return this;
     }
 
-    public RecordSubmission setValue(Integer value) {
+    public void setValue(Integer value) {
         this.value = value;
-        return this;
     }
 
     @Override

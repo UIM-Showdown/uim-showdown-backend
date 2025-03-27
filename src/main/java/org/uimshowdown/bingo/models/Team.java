@@ -57,19 +57,16 @@ public class Team {
         return players;
     }
 
-    public Team setAbbreviation(String abbreviation) {
+    public void setAbbreviation(String abbreviation) {
         this.abbreviation = abbreviation;
-        return this;
     }
 
-    public Team setColor(String color) {
+    public void setColor(String color) {
         this.color = color;
-        return this;
     }
 
-    public Team setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
     @Override

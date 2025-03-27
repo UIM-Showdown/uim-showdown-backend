@@ -69,24 +69,20 @@ public class Challenge {
         return type;
     }
 
-    public Challenge setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
-        return this;
     }
 
-    public Challenge setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
-    public Challenge setTeamSize(Integer teamSize) {
+    public void setTeamSize(Integer teamSize) {
         this.teamSize = teamSize;
-        return this;
     }
 
-    public Challenge setType(ChallengeType challengeType) {
+    public void setType(ChallengeType challengeType) {
         type = challengeType;
-        return this;
     }
 
     @Override
