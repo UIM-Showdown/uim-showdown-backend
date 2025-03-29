@@ -22,7 +22,7 @@ public class ChallengeRelayComponentRepositoryTests {
     private ChallengeRepository challengeRepository;
 
     @Autowired
-    private ChallangeRelayComponentRepository challangeRelayComponentRepository;
+    private ChallengeRelayComponentRepository challengeRelayComponentRepository;
 
     private Challenge testChallenge;
     private ChallengeRelayComponent testChallengeRelayComponent;
@@ -30,19 +30,19 @@ public class ChallengeRelayComponentRepositoryTests {
     @BeforeAll
     public void setUp() {
         testChallenge = challengeRepository.save(SharedTestVariables.makeTestChallenge());
-        testChallengeRelayComponent = challangeRelayComponentRepository.save(SharedTestVariables.makeTestChallengeRelayComponent(testChallenge));
+        testChallengeRelayComponent = challengeRelayComponentRepository.save(SharedTestVariables.makeTestChallengeRelayComponent(testChallenge));
     }
 
     @AfterAll
     public void tearDown() {
-        challangeRelayComponentRepository.delete(testChallengeRelayComponent);
+        challengeRelayComponentRepository.delete(testChallengeRelayComponent);
         challengeRepository.delete(testChallenge);
     }
 
     @Test
     @Transactional
     public void Should_FindTestChallengeRelayComponent_When_GivenTestChallengeId() {
-        Iterable<ChallengeRelayComponent> challengeRelayComponents = challangeRelayComponentRepository.findAllByChallengeId(testChallenge.getId());
+        Iterable<ChallengeRelayComponent> challengeRelayComponents = challengeRelayComponentRepository.findAllByChallengeId(testChallenge.getId());
 
         assertThat(challengeRelayComponents)
             .isNotNull()
@@ -53,7 +53,7 @@ public class ChallengeRelayComponentRepositoryTests {
     @Test
     @Transactional
     public void Should_NotFindTestChallengeRelayComponent_When_GivenWrongChallengeId() {
-        Iterable<ChallengeRelayComponent> challengeRelayComponents = challangeRelayComponentRepository.findAllByChallengeId(0);
+        Iterable<ChallengeRelayComponent> challengeRelayComponents = challengeRelayComponentRepository.findAllByChallengeId(0);
 
         assertThat(challengeRelayComponents)
             .isNotNull()

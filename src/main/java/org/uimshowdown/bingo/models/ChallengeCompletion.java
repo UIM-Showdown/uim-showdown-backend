@@ -2,6 +2,7 @@ package org.uimshowdown.bingo.models;
 
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,6 +25,9 @@ public class ChallengeCompletion {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "challenge_id")
     private Challenge challenge;
+
+    @OneToMany(mappedBy = "challengeCompletion")
+    private Set<PlayerChallengeCompletion> playerChallengeCompletions;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
@@ -40,6 +45,10 @@ public class ChallengeCompletion {
 
     public Challenge getChallenge() {
         return challenge;
+    }
+
+    public Set<PlayerChallengeCompletion> getPlayerChallengeCompletions() {
+        return playerChallengeCompletions;
     }
 
     public Team getTeam() {

@@ -1,5 +1,7 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -8,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,6 +27,9 @@ public class ChallengeRelayComponent {
     @Column(length = 64)
     private String name;
 
+    @OneToMany(mappedBy = "relayComponent")
+    private Set<PlayerChallengeCompletion> playerChallengeCompletions;
+
     public Integer getId() {
         return id;
     }
@@ -34,6 +40,10 @@ public class ChallengeRelayComponent {
 
     public String getName() {
         return name;
+    }
+
+    public Set<PlayerChallengeCompletion> getPlayerChallengeCompletions() {
+        return playerChallengeCompletions;
     }
 
     public void setChallenge(Challenge challenge) {

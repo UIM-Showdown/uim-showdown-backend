@@ -14,6 +14,7 @@ import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
+import org.uimshowdown.bingo.models.PlayerChallengeCompletion;
 import org.uimshowdown.bingo.models.Record;
 import org.uimshowdown.bingo.models.RecordCompletion;
 import org.uimshowdown.bingo.models.RecordHandicap;
@@ -107,6 +108,16 @@ public class SharedTestVariables {
         testPlayer.setRsn("Flashcards");
         testPlayer.setTeam(team);
         return testPlayer;
+    }
+
+    public static PlayerChallengeCompletion makeTestPlayerChallengeCompletion(ChallengeCompletion challengeCompletion, ChallengeRelayComponent challengeRelayComponent, Player player) {
+        PlayerChallengeCompletion testPlayerChallengeCompletion = new PlayerChallengeCompletion();
+        testPlayerChallengeCompletion.setChallengeCompletion(challengeCompletion);
+        testPlayerChallengeCompletion.setPlayer(player);
+        testPlayerChallengeCompletion.setRelayComponent(challengeRelayComponent);
+        testPlayerChallengeCompletion.setScreenshotUrl("https://www.reddit.com/media?url=https%3A%2F%2Fi.redd.it%2Fs61jozhbbxk61.png");
+        testPlayerChallengeCompletion.setSeconds(75.0);
+        return testPlayerChallengeCompletion;
     }
 
     public static Submission makeTestSubmission(Player player) {

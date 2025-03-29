@@ -31,6 +31,9 @@ public class Player {
     private String discordName;
 
     @OneToMany(mappedBy = "player")
+    private Set<PlayerChallengeCompletion> playerChallengeCompletions;
+
+    @OneToMany(mappedBy = "player")
     private Set<RecordCompletion> recordCompletions;
 
     @Column(length = 64, unique = true)
@@ -57,6 +60,10 @@ public class Player {
 
     public String getRsn() {
         return rsn;
+    }
+
+    public Set<PlayerChallengeCompletion> getPlayerChallengeCompletions() {
+        return playerChallengeCompletions;
     }
 
     public Set<RecordCompletion> getRecordCompletions() {
