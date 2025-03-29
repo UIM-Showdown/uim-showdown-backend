@@ -35,7 +35,7 @@ public class RecordSubmissionRepositoryTests {
     private RecordSubmissionRepository recordSubmissionRepository;
 
     @Autowired
-    private SubmissionRepostiory submissionRepostiory;
+    private SubmissionRepository submissionRepository;
 
     @Autowired
     private TeamRepository teamRepository;
@@ -53,14 +53,14 @@ public class RecordSubmissionRepositoryTests {
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
         testRecord = recordRepository.save(SharedTestVariables.makeTestRecord());
         testRecordHandicap = recordHandicapRepository.save(SharedTestVariables.makeTestRecordHandicap(testRecord));
-        testSubmission = submissionRepostiory.save(SharedTestVariables.makeTestSubmission(testPlayer));
+        testSubmission = submissionRepository.save(SharedTestVariables.makeTestSubmission(testPlayer));
         testRecordSubmission = recordSubmissionRepository.save(SharedTestVariables.makeTestRecordSubmission(testRecordHandicap, testRecord, testSubmission));
     }
 
     @AfterAll
     public void tearDown() {
         recordSubmissionRepository.delete(testRecordSubmission);
-        submissionRepostiory.delete(testSubmission);
+        submissionRepository.delete(testSubmission);
         recordHandicapRepository.delete(testRecordHandicap);
         recordRepository.delete(testRecord);
         playerRepository.delete(testPlayer);

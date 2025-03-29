@@ -34,6 +34,9 @@ public class Challenge {
     @OneToMany(mappedBy = "challenge")
     private Set<ChallengeRelayComponent> relayComponents;
 
+    @OneToMany(mappedBy = "challenge")
+    private Set<ChallengeSubmission> submissions;
+
     @Column(name = "team_size")
     private Integer teamSize;
 

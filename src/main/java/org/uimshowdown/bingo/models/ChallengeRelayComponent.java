@@ -30,6 +30,9 @@ public class ChallengeRelayComponent {
     @OneToMany(mappedBy = "relayComponent")
     private Set<PlayerChallengeCompletion> playerChallengeCompletions;
 
+    @OneToMany(mappedBy = "relayComponent")
+    private Set<ChallengeSubmission> submissions;
+
     public Integer getId() {
         return id;
     }
@@ -44,6 +47,10 @@ public class ChallengeRelayComponent {
 
     public Set<PlayerChallengeCompletion> getPlayerChallengeCompletions() {
         return playerChallengeCompletions;
+    }
+
+    public Set<ChallengeSubmission> getSubmissions() {
+        return submissions;
     }
 
     public void setChallenge(Challenge challenge) {

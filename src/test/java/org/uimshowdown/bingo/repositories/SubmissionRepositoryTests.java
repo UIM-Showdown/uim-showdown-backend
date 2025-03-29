@@ -27,7 +27,7 @@ public class SubmissionRepositoryTests {
     private PlayerRepository playerRepository;
 
     @Autowired
-    private SubmissionRepostiory submissionRepostiory;
+    private SubmissionRepository submissionRepository;
 
     private Team testTeam;
     private Player testPlayer;
@@ -37,12 +37,12 @@ public class SubmissionRepositoryTests {
     public void setUp() {
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
-        testSubmission = submissionRepostiory.save(SharedTestVariables.makeTestSubmission(testPlayer));
+        testSubmission = submissionRepository.save(SharedTestVariables.makeTestSubmission(testPlayer));
     }
 
     @AfterAll
     public void tearDown() {
-        submissionRepostiory.delete(testSubmission);
+        submissionRepository.delete(testSubmission);
         playerRepository.delete(testPlayer);
         teamRepository.delete(testTeam);
     }
@@ -50,7 +50,7 @@ public class SubmissionRepositoryTests {
     @Test
     @Transactional
     public void Should_FindTestSubmission_When_GivenTestPlayerId() {
-        Iterable<Submission> submissions = submissionRepostiory.findAllByPlayerId(testPlayer.getId());
+        Iterable<Submission> submissions = submissionRepository.findAllByPlayerId(testPlayer.getId());
 
         assertThat(submissions)
             .isNotNull()
@@ -61,7 +61,7 @@ public class SubmissionRepositoryTests {
     @Test
     @Transactional
     public void Should_NotFindTestSubmission_When_GivenIncorrectPlayerId() {
-        Iterable<Submission> submissions = submissionRepostiory.findAllByPlayerId(0);
+        Iterable<Submission> submissions = submissionRepository.findAllByPlayerId(0);
 
         assertThat(submissions)
             .isNotNull()
@@ -71,7 +71,7 @@ public class SubmissionRepositoryTests {
     @Test
     @Transactional
     public void Should_FindTestSubmission_When_GivenOpenSubmissionState() {
-        Iterable<Submission> submissions = submissionRepostiory.findAllByState(SubmissionState.OPEN);
+        Iterable<Submission> submissions = submissionRepository.findAllByState(SubmissionState.OPEN);
 
         assertThat(submissions)
             .isNotNull()
@@ -82,7 +82,7 @@ public class SubmissionRepositoryTests {
     @Test
     @Transactional
     public void Should_NotFindTestSubmission_When_GivenDeniedSubmissionState() {
-        Iterable<Submission> submissions = submissionRepostiory.findAllByState(SubmissionState.DENIED);
+        Iterable<Submission> submissions = submissionRepository.findAllByState(SubmissionState.DENIED);
 
         assertThat(submissions)
             .isNotNull()

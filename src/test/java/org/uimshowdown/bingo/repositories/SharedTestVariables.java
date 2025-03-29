@@ -11,6 +11,7 @@ import org.uimshowdown.bingo.enums.SubmissionState;
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeCompletion;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
+import org.uimshowdown.bingo.models.ChallengeSubmission;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
@@ -47,6 +48,15 @@ public class SharedTestVariables {
         testChallengeRelayComponent.setChallenge(challenge);
         testChallengeRelayComponent.setName("Duke Sucellus");
         return testChallengeRelayComponent;
+    }
+
+    public static ChallengeSubmission makeTestChallengeSubmission(Challenge challenge, ChallengeRelayComponent challengeRelayComponent, Submission submission) {
+        ChallengeSubmission testChallengeSubmission = new ChallengeSubmission();
+        testChallengeSubmission.setChallenge(challenge);
+        testChallengeSubmission.setRelayComponent(challengeRelayComponent);
+        testChallengeSubmission.setSeconds(75.0);
+        testChallengeSubmission.setSubmission(submission);
+        return testChallengeSubmission;
     }
 
     public static Contribution makeTestContribution(ContributionMethod contributionMethod, Player player) {
