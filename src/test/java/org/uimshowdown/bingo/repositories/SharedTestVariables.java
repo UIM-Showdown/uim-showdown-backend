@@ -5,6 +5,7 @@ import java.time.Instant;
 
 import org.uimshowdown.bingo.constants.PlayerSkill;
 import org.uimshowdown.bingo.enums.ChallengeType;
+import org.uimshowdown.bingo.enums.CollectionLogGroupType;
 import org.uimshowdown.bingo.enums.ContributionMethodCategory;
 import org.uimshowdown.bingo.enums.ContributionMethodType;
 import org.uimshowdown.bingo.enums.SubmissionState;
@@ -12,6 +13,7 @@ import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeCompletion;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.ChallengeSubmission;
+import org.uimshowdown.bingo.models.CollectionLogGroup;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
@@ -25,6 +27,14 @@ import org.uimshowdown.bingo.models.Team;
 import org.uimshowdown.bingo.models.Tile;
 
 public class SharedTestVariables {
+    public static CollectionLogGroup makeTestCollectionLogGroup() {
+        CollectionLogGroup testCollectionTableGroup = new CollectionLogGroup();
+        testCollectionTableGroup.setDescription("Clue scroll rewards");
+        testCollectionTableGroup.setName("For the Love of the Gamba");
+        testCollectionTableGroup.setType(CollectionLogGroupType.CHECKLIST);
+        return testCollectionTableGroup;
+    }
+
     public static Challenge makeTestChallenge() {
         Challenge testChallenge = new Challenge();
         testChallenge.setDescription("Four player relay for each of the Desert Treasure II bosses.");
