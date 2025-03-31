@@ -26,6 +26,7 @@ import org.uimshowdown.bingo.models.RecordHandicap;
 import org.uimshowdown.bingo.models.RecordSubmission;
 import org.uimshowdown.bingo.models.Submission;
 import org.uimshowdown.bingo.models.Team;
+import org.uimshowdown.bingo.models.TeamScoreboard;
 import org.uimshowdown.bingo.models.Tile;
 import org.uimshowdown.bingo.models.TileProgress;
 
@@ -171,6 +172,18 @@ public class SharedTestVariables {
         testTeam.setColor("c97632");
         testTeam.setName("Falador Fullsends");
         return testTeam;
+    }
+
+    public static TeamScoreboard makeTestTeamScoreboard(Team team) {
+        TeamScoreboard testTeamScoreboard = new TeamScoreboard();
+        testTeamScoreboard.setEventPoints(1);
+        testTeamScoreboard.setEventPointsFromChallenge(0);
+        testTeamScoreboard.setEventPointsFromCollectionLogItems(1);
+        testTeamScoreboard.setEventPointsFromGroups(0);
+        testTeamScoreboard.setEventPointsFromRecords(0);
+        testTeamScoreboard.setEventPointsFromTiles(0);
+        testTeamScoreboard.setTeam(team);
+        return testTeamScoreboard;
     }
 
     public static Tile makeTestTile() {

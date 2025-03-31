@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,6 +33,9 @@ public class Team {
 
     @OneToMany(mappedBy = "team")
     private Set<Player> players;
+
+    @OneToOne(mappedBy = "team")
+    private TeamScoreboard scoreboard;
 
     @OneToMany(mappedBy = "team")
     private Set<TileProgress> tileProgress;
