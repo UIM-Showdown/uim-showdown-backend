@@ -15,6 +15,7 @@ import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.ChallengeSubmission;
 import org.uimshowdown.bingo.models.CollectionLogGroup;
 import org.uimshowdown.bingo.models.CollectionLogItem;
+import org.uimshowdown.bingo.models.CollectionLogSubmission;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
@@ -42,6 +43,13 @@ public class SharedTestVariables {
         testCollectionLogItem.setGroup(collectionLogGroup);
         testCollectionLogItem.setName("Ranger Boots");
         return testCollectionLogItem;
+    }
+
+    public static CollectionLogSubmission makeTestCollectionLogSubmission(CollectionLogItem collectionLogItem, Submission submission) {
+        CollectionLogSubmission testCollectionLogSubmission = new CollectionLogSubmission();
+        testCollectionLogSubmission.setItem(collectionLogItem);
+        testCollectionLogSubmission.setSubmission(submission);
+        return testCollectionLogSubmission;
     }
 
     public static Challenge makeTestChallenge() {

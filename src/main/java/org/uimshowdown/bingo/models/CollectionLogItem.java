@@ -1,6 +1,7 @@
 package org.uimshowdown.bingo.models;
 
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,6 +31,9 @@ public class CollectionLogItem {
     @Column(length = 64, unique = true)
     private String name;
 
+    @OneToMany(mappedBy = "item")
+    private Set<CollectionLogSubmission> submissions;
+
     public Integer getId() {
         return id;
     }
@@ -43,6 +48,10 @@ public class CollectionLogItem {
 
     public String getName() {
         return name;
+    }
+
+    public Set<CollectionLogSubmission> getSubmissions() {
+        return submissions;
     }
 
     public void setGroup(CollectionLogGroup collectionLogGroup) {

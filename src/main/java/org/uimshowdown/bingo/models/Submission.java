@@ -40,6 +40,9 @@ public class Submission {
     private String decisionMaker;
 
     @OneToMany(mappedBy = "submission")
+    private Set<CollectionLogSubmission> collectionLogSubmissions;
+
+    @OneToMany(mappedBy = "submission")
     private Set<ChallengeSubmission> challengeSubmissions;
 
     @OneToMany(mappedBy = "submission")
@@ -66,6 +69,10 @@ public class Submission {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public Set<CollectionLogSubmission> getCollectionLogSubmissions() {
+        return collectionLogSubmissions;
     }
 
     public Set<ChallengeSubmission> getChallengeSubmissions() {
