@@ -14,6 +14,7 @@ import org.uimshowdown.bingo.models.ChallengeCompletion;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.ChallengeSubmission;
 import org.uimshowdown.bingo.models.CollectionLogGroup;
+import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
@@ -33,6 +34,14 @@ public class SharedTestVariables {
         testCollectionTableGroup.setName("For the Love of the Gamba");
         testCollectionTableGroup.setType(CollectionLogGroupType.CHECKLIST);
         return testCollectionTableGroup;
+    }
+
+    public static CollectionLogItem makeTestCollectionLogItem(CollectionLogGroup collectionLogGroup) {
+        CollectionLogItem testCollectionLogItem = new CollectionLogItem();
+        testCollectionLogItem.setDescription("Boots we chase, yet rarely use.");
+        testCollectionLogItem.setGroup(collectionLogGroup);
+        testCollectionLogItem.setName("Ranger Boots");
+        return testCollectionLogItem;
     }
 
     public static Challenge makeTestChallenge() {

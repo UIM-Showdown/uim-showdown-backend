@@ -1,6 +1,7 @@
 package org.uimshowdown.bingo.models;
 
 import java.util.Objects;
+import java.util.Set;
 
 import org.uimshowdown.bingo.enums.CollectionLogGroupType;
 
@@ -11,6 +12,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +24,9 @@ public class CollectionLogGroup {
 
     @Column(length = 512)
     private String description;
+
+    @OneToMany(mappedBy = "group")
+    private Set<CollectionLogItem> items;
 
     @Column(length = 64, unique = true)
     private String name;
@@ -36,6 +41,10 @@ public class CollectionLogGroup {
 
     public String getDescription() {
         return description;
+    }
+
+    public Set<CollectionLogItem> getItems() {
+        return items;
     }
 
     public String getName() {
