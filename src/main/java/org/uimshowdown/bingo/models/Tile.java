@@ -27,6 +27,9 @@ public class Tile {
     @OneToMany(mappedBy = "tile")
     private Set<ContributionMethod> contributionMethods;
 
+    @OneToMany(mappedBy = "tile")
+    private Set<TileProgress> progress;
+
     public Integer getId() {
         return id;
     }
@@ -41,6 +44,10 @@ public class Tile {
 
     public Set<ContributionMethod> getContributionMethods() {
         return contributionMethods;
+    }
+
+    public Set<TileProgress> getProgress() {
+        return progress;
     }
     
     public void setName(String name) {

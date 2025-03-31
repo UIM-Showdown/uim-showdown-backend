@@ -33,6 +33,9 @@ public class Team {
     @OneToMany(mappedBy = "team")
     private Set<Player> players;
 
+    @OneToMany(mappedBy = "team")
+    private Set<TileProgress> tileProgress;
+
     public String getAbbreviation() {
         return abbreviation;
     }
@@ -55,6 +58,10 @@ public class Team {
     
     public Set<Player> getPlayers() {
         return players;
+    }
+
+    public Set<TileProgress> getTileProgress() {
+        return tileProgress;
     }
 
     public void setAbbreviation(String abbreviation) {

@@ -27,6 +27,7 @@ import org.uimshowdown.bingo.models.RecordSubmission;
 import org.uimshowdown.bingo.models.Submission;
 import org.uimshowdown.bingo.models.Team;
 import org.uimshowdown.bingo.models.Tile;
+import org.uimshowdown.bingo.models.TileProgress;
 
 public class SharedTestVariables {
     public static CollectionLogGroup makeTestCollectionLogGroup() {
@@ -177,5 +178,15 @@ public class SharedTestVariables {
         testTile.setName("Looting Bag Management");
         testTile.setPointsPerTier(100000);
         return testTile;
+    }
+
+    public static TileProgress makeTestTileProgress(Tile tile, Team team) {
+        TileProgress testTileProgress = new TileProgress();
+        testTileProgress.setPercentageToNextTier(0.0);
+        testTileProgress.setPoints(0);
+        testTileProgress.setTeam(team);
+        testTileProgress.setTier(1);
+        testTileProgress.setTile(tile);
+        return testTileProgress;
     }
 }
