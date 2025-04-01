@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -38,6 +39,9 @@ public class Player {
 
     @Column(length = 64, unique = true)
     private String rsn;
+
+    @OneToOne(mappedBy = "player")
+    private PlayerScoreboard scoreboard;
 
     @OneToMany(mappedBy = "player")
     private Set<Submission> submissions;
@@ -68,6 +72,10 @@ public class Player {
 
     public Set<RecordCompletion> getRecordCompletions() {
         return recordCompletions;
+    }
+
+    public PlayerScoreboard getScoreboard() {
+        return scoreboard;
     }
 
     public Set<Submission> getSubmissions() {

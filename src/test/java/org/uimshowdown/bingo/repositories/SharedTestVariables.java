@@ -20,6 +20,7 @@ import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.PlayerChallengeCompletion;
+import org.uimshowdown.bingo.models.PlayerScoreboard;
 import org.uimshowdown.bingo.models.Record;
 import org.uimshowdown.bingo.models.RecordCompletion;
 import org.uimshowdown.bingo.models.RecordHandicap;
@@ -157,6 +158,17 @@ public class SharedTestVariables {
         testPlayerChallengeCompletion.setScreenshotUrl("https://www.reddit.com/media?url=https%3A%2F%2Fi.redd.it%2Fs61jozhbbxk61.png");
         testPlayerChallengeCompletion.setSeconds(75.0);
         return testPlayerChallengeCompletion;
+    }
+
+    public static PlayerScoreboard makeTestPlayerScoreboard(Player player) {
+        PlayerScoreboard testPlayerScoreboard = new PlayerScoreboard();
+        testPlayerScoreboard.setCollectionLogPoints(1);
+        testPlayerScoreboard.setOtherTileContribution(0.0);
+        testPlayerScoreboard.setPlayer(player);
+        testPlayerScoreboard.setPvmTileContribution(0.0);
+        testPlayerScoreboard.setSkillingTitleContribution(0.0);
+        testPlayerScoreboard.setTotalTileContribution(1.0);
+        return testPlayerScoreboard;
     }
 
     public static Submission makeTestSubmission(Player player) {
