@@ -32,12 +32,12 @@ public class Submission {
     @JoinColumn(name = "player_id")
     private Player player;
 
-    @Column(name = "decision_made_at", nullable = true)
+    @Column(name = "reviewed_at", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp decisionMadeAt;
+    private Timestamp reviewedAt;
 
-    @Column(name = "decision_maker", nullable = true, length = 64)
-    private String decisionMaker;
+    @Column(name = "reviewer", nullable = true, length = 64)
+    private String reviewer;
 
     @OneToMany(mappedBy = "submission")
     private Set<CollectionLogSubmission> collectionLogSubmissions;
@@ -59,12 +59,12 @@ public class Submission {
         return id;
     }
 
-    public Timestamp getDecisionMadeAt() {
-        return decisionMadeAt;
+    public Timestamp getReviewedAt() {
+        return reviewedAt;
     }
 
-    public String getDecisionMaker() {
-        return decisionMaker;
+    public String getReviewer() {
+        return reviewer;
     }
 
     public Player getPlayer() {
@@ -91,12 +91,12 @@ public class Submission {
         return state;
     }
 
-    public void setDecisionMadeAt(Timestamp decisionMadeAt) {
-        this.decisionMadeAt = decisionMadeAt;
+    public void setReviewedAt(Timestamp reviewedAt) {
+        this.reviewedAt = reviewedAt;
     }
 
-    public void setDecisionMaker(String decisionMaker) {
-        this.decisionMaker = decisionMaker;
+    public void setReviewer(String reviewer) {
+        this.reviewer = reviewer;
     }
 
     public void setPlayer(Player player) {
@@ -120,14 +120,14 @@ public class Submission {
         Submission otherSubmission = (Submission) obj;
         return (
             getId() instanceof Integer ? getId().equals(otherSubmission.getId()) : getId() == otherSubmission.getId()
-            && getDecisionMadeAt() instanceof Timestamp ? getDecisionMadeAt().equals(otherSubmission.getDecisionMadeAt()) : getDecisionMadeAt() == otherSubmission.getDecisionMadeAt()
-            && getDecisionMaker() instanceof String ? getDecisionMaker().equals(otherSubmission.getDecisionMaker()) : getDecisionMaker() == otherSubmission.getDecisionMaker()
+            && getReviewedAt() instanceof Timestamp ? getReviewedAt().equals(otherSubmission.getReviewedAt()) : getReviewedAt() == otherSubmission.getReviewedAt()
+            && getReviewer() instanceof String ? getReviewer().equals(otherSubmission.getReviewer()) : getReviewer() == otherSubmission.getReviewer()
             && getSubmissionState() instanceof SubmissionState ? getSubmissionState().equals(otherSubmission.getSubmissionState()) : getSubmissionState() == otherSubmission.getSubmissionState()
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, decisionMadeAt, decisionMaker, state);
+        return Objects.hash(id, reviewedAt, reviewer, state);
     }
 }
