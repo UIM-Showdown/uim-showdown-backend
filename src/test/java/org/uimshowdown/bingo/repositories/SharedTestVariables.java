@@ -13,6 +13,7 @@ import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeCompletion;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.ChallengeSubmission;
+import org.uimshowdown.bingo.models.CollectionLogCompletion;
 import org.uimshowdown.bingo.models.CollectionLogGroup;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.CollectionLogSubmission;
@@ -32,6 +33,14 @@ import org.uimshowdown.bingo.models.Tile;
 import org.uimshowdown.bingo.models.TileProgress;
 
 public class SharedTestVariables {
+    public static CollectionLogCompletion makeTestCollectionLogCompletion(CollectionLogItem collectionLogItem, Player player) {
+        CollectionLogCompletion testCollectionLogCompletion = new CollectionLogCompletion();
+        testCollectionLogCompletion.setItem(collectionLogItem);
+        testCollectionLogCompletion.setPlayer(player);
+        testCollectionLogCompletion.setScreenshotUrl("https://www.reddit.com/media?url=https%3A%2F%2Fi.redd.it%2Fs61jozhbbxk61.png");
+        return testCollectionLogCompletion;
+    }
+
     public static CollectionLogGroup makeTestCollectionLogGroup() {
         CollectionLogGroup testCollectionTableGroup = new CollectionLogGroup();
         testCollectionTableGroup.setDescription("Clue scroll rewards");

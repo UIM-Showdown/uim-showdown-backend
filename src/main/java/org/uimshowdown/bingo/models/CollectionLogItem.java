@@ -21,6 +21,9 @@ public class CollectionLogItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @OneToMany(mappedBy = "item")
+    private Set<CollectionLogCompletion> completions;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private CollectionLogGroup group;
@@ -36,6 +39,10 @@ public class CollectionLogItem {
 
     public Integer getId() {
         return id;
+    }
+
+    public Set<CollectionLogCompletion> getCompletions() {
+        return completions;
     }
 
     public CollectionLogGroup getGroup() {

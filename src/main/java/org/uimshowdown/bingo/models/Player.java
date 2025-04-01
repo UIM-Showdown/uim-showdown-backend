@@ -32,6 +32,9 @@ public class Player {
     private String discordName;
 
     @OneToMany(mappedBy = "player")
+    private Set<CollectionLogCompletion> collectionLogCompletions;
+
+    @OneToMany(mappedBy = "player")
     private Set<PlayerChallengeCompletion> playerChallengeCompletions;
 
     @OneToMany(mappedBy = "player")
@@ -64,6 +67,10 @@ public class Player {
 
     public String getRsn() {
         return rsn;
+    }
+
+    public Set<CollectionLogCompletion> getCollectionLogCompletions() {
+        return collectionLogCompletions;
     }
 
     public Set<PlayerChallengeCompletion> getPlayerChallengeCompletions() {
