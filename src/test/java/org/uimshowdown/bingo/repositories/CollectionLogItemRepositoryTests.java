@@ -29,7 +29,7 @@ public class CollectionLogItemRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-        testCollectionLogGroup = collectionLogGroupRepository.save(SharedTestVariables.makeTestCollectionLogGroup());
+        testCollectionLogGroup = collectionLogGroupRepository.save(SharedTestVariables.makeTestCollectionLogChecklistGroup());
         testCollectionLogItem = collectionLogItemRepository.save(SharedTestVariables.makeTestCollectionLogItem(testCollectionLogGroup));
     }
 

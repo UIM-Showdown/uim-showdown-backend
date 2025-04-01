@@ -52,7 +52,7 @@ public class CollectionLogSubmissionRepositoryTests {
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
         testSubmission = submissionRepository.save(SharedTestVariables.makeTestSubmission(testPlayer));
-        testCollectionLogGroup = collectionLogGroupRepository.save(SharedTestVariables.makeTestCollectionLogGroup());
+        testCollectionLogGroup = collectionLogGroupRepository.save(SharedTestVariables.makeTestCollectionLogChecklistGroup());
         testCollectionLogItem = collectionLogItemRepository.save(SharedTestVariables.makeTestCollectionLogItem(testCollectionLogGroup));
         testCollectionLogSubmission = collectionLogSubmissionRepository.save(SharedTestVariables.makeTestCollectionLogSubmission(testCollectionLogItem, testSubmission));
     }

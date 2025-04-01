@@ -6,16 +6,26 @@ import java.util.Set;
 import org.uimshowdown.bingo.enums.CollectionLogGroupType;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+/**
+ * Base class for the `collection_log_groups` table.
+ * 
+ * @implNote Do not attempt to save an instance of this base class! Since no default `@DiscriminatorValue` annotation is defined, it will trigger a runtime exception!
+ */
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type")
 @Table(name = "collection_log_groups")
 public class CollectionLogGroup {
     @Id
@@ -31,7 +41,8 @@ public class CollectionLogGroup {
     @Column(length = 64, unique = true)
     private String name;
 
-    @Column
+    /** insert and update are managed by discriminator mechanics */
+    @Column(insertable = false, updatable = false)
     @Enumerated(EnumType.STRING)
     private CollectionLogGroupType type;
 
@@ -63,7 +74,7 @@ public class CollectionLogGroup {
         this.name = name;
     }
 
-    public void setType(CollectionLogGroupType type) {
+    public void setType(CollectionLogGroupType type) throws IllegalArgumentException {
         this.type = type;
     }
 
@@ -79,7 +90,7 @@ public class CollectionLogGroup {
 
         CollectionLogGroup otherCollectionLogGroup = (CollectionLogGroup) obj;
         return (
-            getId() instanceof Integer ? getId().equals(otherCollectionLogGroup.getId()) : getId() == otherCollectionLogGroup.getId()
+            Integer.compare(id, otherCollectionLogGroup.getId()) == 0
             && getDescription() instanceof String ? getDescription().equals(otherCollectionLogGroup.getDescription()) : getDescription() == otherCollectionLogGroup.getDescription()
             && getName() instanceof String ? getName().equals(otherCollectionLogGroup.getName()) : getName() == otherCollectionLogGroup.getName()
             && getType() instanceof CollectionLogGroupType ? getType().equals(otherCollectionLogGroup.getType()) : getType() == otherCollectionLogGroup.getType()
@@ -89,5 +100,13 @@ public class CollectionLogGroup {
     @Override
     public int hashCode() {
         return Objects.hash(id, description, name, type);
+    }
+
+    public <T extends CollectionLogGroup> T as(Class<T> classType) throws ClassCastException {
+        if (classType == CollectionLogCounterGroup.class && type == CollectionLogGroupType.COUNTER) {
+            return (T) this;
+        }
+
+        throw new ClassCastException("Cannot cast group into " + classType.getName());
     }
 }

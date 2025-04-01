@@ -46,7 +46,7 @@ public class CollectionLogCompletionRepositoryTests {
     public void setUp() {
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
-        testCollectionLogGroup = collectionLogGroupRepository.save(SharedTestVariables.makeTestCollectionLogGroup());
+        testCollectionLogGroup = collectionLogGroupRepository.save(SharedTestVariables.makeTestCollectionLogChecklistGroup());
         testCollectionLogItem = collectionLogItemRepository.save(SharedTestVariables.makeTestCollectionLogItem(testCollectionLogGroup));
         testCollectionLogCompletion = collectionLogCompletionRepository.save(SharedTestVariables.makeTestCollectionLogCompletion(testCollectionLogItem, testPlayer));
     }

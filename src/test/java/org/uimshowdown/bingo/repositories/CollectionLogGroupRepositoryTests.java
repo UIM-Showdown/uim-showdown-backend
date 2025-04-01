@@ -24,7 +24,7 @@ public class CollectionLogGroupRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-        testCollectionLogGroup = collectionLogGroupRepository.save(SharedTestVariables.makeTestCollectionLogGroup());
+        testCollectionLogGroup = collectionLogGroupRepository.save(SharedTestVariables.makeTestCollectionLogChecklistGroup());
     }
 
     @AfterAll

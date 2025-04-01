@@ -13,7 +13,9 @@ import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeCompletion;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.ChallengeSubmission;
+import org.uimshowdown.bingo.models.CollectionLogChecklistGroup;
 import org.uimshowdown.bingo.models.CollectionLogCompletion;
+import org.uimshowdown.bingo.models.CollectionLogCounterGroup;
 import org.uimshowdown.bingo.models.CollectionLogGroup;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.CollectionLogSubmission;
@@ -41,12 +43,22 @@ public class SharedTestVariables {
         return testCollectionLogCompletion;
     }
 
-    public static CollectionLogGroup makeTestCollectionLogGroup() {
-        CollectionLogGroup testCollectionTableGroup = new CollectionLogGroup();
-        testCollectionTableGroup.setDescription("Clue scroll rewards");
-        testCollectionTableGroup.setName("For the Love of the Gamba");
-        testCollectionTableGroup.setType(CollectionLogGroupType.CHECKLIST);
-        return testCollectionTableGroup;
+    public static CollectionLogGroup makeTestCollectionLogChecklistGroup() {
+        CollectionLogChecklistGroup testCollectionLogGroup = new CollectionLogChecklistGroup();
+        testCollectionLogGroup.setBonusPointThresholds(new int[] {3, 5, 7});
+        testCollectionLogGroup.setDescription("Clue scroll rewards");
+        testCollectionLogGroup.setName("For the Love of the Gamba!");
+        testCollectionLogGroup.setType(CollectionLogGroupType.CHECKLIST);
+        return testCollectionLogGroup;
+    }
+
+    public static CollectionLogCounterGroup makeTestCollectionLogCounterGroup() {
+        CollectionLogCounterGroup testCollectionLogCounterGroup = new CollectionLogCounterGroup();
+        testCollectionLogCounterGroup.setCounterPointValues(new int[] {7, 5, 3, 1});
+        testCollectionLogCounterGroup.setDescription("Pets!");
+        testCollectionLogCounterGroup.setName("Pets");
+        testCollectionLogCounterGroup.setType(CollectionLogGroupType.COUNTER);
+        return testCollectionLogCounterGroup;
     }
 
     public static CollectionLogItem makeTestCollectionLogItem(CollectionLogGroup collectionLogGroup) {
