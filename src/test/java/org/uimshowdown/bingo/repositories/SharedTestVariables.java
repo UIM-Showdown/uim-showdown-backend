@@ -69,10 +69,11 @@ public class SharedTestVariables {
         return testCollectionLogItem;
     }
 
-    public static CollectionLogSubmission makeTestCollectionLogSubmission(CollectionLogItem collectionLogItem, Submission submission) {
+    public static CollectionLogSubmission makeTestCollectionLogSubmission(CollectionLogItem collectionLogItem, Player player) {
         CollectionLogSubmission testCollectionLogSubmission = new CollectionLogSubmission();
         testCollectionLogSubmission.setItem(collectionLogItem);
-        testCollectionLogSubmission.setSubmission(submission);
+        testCollectionLogSubmission.setPlayer(player);
+        testCollectionLogSubmission.setSubmissionState(SubmissionState.OPEN);
         return testCollectionLogSubmission;
     }
 
@@ -101,12 +102,13 @@ public class SharedTestVariables {
         return testChallengeRelayComponent;
     }
 
-    public static ChallengeSubmission makeTestChallengeSubmission(Challenge challenge, ChallengeRelayComponent challengeRelayComponent, Submission submission) {
+    public static ChallengeSubmission makeTestChallengeSubmission(Challenge challenge, ChallengeRelayComponent challengeRelayComponent, Player player) {
         ChallengeSubmission testChallengeSubmission = new ChallengeSubmission();
         testChallengeSubmission.setChallenge(challenge);
+        testChallengeSubmission.setPlayer(player);
         testChallengeSubmission.setRelayComponent(challengeRelayComponent);
         testChallengeSubmission.setSeconds(75.0);
-        testChallengeSubmission.setSubmission(submission);
+        testChallengeSubmission.setSubmissionState(SubmissionState.OPEN);
         return testChallengeSubmission;
     }
 
@@ -153,11 +155,12 @@ public class SharedTestVariables {
         return testRecordHandicap;
     }
 
-    public static RecordSubmission makeTestRecordSubmission(RecordHandicap recordHandicap, Record record, Submission submission) {
+    public static RecordSubmission makeTestRecordSubmission(RecordHandicap recordHandicap, Player player, Record record) {
         RecordSubmission testRecordSubmission = new RecordSubmission();
         testRecordSubmission.setHandicap(recordHandicap);
+        testRecordSubmission.setPlayer(player);
         testRecordSubmission.setRecord(record);
-        testRecordSubmission.setSubmission(submission);
+        testRecordSubmission.setSubmissionState(SubmissionState.OPEN);
         testRecordSubmission.setValue(1);
         return testRecordSubmission;
     }

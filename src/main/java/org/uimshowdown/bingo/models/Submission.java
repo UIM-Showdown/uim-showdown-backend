@@ -14,6 +14,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -22,6 +24,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED) 
 @Table(name = "submissions")
 public class Submission {
     @Id
@@ -38,15 +41,6 @@ public class Submission {
 
     @Column(name = "reviewer", nullable = true, length = 64)
     private String reviewer;
-
-    @OneToMany(mappedBy = "submission")
-    private Set<CollectionLogSubmission> collectionLogSubmissions;
-
-    @OneToMany(mappedBy = "submission")
-    private Set<ChallengeSubmission> challengeSubmissions;
-
-    @OneToMany(mappedBy = "submission")
-    private Set<RecordSubmission> recordSubmissions;
 
     @OneToMany(mappedBy = "submission")
     private Set<SubmissionScreenshotUrl> screenshotUrls;
@@ -69,18 +63,6 @@ public class Submission {
 
     public Player getPlayer() {
         return player;
-    }
-
-    public Set<CollectionLogSubmission> getCollectionLogSubmissions() {
-        return collectionLogSubmissions;
-    }
-
-    public Set<ChallengeSubmission> getChallengeSubmissions() {
-        return challengeSubmissions;
-    }
-
-    public Set<RecordSubmission> getRecordSubmissions() {
-        return recordSubmissions;
     }
 
     public Set<SubmissionScreenshotUrl> getScreenshotUrls() {

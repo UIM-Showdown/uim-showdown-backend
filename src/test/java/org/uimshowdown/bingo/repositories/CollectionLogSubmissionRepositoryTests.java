@@ -15,7 +15,6 @@ import org.uimshowdown.bingo.models.CollectionLogGroup;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.CollectionLogSubmission;
 import org.uimshowdown.bingo.models.Player;
-import org.uimshowdown.bingo.models.Submission;
 import org.uimshowdown.bingo.models.Team;
 
 @SpringBootTest
@@ -35,26 +34,21 @@ public class CollectionLogSubmissionRepositoryTests {
     private PlayerRepository playerRepository;
 
     @Autowired
-    private SubmissionRepository submissionRepository;
-
-    @Autowired
     private TeamRepository teamRepository;
 
     private CollectionLogGroup testCollectionLogGroup;
     private CollectionLogItem testCollectionLogItem;
     private CollectionLogSubmission testCollectionLogSubmission;
     private Player testPlayer;
-    private Submission testSubmission;
     private Team testTeam;
 
     @BeforeAll
     public void setUp() {
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
-        testSubmission = submissionRepository.save(SharedTestVariables.makeTestSubmission(testPlayer));
         testCollectionLogGroup = collectionLogGroupRepository.save(SharedTestVariables.makeTestCollectionLogChecklistGroup());
         testCollectionLogItem = collectionLogItemRepository.save(SharedTestVariables.makeTestCollectionLogItem(testCollectionLogGroup));
-        testCollectionLogSubmission = collectionLogSubmissionRepository.save(SharedTestVariables.makeTestCollectionLogSubmission(testCollectionLogItem, testSubmission));
+        testCollectionLogSubmission = collectionLogSubmissionRepository.save(SharedTestVariables.makeTestCollectionLogSubmission(testCollectionLogItem, testPlayer));
     }
 
     @AfterAll
@@ -62,7 +56,6 @@ public class CollectionLogSubmissionRepositoryTests {
         collectionLogSubmissionRepository.delete(testCollectionLogSubmission);
         collectionLogItemRepository.delete(testCollectionLogItem);
         collectionLogGroupRepository.delete(testCollectionLogGroup);
-        submissionRepository.delete(testSubmission);
         playerRepository.delete(testPlayer);
         teamRepository.delete(testTeam);
     }
@@ -82,27 +75,6 @@ public class CollectionLogSubmissionRepositoryTests {
     @Transactional
     public void Should_NotFindTestCollectionLogSubmission_When_GivenWrongCollectionLogItemId() {
         Iterable<CollectionLogSubmission> collectionLogSubmissions = collectionLogSubmissionRepository.findAllByItemId(0);
-
-        assertThat(collectionLogSubmissions)
-            .isNotNull()
-            .doesNotContain(testCollectionLogSubmission);
-    }
-
-    @Test
-    @Transactional
-    public void Should_FindTestCollectionLogSubmission_When_GivenTestSubmissionId() {
-        Iterable<CollectionLogSubmission> collectionLogSubmissions = collectionLogSubmissionRepository.findAllBySubmissionId(testSubmission.getId());
-
-        assertThat(collectionLogSubmissions)
-            .isNotNull()
-            .isNotEmpty()
-            .contains(testCollectionLogSubmission);
-    }
-
-    @Test
-    @Transactional
-    public void Should_NotFindTestCollectionLogSubmission_When_GivenWrongSubmissionId() {
-        Iterable<CollectionLogSubmission> collectionLogSubmissions = collectionLogSubmissionRepository.findAllBySubmissionId(0);
 
         assertThat(collectionLogSubmissions)
             .isNotNull()

@@ -5,20 +5,15 @@ import java.util.Objects;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
+@PrimaryKeyJoinColumn(name = "submission_id")
 @Table(name = "challenge_submissions")
-public class ChallengeSubmission {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
+public class ChallengeSubmission extends Submission {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "challenge_id")
     private Challenge challenge;
@@ -27,16 +22,8 @@ public class ChallengeSubmission {
     @JoinColumn(name = "challenge_relay_component_id")
     private ChallengeRelayComponent relayComponent;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "submission_id")
-    private Submission submission;
-
     @Column
     private Double seconds;
-
-    public Integer getId() {
-        return id;
-    }
 
     public Challenge getChallenge() {
         return challenge;
@@ -44,10 +31,6 @@ public class ChallengeSubmission {
 
     public ChallengeRelayComponent getRelayComponent() {
         return relayComponent;
-    }
-
-    public Submission getSubmission() {
-        return submission;
     }
 
     public Double getSeconds() {
@@ -60,10 +43,6 @@ public class ChallengeSubmission {
 
     public void setRelayComponent(ChallengeRelayComponent challengeRelayComponent) {
         this.relayComponent = challengeRelayComponent;
-    }
-
-    public void setSubmission(Submission submission) {
-        this.submission = submission;
     }
 
     public void setSeconds(Double seconds) {
@@ -82,13 +61,13 @@ public class ChallengeSubmission {
 
         ChallengeSubmission otherChallengeSubmission = (ChallengeSubmission) obj;
         return (
-            getId() instanceof Integer ? getId().equals(otherChallengeSubmission.getId()) : getId() == otherChallengeSubmission.getId()
-            && getSeconds() instanceof Double ? getSeconds().equals(otherChallengeSubmission.getSeconds()) : getSeconds() == otherChallengeSubmission.getSeconds()
+            super.equals(otherChallengeSubmission)
+            && Double.compare(seconds, otherChallengeSubmission.getSeconds()) == 0
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, seconds);
+        return Objects.hash(super.hashCode(), seconds);
     }
 }

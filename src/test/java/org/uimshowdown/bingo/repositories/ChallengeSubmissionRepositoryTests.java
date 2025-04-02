@@ -15,7 +15,6 @@ import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.ChallengeSubmission;
 import org.uimshowdown.bingo.models.Player;
-import org.uimshowdown.bingo.models.Submission;
 import org.uimshowdown.bingo.models.Team;
 
 @SpringBootTest
@@ -35,15 +34,11 @@ public class ChallengeSubmissionRepositoryTests {
     private PlayerRepository playerRepository;
 
     @Autowired
-    private SubmissionRepository submissionRepository;
-
-    @Autowired
     private TeamRepository teamRepository;
 
     private Challenge testChallenge;
     private ChallengeRelayComponent testChallengeRelayComponent;
     private ChallengeSubmission testChallengeSubmission;
-    private Submission testSubmission;
     private Player testPlayer;
     private Team testTeam;
 
@@ -51,10 +46,9 @@ public class ChallengeSubmissionRepositoryTests {
     public void setUp() {
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
-        testSubmission = submissionRepository.save(SharedTestVariables.makeTestSubmission(testPlayer));
         testChallenge = challengeRepository.save(SharedTestVariables.makeTestChallenge());
         testChallengeRelayComponent = challengeRelayComponentRepository.save(SharedTestVariables.makeTestChallengeRelayComponent(testChallenge));
-        testChallengeSubmission = challengeSubmissionRepository.save(SharedTestVariables.makeTestChallengeSubmission(testChallenge, testChallengeRelayComponent, testSubmission));
+        testChallengeSubmission = challengeSubmissionRepository.save(SharedTestVariables.makeTestChallengeSubmission(testChallenge, testChallengeRelayComponent, testPlayer));
     }
 
     @AfterAll
@@ -62,7 +56,6 @@ public class ChallengeSubmissionRepositoryTests {
         challengeSubmissionRepository.delete(testChallengeSubmission);
         challengeRelayComponentRepository.delete(testChallengeRelayComponent);
         challengeRepository.delete(testChallenge);
-        submissionRepository.delete(testSubmission);
         playerRepository.delete(testPlayer);
         teamRepository.delete(testTeam);
     }
@@ -103,27 +96,6 @@ public class ChallengeSubmissionRepositoryTests {
     @Transactional
     public void Should_NotFindTestChallengeSubmission_When_GivenWrongChallengeRelayComponentId() {
         Iterable<ChallengeSubmission> challengeSubmissions = challengeSubmissionRepository.findAllByRelayComponentId(0);
-
-        assertThat(challengeSubmissions)
-            .isNotNull()
-            .doesNotContain(testChallengeSubmission);
-    }
-
-    @Test
-    @Transactional
-    public void Should_FindTestChallengeSubmission_When_GivenTestSubmissionId() {
-        Iterable<ChallengeSubmission> challengeSubmissions = challengeSubmissionRepository.findAllBySubmissionId(testSubmission.getId());
-
-        assertThat(challengeSubmissions)
-            .isNotNull()
-            .isNotEmpty()
-            .contains(testChallengeSubmission);
-    }
-
-    @Test
-    @Transactional
-    public void Should_NotFindTestChallengeSubmission_When_GivenWrongSubmissionId() {
-        Iterable<ChallengeSubmission> challengeSubmissions = challengeSubmissionRepository.findAllBySubmissionId(0);
 
         assertThat(challengeSubmissions)
             .isNotNull()

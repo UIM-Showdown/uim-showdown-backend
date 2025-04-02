@@ -101,12 +101,4 @@ public class CollectionLogGroup {
     public int hashCode() {
         return Objects.hash(id, description, name, type);
     }
-
-    public <T extends CollectionLogGroup> T as(Class<T> classType) throws ClassCastException {
-        if (classType == CollectionLogCounterGroup.class && type == CollectionLogGroupType.COUNTER) {
-            return (T) this;
-        }
-
-        throw new ClassCastException("Cannot cast group into " + classType.getName());
-    }
 }

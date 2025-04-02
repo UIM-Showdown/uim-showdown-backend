@@ -33,6 +33,9 @@ public class ContributionMethod {
     @JoinColumn(name = "tile_id")
     private Tile tile;
 
+    @OneToMany(mappedBy = "contributionMethod")
+    private Set<UnrankedStartingValueSubmission> unrankedStartingValueSubmissions;
+
     @Column(name = "category")
     @Enumerated(EnumType.STRING)
     private ContributionMethodCategory contributionMethodCategory;
@@ -57,6 +60,10 @@ public class ContributionMethod {
 
     public Tile getTile() {
         return tile;
+    }
+
+    public Set<UnrankedStartingValueSubmission> getUnrankedStartingValueSubmissions() {
+        return unrankedStartingValueSubmissions;
     }
 
     public ContributionMethodCategory getContributionMethodCategory() {
@@ -107,7 +114,7 @@ public class ContributionMethod {
 
         ContributionMethod otherContributionMethod = (ContributionMethod) obj;
         return (
-            getId() instanceof Integer ? getId().equals(otherContributionMethod.getId()) : getId() == otherContributionMethod.getId()
+            Integer.compare(id, otherContributionMethod.getId()) == 0
             && getContributionMethodCategory() instanceof ContributionMethodCategory ? getContributionMethodCategory().equals(otherContributionMethod.getContributionMethodCategory()) : getContributionMethodCategory() == otherContributionMethod.getContributionMethodCategory()
             && getContributionMethodType() instanceof ContributionMethodType ? getContributionMethodType().equals(otherContributionMethod.getContributionMethodType()) : getContributionMethodType() == otherContributionMethod.getContributionMethodType()
             && Double.compare(getEhtRate(), otherContributionMethod.getEhtRate()) == 0
