@@ -27,6 +27,9 @@ public class ContributionMethod {
     private Integer id;
 
     @OneToMany(mappedBy = "contributionMethod")
+    private Set<ContributionSubmission> contributionSubmissions;
+
+    @OneToMany(mappedBy = "contributionMethod")
     private Set<Contribution> playerContributions;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -52,6 +55,10 @@ public class ContributionMethod {
 
     public Integer getId() {
         return id;
+    }
+
+    public Set<ContributionSubmission> getContributionSubmissions() {
+        return contributionSubmissions;
     }
 
     public Set<Contribution> getPlayerContributions() {

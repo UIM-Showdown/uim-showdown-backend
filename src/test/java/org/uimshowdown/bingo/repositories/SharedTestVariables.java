@@ -21,6 +21,7 @@ import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.CollectionLogSubmission;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
+import org.uimshowdown.bingo.models.ContributionSubmission;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.PlayerChallengeCompletion;
 import org.uimshowdown.bingo.models.PlayerScoreboard;
@@ -130,6 +131,15 @@ public class SharedTestVariables {
         testContributionMethod.setName("Calvar'ion");
         testContributionMethod.setTile(tile);
         return testContributionMethod;
+    }
+
+    public static ContributionSubmission makeTestContributionSubmission(ContributionMethod contributionMethod, Player player) {
+        ContributionSubmission testContributionSubmission = new ContributionSubmission();
+        testContributionSubmission.setContributionMethod(contributionMethod);
+        testContributionSubmission.setPlayer(player);
+        testContributionSubmission.setSubmissionState(SubmissionState.OPEN);
+        testContributionSubmission.setValue(1);
+        return testContributionSubmission;
     }
 
     public static Record makeTestRecord() {
