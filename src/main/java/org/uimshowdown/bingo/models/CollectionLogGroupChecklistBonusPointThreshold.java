@@ -70,10 +70,7 @@ public class CollectionLogGroupChecklistBonusPointThreshold {
         }
 
         CollectionLogGroupChecklistBonusPointThreshold otherCollectionLogGroupChecklistBonusPointThreshold = (CollectionLogGroupChecklistBonusPointThreshold) obj;
-        return (
-            Integer.compare(id, otherCollectionLogGroupChecklistBonusPointThreshold.getId()) == 0
-            && Integer.compare(value, otherCollectionLogGroupChecklistBonusPointThreshold.getValue()) == 0
-        );
+        return Integer.compare(id, otherCollectionLogGroupChecklistBonusPointThreshold.getId()) == 0;
     }
 
     @Override

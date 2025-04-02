@@ -84,11 +84,7 @@ public class CollectionLogItem {
         }
 
         CollectionLogItem otherCollectionLogItem = (CollectionLogItem) obj;
-        return (
-            getId() instanceof Integer ? getId().equals(otherCollectionLogItem.getId()) : getId() == otherCollectionLogItem.getId()
-            && getDescription() instanceof String ? getDescription().equals(otherCollectionLogItem.getDescription()) : getDescription() == otherCollectionLogItem.getDescription()
-            && getName() instanceof String ? getName().equals(otherCollectionLogItem.getName()) : getName() == otherCollectionLogItem.getName()
-        );
+        return Integer.compare(id, otherCollectionLogItem.getId()) == 0;
     }
 
     @Override

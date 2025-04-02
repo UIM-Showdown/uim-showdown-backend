@@ -120,13 +120,7 @@ public class ContributionMethod {
         }
 
         ContributionMethod otherContributionMethod = (ContributionMethod) obj;
-        return (
-            Integer.compare(id, otherContributionMethod.getId()) == 0
-            && getContributionMethodCategory() instanceof ContributionMethodCategory ? getContributionMethodCategory().equals(otherContributionMethod.getContributionMethodCategory()) : getContributionMethodCategory() == otherContributionMethod.getContributionMethodCategory()
-            && getContributionMethodType() instanceof ContributionMethodType ? getContributionMethodType().equals(otherContributionMethod.getContributionMethodType()) : getContributionMethodType() == otherContributionMethod.getContributionMethodType()
-            && Double.compare(getEhtRate(), otherContributionMethod.getEhtRate()) == 0
-            && getName() instanceof String ? getName().equals(otherContributionMethod.getName()) : getName() == otherContributionMethod.getName()
-        );
+        return Integer.compare(id, otherContributionMethod.getId()) == 0;
     }
 
     @Override

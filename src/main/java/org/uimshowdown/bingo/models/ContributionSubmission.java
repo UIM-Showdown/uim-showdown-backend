@@ -38,23 +38,6 @@ public class ContributionSubmission extends Submission {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof ContributionSubmission) == false) {
-            return false;
-        }
-        
-        ContributionSubmission otherContributionSubmission = (ContributionSubmission) obj;
-        return (
-            super.equals(otherContributionSubmission)
-            && Integer.compare(value, otherContributionSubmission.getValue()) == 0
-        );
-    }
-
-    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), value);
     }

@@ -90,11 +90,7 @@ public class ChallengeCompletion {
         }
 
         ChallengeCompletion otherChallengeCompletion = (ChallengeCompletion) obj;
-        return (
-            getId() instanceof Integer ? getId().equals(otherChallengeCompletion.getId()) : getId() == otherChallengeCompletion.getId()
-            && getCompletedAt() instanceof Timestamp ? getCompletedAt().equals(otherChallengeCompletion.getCompletedAt()) : getCompletedAt() == otherChallengeCompletion.getCompletedAt()
-            && getSeconds() instanceof Double ? getSeconds().equals(otherChallengeCompletion.getSeconds()) : getSeconds() == otherChallengeCompletion.getSeconds()
-        );
+        return Integer.compare(id, otherChallengeCompletion.getId()) == 0;
     }
 
     @Override

@@ -91,12 +91,7 @@ public class Team {
         }
 
         Team otherTeam = (Team) obj;
-        return (
-            getId() instanceof Integer ? getId().equals(otherTeam.getId()) : getId() == otherTeam.getId()
-            && getAbbreviation() instanceof String ? getAbbreviation().equals(otherTeam.getAbbreviation()) : getAbbreviation() == otherTeam.getAbbreviation()
-            && getColor() instanceof String ? getColor().equals(otherTeam.getColor()) : getColor() == otherTeam.getColor()
-            && getName() instanceof String ? getName().equals(otherTeam.getName()) : getName() == otherTeam.getName()
-        );
+        return Integer.compare(id, otherTeam.getId()) == 0;
     }
 
     @Override

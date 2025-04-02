@@ -99,13 +99,7 @@ public class Challenge {
         }
 
         Challenge otherChallenge = (Challenge) obj;
-        return (
-            getId() instanceof Integer ? getId().equals(otherChallenge.getId()) : getId() == otherChallenge.getId()
-            && getDescription() instanceof String ? getDescription().equals(otherChallenge.getDescription()) : getDescription() == otherChallenge.getDescription()
-            && getName() instanceof String ? getName().equals(otherChallenge.getName()) : getName() == otherChallenge.getName()
-            && getTeamSize() instanceof Integer ? getTeamSize().equals(otherChallenge.getTeamSize()) : getTeamSize() == otherChallenge.getTeamSize()
-            && getType() instanceof ChallengeType ? getType().equals(otherChallenge.getType()) : getType() == otherChallenge.getType()
-        );
+        return Integer.compare(id, otherChallenge.getId()) == 0;
     }
 
     @Override

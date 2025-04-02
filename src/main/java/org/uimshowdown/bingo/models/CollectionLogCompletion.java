@@ -69,10 +69,7 @@ public class CollectionLogCompletion {
         }
 
         CollectionLogCompletion otherCollectionLogCompletion = (CollectionLogCompletion) obj;
-        return (
-            Integer.compare(id, otherCollectionLogCompletion.getId()) == 0
-            && screenshotUrl instanceof String ? screenshotUrl.equals(otherCollectionLogCompletion.getScreenshotUrl()) : screenshotUrl == otherCollectionLogCompletion.getScreenshotUrl()
-        );
+        return Integer.compare(id, otherCollectionLogCompletion.getId()) == 0;
     }
 
     @Override

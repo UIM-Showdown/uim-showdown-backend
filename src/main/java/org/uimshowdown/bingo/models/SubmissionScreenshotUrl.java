@@ -57,10 +57,7 @@ public class SubmissionScreenshotUrl {
         }
 
         SubmissionScreenshotUrl otherSubmissionScreenshotUrl = (SubmissionScreenshotUrl) obj;
-        return (
-            getId() instanceof Integer ? getId().equals(otherSubmissionScreenshotUrl.getId()) : getId() == otherSubmissionScreenshotUrl.getId()
-            && getScreenshotUrl() instanceof String ? getScreenshotUrl().equals(otherSubmissionScreenshotUrl.getScreenshotUrl()) : getScreenshotUrl() == otherSubmissionScreenshotUrl.getScreenshotUrl()
-        );
+        return Integer.compare(id, otherSubmissionScreenshotUrl.getId()) == 0;
     }
 
     @Override

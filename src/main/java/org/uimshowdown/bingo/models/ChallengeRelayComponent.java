@@ -71,9 +71,6 @@ public class ChallengeRelayComponent {
         }
 
         ChallengeRelayComponent otherChallengeRelayComponent = (ChallengeRelayComponent) obj;
-        return (
-            getId() instanceof Integer ? getId().equals(otherChallengeRelayComponent.getId()) : getId() == otherChallengeRelayComponent.getId()
-            && getName() instanceof String ? getName().equals(otherChallengeRelayComponent.getName()) : getName() == otherChallengeRelayComponent.getName()
-        );
+        return Integer.compare(id, otherChallengeRelayComponent.getId()) == 0;
     }
 }

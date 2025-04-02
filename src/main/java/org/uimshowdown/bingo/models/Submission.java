@@ -100,12 +100,7 @@ public class Submission {
         }
 
         Submission otherSubmission = (Submission) obj;
-        return (
-            getId() instanceof Integer ? getId().equals(otherSubmission.getId()) : getId() == otherSubmission.getId()
-            && getReviewedAt() instanceof Timestamp ? getReviewedAt().equals(otherSubmission.getReviewedAt()) : getReviewedAt() == otherSubmission.getReviewedAt()
-            && getReviewer() instanceof String ? getReviewer().equals(otherSubmission.getReviewer()) : getReviewer() == otherSubmission.getReviewer()
-            && getSubmissionState() instanceof SubmissionState ? getSubmissionState().equals(otherSubmission.getSubmissionState()) : getSubmissionState() == otherSubmission.getSubmissionState()
-        );
+        return Integer.compare(id, otherSubmission.getId()) == 0;
     }
 
     @Override

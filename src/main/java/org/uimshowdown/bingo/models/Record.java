@@ -68,11 +68,7 @@ public class Record {
         }
 
         Record otherRecord = (Record) obj;
-        return (
-            getId() instanceof Integer ? getId().equals(otherRecord.getId()) : getId() == otherRecord.getId()
-            && getDescription() instanceof String ? getDescription().equals(otherRecord.getDescription()) : getDescription() == otherRecord.getDescription()
-            && getSkill() instanceof String ? getSkill().equals(otherRecord.getSkill()) : getSkill() == otherRecord.getSkill()
-        );
+        return Integer.compare(id, otherRecord.getId()) == 0;
     }
 
     @Override

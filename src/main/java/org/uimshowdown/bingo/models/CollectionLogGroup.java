@@ -89,12 +89,7 @@ public class CollectionLogGroup {
         }
 
         CollectionLogGroup otherCollectionLogGroup = (CollectionLogGroup) obj;
-        return (
-            Integer.compare(id, otherCollectionLogGroup.getId()) == 0
-            && getDescription() instanceof String ? getDescription().equals(otherCollectionLogGroup.getDescription()) : getDescription() == otherCollectionLogGroup.getDescription()
-            && getName() instanceof String ? getName().equals(otherCollectionLogGroup.getName()) : getName() == otherCollectionLogGroup.getName()
-            && getType() instanceof CollectionLogGroupType ? getType().equals(otherCollectionLogGroup.getType()) : getType() == otherCollectionLogGroup.getType()
-        );
+        return Integer.compare(id, otherCollectionLogGroup.getId()) == 0;
     }
 
     @Override

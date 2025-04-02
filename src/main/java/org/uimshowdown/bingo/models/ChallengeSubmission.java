@@ -50,23 +50,6 @@ public class ChallengeSubmission extends Submission {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof ChallengeSubmission) == false) {
-            return false;
-        }
-
-        ChallengeSubmission otherChallengeSubmission = (ChallengeSubmission) obj;
-        return (
-            super.equals(otherChallengeSubmission)
-            && Double.compare(seconds, otherChallengeSubmission.getSeconds()) == 0
-        );
-    }
-
-    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), seconds);
     }

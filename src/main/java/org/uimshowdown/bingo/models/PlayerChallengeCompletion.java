@@ -92,11 +92,7 @@ public class PlayerChallengeCompletion {
         }
 
         PlayerChallengeCompletion otherPlayerChallengeCompletion = (PlayerChallengeCompletion) obj;
-        return (
-            getId() instanceof Integer ? getId().equals(otherPlayerChallengeCompletion.getId()) : getId() == otherPlayerChallengeCompletion.getId()
-            && getScreenshotUrl() instanceof String ? getScreenshotUrl().equals(otherPlayerChallengeCompletion.getScreenshotUrl()) : getScreenshotUrl() == otherPlayerChallengeCompletion.getScreenshotUrl()
-            && getSeconds() instanceof Double ? getSeconds().equals(otherPlayerChallengeCompletion.getSeconds()) : getSeconds() == otherPlayerChallengeCompletion.getSeconds()
-        );
+        return Integer.compare(id, otherPlayerChallengeCompletion.getId()) == 0;
     }
 
     @Override

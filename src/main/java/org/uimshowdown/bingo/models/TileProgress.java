@@ -91,12 +91,7 @@ public class TileProgress {
         }
 
         TileProgress otherTileProgress = (TileProgress) obj;
-        return (
-            getId() instanceof Integer ? getId().equals(otherTileProgress.getId()) : getId() == otherTileProgress.getId()
-            && Double.compare(getPercentageToNextTier(), otherTileProgress.getPercentageToNextTier()) == 0
-            && getPoints() instanceof Integer ? getPoints().equals(otherTileProgress.getPoints()) : getPoints() == otherTileProgress.getPoints()
-            && getTier() instanceof Integer ? getTier().equals(otherTileProgress.getTier()) : getTier() == otherTileProgress.getTier()
-        );
+        return Integer.compare(id, otherTileProgress.getId()) == 0;
     }
 
     @Override

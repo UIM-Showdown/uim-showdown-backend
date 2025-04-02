@@ -62,24 +62,6 @@ public class RecordSubmission extends Submission {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof RecordSubmission) == false) {
-            return false;
-        }
-
-        RecordSubmission otherRecordSubmission = (RecordSubmission) obj;
-        return (
-            super.equals(otherRecordSubmission)
-            && getSubmittedAt() instanceof Timestamp ? getSubmittedAt().equals(otherRecordSubmission.getSubmittedAt()) : getSubmittedAt() == otherRecordSubmission.getSubmittedAt()
-            && Integer.compare(value, otherRecordSubmission.getValue()) == 0
-        );
-    }
-
-    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), submittedAt, value);
     }

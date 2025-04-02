@@ -70,10 +70,7 @@ public class CollectionLogGroupCounterPointValue {
         }
 
         CollectionLogGroupCounterPointValue otherCollectionLogGroupCounterPointValue = (CollectionLogGroupCounterPointValue) obj;
-        return (
-            Integer.compare(id, otherCollectionLogGroupCounterPointValue.getId()) == 0
-            && Integer.compare(value, otherCollectionLogGroupCounterPointValue.getValue()) == 0
-        );
+        return Integer.compare(id, otherCollectionLogGroupCounterPointValue.getId()) == 0;
     }
 
     @Override

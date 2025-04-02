@@ -112,15 +112,7 @@ public class TeamScoreboard {
         }
 
         TeamScoreboard otherTeamScoreboard = (TeamScoreboard) obj;
-        return (
-            Integer.compare(id, otherTeamScoreboard.getId()) == 0
-            && Integer.compare(eventPoints, otherTeamScoreboard.getEventPoints()) == 0
-            && Integer.compare(eventPointsFromChallenges, otherTeamScoreboard.getEventPointsFromChallenges()) == 0
-            && Integer.compare(eventPointsFromCollectionLogItems, otherTeamScoreboard.getEventPointsFromCollectionLogItems()) == 0
-            && Integer.compare(eventPointsFromGroups, otherTeamScoreboard.getEventPointsFromGroups()) == 0
-            && Integer.compare(eventPointsFromRecords, otherTeamScoreboard.getEventPointsFromRecords()) == 0
-            && Integer.compare(eventPointsFromTiles, otherTeamScoreboard.getEventPointsFromTiles()) == 0
-        );
+        return Integer.compare(id, otherTeamScoreboard.getId()) == 0;
     }
 
     @Override

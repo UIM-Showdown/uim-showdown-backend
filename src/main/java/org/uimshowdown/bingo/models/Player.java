@@ -124,11 +124,7 @@ public class Player {
         }
 
         Player otherPlayer = (Player) obj;
-        return (
-            getId() instanceof Integer ? getId().equals(otherPlayer.getId()) : getId() == otherPlayer.getId()
-            && getDiscordName() instanceof String ? getDiscordName().equals(otherPlayer.getDiscordName()) : getDiscordName() == otherPlayer.getDiscordName()
-            && getRsn() instanceof String ? getRsn().equals(otherPlayer.getRsn()) : getRsn() == otherPlayer.getRsn()
-        );
+        return Integer.compare(id, otherPlayer.getId()) == 0;
     }
 
     @Override

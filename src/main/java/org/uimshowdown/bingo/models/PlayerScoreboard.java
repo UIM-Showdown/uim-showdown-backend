@@ -101,14 +101,7 @@ public class PlayerScoreboard {
         }
 
         PlayerScoreboard otherPlayerScoreboard = (PlayerScoreboard) obj;
-        return (
-            Integer.compare(id, otherPlayerScoreboard.getId()) == 0
-            && Integer.compare(collectionLogPoints, otherPlayerScoreboard.getCollectionLogPoints()) == 0
-            && Double.compare(otherTileContribution, otherPlayerScoreboard.getOtherTileContribution()) == 0
-            && Double.compare(pvmTileContribution, otherPlayerScoreboard.getPvmTileContribution()) == 0
-            && Double.compare(skillingTileContribution, otherPlayerScoreboard.getSkillingTileContribution()) == 0
-            && Double.compare(totalTileContribution, otherPlayerScoreboard.getTotalTileContribution()) == 0
-        );
+        return Integer.compare(id, otherPlayerScoreboard.getId()) == 0;
     }
     @Override
     public int hashCode() {

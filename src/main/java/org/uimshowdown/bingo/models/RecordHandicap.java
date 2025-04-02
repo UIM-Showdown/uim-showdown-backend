@@ -84,11 +84,7 @@ public class RecordHandicap {
         }
 
         RecordHandicap otherRecordHandicap = (RecordHandicap) obj;
-        return (
-            getId() instanceof Integer ? getId().equals(otherRecordHandicap.getId()) : getId() == otherRecordHandicap.getId()
-            && Double.compare(getMultiplier(), otherRecordHandicap.getMultiplier()) == 0
-            && getName() instanceof String ? getName().equals(otherRecordHandicap.getName()) : getName() == otherRecordHandicap.getName()
-        );
+        return Integer.compare(id, otherRecordHandicap.getId()) == 0;
     }
 
     @Override
