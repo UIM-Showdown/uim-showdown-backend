@@ -33,6 +33,7 @@ import org.uimshowdown.bingo.models.Team;
 import org.uimshowdown.bingo.models.TeamScoreboard;
 import org.uimshowdown.bingo.models.Tile;
 import org.uimshowdown.bingo.models.TileProgress;
+import org.uimshowdown.bingo.models.UnrankedStartingValueSubmission;
 
 public class SharedTestVariables {
     public static CollectionLogCompletion makeTestCollectionLogCompletion(CollectionLogItem collectionLogItem, Player player) {
@@ -237,5 +238,14 @@ public class SharedTestVariables {
         testTileProgress.setTier(1);
         testTileProgress.setTile(tile);
         return testTileProgress;
+    }
+
+    public static UnrankedStartingValueSubmission makeTestUnrankedStartingValueSubmission(ContributionMethod contributionMethod, Player player) {
+        UnrankedStartingValueSubmission testUnrankedStartingValueSubmission = new UnrankedStartingValueSubmission();
+        testUnrankedStartingValueSubmission.setContributionMethod(contributionMethod);
+        testUnrankedStartingValueSubmission.setPlayer(player);
+        testUnrankedStartingValueSubmission.setSubmissionState(SubmissionState.OPEN);
+        testUnrankedStartingValueSubmission.setValue(1);
+        return testUnrankedStartingValueSubmission;
     }
 }
