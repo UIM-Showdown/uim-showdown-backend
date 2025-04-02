@@ -26,6 +26,10 @@ public class CollectionLogGroupChecklistBonusPointThreshold {
     @Column
     private Integer value;
 
+    /**
+     * Classes that define constructors must also include a no-arg constructor.
+     * @see https://openjpa.apache.org/builds/1.0.2/apache-openjpa-1.0.2/docs/manual/jpa_overview_pc.html#jpa_overview_pc_no_arg
+     */
     public CollectionLogGroupChecklistBonusPointThreshold() {
         
     }
