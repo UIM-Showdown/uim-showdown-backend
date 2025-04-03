@@ -3,8 +3,6 @@ package org.uimshowdown.bingo.models;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import org.uimshowdown.bingo.enums.CollectionLogGroupType;
-
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -32,8 +30,8 @@ public class CollectionLogCounterGroup extends CollectionLogGroup {
     }
 
     @Override
-    public void setType(CollectionLogGroupType type) throws IllegalArgumentException {
-        if (type != CollectionLogGroupType.COUNTER) {
+    public void setType(CollectionLogGroup.Type type) throws IllegalArgumentException {
+        if (type != CollectionLogGroup.Type.COUNTER) {
             throw new IllegalArgumentException("Collection log group type must be set to 'COUNTER'!");
         }
         

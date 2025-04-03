@@ -4,11 +4,6 @@ import java.sql.Timestamp;
 import java.time.Instant;
 
 import org.uimshowdown.bingo.constants.PlayerSkill;
-import org.uimshowdown.bingo.enums.ChallengeType;
-import org.uimshowdown.bingo.enums.CollectionLogGroupType;
-import org.uimshowdown.bingo.enums.ContributionMethodCategory;
-import org.uimshowdown.bingo.enums.ContributionMethodType;
-import org.uimshowdown.bingo.enums.SubmissionState;
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeCompletion;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
@@ -50,7 +45,7 @@ public class SharedTestVariables {
         testCollectionLogGroup.setBonusPointThresholds(new int[] {3, 5, 7});
         testCollectionLogGroup.setDescription("Clue scroll rewards");
         testCollectionLogGroup.setName("For the Love of the Gamba!");
-        testCollectionLogGroup.setType(CollectionLogGroupType.CHECKLIST);
+        testCollectionLogGroup.setType(CollectionLogGroup.Type.CHECKLIST);
         return testCollectionLogGroup;
     }
 
@@ -59,7 +54,7 @@ public class SharedTestVariables {
         testCollectionLogCounterGroup.setCounterPointValues(new int[] {7, 5, 3, 1});
         testCollectionLogCounterGroup.setDescription("Pets!");
         testCollectionLogCounterGroup.setName("Pets");
-        testCollectionLogCounterGroup.setType(CollectionLogGroupType.COUNTER);
+        testCollectionLogCounterGroup.setType(CollectionLogGroup.Type.COUNTER);
         return testCollectionLogCounterGroup;
     }
 
@@ -75,7 +70,7 @@ public class SharedTestVariables {
         CollectionLogSubmission testCollectionLogSubmission = new CollectionLogSubmission();
         testCollectionLogSubmission.setItem(collectionLogItem);
         testCollectionLogSubmission.setPlayer(player);
-        testCollectionLogSubmission.setSubmissionState(SubmissionState.OPEN);
+        testCollectionLogSubmission.setSubmissionState(Submission.State.OPEN);
         return testCollectionLogSubmission;
     }
 
@@ -84,7 +79,7 @@ public class SharedTestVariables {
         testChallenge.setDescription("Four player relay for each of the Desert Treasure II bosses.");
         testChallenge.setName("DT2 Boss Relay");
         testChallenge.setTeamSize(4);
-        testChallenge.setType(ChallengeType.RELAY);
+        testChallenge.setType(Challenge.Type.RELAY);
         return testChallenge;
     }
 
@@ -110,7 +105,7 @@ public class SharedTestVariables {
         testChallengeSubmission.setPlayer(player);
         testChallengeSubmission.setRelayComponent(challengeRelayComponent);
         testChallengeSubmission.setSeconds(75.0);
-        testChallengeSubmission.setSubmissionState(SubmissionState.OPEN);
+        testChallengeSubmission.setSubmissionState(Submission.State.OPEN);
         return testChallengeSubmission;
     }
 
@@ -125,8 +120,8 @@ public class SharedTestVariables {
 
     public static ContributionMethod makeTestContributionMethod(Tile tile) {
         ContributionMethod testContributionMethod = new ContributionMethod();
-        testContributionMethod.setContributionMethodCategory(ContributionMethodCategory.PVM);
-        testContributionMethod.setContributionMethodType(ContributionMethodType.KC);
+        testContributionMethod.setContributionMethodCategory(ContributionMethod.Category.PVM);
+        testContributionMethod.setContributionMethodType(ContributionMethod.Type.KC);
         testContributionMethod.setEhtRate(25.0);
         testContributionMethod.setName("Calvar'ion");
         testContributionMethod.setTile(tile);
@@ -137,7 +132,7 @@ public class SharedTestVariables {
         ContributionSubmission testContributionSubmission = new ContributionSubmission();
         testContributionSubmission.setContributionMethod(contributionMethod);
         testContributionSubmission.setPlayer(player);
-        testContributionSubmission.setSubmissionState(SubmissionState.OPEN);
+        testContributionSubmission.setSubmissionState(Submission.State.OPEN);
         testContributionSubmission.setValue(1);
         return testContributionSubmission;
     }
@@ -171,7 +166,7 @@ public class SharedTestVariables {
         testRecordSubmission.setHandicap(recordHandicap);
         testRecordSubmission.setPlayer(player);
         testRecordSubmission.setRecord(record);
-        testRecordSubmission.setSubmissionState(SubmissionState.OPEN);
+        testRecordSubmission.setSubmissionState(Submission.State.OPEN);
         testRecordSubmission.setValue(1);
         return testRecordSubmission;
     }
@@ -208,7 +203,7 @@ public class SharedTestVariables {
 
     public static Submission makeTestSubmission(Player player) {
         Submission testSubmission = new Submission();
-        testSubmission.setSubmissionState(SubmissionState.OPEN);
+        testSubmission.setSubmissionState(Submission.State.OPEN);
         testSubmission.setPlayer(player);
         return testSubmission;
     }
@@ -254,7 +249,7 @@ public class SharedTestVariables {
         UnrankedStartingValueSubmission testUnrankedStartingValueSubmission = new UnrankedStartingValueSubmission();
         testUnrankedStartingValueSubmission.setContributionMethod(contributionMethod);
         testUnrankedStartingValueSubmission.setPlayer(player);
-        testUnrankedStartingValueSubmission.setSubmissionState(SubmissionState.OPEN);
+        testUnrankedStartingValueSubmission.setSubmissionState(Submission.State.OPEN);
         testUnrankedStartingValueSubmission.setValue(1);
         return testUnrankedStartingValueSubmission;
     }

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import org.uimshowdown.bingo.constants.TestTag;
-import org.uimshowdown.bingo.enums.SubmissionState;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.Submission;
 import org.uimshowdown.bingo.models.Team;
@@ -71,7 +70,7 @@ public class SubmissionRepositoryTests {
     @Test
     @Transactional
     public void Should_FindTestSubmission_When_GivenOpenSubmissionState() {
-        Iterable<Submission> submissions = submissionRepository.findAllByState(SubmissionState.OPEN);
+        Iterable<Submission> submissions = submissionRepository.findAllByState(Submission.State.OPEN);
 
         assertThat(submissions)
             .isNotNull()
@@ -82,7 +81,7 @@ public class SubmissionRepositoryTests {
     @Test
     @Transactional
     public void Should_NotFindTestSubmission_When_GivenDeniedSubmissionState() {
-        Iterable<Submission> submissions = submissionRepository.findAllByState(SubmissionState.DENIED);
+        Iterable<Submission> submissions = submissionRepository.findAllByState(Submission.State.DENIED);
 
         assertThat(submissions)
             .isNotNull()

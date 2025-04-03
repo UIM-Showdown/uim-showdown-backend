@@ -3,8 +3,6 @@ package org.uimshowdown.bingo.models;
 import java.util.Objects;
 import java.util.Set;
 
-import org.uimshowdown.bingo.enums.ChallengeType;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,6 +16,9 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "challenges")
 public class Challenge {
+	
+	public enum Type { RELAY, SPEEDRUN }
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -42,7 +43,7 @@ public class Challenge {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private ChallengeType type;
+    private Type type;
 
     public Integer getId() {
         return id;
@@ -68,7 +69,7 @@ public class Challenge {
         return teamSize;
     }
 
-    public ChallengeType getType() {
+    public Type getType() {
         return type;
     }
 
@@ -84,8 +85,8 @@ public class Challenge {
         this.teamSize = teamSize;
     }
 
-    public void setType(ChallengeType challengeType) {
-        type = challengeType;
+    public void setType(Type type) {
+        this.type = type;
     }
 
     @Override
@@ -106,4 +107,5 @@ public class Challenge {
     public int hashCode() {
         return Objects.hash(id, description, name, teamSize, type);
     }
+    
 }

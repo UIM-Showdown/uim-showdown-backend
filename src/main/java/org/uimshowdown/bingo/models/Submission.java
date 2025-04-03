@@ -4,8 +4,6 @@ import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.Set;
 
-import org.uimshowdown.bingo.enums.SubmissionState;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -27,6 +25,9 @@ import jakarta.persistence.TemporalType;
 @Inheritance(strategy = InheritanceType.JOINED) 
 @Table(name = "submissions")
 public class Submission {
+	
+	public enum State { OPEN, APPROVED, DENIED }
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -47,7 +48,7 @@ public class Submission {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private SubmissionState state;
+    private State state;
 
     public Integer getId() {
         return id;
@@ -69,7 +70,7 @@ public class Submission {
         return screenshotUrls;
     }
 
-    public SubmissionState getSubmissionState() {
+    public State getSubmissionState() {
         return state;
     }
 
@@ -85,7 +86,7 @@ public class Submission {
         this.player = player;
     }
 
-    public void setSubmissionState(SubmissionState submissionState) {
+    public void setSubmissionState(State submissionState) {
         state = submissionState;
     }
 

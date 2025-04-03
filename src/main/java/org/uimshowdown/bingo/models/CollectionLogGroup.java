@@ -3,8 +3,6 @@ package org.uimshowdown.bingo.models;
 import java.util.Objects;
 import java.util.Set;
 
-import org.uimshowdown.bingo.enums.CollectionLogGroupType;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
@@ -28,6 +26,9 @@ import jakarta.persistence.Table;
 @DiscriminatorColumn(name = "type")
 @Table(name = "collection_log_groups")
 public class CollectionLogGroup {
+	
+	public enum Type { CHECKLIST, COUNTER };
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -44,7 +45,7 @@ public class CollectionLogGroup {
     /** insert and update are managed by discriminator mechanics */
     @Column(insertable = false, updatable = false)
     @Enumerated(EnumType.STRING)
-    private CollectionLogGroupType type;
+    private Type type;
 
     public Integer getId() {
         return id;
@@ -62,7 +63,7 @@ public class CollectionLogGroup {
         return name;
     }
 
-    public CollectionLogGroupType getType() {
+    public Type getType() {
         return type;
     }
 
@@ -74,7 +75,7 @@ public class CollectionLogGroup {
         this.name = name;
     }
 
-    public void setType(CollectionLogGroupType type) throws IllegalArgumentException {
+    public void setType(Type type) throws IllegalArgumentException {
         this.type = type;
     }
 
@@ -96,4 +97,5 @@ public class CollectionLogGroup {
     public int hashCode() {
         return Objects.hash(id, description, name, type);
     }
+    
 }

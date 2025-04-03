@@ -3,9 +3,6 @@ package org.uimshowdown.bingo.models;
 import java.util.Objects;
 import java.util.Set;
 
-import org.uimshowdown.bingo.enums.ContributionMethodCategory;
-import org.uimshowdown.bingo.enums.ContributionMethodType;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,6 +19,11 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "contribution_methods")
 public class ContributionMethod {
+	
+	public enum Category { PVM, SKILLING, OTHER }
+	
+	public enum Type { KC, SUBMISSION, XP }
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -41,11 +43,11 @@ public class ContributionMethod {
 
     @Column(name = "category")
     @Enumerated(EnumType.STRING)
-    private ContributionMethodCategory contributionMethodCategory;
+    private Category contributionMethodCategory;
 
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
-    private ContributionMethodType contributionMethodType;
+    private Type contributionMethodType;
 
     @Column(name = "eht_rate")
     private Double ehtRate;
@@ -73,11 +75,11 @@ public class ContributionMethod {
         return unrankedStartingValueSubmissions;
     }
 
-    public ContributionMethodCategory getContributionMethodCategory() {
+    public Category getContributionMethodCategory() {
         return contributionMethodCategory;
     }
 
-    public ContributionMethodType getContributionMethodType() {
+    public Type getContributionMethodType() {
         return contributionMethodType;
     }
 
@@ -93,11 +95,11 @@ public class ContributionMethod {
         this.tile = tile;
     }
 
-    public void setContributionMethodCategory(ContributionMethodCategory category) {
+    public void setContributionMethodCategory(Category category) {
         contributionMethodCategory = category;
     }
 
-    public void setContributionMethodType(ContributionMethodType type) {
+    public void setContributionMethodType(Type type) {
         contributionMethodType = type;
     }
 
