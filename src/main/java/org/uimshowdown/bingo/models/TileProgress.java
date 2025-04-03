@@ -1,7 +1,5 @@
 package org.uimshowdown.bingo.models;
 
-import java.util.Objects;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,9 +13,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tile_progress")
 public class TileProgress {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
@@ -28,15 +27,15 @@ public class TileProgress {
     private Tile tile;
 
     @Column(name = "percentage_to_next_tier")
-    private Double percentageToNextTier;
+    private double percentageToNextTier;
 
     @Column
-    private Integer points;
+    private int points;
 
     @Column
-    private Integer tier;
+    private int tier;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -48,15 +47,15 @@ public class TileProgress {
         return tile;
     }
 
-    public Double getPercentageToNextTier() {
+    public double getPercentageToNextTier() {
         return percentageToNextTier;
     }
 
-    public Integer getPoints() {
+    public int getPoints() {
         return points;
     }
 
-    public Integer getTier() {
+    public int getTier() {
         return tier;
     }
 
@@ -68,34 +67,21 @@ public class TileProgress {
         this.tile = tile;
     }
 
-    public void setPercentageToNextTier(Double percentageToNextTier) {
+    public void setPercentageToNextTier(double percentageToNextTier) {
         this.percentageToNextTier = percentageToNextTier;
     }
 
-    public void setPoints(Integer points) {
+    public void setPoints(int points) {
         this.points = points;
     }
 
-    public void setTier(Integer tier) {
+    public void setTier(int tier) {
         this.tier = tier;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof TileProgress) == false) {
-            return false;
-        }
-
-        TileProgress otherTileProgress = (TileProgress) obj;
-        return Integer.compare(id, otherTileProgress.getId()) == 0;
+    	return obj != null && obj instanceof TileProgress && ((TileProgress) obj).getId() == this.id;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, percentageToNextTier, points, tier);
-    }
+    
 }

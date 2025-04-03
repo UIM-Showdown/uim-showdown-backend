@@ -1,6 +1,4 @@
 package org.uimshowdown.bingo.models;
-
-import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -26,7 +24,7 @@ public class ContributionMethod {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @OneToMany(mappedBy = "contributionMethod")
     private Set<ContributionSubmission> contributionSubmissions;
@@ -50,12 +48,12 @@ public class ContributionMethod {
     private Type contributionMethodType;
 
     @Column(name = "eht_rate")
-    private Double ehtRate;
+    private double ehtRate;
 
     @Column(length = 64)
     private String name;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -83,7 +81,7 @@ public class ContributionMethod {
         return contributionMethodType;
     }
 
-    public Double getEhtRate() {
+    public double getEhtRate() {
         return ehtRate;
     }
 
@@ -103,7 +101,7 @@ public class ContributionMethod {
         contributionMethodType = type;
     }
 
-    public void setEhtRate(Double ehtRate) {
+    public void setEhtRate(double ehtRate) {
         this.ehtRate = ehtRate;
     }
 
@@ -113,20 +111,7 @@ public class ContributionMethod {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof ContributionMethod) == false) {
-            return false;
-        }
-
-        ContributionMethod otherContributionMethod = (ContributionMethod) obj;
-        return Integer.compare(id, otherContributionMethod.getId()) == 0;
+    	return obj != null && obj instanceof ContributionMethod && ((ContributionMethod) obj).getId() == this.id;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, contributionMethodCategory, contributionMethodType, ehtRate, name);
-    }
 }

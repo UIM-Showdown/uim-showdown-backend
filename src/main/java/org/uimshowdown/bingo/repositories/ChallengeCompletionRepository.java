@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.uimshowdown.bingo.models.ChallengeCompletion;
 
 public interface ChallengeCompletionRepository extends CrudRepository<ChallengeCompletion, Integer> {
-    Iterable<ChallengeCompletion> findAllByChallengeId(Integer challengeId);
-    Iterable<ChallengeCompletion> findAllByTeamId(Integer teamId);
+    Iterable<ChallengeCompletion> findAllByChallengeId(int challengeId);
+    Iterable<ChallengeCompletion> findAllByTeamId(int teamId);
 }

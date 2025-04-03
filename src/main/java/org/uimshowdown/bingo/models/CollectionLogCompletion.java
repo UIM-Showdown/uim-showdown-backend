@@ -1,7 +1,5 @@
 package org.uimshowdown.bingo.models;
 
-import java.util.Objects;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,9 +13,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "collection_log_completions")
 public class CollectionLogCompletion {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
@@ -30,7 +29,7 @@ public class CollectionLogCompletion {
     @Column(name = "screenshot_url", length = 512)
     private String screenshotUrl;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -60,20 +59,7 @@ public class CollectionLogCompletion {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof CollectionLogCompletion) == false) {
-            return false;
-        }
-
-        CollectionLogCompletion otherCollectionLogCompletion = (CollectionLogCompletion) obj;
-        return Integer.compare(id, otherCollectionLogCompletion.getId()) == 0;
+        return obj != null && obj instanceof CollectionLogCompletion && ((CollectionLogCompletion) obj).getId() == this.id;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, screenshotUrl);
-    }
+    
 }

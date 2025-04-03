@@ -1,7 +1,5 @@
 package org.uimshowdown.bingo.models;
 
-import java.util.Objects;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,16 +13,17 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "collection_log_group_counter_point_values")
 public class CollectionLogGroupCounterPointValue {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "collection_log_group_id")
     private CollectionLogCounterGroup collectionLogGroup;
 
     @Column
-    private Integer value;
+    private int value;
 
     /**
      * Classes that define constructors must also include a no-arg constructor.
@@ -34,12 +33,12 @@ public class CollectionLogGroupCounterPointValue {
         
     }
 
-    public CollectionLogGroupCounterPointValue(CollectionLogCounterGroup collectionLogCounterGroup, Integer value) {
+    public CollectionLogGroupCounterPointValue(CollectionLogCounterGroup collectionLogCounterGroup, int value) {
         collectionLogGroup = collectionLogCounterGroup;
         this.value = value;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -47,7 +46,7 @@ public class CollectionLogGroupCounterPointValue {
         return collectionLogGroup;
     }
 
-    public Integer getValue() {
+    public int getValue() {
         return value;
     }
 
@@ -55,26 +54,13 @@ public class CollectionLogGroupCounterPointValue {
         collectionLogGroup = collectionLogCounterGroup;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(int value) {
         this.value = value;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof CollectionLogGroupCounterPointValue) == false) {
-            return false;
-        }
-
-        CollectionLogGroupCounterPointValue otherCollectionLogGroupCounterPointValue = (CollectionLogGroupCounterPointValue) obj;
-        return Integer.compare(id, otherCollectionLogGroupCounterPointValue.getId()) == 0;
+        return obj != null && obj instanceof CollectionLogGroupCounterPointValue && ((CollectionLogGroupCounterPointValue) obj).getId() == this.id;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, value);
-    }
+    
 }

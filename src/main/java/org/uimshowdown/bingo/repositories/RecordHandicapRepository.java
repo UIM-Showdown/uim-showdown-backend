@@ -4,5 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.uimshowdown.bingo.models.RecordHandicap;
 
 public interface RecordHandicapRepository extends CrudRepository<RecordHandicap, Integer> {
-    Iterable<RecordHandicap> findAllByRecordId(Integer recordId);
+    Iterable<RecordHandicap> findAllByRecordId(int recordId);
 }

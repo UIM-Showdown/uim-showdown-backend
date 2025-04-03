@@ -1,7 +1,5 @@
 package org.uimshowdown.bingo.models;
 
-import java.util.Objects;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,18 +12,19 @@ import jakarta.persistence.Table;
 @PrimaryKeyJoinColumn(name = "submission_id")
 @Table(name = "unranked_starting_value_submissions")
 public class UnrankedStartingValueSubmission extends Submission {
+	
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contribution_method_id")
     private ContributionMethod contributionMethod;
 
     @Column
-    private Integer value;
+    private int value;
 
     public ContributionMethod getContributionMethod() {
         return contributionMethod;
     }
 
-    public Integer getValue() {
+    public int getValue() {
         return value;
     }
 
@@ -33,12 +32,8 @@ public class UnrankedStartingValueSubmission extends Submission {
         this.contributionMethod = contributionMethod;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(int value) {
         this.value = value;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), value);
-    }
+    
 }

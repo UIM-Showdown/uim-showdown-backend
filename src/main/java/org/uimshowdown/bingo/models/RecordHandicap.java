@@ -1,6 +1,5 @@
 package org.uimshowdown.bingo.models;
 
-import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -17,15 +16,16 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "record_handicaps")
 public class RecordHandicap {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @OneToMany(mappedBy = "handicap")
     private Set<RecordCompletion> completions;
 
     @Column
-    private Double multiplier;
+    private double multiplier;
 
     @Column(length = 64)
     private String name;
@@ -37,7 +37,7 @@ public class RecordHandicap {
     @OneToMany(mappedBy = "handicap")
     private Set<RecordSubmission> submissions;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -45,7 +45,7 @@ public class RecordHandicap {
         return completions;
     }
 
-    public Double getMultiplier() {
+    public double getMultiplier() {
         return multiplier;
     }
 
@@ -61,7 +61,7 @@ public class RecordHandicap {
         return submissions;
     }
 
-    public void setMultiplier(Double multiplier) {
+    public void setMultiplier(double multiplier) {
         this.multiplier = multiplier;
     }
 
@@ -75,20 +75,7 @@ public class RecordHandicap {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof RecordHandicap) == false) {
-            return false;
-        }
-
-        RecordHandicap otherRecordHandicap = (RecordHandicap) obj;
-        return Integer.compare(id, otherRecordHandicap.getId()) == 0;
+    	return obj != null && obj instanceof RecordHandicap && ((RecordHandicap) obj).getId() == this.id;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, multiplier, name);
-    }
+    
 }

@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 
 public interface CollectionLogItemRepository extends CrudRepository<CollectionLogItem, Integer> {
-    Iterable<CollectionLogItem> findAllByGroupId(Integer collectionLogGroupId);
+    Iterable<CollectionLogItem> findAllByGroupId(int collectionLogGroupId);
     Optional<CollectionLogItem> findByName(String name);
 }

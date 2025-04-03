@@ -4,5 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.uimshowdown.bingo.models.RecordSubmission;
 
 public interface RecordSubmissionRepository extends CrudRepository<RecordSubmission, Integer> {
-    Iterable<RecordSubmission> findAllByRecordId(Integer recordId);
+    Iterable<RecordSubmission> findAllByRecordId(int recordId);
 }

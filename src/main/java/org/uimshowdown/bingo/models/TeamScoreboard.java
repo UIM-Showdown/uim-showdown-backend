@@ -1,7 +1,5 @@
 package org.uimshowdown.bingo.models;
 
-import java.util.Objects;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,33 +13,34 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "team_scoreboards")
 public class TeamScoreboard {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
 
     @Column(name = "event_points")
-    private Integer eventPoints;
+    private int eventPoints;
 
     @Column(name = "event_points_from_challenges")
-    private Integer eventPointsFromChallenges;
+    private int eventPointsFromChallenges;
 
     @Column(name = "event_points_from_collection_log_items")
-    private Integer eventPointsFromCollectionLogItems;
+    private int eventPointsFromCollectionLogItems;
 
     @Column(name = "event_points_from_groups")
-    private Integer eventPointsFromGroups;
+    private int eventPointsFromGroups;
 
     @Column(name = "event_points_from_records")
-    private Integer eventPointsFromRecords;
+    private int eventPointsFromRecords;
 
     @Column(name = "event_points_from_tiles")
-    private Integer eventPointsFromTiles;
+    private int eventPointsFromTiles;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -49,27 +48,27 @@ public class TeamScoreboard {
         return team;
     }
 
-    public Integer getEventPoints() {
+    public int getEventPoints() {
         return eventPoints;
     }
 
-    public Integer getEventPointsFromChallenges() {
+    public int getEventPointsFromChallenges() {
         return eventPointsFromChallenges;
     }
 
-    public Integer getEventPointsFromCollectionLogItems() {
+    public int getEventPointsFromCollectionLogItems() {
         return eventPointsFromCollectionLogItems;
     }
 
-    public Integer getEventPointsFromGroups() {
+    public int getEventPointsFromGroups() {
         return eventPointsFromGroups;
     }
 
-    public Integer getEventPointsFromRecords() {
+    public int getEventPointsFromRecords() {
         return eventPointsFromRecords;
     }
 
-    public Integer getEventPointsFromTiles() {
+    public int getEventPointsFromTiles() {
         return eventPointsFromTiles;
     }
 
@@ -77,54 +76,33 @@ public class TeamScoreboard {
         this.team = team;
     }
 
-    public void setEventPoints(Integer points) {
+    public void setEventPoints(int points) {
         eventPoints = points;
     }
 
-    public void setEventPointsFromChallenge(Integer points) {
+    public void setEventPointsFromChallenge(int points) {
         eventPointsFromChallenges = points;
     }
 
-    public void setEventPointsFromCollectionLogItems(Integer points) {
+    public void setEventPointsFromCollectionLogItems(int points) {
         eventPointsFromCollectionLogItems = points;
     }
 
-    public void setEventPointsFromGroups(Integer points) {
+    public void setEventPointsFromGroups(int points) {
         eventPointsFromGroups = points;
     }
 
-    public void setEventPointsFromRecords(Integer points) {
+    public void setEventPointsFromRecords(int points) {
         eventPointsFromRecords = points;
     }
 
-    public void setEventPointsFromTiles(Integer points) {
+    public void setEventPointsFromTiles(int points) {
         eventPointsFromTiles = points;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof TeamScoreboard) == false) {
-            return false;
-        }
-
-        TeamScoreboard otherTeamScoreboard = (TeamScoreboard) obj;
-        return Integer.compare(id, otherTeamScoreboard.getId()) == 0;
+    	return obj != null && obj instanceof TeamScoreboard && ((TeamScoreboard) obj).getId() == this.id;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(
-            id,
-            eventPoints,
-            eventPointsFromChallenges,
-            eventPointsFromCollectionLogItems,
-            eventPointsFromGroups,
-            eventPointsFromRecords,
-            eventPointsFromTiles
-        );
-    }
+    
 }

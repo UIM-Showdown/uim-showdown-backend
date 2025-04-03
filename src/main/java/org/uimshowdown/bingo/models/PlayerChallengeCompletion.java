@@ -1,7 +1,5 @@
 package org.uimshowdown.bingo.models;
 
-import java.util.Objects;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,9 +13,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "player_challenge_completions")
 public class PlayerChallengeCompletion {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "challenge_completion_id")
@@ -35,9 +34,9 @@ public class PlayerChallengeCompletion {
     private String screenshotUrl;
 
     @Column
-    private Double seconds;
+    private double seconds;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -57,7 +56,7 @@ public class PlayerChallengeCompletion {
         return screenshotUrl;
     }
 
-    public Double getSeconds() {
+    public double getSeconds() {
         return seconds;
     }
 
@@ -77,26 +76,13 @@ public class PlayerChallengeCompletion {
         this.screenshotUrl = screenshotUrl;
     }
 
-    public void setSeconds(Double seconds) {
+    public void setSeconds(double seconds) {
         this.seconds = seconds;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof PlayerChallengeCompletion) == false) {
-            return false;
-        }
-
-        PlayerChallengeCompletion otherPlayerChallengeCompletion = (PlayerChallengeCompletion) obj;
-        return Integer.compare(id, otherPlayerChallengeCompletion.getId()) == 0;
+    	return obj != null && obj instanceof PlayerChallengeCompletion && ((PlayerChallengeCompletion) obj).getId() == this.id;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, screenshotUrl, seconds);
-    }
+    
 }

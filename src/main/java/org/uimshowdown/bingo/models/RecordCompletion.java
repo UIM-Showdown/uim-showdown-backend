@@ -1,7 +1,6 @@
 package org.uimshowdown.bingo.models;
 
 import java.sql.Timestamp;
-import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,9 +17,10 @@ import jakarta.persistence.TemporalType;
 @Entity
 @Table(name = "record_completions")
 public class RecordCompletion {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    public int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "record_handicap_id", nullable = true)
@@ -35,7 +35,7 @@ public class RecordCompletion {
     public Timestamp completedAt;
 
     @Column(name = "raw_value")
-    public Integer rawValue;
+    public int rawValue;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "record_id")
@@ -44,7 +44,7 @@ public class RecordCompletion {
     @Column(name = "video_url", nullable = true, length = 512)
     public String videoUrl;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -60,7 +60,7 @@ public class RecordCompletion {
         return player;
     }
 
-    public Integer getRawValue() {
+    public int getRawValue() {
         return rawValue;
     }
 
@@ -84,7 +84,7 @@ public class RecordCompletion {
         this.player = player;
     }
 
-    public void setRawValue(Integer rawValue) {
+    public void setRawValue(int rawValue) {
         this.rawValue = rawValue;
     }
 
@@ -98,20 +98,7 @@ public class RecordCompletion {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof RecordCompletion) == false) {
-            return false;
-        }
-
-        RecordCompletion otherRecordCompletion = (RecordCompletion) obj;
-        return Integer.compare(id, otherRecordCompletion.getId()) == 0;
+    	return obj != null && obj instanceof RecordCompletion && ((RecordCompletion) obj).getId() == this.id;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, completedAt, rawValue, videoUrl);
-    }
+    
 }

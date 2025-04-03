@@ -1,6 +1,5 @@
 package org.uimshowdown.bingo.models;
 
-import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -21,7 +20,7 @@ public class Challenge {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @OneToMany(mappedBy = "challenge")
     private Set<ChallengeCompletion> completions;
@@ -39,13 +38,13 @@ public class Challenge {
     private Set<ChallengeSubmission> submissions;
 
     @Column(name = "team_size")
-    private Integer teamSize;
+    private int teamSize;
 
     @Column
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -65,7 +64,7 @@ public class Challenge {
         return relayComponents;
     }
 
-    public Integer getTeamSize() {
+    public int getTeamSize() {
         return teamSize;
     }
 
@@ -81,7 +80,7 @@ public class Challenge {
         this.name = name;
     }
 
-    public void setTeamSize(Integer teamSize) {
+    public void setTeamSize(int teamSize) {
         this.teamSize = teamSize;
     }
 
@@ -91,21 +90,7 @@ public class Challenge {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof Challenge) == false) {
-            return false;
-        }
-
-        Challenge otherChallenge = (Challenge) obj;
-        return Integer.compare(id, otherChallenge.getId()) == 0;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, description, name, teamSize, type);
+    	return obj != null && obj instanceof Challenge && ((Challenge) obj).getId() == this.id;
     }
     
 }

@@ -7,5 +7,5 @@ import org.uimshowdown.bingo.models.ContributionMethod;
 
 public interface ContributionMethodRepository extends CrudRepository<ContributionMethod, Integer> {
     Optional<ContributionMethod> findByName(String name);
-    Iterable<ContributionMethod> findAllByTileId(Integer tileId);
+    Iterable<ContributionMethod> findAllByTileId(int tileId);
 }

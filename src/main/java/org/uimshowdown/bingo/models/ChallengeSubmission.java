@@ -1,7 +1,5 @@
 package org.uimshowdown.bingo.models;
 
-import java.util.Objects;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,6 +12,7 @@ import jakarta.persistence.Table;
 @PrimaryKeyJoinColumn(name = "submission_id")
 @Table(name = "challenge_submissions")
 public class ChallengeSubmission extends Submission {
+	
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "challenge_id")
     private Challenge challenge;
@@ -23,7 +22,7 @@ public class ChallengeSubmission extends Submission {
     private ChallengeRelayComponent relayComponent;
 
     @Column
-    private Double seconds;
+    private double seconds;
 
     public Challenge getChallenge() {
         return challenge;
@@ -33,7 +32,7 @@ public class ChallengeSubmission extends Submission {
         return relayComponent;
     }
 
-    public Double getSeconds() {
+    public double getSeconds() {
         return seconds;
     }
 
@@ -45,12 +44,8 @@ public class ChallengeSubmission extends Submission {
         this.relayComponent = challengeRelayComponent;
     }
 
-    public void setSeconds(Double seconds) {
+    public void setSeconds(double seconds) {
         this.seconds = seconds;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), seconds);
-    }
+    
 }

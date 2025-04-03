@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 @PrimaryKeyJoinColumn(name = "submission_id")
 @Table(name = "collection_log_submissions")
 public class CollectionLogSubmission extends Submission {
+	
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private CollectionLogItem item;
@@ -22,4 +23,5 @@ public class CollectionLogSubmission extends Submission {
     public void setItem(CollectionLogItem collectionLogItem) {
         item = collectionLogItem;
     }
+    
 }

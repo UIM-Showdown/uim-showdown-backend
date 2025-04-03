@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 public class ChallengeRelayComponent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "challenge_id")
@@ -33,7 +33,7 @@ public class ChallengeRelayComponent {
     @OneToMany(mappedBy = "relayComponent")
     private Set<ChallengeSubmission> submissions;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -62,15 +62,6 @@ public class ChallengeRelayComponent {
     }
 
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof ChallengeRelayComponent) == false) {
-            return false;
-        }
-
-        ChallengeRelayComponent otherChallengeRelayComponent = (ChallengeRelayComponent) obj;
-        return Integer.compare(id, otherChallengeRelayComponent.getId()) == 0;
+    	return obj != null && obj instanceof ChallengeRelayComponent && ((ChallengeRelayComponent) obj).getId() == this.id;
     }
 }

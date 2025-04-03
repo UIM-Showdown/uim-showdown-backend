@@ -1,6 +1,5 @@
 package org.uimshowdown.bingo.models;
 
-import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -14,15 +13,16 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tiles")
 public class Tile {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @Column(length = 64)
     private String name;
 
     @Column(name = "points_per_tier")
-    private Integer pointsPerTier;
+    private int pointsPerTier;
 
     @OneToMany(mappedBy = "tile")
     private Set<ContributionMethod> contributionMethods;
@@ -30,7 +30,7 @@ public class Tile {
     @OneToMany(mappedBy = "tile")
     private Set<TileProgress> progress;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -38,7 +38,7 @@ public class Tile {
         return name;
     }
 
-    public Integer getPointsPerTier() {
+    public int getPointsPerTier() {
         return pointsPerTier;
     }
 
@@ -54,26 +54,13 @@ public class Tile {
         this.name = name;
     }
 
-    public void setPointsPerTier(Integer pointsPerTier) {
+    public void setPointsPerTier(int pointsPerTier) {
         this.pointsPerTier = pointsPerTier;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof Tile) == false) {
-            return false;
-        }
-
-        Tile otherTile = (Tile) obj;
-        return Integer.compare(id, otherTile.getId()) == 0;
+    	return obj != null && obj instanceof Tile && ((Tile) obj).getId() == this.id;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, pointsPerTier);
-    }
+    
 }

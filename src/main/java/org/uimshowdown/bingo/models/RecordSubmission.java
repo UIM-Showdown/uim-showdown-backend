@@ -1,7 +1,6 @@
 package org.uimshowdown.bingo.models;
 
 import java.sql.Timestamp;
-import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +14,7 @@ import jakarta.persistence.Table;
 @PrimaryKeyJoinColumn(name = "submission_id")
 @Table(name = "record_submissions")
 public class RecordSubmission extends Submission {
+	
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "handicap_id", nullable = true)
     private RecordHandicap handicap;
@@ -27,7 +27,7 @@ public class RecordSubmission extends Submission {
     private Timestamp submittedAt;
 
     @Column
-    private Integer value;
+    private int value;
 
     public RecordHandicap getHandicap() {
         return handicap;
@@ -41,7 +41,7 @@ public class RecordSubmission extends Submission {
         return submittedAt;
     }
 
-    public Integer getValue() {
+    public int getValue() {
         return value;
     }
 
@@ -57,12 +57,8 @@ public class RecordSubmission extends Submission {
         this.submittedAt = submittedAt;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(int value) {
         this.value = value;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), submittedAt, value);
-    }
+    
 }

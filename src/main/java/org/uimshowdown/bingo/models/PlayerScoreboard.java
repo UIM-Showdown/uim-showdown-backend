@@ -1,7 +1,5 @@
 package org.uimshowdown.bingo.models;
 
-import java.util.Objects;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,30 +13,31 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "player_scoreboards")
 public class PlayerScoreboard {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player_id")
     private Player player;
 
     @Column(name = "collection_log_points")
-    private Integer collectionLogPoints;
+    private int collectionLogPoints;
 
     @Column(name = "other_tile_contribution")
-    private Double otherTileContribution;
+    private double otherTileContribution;
 
     @Column(name = "pvm_tile_contribution")
-    private Double pvmTileContribution;
+    private double pvmTileContribution;
 
     @Column(name = "skilling_tile_contribution")
-    private Double skillingTileContribution;
+    private double skillingTileContribution;
 
     @Column(name = "total_tile_contribution")
-    private Double totalTileContribution;
+    private double totalTileContribution;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -46,23 +45,23 @@ public class PlayerScoreboard {
         return player;
     }
 
-    public Integer getCollectionLogPoints() {
+    public int getCollectionLogPoints() {
         return collectionLogPoints;
     }
 
-    public Double getOtherTileContribution() {
+    public double getOtherTileContribution() {
         return otherTileContribution;
     }
 
-    public Double getPvmTileContribution() {
+    public double getPvmTileContribution() {
         return pvmTileContribution;
     }
 
-    public Double getSkillingTileContribution() {
+    public double getSkillingTileContribution() {
         return skillingTileContribution;
     }
 
-    public Double getTotalTileContribution() {
+    public double getTotalTileContribution() {
         return totalTileContribution;
     }
 
@@ -70,48 +69,29 @@ public class PlayerScoreboard {
         this.player = player;
     }
 
-    public void setCollectionLogPoints(Integer points) {
+    public void setCollectionLogPoints(int points) {
         collectionLogPoints = points;
     }
 
-    public void setOtherTileContribution(Double points) {
+    public void setOtherTileContribution(double points) {
         otherTileContribution = points;
     }
 
-    public void setPvmTileContribution(Double points) {
+    public void setPvmTileContribution(double points) {
         pvmTileContribution = points;
     }
 
-    public void setSkillingTitleContribution(Double points) {
+    public void setSkillingTitleContribution(double points) {
         skillingTileContribution = points;
     }
 
-    public void setTotalTileContribution(Double points) {
+    public void setTotalTileContribution(double points) {
         totalTileContribution = points;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof PlayerScoreboard) == false) {
-            return false;
-        }
-
-        PlayerScoreboard otherPlayerScoreboard = (PlayerScoreboard) obj;
-        return Integer.compare(id, otherPlayerScoreboard.getId()) == 0;
+    	return obj != null && obj instanceof PlayerScoreboard && ((PlayerScoreboard) obj).getId() == this.id;
     }
-    @Override
-    public int hashCode() {
-        return Objects.hash(
-            id,
-            collectionLogPoints,
-            otherTileContribution,
-            pvmTileContribution,
-            skillingTileContribution,
-            totalTileContribution
-        );
-    }
+    
 }

@@ -1,7 +1,5 @@
 package org.uimshowdown.bingo.models;
 
-import java.util.Objects;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,9 +13,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "contributions")
 public class Contribution {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contribution_method_id")
@@ -28,24 +27,24 @@ public class Contribution {
     private Player player;
 
     @Column(name = "initial_value", nullable = true)
-    private Integer initialValue;
+    private int initialValue;
 
     @Column(name = "initial_value_screenshot_url", nullable = true, length = 512)
     private String initialValueScreenshotUrl;
 
     @Column(name = "final_value", nullable = true)
-    private Integer finalValue;
+    private int finalValue;
 
     @Column(name = "final_value_screenshot_url", nullable = true, length = 512)
     private String finalValueScreenshotUrl;
 
     @Column(name = "staff_adjustment")
-    private Integer staffAdjustment;
+    private int staffAdjustment;
 
     @Column(name = "unranked_starting_value")
-    private Integer unrankedStartingValue;
+    private int unrankedStartingValue;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -57,7 +56,7 @@ public class Contribution {
         return player;
     }
 
-    public Integer getInitialValue() {
+    public int getInitialValue() {
         return initialValue;
     }
 
@@ -65,7 +64,7 @@ public class Contribution {
         return initialValueScreenshotUrl;
     }
 
-    public Integer getFinalValue() {
+    public int getFinalValue() {
         return finalValue;
     }
 
@@ -73,11 +72,11 @@ public class Contribution {
         return finalValueScreenshotUrl;
     }
 
-    public Integer getStaffAdjustment() {
+    public int getStaffAdjustment() {
         return staffAdjustment;
     }
 
-    public Integer getUnrankedStartingValue() {
+    public int getUnrankedStartingValue() {
         return unrankedStartingValue;
     }
 
@@ -89,7 +88,7 @@ public class Contribution {
         this.player = player;
     }
 
-    public void setInitialValue(Integer initialValue) {
+    public void setInitialValue(int initialValue) {
         this.initialValue = initialValue;
     }
 
@@ -97,7 +96,7 @@ public class Contribution {
         this.initialValueScreenshotUrl = initialValueScreenshotUrl;
     }
 
-    public void setFinalValue(Integer finalValue) {
+    public void setFinalValue(int finalValue) {
         this.finalValue = finalValue;
     }
 
@@ -105,30 +104,17 @@ public class Contribution {
         this.finalValueScreenshotUrl = finalValueScreenshotUrl;
     }
 
-    public void setStaffAdjustment(Integer staffAdjustment) {
+    public void setStaffAdjustment(int staffAdjustment) {
         this.staffAdjustment = staffAdjustment;
     }
 
-    public void setUnrankedStartingValue(Integer unrankedStartingValue) {
+    public void setUnrankedStartingValue(int unrankedStartingValue) {
         this.unrankedStartingValue = unrankedStartingValue;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof Contribution) == false) {
-            return false;
-        }
-
-        Contribution otherContribution = (Contribution) obj;
-        return Integer.compare(id, otherContribution.getId()) == 0;
+    	return obj != null && obj instanceof Contribution && ((Contribution) obj).getId() == this.id;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, finalValue, finalValueScreenshotUrl, initialValue, initialValueScreenshotUrl, staffAdjustment, unrankedStartingValue);
-    }
+    
 }

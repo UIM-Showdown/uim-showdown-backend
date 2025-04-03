@@ -1,7 +1,6 @@
 package org.uimshowdown.bingo.models;
 
 import java.sql.Timestamp;
-import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -30,7 +29,7 @@ public class Submission {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player_id")
@@ -50,7 +49,7 @@ public class Submission {
     @Enumerated(EnumType.STRING)
     private State state;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -92,20 +91,7 @@ public class Submission {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof Submission) == false) {
-            return false;
-        }
-
-        Submission otherSubmission = (Submission) obj;
-        return Integer.compare(id, otherSubmission.getId()) == 0;
+    	return obj != null && obj instanceof Submission && ((Submission) obj).getId() == this.id;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, reviewedAt, reviewer, state);
-    }
 }

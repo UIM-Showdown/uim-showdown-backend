@@ -1,7 +1,6 @@
 package org.uimshowdown.bingo.models;
 
 import java.sql.Timestamp;
-import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -18,9 +17,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "challenge_completions")
 public class ChallengeCompletion {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "challenge_id")
@@ -37,9 +37,9 @@ public class ChallengeCompletion {
     private Timestamp completedAt;
 
     @Column
-    private Double seconds;
+    private double seconds;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -59,7 +59,7 @@ public class ChallengeCompletion {
         return completedAt;
     }
 
-    public Double getSeconds() {
+    public double getSeconds() {
         return seconds;
     }
 
@@ -75,26 +75,13 @@ public class ChallengeCompletion {
         this.completedAt = completedAt;
     }
 
-    public void setSeconds(Double seconds) {
+    public void setSeconds(double seconds) {
         this.seconds = seconds;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof ChallengeCompletion) == false) {
-            return false;
-        }
-
-        ChallengeCompletion otherChallengeCompletion = (ChallengeCompletion) obj;
-        return Integer.compare(id, otherChallengeCompletion.getId()) == 0;
+    	return obj != null && obj instanceof ChallengeCompletion && ((ChallengeCompletion) obj).getId() == this.id;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, completedAt, seconds);
-    }
+    
 }

@@ -1,7 +1,5 @@
 package org.uimshowdown.bingo.models;
 
-import java.util.Objects;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,16 +13,17 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "collection_log_group_checklist_bonus_point_thresholds")
 public class CollectionLogGroupChecklistBonusPointThreshold {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "collection_log_group_id")
     private CollectionLogChecklistGroup collectionLogGroup;
 
     @Column
-    private Integer value;
+    private int value;
 
     /**
      * Classes that define constructors must also include a no-arg constructor.
@@ -34,12 +33,12 @@ public class CollectionLogGroupChecklistBonusPointThreshold {
         
     }
 
-    public CollectionLogGroupChecklistBonusPointThreshold(CollectionLogChecklistGroup collectionLogChecklistGroup, Integer value) {
+    public CollectionLogGroupChecklistBonusPointThreshold(CollectionLogChecklistGroup collectionLogChecklistGroup, int value) {
         collectionLogGroup = collectionLogChecklistGroup;
         this.value = value;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -47,7 +46,7 @@ public class CollectionLogGroupChecklistBonusPointThreshold {
         return collectionLogGroup;
     }
 
-    public Integer getValue() {
+    public int getValue() {
         return value;
     }
 
@@ -55,26 +54,13 @@ public class CollectionLogGroupChecklistBonusPointThreshold {
         collectionLogGroup = collectionLogChecklistGroup;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(int value) {
         this.value = value;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof CollectionLogGroupChecklistBonusPointThreshold) == false) {
-            return false;
-        }
-
-        CollectionLogGroupChecklistBonusPointThreshold otherCollectionLogGroupChecklistBonusPointThreshold = (CollectionLogGroupChecklistBonusPointThreshold) obj;
-        return Integer.compare(id, otherCollectionLogGroupChecklistBonusPointThreshold.getId()) == 0;
+        return obj != null && obj instanceof CollectionLogGroupChecklistBonusPointThreshold && ((CollectionLogGroupChecklistBonusPointThreshold) obj).getId() == this.id;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, value);
-    }
 }

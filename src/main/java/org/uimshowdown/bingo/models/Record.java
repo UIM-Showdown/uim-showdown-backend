@@ -1,6 +1,5 @@
 package org.uimshowdown.bingo.models;
 
-import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -14,9 +13,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "records")
 public class Record {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @OneToMany(mappedBy = "record")
     private Set<RecordCompletion> completions;
@@ -33,7 +33,7 @@ public class Record {
     @OneToMany(mappedBy = "record")
     private Set<RecordSubmission> submissions;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -59,20 +59,7 @@ public class Record {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if ((obj instanceof Record) == false) {
-            return false;
-        }
-
-        Record otherRecord = (Record) obj;
-        return Integer.compare(id, otherRecord.getId()) == 0;
+    	return obj != null && obj instanceof Record && ((Record) obj).getId() == this.id;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, description, skill);
-    }
+    
 }

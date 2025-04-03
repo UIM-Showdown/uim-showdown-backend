@@ -11,6 +11,7 @@ import jakarta.persistence.OrderBy;
 @Entity
 @DiscriminatorValue("CHECKLIST")
 public class CollectionLogChecklistGroup extends CollectionLogGroup {
+	
     @OneToMany(mappedBy = "collectionLogGroup")
     @OrderBy("value ASC")
     private List<CollectionLogGroupChecklistBonusPointThreshold> bonusPointThresholds;
@@ -37,4 +38,5 @@ public class CollectionLogChecklistGroup extends CollectionLogGroup {
         
         super.setType(type);
     }
+    
 }

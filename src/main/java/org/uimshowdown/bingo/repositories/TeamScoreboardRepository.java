@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.uimshowdown.bingo.models.TeamScoreboard;
 
 public interface TeamScoreboardRepository extends CrudRepository<TeamScoreboard, Integer> {
-    Optional<TeamScoreboard> findByTeamId(Integer teamId);
+    Optional<TeamScoreboard> findByTeamId(int teamId);
 }
