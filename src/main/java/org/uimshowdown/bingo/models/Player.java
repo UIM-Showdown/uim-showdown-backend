@@ -2,6 +2,7 @@ package org.uimshowdown.bingo.models;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -26,9 +27,11 @@ public class Player {
     private int id;
 
     @Column
+    @JsonIgnore
     private boolean captain;
 
     @OneToMany(mappedBy = "player")
+    @JsonIgnore
     private Set<Contribution> contributions;
 
     @Column(length = 64, name="discord_name", unique = true)
@@ -36,12 +39,15 @@ public class Player {
     private String discordName;
 
     @OneToMany(mappedBy = "player")
+    @JsonIgnore
     private Set<CollectionLogCompletion> collectionLogCompletions;
 
     @OneToMany(mappedBy = "player")
+    @JsonIgnore
     private Set<PlayerChallengeCompletion> playerChallengeCompletions;
 
     @OneToMany(mappedBy = "player")
+    @JsonIgnore
     private Set<RecordCompletion> recordCompletions;
 
     @Column(length = 64, unique = true)
@@ -49,13 +55,16 @@ public class Player {
     private String rsn;
 
     @OneToOne(mappedBy = "player")
+    @JsonIgnore
     private PlayerScoreboard scoreboard;
 
     @OneToMany(mappedBy = "player")
+    @JsonIgnore
     private Set<Submission> submissions;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
+    @JsonIgnore
     private Team team;
 
     public Set<Contribution> getContributions() {

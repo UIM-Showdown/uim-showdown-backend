@@ -1,10 +1,9 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.uimshowdown.bingo.repositories.PlayerRepository;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -20,9 +19,6 @@ import jakarta.persistence.Table;
 @Table(name = "teams")
 public class Team {
 	
-	@Autowired
-	private transient PlayerRepository playerRepository;
-	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty
@@ -33,6 +29,7 @@ public class Team {
     private String abbreviation;
 
     @OneToMany(mappedBy = "team")
+    @JsonIgnore
     private Set<ChallengeCompletion> challengeCompletions;
 
     @Column(length = 6)
@@ -44,12 +41,15 @@ public class Team {
     private String name;
 
     @OneToMany(mappedBy = "team")
+    @JsonProperty
     private Set<Player> players;
 
     @OneToOne(mappedBy = "team")
+    @JsonIgnore
     private TeamScoreboard scoreboard;
 
     @OneToMany(mappedBy = "team")
+    @JsonIgnore
     private Set<TileProgress> tileProgress;
 
     public String getAbbreviation() {
@@ -94,12 +94,13 @@ public class Team {
     
     @JsonProperty("captains")
     public Set<Player> getCaptains() {
-    	return playerRepository.getTeamCaptains(id);
-    }
-    
-    @JsonProperty("roster")
-    public Set<Player> getRoster() {
-    	return playerRepository.getTeamRoster(id);
+    	Set<Player> captains = new HashSet<Player>();
+    	for(Player player : this.players) {
+    		if(player.isCaptain()) {
+    			captains.add(player);
+    		}
+    	}
+    	return captains;
     }
 
     @Override

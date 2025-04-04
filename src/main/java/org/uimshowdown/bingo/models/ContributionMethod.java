@@ -1,6 +1,7 @@
 package org.uimshowdown.bingo.models;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -30,16 +31,20 @@ public class ContributionMethod {
     private int id;
 
     @OneToMany(mappedBy = "contributionMethod")
+    @JsonIgnore
     private Set<ContributionSubmission> contributionSubmissions;
 
     @OneToMany(mappedBy = "contributionMethod")
+    @JsonIgnore
     private Set<Contribution> playerContributions;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tile_id")
+    @JsonIgnore
     private Tile tile;
 
     @OneToMany(mappedBy = "contributionMethod")
+    @JsonIgnore
     private Set<UnrankedStartingValueSubmission> unrankedStartingValueSubmissions;
 
     @Column(name = "category")
