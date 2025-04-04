@@ -25,10 +25,6 @@ public class RecordHandicap {
     @JsonProperty
     private int id;
 
-    @OneToMany(mappedBy = "handicap")
-    @JsonIgnore
-    private Set<RecordCompletion> completions;
-
     @Column
     @JsonProperty
     private double multiplier;
@@ -42,16 +38,8 @@ public class RecordHandicap {
     @JsonIgnore
     private Record record;
 
-    @OneToMany(mappedBy = "handicap")
-    @JsonIgnore
-    private Set<RecordSubmission> submissions;
-
     public int getId() {
         return id;
-    }
-
-    public Set<RecordCompletion> getCompletions() {
-        return completions;
     }
 
     public double getMultiplier() {
@@ -64,10 +52,6 @@ public class RecordHandicap {
 
     public Record getRecord() {
         return record;
-    }
-
-    public Set<RecordSubmission> getSubmissions() {
-        return submissions;
     }
 
     public void setMultiplier(double multiplier) {
