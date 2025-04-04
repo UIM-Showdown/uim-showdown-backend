@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tiles")
 public class Tile {
-	
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -60,7 +60,7 @@ public class Tile {
 
     @Override
     public boolean equals(Object obj) {
-    	return obj != null && obj instanceof Tile && ((Tile) obj).getId() == this.id;
+        return obj != null && obj instanceof Tile && ((Tile) obj).getId() == this.id;
     }
     
 }

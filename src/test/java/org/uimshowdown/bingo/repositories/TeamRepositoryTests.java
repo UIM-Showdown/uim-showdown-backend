@@ -24,7 +24,7 @@ public class TeamRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-    	teamRepository.deleteAll();
+        teamRepository.deleteAll();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
     }
 

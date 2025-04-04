@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "record_handicaps")
 public class RecordHandicap {
-	
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty
@@ -80,7 +80,7 @@ public class RecordHandicap {
 
     @Override
     public boolean equals(Object obj) {
-    	return obj != null && obj instanceof RecordHandicap && ((RecordHandicap) obj).getId() == this.id;
+        return obj != null && obj instanceof RecordHandicap && ((RecordHandicap) obj).getId() == this.id;
     }
     
 }

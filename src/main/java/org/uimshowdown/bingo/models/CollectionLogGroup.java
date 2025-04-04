@@ -27,9 +27,9 @@ import jakarta.persistence.Table;
 @DiscriminatorColumn(name = "type")
 @Table(name = "collection_log_groups")
 public class CollectionLogGroup {
-	
-	public enum Type { CHECKLIST, COUNTER };
-	
+    
+    public enum Type { CHECKLIST, COUNTER };
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty

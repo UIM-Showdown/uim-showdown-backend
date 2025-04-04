@@ -29,8 +29,8 @@ public class TeamScoreboardRepositoryTests {
     
     @BeforeAll
     public void setUp() {
-    	teamRepository.deleteAll();
-    	teamScoreboardRepository.deleteAll();
+        teamRepository.deleteAll();
+        teamScoreboardRepository.deleteAll();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testTeamScoreboard = teamScoreboardRepository.save(SharedTestVariables.makeTestTeamScoreboard(testTeam));
     }

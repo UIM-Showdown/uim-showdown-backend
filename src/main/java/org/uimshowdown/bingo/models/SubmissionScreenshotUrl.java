@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "submission_screenshot_urls")
 public class SubmissionScreenshotUrl {
-	
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -47,7 +47,7 @@ public class SubmissionScreenshotUrl {
 
     @Override
     public boolean equals(Object obj) {
-    	return obj != null && obj instanceof SubmissionScreenshotUrl && ((SubmissionScreenshotUrl) obj).getId() == this.id;
+        return obj != null && obj instanceof SubmissionScreenshotUrl && ((SubmissionScreenshotUrl) obj).getId() == this.id;
     }
     
 }

@@ -17,7 +17,7 @@ import jakarta.persistence.TemporalType;
 @Entity
 @Table(name = "record_completions")
 public class RecordCompletion {
-	
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
@@ -98,7 +98,7 @@ public class RecordCompletion {
 
     @Override
     public boolean equals(Object obj) {
-    	return obj != null && obj instanceof RecordCompletion && ((RecordCompletion) obj).getId() == this.id;
+        return obj != null && obj instanceof RecordCompletion && ((RecordCompletion) obj).getId() == this.id;
     }
     
 }

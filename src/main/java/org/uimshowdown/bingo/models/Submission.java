@@ -24,9 +24,9 @@ import jakarta.persistence.TemporalType;
 @Inheritance(strategy = InheritanceType.JOINED) 
 @Table(name = "submissions")
 public class Submission {
-	
-	public enum State { OPEN, APPROVED, DENIED }
-	
+    
+    public enum State { OPEN, APPROVED, DENIED }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -91,7 +91,7 @@ public class Submission {
 
     @Override
     public boolean equals(Object obj) {
-    	return obj != null && obj instanceof Submission && ((Submission) obj).getId() == this.id;
+        return obj != null && obj instanceof Submission && ((Submission) obj).getId() == this.id;
     }
 
 }

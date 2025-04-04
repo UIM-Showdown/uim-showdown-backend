@@ -32,8 +32,8 @@ public class PlayerRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-    	teamRepository.deleteAll();
-    	playerRepository.deleteAll();
+        teamRepository.deleteAll();
+        playerRepository.deleteAll();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
         testCaptain = playerRepository.save(SharedTestVariables.makeTestCaptain(testTeam));
@@ -85,16 +85,16 @@ public class PlayerRepositoryTests {
     @Test
     @Transactional
     public void getRoster() {
-    	Set<Player> roster = playerRepository.getTeamRoster(testTeam.getId());
-    	assertThat(roster).contains(testPlayer, testCaptain);
+        Set<Player> roster = playerRepository.getTeamRoster(testTeam.getId());
+        assertThat(roster).contains(testPlayer, testCaptain);
     }
     
     @Test
     @Transactional
     public void getCaptains() {
-    	Set<Player> roster = playerRepository.getTeamCaptains(testTeam.getId());
-    	assertThat(roster)
-    	.contains(testCaptain)
-    	.doesNotContain(testPlayer);
+        Set<Player> roster = playerRepository.getTeamCaptains(testTeam.getId());
+        assertThat(roster)
+        .contains(testCaptain)
+        .doesNotContain(testPlayer);
     }
 }

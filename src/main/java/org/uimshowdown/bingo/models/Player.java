@@ -20,7 +20,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "players")
 public class Player {
-	
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty
@@ -129,7 +129,7 @@ public class Player {
 
     @Override
     public boolean equals(Object obj) {
-    	return obj != null && obj instanceof Player && ((Player) obj).getId() == this.id;
+        return obj != null && obj instanceof Player && ((Player) obj).getId() == this.id;
     }
     
 }

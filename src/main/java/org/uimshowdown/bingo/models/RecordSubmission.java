@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 @PrimaryKeyJoinColumn(name = "submission_id")
 @Table(name = "record_submissions")
 public class RecordSubmission extends Submission {
-	
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "handicap_id", nullable = true)
     private RecordHandicap handicap;

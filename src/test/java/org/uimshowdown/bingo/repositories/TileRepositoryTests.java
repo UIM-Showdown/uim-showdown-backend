@@ -24,7 +24,7 @@ public class TileRepositoryTests extends SharedTestVariables {
 
     @BeforeAll
     public void setUp() {
-    	tileRepository.deleteAll();
+        tileRepository.deleteAll();
         testTile = tileRepository.save(SharedTestVariables.makeTestTile());
     }
 

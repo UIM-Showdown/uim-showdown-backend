@@ -11,17 +11,17 @@ import org.uimshowdown.bingo.repositories.CollectionLogGroupRepository;
 
 @RestController
 public class CollectionLogGroupController {
-	
-	@Autowired
-	private CollectionLogGroupRepository collectionLogGroupRepository;
-	
-	@GetMapping("/collectionLogGroups")
-	public Set<CollectionLogGroup> getCollectionLogGroups() {
-		Set<CollectionLogGroup> groups = new HashSet<CollectionLogGroup>();
-		for(CollectionLogGroup group : collectionLogGroupRepository.findAll()) {
-			groups.add(group);
-		}
-		return groups;
-	}
+    
+    @Autowired
+    private CollectionLogGroupRepository collectionLogGroupRepository;
+    
+    @GetMapping("/collectionLogGroups")
+    public Set<CollectionLogGroup> getCollectionLogGroups() {
+        Set<CollectionLogGroup> groups = new HashSet<CollectionLogGroup>();
+        for(CollectionLogGroup group : collectionLogGroupRepository.findAll()) {
+            groups.add(group);
+        }
+        return groups;
+    }
 
 }

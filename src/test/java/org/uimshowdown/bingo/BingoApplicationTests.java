@@ -8,9 +8,9 @@ import org.uimshowdown.bingo.constants.TestTag;
 @SpringBootTest
 class BingoApplicationTests {
 
-	@Test
-	@Tag(TestTag.SMOKE_TEST)
-	void contextLoads() {
-	}
+    @Test
+    @Tag(TestTag.SMOKE_TEST)
+    void contextLoads() {
+    }
 
 }

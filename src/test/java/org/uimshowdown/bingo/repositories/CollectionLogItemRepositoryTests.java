@@ -29,8 +29,8 @@ public class CollectionLogItemRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-    	collectionLogItemRepository.deleteAll();
-    	collectionLogGroupRepository.deleteAll();
+        collectionLogItemRepository.deleteAll();
+        collectionLogGroupRepository.deleteAll();
         testCollectionLogGroup = collectionLogGroupRepository.save(SharedTestVariables.makeTestCollectionLogChecklistGroup());
         testCollectionLogItem = collectionLogItemRepository.save(SharedTestVariables.makeTestCollectionLogItem(testCollectionLogGroup));
     }

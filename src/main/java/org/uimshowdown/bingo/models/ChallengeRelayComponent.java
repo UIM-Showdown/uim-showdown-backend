@@ -66,6 +66,6 @@ public class ChallengeRelayComponent {
     }
 
     public boolean equals(Object obj) {
-    	return obj != null && obj instanceof ChallengeRelayComponent && ((ChallengeRelayComponent) obj).getId() == this.id;
+        return obj != null && obj instanceof ChallengeRelayComponent && ((ChallengeRelayComponent) obj).getId() == this.id;
     }
 }

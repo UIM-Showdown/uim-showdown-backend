@@ -181,7 +181,7 @@ public class SharedTestVariables {
     }
     
     public static Player makeTestCaptain(Team team) {
-    	Player testPlayer = new Player();
+        Player testPlayer = new Player();
         testPlayer.setCaptainStatus(true);
         testPlayer.setDiscordName("derek_mk");
         testPlayer.setRsn("DerekMK");

@@ -11,17 +11,17 @@ import org.uimshowdown.bingo.repositories.TeamRepository;
 
 @RestController
 public class TeamController {
-	
-	@Autowired
-	private TeamRepository teamRepository;
-	
-	@GetMapping("/teams")
-	public Set<Team> getTeams() {
-		Set<Team> teams = new HashSet<Team>();
-		for(Team team : teamRepository.findAll()) {
-			teams.add(team);
-		}
-		return teams;
-	}
+    
+    @Autowired
+    private TeamRepository teamRepository;
+    
+    @GetMapping("/teams")
+    public Set<Team> getTeams() {
+        Set<Team> teams = new HashSet<Team>();
+        for(Team team : teamRepository.findAll()) {
+            teams.add(team);
+        }
+        return teams;
+    }
 
 }

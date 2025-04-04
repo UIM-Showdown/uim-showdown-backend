@@ -14,7 +14,7 @@ import jakarta.persistence.OrderBy;
 @Entity
 @DiscriminatorValue("COUNTER")
 public class CollectionLogCounterGroup extends CollectionLogGroup {
-	
+    
     @OneToMany(mappedBy = "collectionLogGroup", cascade = CascadeType.ALL)
     @OrderBy("value DESC")
     private List<CollectionLogGroupCounterPointValue> counterPointValues;

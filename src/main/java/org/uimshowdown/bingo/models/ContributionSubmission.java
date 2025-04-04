@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 @PrimaryKeyJoinColumn(name = "submission_id")
 @Table(name = "contribution_submissions")
 public class ContributionSubmission extends Submission {
-	
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contribution_method_id")
     private ContributionMethod contributionMethod;

@@ -34,9 +34,9 @@ public class SubmissionRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-    	teamRepository.deleteAll();
-    	playerRepository.deleteAll();
-    	submissionRepository.deleteAll();
+        teamRepository.deleteAll();
+        playerRepository.deleteAll();
+        submissionRepository.deleteAll();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
         testSubmission = submissionRepository.save(SharedTestVariables.makeTestSubmission(testPlayer));

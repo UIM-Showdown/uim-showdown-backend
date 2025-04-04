@@ -34,9 +34,9 @@ public class TileProgressRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-    	teamRepository.deleteAll();
-    	tileRepository.deleteAll();
-    	tileProgressRepository.deleteAll();
+        teamRepository.deleteAll();
+        tileRepository.deleteAll();
+        tileProgressRepository.deleteAll();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testTile = tileRepository.save(SharedTestVariables.makeTestTile());
         testTileProgress = tileProgressRepository.save(SharedTestVariables.makeTestTileProgress(testTile, testTeam));

@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "teams")
 public class Team {
-	
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty
@@ -94,18 +94,18 @@ public class Team {
     
     @JsonProperty("captains")
     public Set<Player> getCaptains() {
-    	Set<Player> captains = new HashSet<Player>();
-    	for(Player player : this.players) {
-    		if(player.isCaptain()) {
-    			captains.add(player);
-    		}
-    	}
-    	return captains;
+        Set<Player> captains = new HashSet<Player>();
+        for(Player player : this.players) {
+            if(player.isCaptain()) {
+                captains.add(player);
+            }
+        }
+        return captains;
     }
 
     @Override
     public boolean equals(Object obj) {
-    	return obj != null && obj instanceof Team && ((Team) obj).getId() == this.id;
+        return obj != null && obj instanceof Team && ((Team) obj).getId() == this.id;
     }
     
 }

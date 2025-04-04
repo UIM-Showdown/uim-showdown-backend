@@ -14,14 +14,14 @@ import jakarta.persistence.OrderBy;
 @Entity
 @DiscriminatorValue("CHECKLIST")
 public class CollectionLogChecklistGroup extends CollectionLogGroup {
-	
+    
     @OneToMany(mappedBy = "collectionLogGroup", cascade = CascadeType.ALL)
     @OrderBy("value ASC")
     private List<CollectionLogGroupChecklistBonusPointThreshold> bonusPointThresholds;
 
     @JsonProperty("bonusPointThresholds")
     public int[] getBonusPointThresholds() {
-    	return bonusPointThresholds
+        return bonusPointThresholds
             .stream()
             .mapToInt(CollectionLogGroupChecklistBonusPointThreshold::getValue)
             .toArray();

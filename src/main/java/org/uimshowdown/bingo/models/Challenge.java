@@ -18,9 +18,9 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "challenges")
 public class Challenge {
-	
-	public enum Type { RELAY, SPEEDRUN }
-	
+    
+    public enum Type { RELAY, SPEEDRUN }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty
@@ -99,7 +99,7 @@ public class Challenge {
 
     @Override
     public boolean equals(Object obj) {
-    	return obj != null && obj instanceof Challenge && ((Challenge) obj).getId() == this.id;
+        return obj != null && obj instanceof Challenge && ((Challenge) obj).getId() == this.id;
     }
     
 }

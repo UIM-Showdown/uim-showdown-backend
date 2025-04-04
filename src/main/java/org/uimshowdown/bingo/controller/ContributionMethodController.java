@@ -11,17 +11,17 @@ import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
 
 @RestController
 public class ContributionMethodController {
-	
-	@Autowired
-	private ContributionMethodRepository contributionMethodRepository;
-	
-	@GetMapping("/contributionMethods")
-	public Set<ContributionMethod> getContributionMethods() {
-		Set<ContributionMethod> contributionMethods = new HashSet<ContributionMethod>();
-		for(ContributionMethod contributionMethod : contributionMethodRepository.findAll()) {
-			contributionMethods.add(contributionMethod);
-		}
-		return contributionMethods;
-	}
+    
+    @Autowired
+    private ContributionMethodRepository contributionMethodRepository;
+    
+    @GetMapping("/contributionMethods")
+    public Set<ContributionMethod> getContributionMethods() {
+        Set<ContributionMethod> contributionMethods = new HashSet<ContributionMethod>();
+        for(ContributionMethod contributionMethod : contributionMethodRepository.findAll()) {
+            contributionMethods.add(contributionMethod);
+        }
+        return contributionMethods;
+    }
 
 }

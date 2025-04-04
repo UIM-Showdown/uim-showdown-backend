@@ -29,8 +29,8 @@ public class RecordHandicapRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-    	recordRepository.deleteAll();
-    	recordHandicapRepository.deleteAll();
+        recordRepository.deleteAll();
+        recordHandicapRepository.deleteAll();
         testRecord = recordRepository.save(SharedTestVariables.makeTestRecord());
         testRecordHandicap = recordHandicapRepository.save(SharedTestVariables.makeTestRecordHandicap(testRecord));
     }

@@ -20,11 +20,11 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "contribution_methods")
 public class ContributionMethod {
-	
-	public enum Category { PVM, SKILLING, OTHER }
-	
-	public enum Type { KC, SUBMISSION, XP }
-	
+    
+    public enum Category { PVM, SKILLING, OTHER }
+    
+    public enum Type { KC, SUBMISSION, XP }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty
@@ -127,13 +127,13 @@ public class ContributionMethod {
 
     @JsonProperty("tilePointsPerContribution")
     public int getTilePointsPerContribution() {
-    	int ehtPerTier = 30; // TODO get from config
-    	return (int) (this.tile.getPointsPerTier() / ehtPerTier / this.ehtRate);
+        int ehtPerTier = 30; // TODO get from config
+        return (int) (this.tile.getPointsPerTier() / ehtPerTier / this.ehtRate);
     }
 
     @Override
     public boolean equals(Object obj) {
-    	return obj != null && obj instanceof ContributionMethod && ((ContributionMethod) obj).getId() == this.id;
+        return obj != null && obj instanceof ContributionMethod && ((ContributionMethod) obj).getId() == this.id;
     }
 
 }

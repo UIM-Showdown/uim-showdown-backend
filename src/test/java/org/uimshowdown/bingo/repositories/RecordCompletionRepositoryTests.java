@@ -44,11 +44,11 @@ public class RecordCompletionRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-    	teamRepository.deleteAll();
-    	playerRepository.deleteAll();
-    	recordRepository.deleteAll();
-    	recordHandicapRepository.deleteAll();
-    	recordCompletionRepository.deleteAll();
+        teamRepository.deleteAll();
+        playerRepository.deleteAll();
+        recordRepository.deleteAll();
+        recordHandicapRepository.deleteAll();
+        recordCompletionRepository.deleteAll();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
         testRecord = recordRepository.save(SharedTestVariables.makeTestRecord());
