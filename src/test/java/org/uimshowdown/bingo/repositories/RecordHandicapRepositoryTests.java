@@ -37,8 +37,8 @@ public class RecordHandicapRepositoryTests {
 
     @AfterAll
     public void tearDown() {
-        recordHandicapRepository.delete(testRecordHandicap);
-        recordRepository.delete(testRecord);
+        //recordHandicapRepository.delete(testRecordHandicap);
+        //recordRepository.delete(testRecord);
     }
 
     @Test
