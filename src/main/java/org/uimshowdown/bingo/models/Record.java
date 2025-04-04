@@ -2,6 +2,8 @@ package org.uimshowdown.bingo.models;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,18 +18,22 @@ public class Record {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty
     private int id;
 
     @OneToMany(mappedBy = "record")
     private Set<RecordCompletion> completions;
 
     @Column(length = 512)
+    @JsonProperty
     private String description;
 
     @OneToMany(mappedBy = "record")
+    @JsonProperty
     private Set<RecordHandicap> handicaps;
 
     @Column(length = 16)
+    @JsonProperty
     private String skill;
 
     @OneToMany(mappedBy = "record")

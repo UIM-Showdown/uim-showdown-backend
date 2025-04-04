@@ -44,6 +44,11 @@ public class CollectionLogSubmissionRepositoryTests {
 
     @BeforeAll
     public void setUp() {
+    	teamRepository.deleteAll();
+    	playerRepository.deleteAll();
+    	collectionLogGroupRepository.deleteAll();
+    	collectionLogItemRepository.deleteAll();
+    	collectionLogSubmissionRepository.deleteAll();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
         testCollectionLogGroup = collectionLogGroupRepository.save(SharedTestVariables.makeTestCollectionLogChecklistGroup());

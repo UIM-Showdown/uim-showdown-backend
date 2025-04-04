@@ -24,6 +24,7 @@ public class ChallengeRepositoryTests {
 
     @BeforeAll
     public void setUp() {
+    	challengeRepository.deleteAll();
         testChallenge = challengeRepository.save(SharedTestVariables.makeTestChallenge());
     }
 

@@ -2,6 +2,8 @@ package org.uimshowdown.bingo.models;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -18,6 +20,7 @@ import jakarta.persistence.Table;
 public class ChallengeRelayComponent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -25,6 +28,7 @@ public class ChallengeRelayComponent {
     private Challenge challenge;
 
     @Column(length = 64)
+    @JsonProperty
     private String name;
 
     @OneToMany(mappedBy = "relayComponent")

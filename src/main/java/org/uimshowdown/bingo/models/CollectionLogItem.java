@@ -2,6 +2,8 @@ package org.uimshowdown.bingo.models;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,6 +21,7 @@ public class CollectionLogItem {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty
     private int id;
 
     @OneToMany(mappedBy = "item")
@@ -29,9 +32,11 @@ public class CollectionLogItem {
     private CollectionLogGroup group;
 
     @Column(length = 512)
+    @JsonProperty
     private String description;
 
     @Column(length = 64, unique = true)
+    @JsonProperty
     private String name;
 
     @OneToMany(mappedBy = "item")

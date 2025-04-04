@@ -2,6 +2,8 @@ package org.uimshowdown.bingo.models;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -20,28 +22,34 @@ public class Challenge {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty
     private int id;
 
     @OneToMany(mappedBy = "challenge")
     private Set<ChallengeCompletion> completions;
 
     @Column(length = 512)
+    @JsonProperty
     private String description;
 
     @Column(length = 64)
+    @JsonProperty
     private String name;
 
     @OneToMany(mappedBy = "challenge")
+    @JsonProperty
     private Set<ChallengeRelayComponent> relayComponents;
 
     @OneToMany(mappedBy = "challenge")
     private Set<ChallengeSubmission> submissions;
 
     @Column(name = "team_size")
+    @JsonProperty
     private int teamSize;
 
     @Column
     @Enumerated(EnumType.STRING)
+    @JsonProperty
     private Type type;
 
     public int getId() {

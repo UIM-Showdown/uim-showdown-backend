@@ -3,6 +3,8 @@ package org.uimshowdown.bingo.models;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -16,6 +18,7 @@ public class CollectionLogChecklistGroup extends CollectionLogGroup {
     @OrderBy("value ASC")
     private List<CollectionLogGroupChecklistBonusPointThreshold> bonusPointThresholds;
 
+    @JsonProperty("bonusPointThresholds")
     public int[] getBonusPointThresholds() {
         return bonusPointThresholds
             .stream()

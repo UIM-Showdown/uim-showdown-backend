@@ -1,6 +1,8 @@
 package org.uimshowdown.bingo.models;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -24,6 +26,7 @@ public class ContributionMethod {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty
     private int id;
 
     @OneToMany(mappedBy = "contributionMethod")
@@ -41,17 +44,25 @@ public class ContributionMethod {
 
     @Column(name = "category")
     @Enumerated(EnumType.STRING)
+    @JsonProperty
     private Category contributionMethodCategory;
 
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
+    @JsonProperty
     private Type contributionMethodType;
 
     @Column(name = "eht_rate")
+    @JsonProperty
     private double ehtRate;
 
     @Column(length = 64)
+    @JsonProperty
     private String name;
+    
+    @Column(length = 64)
+    @JsonProperty
+    private String templeId;
 
     public int getId() {
         return id;
@@ -107,6 +118,12 @@ public class ContributionMethod {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @JsonProperty("tilePointsPerContribution")
+    public int getTilePointsPerContribution() {
+    	int ehtPerTier = 30; // TODO get from config
+    	return (int) (this.tile.getPointsPerTier() / ehtPerTier / this.ehtRate);
     }
 
     @Override

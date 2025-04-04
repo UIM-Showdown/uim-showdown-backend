@@ -44,6 +44,11 @@ public class UnrankedStartingValueSubmissionRepositoryTests {
 
     @BeforeAll
     public void setUp() {
+    	teamRepository.deleteAll();
+    	playerRepository.deleteAll();
+    	tileRepository.deleteAll();
+    	contributionMethodRepository.deleteAll();
+    	unrankedStartingValueSubmissionRepository.deleteAll();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
         testTile = tileRepository.save(SharedTestVariables.makeTestTile());

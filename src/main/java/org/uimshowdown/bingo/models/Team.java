@@ -2,6 +2,11 @@ package org.uimshowdown.bingo.models;
 
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.uimshowdown.bingo.repositories.PlayerRepository;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,20 +20,27 @@ import jakarta.persistence.Table;
 @Table(name = "teams")
 public class Team {
 	
+	@Autowired
+	private transient PlayerRepository playerRepository;
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty
     private int id;
 
     @Column(length = 8)
+    @JsonProperty
     private String abbreviation;
 
     @OneToMany(mappedBy = "team")
     private Set<ChallengeCompletion> challengeCompletions;
 
     @Column(length = 6)
+    @JsonProperty
     private String color;
 
     @Column(length = 128, unique = true)
+    @JsonProperty
     private String name;
 
     @OneToMany(mappedBy = "team")
@@ -78,6 +90,16 @@ public class Team {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    @JsonProperty("captains")
+    public Set<Player> getCaptains() {
+    	return playerRepository.getTeamCaptains(id);
+    }
+    
+    @JsonProperty("roster")
+    public Set<Player> getRoster() {
+    	return playerRepository.getTeamRoster(id);
     }
 
     @Override

@@ -2,6 +2,8 @@ package org.uimshowdown.bingo.models;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,15 +22,17 @@ public class Player {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty
     private int id;
 
     @Column
-    private Boolean captain;
+    private boolean captain;
 
     @OneToMany(mappedBy = "player")
     private Set<Contribution> contributions;
 
     @Column(length = 64, name="discord_name", unique = true)
+    @JsonProperty
     private String discordName;
 
     @OneToMany(mappedBy = "player")
@@ -41,6 +45,7 @@ public class Player {
     private Set<RecordCompletion> recordCompletions;
 
     @Column(length = 64, unique = true)
+    @JsonProperty
     private String rsn;
 
     @OneToOne(mappedBy = "player")
@@ -93,11 +98,11 @@ public class Player {
         return team;
     }
 
-    public Boolean isCaptain() {
+    public boolean isCaptain() {
         return captain;
     }
 
-    public void setCaptainStatus(Boolean isCaptain) {
+    public void setCaptainStatus(boolean isCaptain) {
         captain = isCaptain;
     }
 

@@ -29,6 +29,8 @@ public class ChallengeRelayComponentRepositoryTests {
 
     @BeforeAll
     public void setUp() {
+    	challengeRepository.deleteAll();
+    	challengeRelayComponentRepository.deleteAll();
         testChallenge = challengeRepository.save(SharedTestVariables.makeTestChallenge());
         testChallengeRelayComponent = challengeRelayComponentRepository.save(SharedTestVariables.makeTestChallengeRelayComponent(testChallenge));
     }

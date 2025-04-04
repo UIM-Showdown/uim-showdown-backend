@@ -3,6 +3,8 @@ package org.uimshowdown.bingo.models;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -16,6 +18,7 @@ public class CollectionLogCounterGroup extends CollectionLogGroup {
     @OrderBy("value DESC")
     private List<CollectionLogGroupCounterPointValue> counterPointValues;
 
+    @JsonProperty("counterPointValues")
     public int[] getCounterPointValues() {
         return counterPointValues
             .stream()

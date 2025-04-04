@@ -29,6 +29,8 @@ public class ContributionMethodRepositoryTests {
 
     @BeforeAll
     public void setUp() {
+    	tileRepository.deleteAll();
+    	contributionMethodRepository.deleteAll();
         testTile = tileRepository.save(SharedTestVariables.makeTestTile());
         testContributionMethod = contributionMethodRepository.save(SharedTestVariables.makeTestContributionMethod(testTile));
     }
