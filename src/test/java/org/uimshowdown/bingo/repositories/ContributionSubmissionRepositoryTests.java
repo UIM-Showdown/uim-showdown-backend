@@ -44,12 +44,11 @@ public class ContributionSubmissionRepositoryTests {
 
     @BeforeAll
     public void setUp() {
+    	contributionSubmissionRepository.deleteAll();
         teamRepository.deleteAll();
         playerRepository.deleteAll();
-        tileRepository.deleteAll();
-        tileRepository.deleteAll();
         contributionMethodRepository.deleteAll();
-        contributionSubmissionRepository.deleteAll();
+        tileRepository.deleteAll();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
         testTile = tileRepository.save(SharedTestVariables.makeTestTile());
