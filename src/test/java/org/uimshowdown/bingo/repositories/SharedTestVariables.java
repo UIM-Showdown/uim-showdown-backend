@@ -211,10 +211,11 @@ public class SharedTestVariables {
         return testPlayerScoreboard;
     }
 
-    public static Submission makeTestSubmission(Player player) {
-        Submission testSubmission = new Submission();
+    public static ChallengeSubmission makeTestSubmission(Player player, Challenge challenge) {
+    	ChallengeSubmission testSubmission = new ChallengeSubmission();
         testSubmission.setSubmissionState(Submission.State.OPEN);
         testSubmission.setPlayer(player);
+        testSubmission.setChallenge(challenge);
         return testSubmission;
     }
 
