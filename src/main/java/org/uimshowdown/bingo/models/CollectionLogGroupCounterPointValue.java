@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "collection_log_group_counter_point_values")
 public class CollectionLogGroupCounterPointValue {
-	
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import org.uimshowdown.bingo.constants.TestTag;
+import org.uimshowdown.bingo.models.Challenge;
+import org.uimshowdown.bingo.models.ChallengeSubmission;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.Submission;
 import org.uimshowdown.bingo.models.Team;
@@ -27,16 +29,25 @@ public class SubmissionRepositoryTests {
 
     @Autowired
     private SubmissionRepository submissionRepository;
+    
+    @Autowired
+    private ChallengeRepository challengeRepository;
 
     private Team testTeam;
     private Player testPlayer;
-    private Submission testSubmission;
+    private ChallengeSubmission testSubmission;
+    private Challenge testChallenge;
 
     @BeforeAll
     public void setUp() {
+        teamRepository.deleteAll();
+        playerRepository.deleteAll();
+        submissionRepository.deleteAll();
+        challengeRepository.deleteAll();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
-        testSubmission = submissionRepository.save(SharedTestVariables.makeTestSubmission(testPlayer));
+        testChallenge = challengeRepository.save(SharedTestVariables.makeTestChallenge());
+        testSubmission = submissionRepository.save(SharedTestVariables.makeTestSubmission(testPlayer, testChallenge));
     }
 
     @AfterAll
@@ -44,6 +55,7 @@ public class SubmissionRepositoryTests {
         submissionRepository.delete(testSubmission);
         playerRepository.delete(testPlayer);
         teamRepository.delete(testTeam);
+        challengeRepository.delete(testChallenge);
     }
 
     @Test

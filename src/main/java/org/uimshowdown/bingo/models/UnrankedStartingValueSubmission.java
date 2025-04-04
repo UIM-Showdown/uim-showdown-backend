@@ -1,18 +1,16 @@
 package org.uimshowdown.bingo.models;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
-import jakarta.persistence.Table;
 
 @Entity
-@PrimaryKeyJoinColumn(name = "submission_id")
-@Table(name = "unranked_starting_value_submissions")
+@DiscriminatorValue("UNRANKED_STARTING_VALUE")
 public class UnrankedStartingValueSubmission extends Submission {
-	
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contribution_method_id")
     private ContributionMethod contributionMethod;
@@ -34,6 +32,15 @@ public class UnrankedStartingValueSubmission extends Submission {
 
     public void setValue(int value) {
         this.value = value;
+    }
+    
+    @Override
+    public void setType(Submission.Type type) throws IllegalArgumentException {
+    	if(type != Submission.Type.UNRANKED_STARTING_VALUE) {
+    		throw new IllegalArgumentException("Unranked starting value submission type must be set to 'UNRANKED_STARTING_VALUE'");
+    	}
+    	
+    	super.setType(type);
     }
     
 }

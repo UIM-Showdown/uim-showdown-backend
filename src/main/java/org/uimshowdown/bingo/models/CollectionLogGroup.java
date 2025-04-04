@@ -2,6 +2,8 @@ package org.uimshowdown.bingo.models;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
@@ -25,25 +27,30 @@ import jakarta.persistence.Table;
 @DiscriminatorColumn(name = "type")
 @Table(name = "collection_log_groups")
 public class CollectionLogGroup {
-	
-	public enum Type { CHECKLIST, COUNTER };
-	
+    
+    public enum Type { CHECKLIST, COUNTER };
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty
     private int id;
 
     @Column(length = 512)
+    @JsonProperty
     private String description;
 
     @OneToMany(mappedBy = "group")
+    @JsonProperty
     private Set<CollectionLogItem> items;
 
     @Column(length = 64, unique = true)
+    @JsonProperty
     private String name;
 
     /** insert and update are managed by discriminator mechanics */
     @Column(insertable = false, updatable = false)
     @Enumerated(EnumType.STRING)
+    @JsonProperty
     private Type type;
 
     public int getId() {

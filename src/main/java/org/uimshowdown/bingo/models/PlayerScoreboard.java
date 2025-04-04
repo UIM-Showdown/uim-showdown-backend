@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "player_scoreboards")
 public class PlayerScoreboard {
-	
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -91,7 +91,7 @@ public class PlayerScoreboard {
 
     @Override
     public boolean equals(Object obj) {
-    	return obj != null && obj instanceof PlayerScoreboard && ((PlayerScoreboard) obj).getId() == this.id;
+        return obj != null && obj instanceof PlayerScoreboard && ((PlayerScoreboard) obj).getId() == this.id;
     }
     
 }

@@ -49,6 +49,12 @@ public class PlayerChallengeCompletionRespositoryTests {
 
     @BeforeAll
     public void setUp() {
+        teamRepository.deleteAll();
+        playerRepository.deleteAll();
+        challengeRepository.deleteAll();
+        challengeCompletionRepository.deleteAll();
+        challengeRelayComponentRepository.deleteAll();
+        playerChallengeCompletionRepository.deleteAll();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
         testChallenge = challengeRepository.save(SharedTestVariables.makeTestChallenge());

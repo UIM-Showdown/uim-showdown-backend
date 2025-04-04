@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "challenge_completions")
 public class ChallengeCompletion {
-	
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -81,7 +81,7 @@ public class ChallengeCompletion {
 
     @Override
     public boolean equals(Object obj) {
-    	return obj != null && obj instanceof ChallengeCompletion && ((ChallengeCompletion) obj).getId() == this.id;
+        return obj != null && obj instanceof ChallengeCompletion && ((ChallengeCompletion) obj).getId() == this.id;
     }
     
 }

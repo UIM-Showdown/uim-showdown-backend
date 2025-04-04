@@ -2,6 +2,10 @@ package org.uimshowdown.bingo.models;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -15,33 +19,41 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "challenges")
 public class Challenge {
-	
-	public enum Type { RELAY, SPEEDRUN }
-	
+    
+    public enum Type { RELAY, SPEEDRUN }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty
     private int id;
 
     @OneToMany(mappedBy = "challenge")
+    @JsonIgnore
     private Set<ChallengeCompletion> completions;
 
     @Column(length = 512)
+    @JsonProperty
     private String description;
 
     @Column(length = 64)
+    @JsonProperty
     private String name;
 
-    @OneToMany(mappedBy = "challenge")
+    @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL)
+    @JsonProperty
     private Set<ChallengeRelayComponent> relayComponents;
 
     @OneToMany(mappedBy = "challenge")
+    @JsonIgnore
     private Set<ChallengeSubmission> submissions;
 
     @Column(name = "team_size")
+    @JsonProperty
     private int teamSize;
 
     @Column
     @Enumerated(EnumType.STRING)
+    @JsonProperty
     private Type type;
 
     public int getId() {
@@ -90,7 +102,7 @@ public class Challenge {
 
     @Override
     public boolean equals(Object obj) {
-    	return obj != null && obj instanceof Challenge && ((Challenge) obj).getId() == this.id;
+        return obj != null && obj instanceof Challenge && ((Challenge) obj).getId() == this.id;
     }
     
 }

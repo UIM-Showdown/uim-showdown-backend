@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "collection_log_completions")
 public class CollectionLogCompletion {
-	
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

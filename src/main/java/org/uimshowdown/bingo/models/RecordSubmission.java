@@ -3,18 +3,16 @@ package org.uimshowdown.bingo.models;
 import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
-import jakarta.persistence.Table;
 
 @Entity
-@PrimaryKeyJoinColumn(name = "submission_id")
-@Table(name = "record_submissions")
+@DiscriminatorValue("SUBMISSION")
 public class RecordSubmission extends Submission {
-	
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "handicap_id", nullable = true)
     private RecordHandicap handicap;
@@ -59,6 +57,15 @@ public class RecordSubmission extends Submission {
 
     public void setValue(int value) {
         this.value = value;
+    }
+    
+    @Override
+    public void setType(Submission.Type type) throws IllegalArgumentException {
+    	if(type != Submission.Type.RECORD) {
+    		throw new IllegalArgumentException("Record submission type must be set to 'RECORD'");
+    	}
+    	
+    	super.setType(type);
     }
     
 }

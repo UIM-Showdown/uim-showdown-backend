@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "contributions")
 public class Contribution {
-	
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -114,7 +114,7 @@ public class Contribution {
 
     @Override
     public boolean equals(Object obj) {
-    	return obj != null && obj instanceof Contribution && ((Contribution) obj).getId() == this.id;
+        return obj != null && obj instanceof Contribution && ((Contribution) obj).getId() == this.id;
     }
     
 }

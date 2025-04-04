@@ -2,6 +2,9 @@ package org.uimshowdown.bingo.models;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,40 +20,51 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "players")
 public class Player {
-	
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty
     private int id;
 
     @Column
-    private Boolean captain;
+    @JsonIgnore
+    private boolean captain;
 
     @OneToMany(mappedBy = "player")
+    @JsonIgnore
     private Set<Contribution> contributions;
 
     @Column(length = 64, name="discord_name", unique = true)
+    @JsonProperty
     private String discordName;
 
     @OneToMany(mappedBy = "player")
+    @JsonIgnore
     private Set<CollectionLogCompletion> collectionLogCompletions;
 
     @OneToMany(mappedBy = "player")
+    @JsonIgnore
     private Set<PlayerChallengeCompletion> playerChallengeCompletions;
 
     @OneToMany(mappedBy = "player")
+    @JsonIgnore
     private Set<RecordCompletion> recordCompletions;
 
     @Column(length = 64, unique = true)
+    @JsonProperty
     private String rsn;
 
     @OneToOne(mappedBy = "player")
+    @JsonIgnore
     private PlayerScoreboard scoreboard;
 
     @OneToMany(mappedBy = "player")
+    @JsonIgnore
     private Set<Submission> submissions;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
+    @JsonIgnore
     private Team team;
 
     public Set<Contribution> getContributions() {
@@ -93,11 +107,11 @@ public class Player {
         return team;
     }
 
-    public Boolean isCaptain() {
+    public boolean isCaptain() {
         return captain;
     }
 
-    public void setCaptainStatus(Boolean isCaptain) {
+    public void setCaptainStatus(boolean isCaptain) {
         captain = isCaptain;
     }
 
@@ -115,7 +129,7 @@ public class Player {
 
     @Override
     public boolean equals(Object obj) {
-    	return obj != null && obj instanceof Player && ((Player) obj).getId() == this.id;
+        return obj != null && obj instanceof Player && ((Player) obj).getId() == this.id;
     }
     
 }

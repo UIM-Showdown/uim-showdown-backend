@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "collection_log_group_checklist_bonus_point_thresholds")
 public class CollectionLogGroupChecklistBonusPointThreshold {
-	
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

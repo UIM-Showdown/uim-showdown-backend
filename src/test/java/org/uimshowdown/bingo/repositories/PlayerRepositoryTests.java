@@ -2,6 +2,8 @@ package org.uimshowdown.bingo.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Set;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
@@ -25,17 +27,22 @@ public class PlayerRepositoryTests {
     private TeamRepository teamRepository;
     
     private Player testPlayer;
+    private Player testCaptain;
     private Team testTeam;
 
     @BeforeAll
     public void setUp() {
+        teamRepository.deleteAll();
+        playerRepository.deleteAll();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
+        testCaptain = playerRepository.save(SharedTestVariables.makeTestCaptain(testTeam));
     }
 
     @AfterAll
     public void tearDown() {
         playerRepository.delete(testPlayer);
+        playerRepository.delete(testCaptain);
         teamRepository.delete(testTeam);
     }
 
@@ -73,5 +80,21 @@ public class PlayerRepositoryTests {
         Player player = playerRepository.findByRsn("Not Likely To Be Found").orElse(null);
 
         assertThat(player).isNull();
+    }
+    
+    @Test
+    @Transactional
+    public void getRoster() {
+        Set<Player> roster = playerRepository.getTeamRoster(testTeam.getId());
+        assertThat(roster).contains(testPlayer, testCaptain);
+    }
+    
+    @Test
+    @Transactional
+    public void getCaptains() {
+        Set<Player> roster = playerRepository.getTeamCaptains(testTeam.getId());
+        assertThat(roster)
+        .contains(testCaptain)
+        .doesNotContain(testPlayer);
     }
 }

@@ -2,6 +2,9 @@ package org.uimshowdown.bingo.models;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -16,25 +19,31 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "collection_log_items")
 public class CollectionLogItem {
-	
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty
     private int id;
 
     @OneToMany(mappedBy = "item")
+    @JsonIgnore
     private Set<CollectionLogCompletion> completions;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
+    @JsonIgnore
     private CollectionLogGroup group;
 
     @Column(length = 512)
+    @JsonProperty
     private String description;
 
     @Column(length = 64, unique = true)
+    @JsonProperty
     private String name;
 
     @OneToMany(mappedBy = "item")
+    @JsonIgnore
     private Set<CollectionLogSubmission> submissions;
 
     public int getId() {

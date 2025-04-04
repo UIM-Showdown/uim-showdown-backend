@@ -3,7 +3,10 @@ package org.uimshowdown.bingo.models;
 import java.sql.Timestamp;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,12 +24,15 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED) 
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type")
 @Table(name = "submissions")
 public class Submission {
-	
-	public enum State { OPEN, APPROVED, DENIED }
-	
+    
+    public enum State { OPEN, APPROVED, DENIED }
+    
+    public enum Type { RECORD, CHALLENGE, SUBMISSION, COLLECTION_LOG, UNRANKED_STARTING_VALUE }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -48,6 +54,12 @@ public class Submission {
     @Column
     @Enumerated(EnumType.STRING)
     private State state;
+    
+    /** insert and update are managed by discriminator mechanics */
+    @Column(insertable = false, updatable = false)
+    @Enumerated(EnumType.STRING)
+    @JsonProperty
+    private Type type;
 
     public int getId() {
         return id;
@@ -72,6 +84,10 @@ public class Submission {
     public State getSubmissionState() {
         return state;
     }
+    
+    public Type getType() {
+    	return type;
+    }
 
     public void setReviewedAt(Timestamp reviewedAt) {
         this.reviewedAt = reviewedAt;
@@ -88,10 +104,14 @@ public class Submission {
     public void setSubmissionState(State submissionState) {
         state = submissionState;
     }
+    
+    public void setType(Type type) throws IllegalArgumentException {
+    	this.type = type;
+    }
 
     @Override
     public boolean equals(Object obj) {
-    	return obj != null && obj instanceof Submission && ((Submission) obj).getId() == this.id;
+        return obj != null && obj instanceof Submission && ((Submission) obj).getId() == this.id;
     }
 
 }
