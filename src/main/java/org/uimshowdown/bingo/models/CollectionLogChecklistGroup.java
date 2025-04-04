@@ -5,6 +5,7 @@ import java.util.stream.IntStream;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -14,13 +15,13 @@ import jakarta.persistence.OrderBy;
 @DiscriminatorValue("CHECKLIST")
 public class CollectionLogChecklistGroup extends CollectionLogGroup {
 	
-    @OneToMany(mappedBy = "collectionLogGroup")
+    @OneToMany(mappedBy = "collectionLogGroup", cascade = CascadeType.ALL)
     @OrderBy("value ASC")
     private List<CollectionLogGroupChecklistBonusPointThreshold> bonusPointThresholds;
 
     @JsonProperty("bonusPointThresholds")
     public int[] getBonusPointThresholds() {
-        return bonusPointThresholds
+    	return bonusPointThresholds
             .stream()
             .mapToInt(CollectionLogGroupChecklistBonusPointThreshold::getValue)
             .toArray();

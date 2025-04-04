@@ -5,6 +5,7 @@ import java.util.stream.IntStream;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -14,7 +15,7 @@ import jakarta.persistence.OrderBy;
 @DiscriminatorValue("COUNTER")
 public class CollectionLogCounterGroup extends CollectionLogGroup {
 	
-    @OneToMany(mappedBy = "collectionLogGroup")
+    @OneToMany(mappedBy = "collectionLogGroup", cascade = CascadeType.ALL)
     @OrderBy("value DESC")
     private List<CollectionLogGroupCounterPointValue> counterPointValues;
 
