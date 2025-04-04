@@ -2,6 +2,7 @@ package org.uimshowdown.bingo.models;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -25,6 +26,7 @@ public class ChallengeRelayComponent {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "challenge_id")
+    @JsonIgnore
     private Challenge challenge;
 
     @Column(length = 64)
@@ -32,9 +34,11 @@ public class ChallengeRelayComponent {
     private String name;
 
     @OneToMany(mappedBy = "relayComponent")
+    @JsonIgnore
     private Set<PlayerChallengeCompletion> playerChallengeCompletions;
 
     @OneToMany(mappedBy = "relayComponent")
+    @JsonIgnore
     private Set<ChallengeSubmission> submissions;
 
     public int getId() {

@@ -2,6 +2,7 @@ package org.uimshowdown.bingo.models;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
@@ -27,6 +28,7 @@ public class Challenge {
     private int id;
 
     @OneToMany(mappedBy = "challenge")
+    @JsonIgnore
     private Set<ChallengeCompletion> completions;
 
     @Column(length = 512)
@@ -42,6 +44,7 @@ public class Challenge {
     private Set<ChallengeRelayComponent> relayComponents;
 
     @OneToMany(mappedBy = "challenge")
+    @JsonIgnore
     private Set<ChallengeSubmission> submissions;
 
     @Column(name = "team_size")
