@@ -1,4 +1,4 @@
-package org.uimshowdown.bingo.controller;
+package org.uimshowdown.bingo.controllers;
 
 import java.util.HashSet;
 import java.util.Set;
