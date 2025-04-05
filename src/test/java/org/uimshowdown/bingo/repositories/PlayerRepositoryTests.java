@@ -12,6 +12,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.Team;
@@ -20,6 +21,10 @@ import org.uimshowdown.bingo.models.Team;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PlayerRepositoryTests {
+	
+	@Autowired
+	private TestUtils testUtils;
+	
     @Autowired
     private PlayerRepository playerRepository;
 
@@ -32,8 +37,7 @@ public class PlayerRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-        teamRepository.deleteAll();
-        playerRepository.deleteAll();
+    	testUtils.resetDB();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
         testCaptain = playerRepository.save(SharedTestVariables.makeTestCaptain(testTeam));
@@ -41,9 +45,7 @@ public class PlayerRepositoryTests {
 
     @AfterAll
     public void tearDown() {
-        playerRepository.delete(testPlayer);
-        playerRepository.delete(testCaptain);
-        teamRepository.delete(testTeam);
+    	testUtils.resetDB();
     }
 
     @Test
@@ -97,4 +99,5 @@ public class PlayerRepositoryTests {
         .contains(testCaptain)
         .doesNotContain(testPlayer);
     }
+    
 }

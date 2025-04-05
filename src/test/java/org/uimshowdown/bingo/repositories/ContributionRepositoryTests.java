@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
@@ -21,6 +22,10 @@ import org.uimshowdown.bingo.models.Tile;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ContributionRepositoryTests {
+	
+	@Autowired
+	private TestUtils testUtils;
+	
     @Autowired
     private ContributionRepository contributionRepository;
 
@@ -44,11 +49,7 @@ public class ContributionRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-        contributionRepository.deleteAll();
-        playerRepository.deleteAll();
-        teamRepository.deleteAll();
-        contributionMethodRepository.deleteAll();
-        tileRepository.deleteAll();
+    	testUtils.resetDB();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
         testTile = tileRepository.save(SharedTestVariables.makeTestTile());
@@ -58,11 +59,7 @@ public class ContributionRepositoryTests {
 
     @AfterAll
     public void tearDown() {
-        contributionRepository.delete(testContribution);
-        contributionMethodRepository.delete(testContributionMethod);
-        tileRepository.delete(testTile);
-        playerRepository.delete(testPlayer);
-        teamRepository.delete(testTeam);
+    	testUtils.resetDB();
     }
 
     @Test
@@ -85,4 +82,5 @@ public class ContributionRepositoryTests {
             .isNotNull()
             .doesNotContain(testContribution);
     }
+    
 }

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.Challenge;
 
@@ -17,6 +18,10 @@ import org.uimshowdown.bingo.models.Challenge;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ChallengeRepositoryTests {
+	
+	@Autowired
+	private TestUtils testUtils;
+	
     @Autowired
     private ChallengeRepository challengeRepository;
 
@@ -24,13 +29,13 @@ public class ChallengeRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-        challengeRepository.deleteAll();
+    	testUtils.resetDB();
         testChallenge = challengeRepository.save(SharedTestVariables.makeTestChallenge());
     }
 
     @AfterAll
     public void tearDown() {
-        challengeRepository.delete(testChallenge);
+    	testUtils.resetDB();
     }
 
     @Test
@@ -50,4 +55,5 @@ public class ChallengeRepositoryTests {
 
         assertThat(challenge).isNull();
     }
+    
 }

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.Team;
 import org.uimshowdown.bingo.models.Tile;
@@ -19,6 +20,10 @@ import org.uimshowdown.bingo.models.TileProgress;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TileProgressRepositoryTests {
+	
+	@Autowired
+	private TestUtils testUtils;
+	
     @Autowired
     private TeamRepository teamRepository;
 
@@ -34,9 +39,7 @@ public class TileProgressRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-        teamRepository.deleteAll();
-        tileRepository.deleteAll();
-        tileProgressRepository.deleteAll();
+    	testUtils.resetDB();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testTile = tileRepository.save(SharedTestVariables.makeTestTile());
         testTileProgress = tileProgressRepository.save(SharedTestVariables.makeTestTileProgress(testTile, testTeam));
@@ -44,9 +47,7 @@ public class TileProgressRepositoryTests {
 
     @AfterAll
     public void tearDown() {
-        tileProgressRepository.delete(testTileProgress);
-        tileRepository.delete(testTile);
-        teamRepository.delete(testTeam);
+    	testUtils.resetDB();
     }
 
     @Test
@@ -90,4 +91,5 @@ public class TileProgressRepositoryTests {
             .isNotNull()
             .doesNotContain(testTileProgress);
     }
+    
 }

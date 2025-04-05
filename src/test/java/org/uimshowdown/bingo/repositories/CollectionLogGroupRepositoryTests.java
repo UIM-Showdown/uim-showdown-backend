@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.CollectionLogGroup;
 
@@ -17,6 +18,10 @@ import org.uimshowdown.bingo.models.CollectionLogGroup;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CollectionLogGroupRepositoryTests {
+	
+	@Autowired
+	private TestUtils testUtils;
+	
     @Autowired
     private CollectionLogGroupRepository collectionLogGroupRepository;
 
@@ -24,13 +29,13 @@ public class CollectionLogGroupRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-        collectionLogGroupRepository.deleteAll();
+    	testUtils.resetDB();
         testCollectionLogGroup = collectionLogGroupRepository.save(SharedTestVariables.makeTestCollectionLogChecklistGroup());
     }
 
     @AfterAll
     public void tearDown() {
-        collectionLogGroupRepository.delete(testCollectionLogGroup);
+    	testUtils.resetDB();
     }
 
     @Test
@@ -51,4 +56,5 @@ public class CollectionLogGroupRepositoryTests {
         assertThat(collectionLogGroup)
             .isNull();
     }
+    
 }

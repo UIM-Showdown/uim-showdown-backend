@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeCompletion;
@@ -22,6 +23,10 @@ import org.uimshowdown.bingo.models.Team;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PlayerChallengeCompletionRespositoryTests {
+	
+	@Autowired
+	private TestUtils testUtils;
+	
     @Autowired
     private ChallengeRepository challengeRepository;
 
@@ -49,12 +54,7 @@ public class PlayerChallengeCompletionRespositoryTests {
 
     @BeforeAll
     public void setUp() {
-        teamRepository.deleteAll();
-        playerRepository.deleteAll();
-        challengeRepository.deleteAll();
-        challengeCompletionRepository.deleteAll();
-        challengeRelayComponentRepository.deleteAll();
-        playerChallengeCompletionRepository.deleteAll();
+    	testUtils.resetDB();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
         testChallenge = challengeRepository.save(SharedTestVariables.makeTestChallenge());
@@ -65,12 +65,7 @@ public class PlayerChallengeCompletionRespositoryTests {
 
     @AfterAll
     public void tearDown() {
-        playerChallengeCompletionRepository.delete(testPlayerChallengeCompletion);
-        challengeRelayComponentRepository.delete(testChallengeRelayComponent);
-        challengeCompletionRepository.delete(testChallengeCompletion);
-        challengeRepository.delete(testChallenge);
-        playerRepository.delete(testPlayer);
-        teamRepository.delete(testTeam);
+    	testUtils.resetDB();
     }
 
     @Test
@@ -135,4 +130,5 @@ public class PlayerChallengeCompletionRespositoryTests {
             .isNotNull()
             .doesNotContain(testPlayerChallengeCompletion);
     }
+    
 }

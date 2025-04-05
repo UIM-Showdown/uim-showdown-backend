@@ -5,6 +5,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,11 +34,11 @@ public class ChallengeRelayComponent {
     @JsonProperty
     private String name;
 
-    @OneToMany(mappedBy = "relayComponent")
+    @OneToMany(mappedBy = "relayComponent", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<PlayerChallengeCompletion> playerChallengeCompletions;
 
-    @OneToMany(mappedBy = "relayComponent")
+    @OneToMany(mappedBy = "relayComponent", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<ChallengeSubmission> submissions;
 
