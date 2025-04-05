@@ -242,6 +242,7 @@ public class SharedTestVariables {
     public static Tile makeTestTile() {
         Tile testTile = new Tile();
         testTile.setName("Looting Bag Management");
+        testTile.setAbbreviation("LBM");
         testTile.setPointsPerTier(100000);
         return testTile;
     }

@@ -1,5 +1,6 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -34,6 +35,14 @@ public class CollectionLogItem {
     @JoinColumn(name = "group_id")
     @JsonIgnore
     private CollectionLogGroup group;
+    
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<ItemOption> itemOptions;
+    
+    @Column(nullable = true)
+    @JsonProperty
+    private Integer points;
 
     @Column(length = 512)
     @JsonProperty
@@ -58,6 +67,10 @@ public class CollectionLogItem {
     public CollectionLogGroup getGroup() {
         return group;
     }
+    
+    public Integer getPoints() {
+    	return points;
+    }
 
     public String getDescription() {
         return description;
@@ -66,6 +79,20 @@ public class CollectionLogItem {
     public String getName() {
         return name;
     }
+    
+    public Set<ItemOption> getItemOptions() {
+    	return itemOptions;
+    }
+    
+    @JsonProperty("itemOptions")
+    public Set<String> getItemOptionNames() {
+    	Set<String> names = new HashSet<String>();
+    	for(ItemOption option : itemOptions) {
+    		names.add(option.getName());
+    	}
+    	return names;
+    }
+    
 
     public Set<CollectionLogSubmission> getSubmissions() {
         return submissions;
@@ -73,6 +100,10 @@ public class CollectionLogItem {
 
     public void setGroup(CollectionLogGroup collectionLogGroup) {
         group = collectionLogGroup;
+    }
+    
+    public void setPoints(Integer points) {
+    	this.points = points;
     }
 
     public void setDescription(String description) {
