@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.Tile;
 
@@ -17,6 +18,10 @@ import org.uimshowdown.bingo.models.Tile;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TileRepositoryTests extends SharedTestVariables {
+	
+	@Autowired
+	private TestUtils testUtils;
+	
     @Autowired
     private TileRepository tileRepository;
 
@@ -24,13 +29,13 @@ public class TileRepositoryTests extends SharedTestVariables {
 
     @BeforeAll
     public void setUp() {
-        tileRepository.deleteAll();
+    	testUtils.resetDB();
         testTile = tileRepository.save(SharedTestVariables.makeTestTile());
     }
 
     @AfterAll
     public void tearDown() {
-        tileRepository.delete(testTile);
+    	testUtils.resetDB();
     }
 
     @Test
@@ -50,4 +55,5 @@ public class TileRepositoryTests extends SharedTestVariables {
 
         assertThat(tile).isNull();
     }
+    
 }

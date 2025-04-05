@@ -5,6 +5,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ public class Record {
     @JsonProperty
     private int id;
 
-    @OneToMany(mappedBy = "record")
+    @OneToMany(mappedBy = "record", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<RecordCompletion> completions;
 
@@ -30,7 +31,7 @@ public class Record {
     @JsonProperty
     private String description;
 
-    @OneToMany(mappedBy = "record")
+    @OneToMany(mappedBy = "record", cascade = CascadeType.ALL)
     @JsonProperty
     private Set<RecordHandicap> handicaps;
 
@@ -38,7 +39,7 @@ public class Record {
     @JsonProperty
     private String skill;
 
-    @OneToMany(mappedBy = "record")
+    @OneToMany(mappedBy = "record", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<RecordSubmission> submissions;
 

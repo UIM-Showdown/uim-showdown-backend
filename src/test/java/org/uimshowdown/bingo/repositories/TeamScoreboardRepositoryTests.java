@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.Team;
 import org.uimshowdown.bingo.models.TeamScoreboard;
@@ -18,6 +19,10 @@ import org.uimshowdown.bingo.models.TeamScoreboard;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TeamScoreboardRepositoryTests {
+	
+	@Autowired
+	private TestUtils testUtils;
+	
     @Autowired
     private TeamScoreboardRepository teamScoreboardRepository;
 
@@ -29,16 +34,14 @@ public class TeamScoreboardRepositoryTests {
     
     @BeforeAll
     public void setUp() {
-        teamRepository.deleteAll();
-        teamScoreboardRepository.deleteAll();
+    	testUtils.resetDB();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testTeamScoreboard = teamScoreboardRepository.save(SharedTestVariables.makeTestTeamScoreboard(testTeam));
     }
 
     @AfterAll
     public void tearDown() {
-        teamScoreboardRepository.delete(testTeamScoreboard);
-        teamRepository.delete(testTeam);
+    	testUtils.resetDB();
     }
 
     @Test
@@ -59,4 +62,5 @@ public class TeamScoreboardRepositoryTests {
         assertThat(teamScoreboard)
             .isNull();
     }
+    
 }

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeCompletion;
@@ -19,6 +20,10 @@ import org.uimshowdown.bingo.models.Team;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ChallengeCompletionRepositoryTests {
+	
+	@Autowired
+	private TestUtils testUtils;
+	
     @Autowired
     private ChallengeRepository challengeRepository;
 
@@ -34,9 +39,7 @@ public class ChallengeCompletionRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-        teamRepository.deleteAll();
-        challengeRepository.deleteAll();
-        challengeCompletionRepository.deleteAll();
+        testUtils.resetDB();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testChallenge = challengeRepository.save(SharedTestVariables.makeTestChallenge());
         testChallengeCompletion = challengeCompletionRepository.save(SharedTestVariables.makeTestChallengeCompletion(testChallenge, testTeam));
@@ -44,9 +47,7 @@ public class ChallengeCompletionRepositoryTests {
 
     @AfterAll
     public void tearDown() {
-        challengeCompletionRepository.delete(testChallengeCompletion);
-        challengeRepository.delete(testChallenge);
-        teamRepository.delete(testTeam);
+    	testUtils.resetDB();
     }
 
     @Test
@@ -90,4 +91,5 @@ public class ChallengeCompletionRepositoryTests {
             .isNotNull()
             .doesNotContain(testChallengeCompletion);
     }
+    
 }

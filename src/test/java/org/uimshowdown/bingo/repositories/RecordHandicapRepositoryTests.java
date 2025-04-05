@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.Record;
 import org.uimshowdown.bingo.models.RecordHandicap;
@@ -18,6 +19,10 @@ import org.uimshowdown.bingo.models.RecordHandicap;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RecordHandicapRepositoryTests {
+	
+	@Autowired
+	private TestUtils testUtils;
+	
     @Autowired
     private RecordRepository recordRepository;
 
@@ -29,16 +34,14 @@ public class RecordHandicapRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-    	recordHandicapRepository.deleteAll();
-        recordRepository.deleteAll();
+        testUtils.resetDB();
         testRecord = recordRepository.save(SharedTestVariables.makeTestRecord());
         testRecordHandicap = recordHandicapRepository.save(SharedTestVariables.makeTestRecordHandicap(testRecord));
     }
 
     @AfterAll
     public void tearDown() {
-        recordHandicapRepository.delete(testRecordHandicap);
-        recordRepository.delete(testRecord);
+    	testUtils.resetDB();
     }
 
     @Test
@@ -61,4 +64,5 @@ public class RecordHandicapRepositoryTests {
             .isNotNull()
             .doesNotContain(testRecordHandicap);
     }
+    
 }

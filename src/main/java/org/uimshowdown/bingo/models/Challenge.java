@@ -27,7 +27,7 @@ public class Challenge {
     @JsonProperty
     private int id;
 
-    @OneToMany(mappedBy = "challenge")
+    @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<ChallengeCompletion> completions;
 
@@ -43,7 +43,7 @@ public class Challenge {
     @JsonProperty
     private Set<ChallengeRelayComponent> relayComponents;
 
-    @OneToMany(mappedBy = "challenge")
+    @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<ChallengeSubmission> submissions;
 

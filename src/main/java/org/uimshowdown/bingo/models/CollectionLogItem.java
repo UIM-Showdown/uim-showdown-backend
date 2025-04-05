@@ -5,6 +5,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -25,7 +26,7 @@ public class CollectionLogItem {
     @JsonProperty
     private int id;
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<CollectionLogCompletion> completions;
 
@@ -42,7 +43,7 @@ public class CollectionLogItem {
     @JsonProperty
     private String name;
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<CollectionLogSubmission> submissions;
 

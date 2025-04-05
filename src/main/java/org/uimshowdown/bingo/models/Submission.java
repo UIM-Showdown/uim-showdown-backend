@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
@@ -48,7 +49,7 @@ public class Submission {
     @Column(name = "reviewer", nullable = true, length = 64)
     private String reviewer;
 
-    @OneToMany(mappedBy = "submission")
+    @OneToMany(mappedBy = "submission", cascade = CascadeType.ALL)
     private Set<SubmissionScreenshotUrl> screenshotUrls;
 
     @Column

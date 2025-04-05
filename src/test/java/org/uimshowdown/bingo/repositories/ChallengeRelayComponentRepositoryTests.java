@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
@@ -18,6 +19,10 @@ import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ChallengeRelayComponentRepositoryTests {
+	
+	@Autowired
+	private TestUtils testUtils;
+	
     @Autowired
     private ChallengeRepository challengeRepository;
 
@@ -29,16 +34,14 @@ public class ChallengeRelayComponentRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-        challengeRepository.deleteAll();
-        challengeRelayComponentRepository.deleteAll();
+    	testUtils.resetDB();
         testChallenge = challengeRepository.save(SharedTestVariables.makeTestChallenge());
         testChallengeRelayComponent = challengeRelayComponentRepository.save(SharedTestVariables.makeTestChallengeRelayComponent(testChallenge));
     }
 
     @AfterAll
     public void tearDown() {
-        challengeRelayComponentRepository.delete(testChallengeRelayComponent);
-        challengeRepository.delete(testChallenge);
+    	testUtils.resetDB();
     }
 
     @Test
@@ -61,4 +64,5 @@ public class ChallengeRelayComponentRepositoryTests {
             .isNotNull()
             .doesNotContain(testChallengeRelayComponent);
     }
+    
 }

@@ -6,6 +6,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +29,7 @@ public class Team {
     @JsonProperty
     private String abbreviation;
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<ChallengeCompletion> challengeCompletions;
 
@@ -40,15 +41,15 @@ public class Team {
     @JsonProperty
     private String name;
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     @JsonProperty
     private Set<Player> players;
 
-    @OneToOne(mappedBy = "team")
+    @OneToOne(mappedBy = "team", cascade = CascadeType.ALL)
     @JsonIgnore
     private TeamScoreboard scoreboard;
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<TileProgress> tileProgress;
 

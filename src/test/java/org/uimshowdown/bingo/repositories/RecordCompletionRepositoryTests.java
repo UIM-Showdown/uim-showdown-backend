@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.Record;
@@ -21,6 +22,10 @@ import org.uimshowdown.bingo.models.Team;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RecordCompletionRepositoryTests {
+	
+	@Autowired
+	private TestUtils testUtils;
+	
     @Autowired
     private PlayerRepository playerRepository;
     
@@ -44,11 +49,7 @@ public class RecordCompletionRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-    	playerRepository.deleteAll();
-        teamRepository.deleteAll();
-        recordHandicapRepository.deleteAll();
-        recordCompletionRepository.deleteAll();
-        recordRepository.deleteAll();
+    	testUtils.resetDB();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
         testRecord = recordRepository.save(SharedTestVariables.makeTestRecord());
@@ -58,11 +59,7 @@ public class RecordCompletionRepositoryTests {
 
     @AfterAll
     public void tearDown() {
-        recordCompletionRepository.delete(testRecordCompletion);
-        recordHandicapRepository.delete(testRecordHandicap);
-        recordRepository.delete(testRecord);
-        playerRepository.delete(testPlayer);
-        teamRepository.delete(testTeam);
+    	testUtils.resetDB();
     }
 
     @Test
@@ -127,4 +124,5 @@ public class RecordCompletionRepositoryTests {
             .isNotNull()
             .doesNotContain(testRecordCompletion);
     }
+    
 }

@@ -5,6 +5,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -30,7 +31,7 @@ public class Player {
     @JsonIgnore
     private boolean captain;
 
-    @OneToMany(mappedBy = "player")
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Contribution> contributions;
 
@@ -38,15 +39,15 @@ public class Player {
     @JsonProperty
     private String discordName;
 
-    @OneToMany(mappedBy = "player")
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<CollectionLogCompletion> collectionLogCompletions;
 
-    @OneToMany(mappedBy = "player")
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<PlayerChallengeCompletion> playerChallengeCompletions;
 
-    @OneToMany(mappedBy = "player")
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<RecordCompletion> recordCompletions;
 
@@ -54,11 +55,11 @@ public class Player {
     @JsonProperty
     private String rsn;
 
-    @OneToOne(mappedBy = "player")
+    @OneToOne(mappedBy = "player", cascade = CascadeType.ALL)
     @JsonIgnore
     private PlayerScoreboard scoreboard;
 
-    @OneToMany(mappedBy = "player")
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Submission> submissions;
 

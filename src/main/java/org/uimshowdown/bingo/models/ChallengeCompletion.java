@@ -3,6 +3,7 @@ package org.uimshowdown.bingo.models;
 import java.sql.Timestamp;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -26,7 +27,7 @@ public class ChallengeCompletion {
     @JoinColumn(name = "challenge_id")
     private Challenge challenge;
 
-    @OneToMany(mappedBy = "challengeCompletion")
+    @OneToMany(mappedBy = "challengeCompletion", cascade = CascadeType.ALL)
     private Set<PlayerChallengeCompletion> playerChallengeCompletions;
 
     @ManyToOne(fetch = FetchType.LAZY)

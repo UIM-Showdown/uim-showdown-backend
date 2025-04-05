@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.CollectionLogCompletion;
 import org.uimshowdown.bingo.models.CollectionLogGroup;
@@ -21,6 +22,10 @@ import org.uimshowdown.bingo.models.Team;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CollectionLogCompletionRepositoryTests {
+	
+	@Autowired
+	private TestUtils testUtils;
+	
     @Autowired
     private CollectionLogCompletionRepository collectionLogCompletionRepository;
 
@@ -44,11 +49,7 @@ public class CollectionLogCompletionRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-        teamRepository.deleteAll();
-        playerRepository.deleteAll();
-        collectionLogGroupRepository.deleteAll();
-        collectionLogItemRepository.deleteAll();
-        collectionLogCompletionRepository.deleteAll();
+    	testUtils.resetDB();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
         testCollectionLogGroup = collectionLogGroupRepository.save(SharedTestVariables.makeTestCollectionLogChecklistGroup());
@@ -58,11 +59,7 @@ public class CollectionLogCompletionRepositoryTests {
 
     @AfterAll
     public void tearDown() {
-        collectionLogCompletionRepository.delete(testCollectionLogCompletion);
-        collectionLogItemRepository.delete(testCollectionLogItem);
-        collectionLogGroupRepository.delete(testCollectionLogGroup);
-        playerRepository.delete(testPlayer);
-        teamRepository.delete(testTeam);
+    	testUtils.resetDB();
     }
 
     @Test
@@ -106,4 +103,5 @@ public class CollectionLogCompletionRepositoryTests {
             .isNotNull()
             .doesNotContain(testCollectionLogCompletion);
     }
+    
 }
