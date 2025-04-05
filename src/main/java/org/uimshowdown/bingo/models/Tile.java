@@ -2,6 +2,7 @@ package org.uimshowdown.bingo.models;
 
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,10 +25,10 @@ public class Tile {
     @Column(name = "points_per_tier")
     private int pointsPerTier;
 
-    @OneToMany(mappedBy = "tile")
+    @OneToMany(mappedBy = "tile", cascade = CascadeType.ALL)
     private Set<ContributionMethod> contributionMethods;
 
-    @OneToMany(mappedBy = "tile")
+    @OneToMany(mappedBy = "tile", cascade = CascadeType.ALL)
     private Set<TileProgress> progress;
 
     public int getId() {

@@ -4,6 +4,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -30,11 +31,11 @@ public class ContributionMethod {
     @JsonProperty
     private int id;
 
-    @OneToMany(mappedBy = "contributionMethod")
+    @OneToMany(mappedBy = "contributionMethod", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<ContributionSubmission> contributionSubmissions;
 
-    @OneToMany(mappedBy = "contributionMethod")
+    @OneToMany(mappedBy = "contributionMethod", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Contribution> playerContributions;
 
@@ -43,7 +44,7 @@ public class ContributionMethod {
     @JsonIgnore
     private Tile tile;
 
-    @OneToMany(mappedBy = "contributionMethod")
+    @OneToMany(mappedBy = "contributionMethod", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<UnrankedStartingValueSubmission> unrankedStartingValueSubmissions;
 
