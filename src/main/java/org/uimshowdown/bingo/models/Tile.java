@@ -21,6 +21,9 @@ public class Tile {
 
     @Column(length = 64)
     private String name;
+    
+    @Column(length = 8)
+    private String abbreviation;
 
     @Column(name = "points_per_tier")
     private int pointsPerTier;
@@ -38,6 +41,10 @@ public class Tile {
     public String getName() {
         return name;
     }
+    
+    public String getAbbreviation() {
+    	return abbreviation;
+    }
 
     public int getPointsPerTier() {
         return pointsPerTier;
@@ -53,6 +60,10 @@ public class Tile {
     
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public void setAbbreviation(String abbreviation) {
+    	this.abbreviation = abbreviation;
     }
 
     public void setPointsPerTier(int pointsPerTier) {
