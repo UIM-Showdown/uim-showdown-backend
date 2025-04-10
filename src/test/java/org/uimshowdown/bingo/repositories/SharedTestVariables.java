@@ -3,7 +3,6 @@ package org.uimshowdown.bingo.repositories;
 import java.sql.Timestamp;
 import java.time.Instant;
 
-import org.uimshowdown.bingo.constants.PlayerSkill;
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeCompletion;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
@@ -140,7 +139,7 @@ public class SharedTestVariables {
     public static Record makeTestRecord() {
         Record testRecord = new Record();
         testRecord.setDescription("Six hour woodcutting record");
-        testRecord.setSkill(PlayerSkill.WOODCUTTING);
+        testRecord.setSkill(Player.Skill.WOODCUTTING);
         return testRecord;
     }
 
