@@ -9,8 +9,6 @@ For further reference, please consider the following sections:
 * [Spring Web](https://docs.spring.io/spring-boot/3.4.3/reference/web/servlet.html)
 * [Spring Security](https://docs.spring.io/spring-boot/3.4.3/reference/web/spring-security.html)
 * [Spring Data JPA](https://docs.spring.io/spring-boot/3.4.3/reference/data/sql.html#data.sql.jpa-and-spring-data)
-* [Spring Data Reactive Redis](https://docs.spring.io/spring-boot/3.4.3/reference/data/nosql.html#data.nosql.redis)
-* [Flyway Migration](https://docs.spring.io/spring-boot/3.4.3/how-to/data-initialization.html#howto.data-initialization.migration-tool.flyway)
 * [Docker Compose Support](https://docs.spring.io/spring-boot/3.4.3/reference/features/dev-services.html#features.dev-services.docker-compose)
 * [Spring Boot DevTools](https://docs.spring.io/spring-boot/3.4.3/reference/using/devtools.html)
 
@@ -25,14 +23,12 @@ The following guides illustrate how to use some features concretely:
 * [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
 * [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
 * [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
-* [Messaging with Redis](https://spring.io/guides/gs/messaging-redis/)
 
 ### Docker Compose support
 This project contains a Docker Compose file named `compose.yaml`.
 In this file, the following services have been defined:
 
 * mysql: [`mysql:8.4.4`](https://hub.docker.com/layers/library/mysql/8.4.4/images/sha256-60832e27fa98532ef7b75e634b065dd3809fcfbbe0dc591d6adf30a386d4dcbe)
-* redis: [`redis:7.4.2-alpine`](https://hub.docker.com/layers/library/redis/7.4.2-alpine/images/sha256-9cabfa9c15e13f9e4faee0f80d4373cd76e7b8d5a678b9036402b1b0ed9c661b)
 
 Please review the tags of the used images and set them to the same as you're running in production.
 
@@ -48,10 +44,10 @@ If you manually switch to a different parent and actually want the inheritance, 
 ### Dependencies
 - [Java SE 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) or [OpenJDK 17](https://formulae.brew.sh/formula/openjdk@17)
 - [Docker Desktop](https://www.docker.com/get-started/)
-- [Redis 7.4.2](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/) (if not using Docker)
 - [MySQL 8.4.4](https://dev.mysql.com/downloads/mysql/8.4.html) (if not using Docker)
 
-### Serving the Application via Docker
+## Docker
+### Serving the Application
 **NOTE:** Everytime changes are made, a new image build and container build are required.
 
 1. Navigate to the `src/main/resources/` directory. Make a copy of `application.properties.example` and rename it to `application.properties`.
@@ -71,3 +67,12 @@ The example properties file is already configured to use the configured Docker e
 ```
 docker-compose up --build
 ```
+
+### Troubleshooting
+
+I recently ran into the following issue:
+```
+Execution default-cli of goal org.springframework.boot:spring-boot-maven-plugin:3.4.3:build-image failed: OS must not be empty
+```
+
+Sometimes stale cache layers cause strange issues. Using `docker system prune -af` addressed the issue above and will clean the Docker build cache. **Be careful — this removes all stopped containers, unused networks, and dangling images.**
