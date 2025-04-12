@@ -25,8 +25,8 @@ hs_err_pid*
 # Maven build directory
 target/
 
-# Spring Boot files
-src/main/resources/application.properties
+# Property files
+src/main/resources/application.yml
 
 # Code editor files
 .vscode/
