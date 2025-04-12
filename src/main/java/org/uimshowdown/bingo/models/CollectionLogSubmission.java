@@ -13,6 +13,10 @@ public class CollectionLogSubmission extends Submission {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private CollectionLogItem item;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_option_id")
+    private ItemOption itemOption;
 
     public CollectionLogItem getItem() {
         return item;
@@ -20,6 +24,14 @@ public class CollectionLogSubmission extends Submission {
 
     public void setItem(CollectionLogItem collectionLogItem) {
         item = collectionLogItem;
+    }
+    
+    public ItemOption itemOption() {
+    	return itemOption;
+    }
+    
+    public void setItemOption(ItemOption itemOption) {
+    	this.itemOption = itemOption;
     }
     
     @Override

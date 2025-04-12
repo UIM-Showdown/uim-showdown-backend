@@ -10,7 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-@DiscriminatorValue("SUBMISSION")
+@DiscriminatorValue("RECORD")
 public class RecordSubmission extends Submission {
     
     @ManyToOne(fetch = FetchType.LAZY)
