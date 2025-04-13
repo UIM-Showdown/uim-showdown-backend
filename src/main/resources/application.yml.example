@@ -22,6 +22,9 @@ competition:
     eventPointsPerTier: [25, 23, 21, 19, 17, 15]
     tierCap: -1
     blackoutBonusEnabled: true
+    maxRoundingErrorForContributionPoints: 0.05
+    sigFigsForContributionPoints: 2
+    sigFigsForTilePointsPerTier: 3
     tiles:
         - name: "COX Tile"
           abbreviation: "CoX"

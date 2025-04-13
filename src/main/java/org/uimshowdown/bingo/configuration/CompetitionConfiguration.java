@@ -43,6 +43,12 @@ public class CompetitionConfiguration {
 	
 	private List<CollectionLogGroupConfig> collectionLogGroups;
 	
+	private double maxRoundingErrorForContributionPoints;
+
+	private int sigFigsForContributionPoints;
+	
+	private int sigFigsForTilePointsPerTier;
+
 	public String getEventName() {
 		return eventName;
 	}
@@ -155,10 +161,35 @@ public class CompetitionConfiguration {
 		this.collectionLogGroups = collectionLogGroups;
 	}
 	
+	public double getMaxRoundingErrorForContributionPoints() {
+		return maxRoundingErrorForContributionPoints;
+	}
+
+	public void setMaxRoundingErrorForContributionPoints(double maxRoundingErrorForContributionPoints) {
+		this.maxRoundingErrorForContributionPoints = maxRoundingErrorForContributionPoints;
+	}
+
+	public int getSigFigsForContributionPoints() {
+		return sigFigsForContributionPoints;
+	}
+
+	public void setSigFigsForContributionPoints(int sigFigsForContributionPoints) {
+		this.sigFigsForContributionPoints = sigFigsForContributionPoints;
+	}
+	
+	public int getSigFigsForTilePointsPerTier() {
+		return sigFigsForTilePointsPerTier;
+	}
+
+	public void setSigFigsForTilePointsPerTier(int sigFigsForTilePointsPerTier) {
+		this.sigFigsForTilePointsPerTier = sigFigsForTilePointsPerTier;
+	}
+	
 	public static class TileConfig {
 		private String name;
 		private String abbreviation;
 		private List<ContributionMethodConfig> contributionMethods;
+		int customMultiplier = -1;
 		
 		public String getName() {
 			return name;
@@ -177,6 +208,12 @@ public class CompetitionConfiguration {
 		}
 		public void setContributionMethods(List<ContributionMethodConfig> contributionMethods) {
 			this.contributionMethods = contributionMethods;
+		}
+		public int getCustomMultiplier() {
+			return customMultiplier;
+		}
+		public void setCustomMultiplier(int customMultiplier) {
+			this.customMultiplier = customMultiplier;
 		}
 	}
 	

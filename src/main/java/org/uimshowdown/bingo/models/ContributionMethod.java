@@ -1,6 +1,9 @@
 package org.uimshowdown.bingo.models;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.uimshowdown.bingo.configuration.CompetitionConfiguration;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -21,6 +24,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "contribution_methods")
 public class ContributionMethod {
+	
+	@JsonIgnore
+	@Autowired
+	private CompetitionConfiguration compConfig;
     
     public enum Category { PVM, SKILLING, OTHER }
     
@@ -61,6 +68,10 @@ public class ContributionMethod {
     @Column(name = "eht_rate")
     @JsonProperty
     private double ehtRate;
+    
+    @Column(name = "tile_points_per_contribution")
+    @JsonProperty
+    private int tilePointsPerContribution;
 
     @Column(length = 64)
     @JsonProperty
@@ -126,10 +137,12 @@ public class ContributionMethod {
         this.name = name;
     }
 
-    @JsonProperty("tilePointsPerContribution")
     public int getTilePointsPerContribution() {
-        int ehtPerTier = 30; // TODO get from config
-        return (int) (this.tile.getPointsPerTier() / ehtPerTier / this.ehtRate);
+        return this.tilePointsPerContribution;
+    }
+    
+    public void setTilePointsPerContribution(int tilePointsPerContribution) {
+    	this.tilePointsPerContribution = tilePointsPerContribution;
     }
 
     @Override
