@@ -54,4 +54,15 @@ public class AdminController {
         
         return ResponseEntity.ok().build();
     }
+    
+    @PostMapping("/admin/addTeam")
+    public ResponseEntity<Void> addTeam(@RequestBody Map<String, Object> requestBody) {
+        eventDataInitializationService.addTeam(
+            (String) requestBody.get("name"),
+            (String) requestBody.get("abbreviation"),
+            (String) requestBody.get("color")
+        );
+        return ResponseEntity.ok().build();
+    }
+    
 }

@@ -23,4 +23,12 @@ public class EventDataInitializationService {
         teamRepository.save(team);
     }
     
+    public void addTeam(String name, String abbreviation, String color) {
+        Team team = new Team();
+        team.setName(name);
+        team.setAbbreviation(abbreviation);
+        team.setColor(color);
+        teamRepository.save(team);
+    }
+    
 }
