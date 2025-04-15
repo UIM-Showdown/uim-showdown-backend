@@ -211,7 +211,7 @@ public class SharedTestVariables {
     }
 
     public static ChallengeSubmission makeTestSubmission(Player player, Challenge challenge) {
-    	ChallengeSubmission testSubmission = new ChallengeSubmission();
+        ChallengeSubmission testSubmission = new ChallengeSubmission();
         testSubmission.setSubmissionState(Submission.State.OPEN);
         testSubmission.setPlayer(player);
         testSubmission.setChallenge(challenge);

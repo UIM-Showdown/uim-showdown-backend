@@ -12,7 +12,7 @@ import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.Team;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
 import org.uimshowdown.bingo.repositories.TeamRepository;
-import org.uimshowdown.bingo.services.EventDataFactory;
+import org.uimshowdown.bingo.services.EventDataInitializationService;
 
 @RestController
 public class AdminController {
@@ -21,19 +21,18 @@ public class AdminController {
 
     @Autowired
     private TeamRepository teamRepository;
+    
+    @Autowired
+    private EventDataInitializationService eventDataInitializationService;
 
     @PostMapping("/admin/addPlayer")
     public ResponseEntity<Void> addPlayer(@RequestBody Map<String, Object> requestBody) {
-        Team team = teamRepository.findByName((String) requestBody.get("teamName")).get();
-        Player newPlayer = EventDataFactory.createPlayer(
+        eventDataInitializationService.addPlayer(
             (String) requestBody.get("discordName"),
             (String) requestBody.get("rsn"),
             (Boolean) requestBody.get("isCaptain"),
-            team
+            (String) requestBody.get("teamName")
         );
-
-        team.getPlayers().add(newPlayer);
-        teamRepository.save(team);
         return ResponseEntity.ok().build();
     }
 
