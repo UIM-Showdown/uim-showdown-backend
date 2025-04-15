@@ -36,4 +36,14 @@ public class AdminController {
         teamRepository.save(team);
         return ResponseEntity.ok().build();
     }
+
+    @PatchMapping("/admin/changePlayerTeam")
+    public ResponseEntity<Void> changePlayerTeam(@RequestBody Map<String, Object> requestBody) {
+        Player player = playerRepository.findByRsn((String) requestBody.get("rsn")).get();
+        Team newTeam = teamRepository.findByName((String) requestBody.get("teamName")).get();
+
+        player.setTeam(newTeam);
+        playerRepository.save(player);
+        return ResponseEntity.ok().build();
+    }
 }
