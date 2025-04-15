@@ -83,7 +83,7 @@ public class Submission {
     }
     
     public void setScreenshotUrls(Set<SubmissionScreenshotUrl> screenshotUrls) {
-    	this.screenshotUrls = screenshotUrls;
+        this.screenshotUrls = screenshotUrls;
     }
 
     public State getSubmissionState() {

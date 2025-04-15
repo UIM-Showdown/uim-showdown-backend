@@ -27,11 +27,11 @@ public class CollectionLogSubmission extends Submission {
     }
     
     public ItemOption itemOption() {
-    	return itemOption;
+        return itemOption;
     }
     
     public void setItemOption(ItemOption itemOption) {
-    	this.itemOption = itemOption;
+        this.itemOption = itemOption;
     }
     
     @Override
