@@ -25,49 +25,49 @@ import org.uimshowdown.bingo.repositories.TileRepository;
 
 @Component
 public class TestUtils {
-	
-	@Autowired ChallengeCompletionRepository challengeCompletionRepository;
-	@Autowired ChallengeRelayComponentRepository challengeRelayComponentRepository;
-	@Autowired ChallengeRepository challengeRepository;
-	@Autowired CollectionLogCompletionRepository collectionLogCompletionRepository;
-	@Autowired CollectionLogGroupRepository collectionLogGroupRepository;
-	@Autowired CollectionLogItemRepository collectionLogItemRepository;
-	@Autowired ContributionMethodRepository contributionMethodRepository;
-	@Autowired ContributionRepository contributionRepository;
-	@Autowired PlayerChallengeCompletionRepository playerChallengeCompletionRepository;
-	@Autowired PlayerRepository playerRepository;
-	@Autowired PlayerScoreboardRepository playerScoreboardRepository;
-	@Autowired RecordCompletionRepository recordCompletionRepository;
-	@Autowired RecordHandicapRepository recordHandicapRepository;
-	@Autowired RecordRepository recordRepository;
-	@Autowired SubmissionRepository submissionRepository;
-	@Autowired SubmissionScreenshotUrlRepository submissionScreenshotUrlRepository;
-	@Autowired TeamRepository teamRepository;
-	@Autowired TeamScoreboardRepository teamScoreboardRepository;
-	@Autowired TileProgressRepository tileProgressRepository;
-	@Autowired TileRepository tileRepository;
-	
-	public void resetDB() {
-		challengeCompletionRepository.deleteAll();
-		challengeRelayComponentRepository.deleteAll();
-		challengeRepository.deleteAll();
-		collectionLogCompletionRepository.deleteAll();
-		collectionLogGroupRepository.deleteAll();
-		collectionLogItemRepository.deleteAll();
-		contributionMethodRepository.deleteAll();
-		contributionRepository.deleteAll();
-		playerChallengeCompletionRepository.deleteAll();
-		playerRepository.deleteAll();
-		playerScoreboardRepository.deleteAll();
-		recordCompletionRepository.deleteAll();
-		recordHandicapRepository.deleteAll();
-		recordRepository.deleteAll();
-		submissionRepository.deleteAll();
-		submissionScreenshotUrlRepository.deleteAll();
-		teamRepository.deleteAll();
-		teamScoreboardRepository.deleteAll();
-		tileProgressRepository.deleteAll();
-		tileRepository.deleteAll();
-	}
+    
+    @Autowired ChallengeCompletionRepository challengeCompletionRepository;
+    @Autowired ChallengeRelayComponentRepository challengeRelayComponentRepository;
+    @Autowired ChallengeRepository challengeRepository;
+    @Autowired CollectionLogCompletionRepository collectionLogCompletionRepository;
+    @Autowired CollectionLogGroupRepository collectionLogGroupRepository;
+    @Autowired CollectionLogItemRepository collectionLogItemRepository;
+    @Autowired ContributionMethodRepository contributionMethodRepository;
+    @Autowired ContributionRepository contributionRepository;
+    @Autowired PlayerChallengeCompletionRepository playerChallengeCompletionRepository;
+    @Autowired PlayerRepository playerRepository;
+    @Autowired PlayerScoreboardRepository playerScoreboardRepository;
+    @Autowired RecordCompletionRepository recordCompletionRepository;
+    @Autowired RecordHandicapRepository recordHandicapRepository;
+    @Autowired RecordRepository recordRepository;
+    @Autowired SubmissionRepository submissionRepository;
+    @Autowired SubmissionScreenshotUrlRepository submissionScreenshotUrlRepository;
+    @Autowired TeamRepository teamRepository;
+    @Autowired TeamScoreboardRepository teamScoreboardRepository;
+    @Autowired TileProgressRepository tileProgressRepository;
+    @Autowired TileRepository tileRepository;
+    
+    public void resetDB() {
+        challengeCompletionRepository.deleteAll();
+        challengeRelayComponentRepository.deleteAll();
+        challengeRepository.deleteAll();
+        collectionLogCompletionRepository.deleteAll();
+        collectionLogGroupRepository.deleteAll();
+        collectionLogItemRepository.deleteAll();
+        contributionMethodRepository.deleteAll();
+        contributionRepository.deleteAll();
+        playerChallengeCompletionRepository.deleteAll();
+        playerRepository.deleteAll();
+        playerScoreboardRepository.deleteAll();
+        recordCompletionRepository.deleteAll();
+        recordHandicapRepository.deleteAll();
+        recordRepository.deleteAll();
+        submissionRepository.deleteAll();
+        submissionScreenshotUrlRepository.deleteAll();
+        teamRepository.deleteAll();
+        teamScoreboardRepository.deleteAll();
+        tileProgressRepository.deleteAll();
+        tileRepository.deleteAll();
+    }
 
 }

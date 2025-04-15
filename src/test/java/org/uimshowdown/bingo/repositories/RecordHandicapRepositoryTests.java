@@ -19,10 +19,10 @@ import org.uimshowdown.bingo.models.RecordHandicap;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RecordHandicapRepositoryTests {
-	
-	@Autowired
-	private TestUtils testUtils;
-	
+    
+    @Autowired
+    private TestUtils testUtils;
+    
     @Autowired
     private RecordRepository recordRepository;
 
@@ -41,7 +41,7 @@ public class RecordHandicapRepositoryTests {
 
     @AfterAll
     public void tearDown() {
-    	testUtils.resetDB();
+        testUtils.resetDB();
     }
 
     @Test

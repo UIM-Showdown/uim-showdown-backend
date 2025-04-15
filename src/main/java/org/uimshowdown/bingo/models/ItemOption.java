@@ -16,12 +16,12 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "item_options")
 public class ItemOption {
-	
-	@Id
+    
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty
     private int id;
-	
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     @JsonIgnore
@@ -36,7 +36,7 @@ public class ItemOption {
     }
     
     public CollectionLogItem getItem() {
-    	return item;
+        return item;
     }
     
     public String getName() {
@@ -44,11 +44,11 @@ public class ItemOption {
     }
     
     public void setName(String name) {
-    	this.name = name;
+        this.name = name;
     }
     
     public void settItem(CollectionLogItem item) {
-    	this.item = item;
+        this.item = item;
     }
     
 }

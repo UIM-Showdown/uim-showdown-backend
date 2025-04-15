@@ -11,17 +11,17 @@ import org.uimshowdown.bingo.repositories.ChallengeRepository;
 
 @RestController
 public class ChallengeController {
-	
-	@Autowired
-	private ChallengeRepository challengeRepository;
-	
-	@GetMapping("/challenges")
-	public Set<Challenge> getChallenges() {
-		Set<Challenge> challenges = new HashSet<Challenge>();
-		for(Challenge challenge : challengeRepository.findAll()) {
-			challenges.add(challenge);
-		}
-		return challenges;
-	}
+    
+    @Autowired
+    private ChallengeRepository challengeRepository;
+    
+    @GetMapping("/challenges")
+    public Set<Challenge> getChallenges() {
+        Set<Challenge> challenges = new HashSet<Challenge>();
+        for(Challenge challenge : challengeRepository.findAll()) {
+            challenges.add(challenge);
+        }
+        return challenges;
+    }
 
 }

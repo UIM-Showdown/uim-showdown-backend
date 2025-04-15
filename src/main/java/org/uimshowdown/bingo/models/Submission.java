@@ -87,7 +87,7 @@ public class Submission {
     }
     
     public Type getType() {
-    	return type;
+        return type;
     }
 
     public void setReviewedAt(Timestamp reviewedAt) {
@@ -107,7 +107,7 @@ public class Submission {
     }
     
     public void setType(Type type) throws IllegalArgumentException {
-    	this.type = type;
+        this.type = type;
     }
 
     @Override

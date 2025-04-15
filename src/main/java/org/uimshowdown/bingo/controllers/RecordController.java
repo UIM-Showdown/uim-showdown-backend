@@ -11,17 +11,17 @@ import org.uimshowdown.bingo.models.Record;
 
 @RestController
 public class RecordController {
-	
-	@Autowired
-	private RecordRepository recordRepository;
-	
-	@GetMapping("/records")
-	public Set<Record> getRecords() {
-		Set<Record> records = new HashSet<Record>();
-		for(Record record : recordRepository.findAll()) {
-			records.add(record);
-		}
-		return records;
-	}
+    
+    @Autowired
+    private RecordRepository recordRepository;
+    
+    @GetMapping("/records")
+    public Set<Record> getRecords() {
+        Set<Record> records = new HashSet<Record>();
+        for(Record record : recordRepository.findAll()) {
+            records.add(record);
+        }
+        return records;
+    }
 
 }

@@ -19,10 +19,10 @@ import org.uimshowdown.bingo.models.Tile;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ContributionMethodRepositoryTests {
-	
-	@Autowired
-	private TestUtils testUtils;
-	
+    
+    @Autowired
+    private TestUtils testUtils;
+    
     @Autowired
     private ContributionMethodRepository contributionMethodRepository;
 
@@ -34,14 +34,14 @@ public class ContributionMethodRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-    	testUtils.resetDB();
+        testUtils.resetDB();
         testTile = tileRepository.save(SharedTestVariables.makeTestTile());
         testContributionMethod = contributionMethodRepository.save(SharedTestVariables.makeTestContributionMethod(testTile));
     }
 
     @AfterAll
     public void tearDown() {
-    	testUtils.resetDB();
+        testUtils.resetDB();
     }
 
     @Test

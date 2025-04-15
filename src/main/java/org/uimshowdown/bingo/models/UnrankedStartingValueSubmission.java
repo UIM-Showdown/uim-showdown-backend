@@ -36,11 +36,11 @@ public class UnrankedStartingValueSubmission extends Submission {
     
     @Override
     public void setType(Submission.Type type) throws IllegalArgumentException {
-    	if(type != Submission.Type.UNRANKED_STARTING_VALUE) {
-    		throw new IllegalArgumentException("Unranked starting value submission type must be set to 'UNRANKED_STARTING_VALUE'");
-    	}
-    	
-    	super.setType(type);
+        if(type != Submission.Type.UNRANKED_STARTING_VALUE) {
+            throw new IllegalArgumentException("Unranked starting value submission type must be set to 'UNRANKED_STARTING_VALUE'");
+        }
+        
+        super.setType(type);
     }
     
 }

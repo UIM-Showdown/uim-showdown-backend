@@ -18,10 +18,10 @@ import org.uimshowdown.bingo.models.Tile;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TileRepositoryTests extends SharedTestVariables {
-	
-	@Autowired
-	private TestUtils testUtils;
-	
+    
+    @Autowired
+    private TestUtils testUtils;
+    
     @Autowired
     private TileRepository tileRepository;
 
@@ -29,13 +29,13 @@ public class TileRepositoryTests extends SharedTestVariables {
 
     @BeforeAll
     public void setUp() {
-    	testUtils.resetDB();
+        testUtils.resetDB();
         testTile = tileRepository.save(SharedTestVariables.makeTestTile());
     }
 
     @AfterAll
     public void tearDown() {
-    	testUtils.resetDB();
+        testUtils.resetDB();
     }
 
     @Test

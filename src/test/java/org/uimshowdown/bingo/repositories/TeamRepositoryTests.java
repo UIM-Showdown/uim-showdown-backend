@@ -18,10 +18,10 @@ import org.uimshowdown.bingo.models.Team;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TeamRepositoryTests {
-	
-	@Autowired
-	private TestUtils testUtils;
-	
+    
+    @Autowired
+    private TestUtils testUtils;
+    
     @Autowired
     private TeamRepository teamRepository;
 
@@ -29,13 +29,13 @@ public class TeamRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-    	testUtils.resetDB();
+        testUtils.resetDB();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
     }
 
     @AfterAll
     public void tearDown() {
-    	testUtils.resetDB();
+        testUtils.resetDB();
     }
 
     @Test
