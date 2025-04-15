@@ -46,4 +46,13 @@ public class AdminController {
         playerRepository.save(player);
         return ResponseEntity.ok().build();
     }
+
+    @PatchMapping("/admin/renamePlayer")
+    public ResponseEntity<Void> renamePlayer(@RequestBody Map<String, Object> requestBody) {
+        Player player = playerRepository.findByRsn((String) requestBody.get("oldRsn")).get();
+        player.setRsn((String) requestBody.get("newRsn"));
+        playerRepository.save(player);
+        
+        return ResponseEntity.ok().build();
+    }
 }
