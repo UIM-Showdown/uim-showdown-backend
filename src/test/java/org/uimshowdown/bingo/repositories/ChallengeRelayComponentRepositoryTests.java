@@ -19,10 +19,10 @@ import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ChallengeRelayComponentRepositoryTests {
-	
-	@Autowired
-	private TestUtils testUtils;
-	
+    
+    @Autowired
+    private TestUtils testUtils;
+    
     @Autowired
     private ChallengeRepository challengeRepository;
 
@@ -34,14 +34,14 @@ public class ChallengeRelayComponentRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-    	testUtils.resetDB();
+        testUtils.resetDB();
         testChallenge = challengeRepository.save(SharedTestVariables.makeTestChallenge());
         testChallengeRelayComponent = challengeRelayComponentRepository.save(SharedTestVariables.makeTestChallengeRelayComponent(testChallenge));
     }
 
     @AfterAll
     public void tearDown() {
-    	testUtils.resetDB();
+        testUtils.resetDB();
     }
 
     @Test

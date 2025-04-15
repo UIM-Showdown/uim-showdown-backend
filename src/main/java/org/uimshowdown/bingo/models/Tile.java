@@ -43,7 +43,7 @@ public class Tile {
     }
     
     public String getAbbreviation() {
-    	return abbreviation;
+        return abbreviation;
     }
 
     public int getPointsPerTier() {
@@ -63,7 +63,7 @@ public class Tile {
     }
     
     public void setAbbreviation(String abbreviation) {
-    	this.abbreviation = abbreviation;
+        this.abbreviation = abbreviation;
     }
 
     public void setPointsPerTier(int pointsPerTier) {

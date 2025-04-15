@@ -36,11 +36,11 @@ public class CollectionLogSubmission extends Submission {
     
     @Override
     public void setType(Submission.Type type) throws IllegalArgumentException {
-    	if(type != Submission.Type.COLLECTION_LOG) {
-    		throw new IllegalArgumentException("Collection log submission type must be set to 'COLLECTION_LOG'");
-    	}
-    	
-    	super.setType(type);
+        if(type != Submission.Type.COLLECTION_LOG) {
+            throw new IllegalArgumentException("Collection log submission type must be set to 'COLLECTION_LOG'");
+        }
+        
+        super.setType(type);
     }
     
 }

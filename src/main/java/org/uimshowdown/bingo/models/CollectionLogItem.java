@@ -69,7 +69,7 @@ public class CollectionLogItem {
     }
     
     public Integer getPoints() {
-    	return points;
+        return points;
     }
 
     public String getDescription() {
@@ -81,16 +81,16 @@ public class CollectionLogItem {
     }
     
     public Set<ItemOption> getItemOptions() {
-    	return itemOptions;
+        return itemOptions;
     }
     
     @JsonProperty("itemOptions")
     public Set<String> getItemOptionNames() {
-    	Set<String> names = new HashSet<String>();
-    	for(ItemOption option : itemOptions) {
-    		names.add(option.getName());
-    	}
-    	return names;
+        Set<String> names = new HashSet<String>();
+        for(ItemOption option : itemOptions) {
+            names.add(option.getName());
+        }
+        return names;
     }
     
 
@@ -103,7 +103,7 @@ public class CollectionLogItem {
     }
     
     public void setPoints(Integer points) {
-    	this.points = points;
+        this.points = points;
     }
 
     public void setDescription(String description) {

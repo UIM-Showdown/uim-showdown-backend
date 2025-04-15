@@ -19,10 +19,10 @@ import org.uimshowdown.bingo.models.TeamScoreboard;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TeamScoreboardRepositoryTests {
-	
-	@Autowired
-	private TestUtils testUtils;
-	
+    
+    @Autowired
+    private TestUtils testUtils;
+    
     @Autowired
     private TeamScoreboardRepository teamScoreboardRepository;
 
@@ -34,14 +34,14 @@ public class TeamScoreboardRepositoryTests {
     
     @BeforeAll
     public void setUp() {
-    	testUtils.resetDB();
+        testUtils.resetDB();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testTeamScoreboard = teamScoreboardRepository.save(SharedTestVariables.makeTestTeamScoreboard(testTeam));
     }
 
     @AfterAll
     public void tearDown() {
-    	testUtils.resetDB();
+        testUtils.resetDB();
     }
 
     @Test

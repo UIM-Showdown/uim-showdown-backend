@@ -18,10 +18,10 @@ import org.uimshowdown.bingo.models.Challenge;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ChallengeRepositoryTests {
-	
-	@Autowired
-	private TestUtils testUtils;
-	
+    
+    @Autowired
+    private TestUtils testUtils;
+    
     @Autowired
     private ChallengeRepository challengeRepository;
 
@@ -29,13 +29,13 @@ public class ChallengeRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-    	testUtils.resetDB();
+        testUtils.resetDB();
         testChallenge = challengeRepository.save(SharedTestVariables.makeTestChallenge());
     }
 
     @AfterAll
     public void tearDown() {
-    	testUtils.resetDB();
+        testUtils.resetDB();
     }
 
     @Test

@@ -61,11 +61,11 @@ public class RecordSubmission extends Submission {
     
     @Override
     public void setType(Submission.Type type) throws IllegalArgumentException {
-    	if(type != Submission.Type.RECORD) {
-    		throw new IllegalArgumentException("Record submission type must be set to 'RECORD'");
-    	}
-    	
-    	super.setType(type);
+        if(type != Submission.Type.RECORD) {
+            throw new IllegalArgumentException("Record submission type must be set to 'RECORD'");
+        }
+        
+        super.setType(type);
     }
     
 }

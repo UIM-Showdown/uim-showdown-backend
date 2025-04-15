@@ -20,10 +20,10 @@ import org.uimshowdown.bingo.models.TileProgress;
 @Tag(TestTag.INTEGRATION_TEST)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TileProgressRepositoryTests {
-	
-	@Autowired
-	private TestUtils testUtils;
-	
+    
+    @Autowired
+    private TestUtils testUtils;
+    
     @Autowired
     private TeamRepository teamRepository;
 
@@ -39,7 +39,7 @@ public class TileProgressRepositoryTests {
 
     @BeforeAll
     public void setUp() {
-    	testUtils.resetDB();
+        testUtils.resetDB();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testTile = tileRepository.save(SharedTestVariables.makeTestTile());
         testTileProgress = tileProgressRepository.save(SharedTestVariables.makeTestTileProgress(testTile, testTeam));
@@ -47,7 +47,7 @@ public class TileProgressRepositoryTests {
 
     @AfterAll
     public void tearDown() {
-    	testUtils.resetDB();
+        testUtils.resetDB();
     }
 
     @Test

@@ -48,11 +48,11 @@ public class ChallengeSubmission extends Submission {
     
     @Override
     public void setType(Submission.Type type) throws IllegalArgumentException {
-    	if(type != Submission.Type.CHALLENGE) {
-    		throw new IllegalArgumentException("Challenge submission type must be set to 'CHALLENGE'");
-    	}
-    	
-    	super.setType(type);
+        if(type != Submission.Type.CHALLENGE) {
+            throw new IllegalArgumentException("Challenge submission type must be set to 'CHALLENGE'");
+        }
+        
+        super.setType(type);
     }
     
 }
