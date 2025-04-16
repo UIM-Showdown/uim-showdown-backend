@@ -35,6 +35,10 @@ public class CompetitionConfiguration {
     
     private boolean blackoutBonusEnabled;
     
+    private boolean best3Of4Records;
+    
+    private boolean best3Of4Challenges;
+    
     private List<TileConfig> tiles;
     
     private List<TileGroupConfig> tileGroups;
@@ -121,6 +125,22 @@ public class CompetitionConfiguration {
 
     public void setBlackoutBonusEnabled(boolean blackoutBonusEnabled) {
         this.blackoutBonusEnabled = blackoutBonusEnabled;
+    }
+
+    public boolean isBest3Of4Records() {
+        return best3Of4Records;
+    }
+
+    public void setBest3Of4Records(boolean best3Of4Records) {
+        this.best3Of4Records = best3Of4Records;
+    }
+
+    public boolean isBest3of4challenges() {
+        return best3Of4Challenges;
+    }
+
+    public void setBest3Of4Challenges(boolean best3Of4Challenges) {
+        this.best3Of4Challenges = best3Of4Challenges;
     }
 
     public List<TileConfig> getTiles() {
