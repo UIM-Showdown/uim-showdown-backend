@@ -135,7 +135,7 @@ public class CompetitionConfiguration {
         this.best3Of4Records = best3Of4Records;
     }
 
-    public boolean isBest3of4challenges() {
+    public boolean isBest3OfCchallenges() {
         return best3Of4Challenges;
     }
 
