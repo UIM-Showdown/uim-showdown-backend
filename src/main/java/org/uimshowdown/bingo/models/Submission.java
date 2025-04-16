@@ -41,6 +41,10 @@ public class Submission {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player_id")
     private Player player;
+    
+    @Column(name = "submitted_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp submittedAt;
 
     @Column(name = "reviewed_at", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
@@ -76,6 +80,14 @@ public class Submission {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public Timestamp getSubmittedAt() {
+        return submittedAt;
+    }
+
+    public void setSubmittedAt(Timestamp submittedAt) {
+        this.submittedAt = submittedAt;
     }
 
     public Set<SubmissionScreenshotUrl> getScreenshotUrls() {

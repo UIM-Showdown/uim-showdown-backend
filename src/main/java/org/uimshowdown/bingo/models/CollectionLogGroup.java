@@ -66,6 +66,10 @@ public class CollectionLogGroup {
         return items;
     }
 
+    public void setItems(Set<CollectionLogItem> items) {
+        this.items = items;
+    }
+
     public String getName() {
         return name;
     }

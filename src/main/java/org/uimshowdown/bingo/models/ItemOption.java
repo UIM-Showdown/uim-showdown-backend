@@ -47,7 +47,7 @@ public class ItemOption {
         this.name = name;
     }
     
-    public void settItem(CollectionLogItem item) {
+    public void setItem(CollectionLogItem item) {
         this.item = item;
     }
     

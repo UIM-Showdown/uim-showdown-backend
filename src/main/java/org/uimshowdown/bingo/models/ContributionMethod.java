@@ -61,6 +61,10 @@ public class ContributionMethod {
     @Column(name = "eht_rate")
     @JsonProperty
     private double ehtRate;
+    
+    @Column(name = "tile_points_per_contribution")
+    @JsonProperty
+    private int tilePointsPerContribution;
 
     @Column(length = 64)
     @JsonProperty
@@ -125,11 +129,21 @@ public class ContributionMethod {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public String getTempleId() {
+        return templeId;
+    }
 
-    @JsonProperty("tilePointsPerContribution")
+    public void setTempleId(String templeId) {
+        this.templeId = templeId;
+    }
+
     public int getTilePointsPerContribution() {
-        int ehtPerTier = 30; // TODO get from config
-        return (int) (this.tile.getPointsPerTier() / ehtPerTier / this.ehtRate);
+        return tilePointsPerContribution;
+    }
+
+    public void setTilePointsPerContribution(int tilePointsPerContribution) {
+        this.tilePointsPerContribution = tilePointsPerContribution;
     }
 
     @Override
