@@ -65,6 +65,14 @@ public class Record {
     public void setDescription(String description) {
         this.description = description;
     }
+    
+    public Set<RecordHandicap> getHandicaps() {
+        return handicaps;
+    }
+
+    public void setHandicaps(Set<RecordHandicap> handicaps) {
+        this.handicaps = handicaps;
+    }
 
     public void setSkill(Player.Skill skill) {
         this.skill = skill;

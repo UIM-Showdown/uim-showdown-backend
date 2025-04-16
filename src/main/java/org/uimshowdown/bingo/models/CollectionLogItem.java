@@ -84,6 +84,10 @@ public class CollectionLogItem {
         return itemOptions;
     }
     
+    public void setItemOptions(Set<ItemOption> itemOptions) {
+        this.itemOptions = itemOptions;
+    }
+
     @JsonProperty("itemOptions")
     public Set<String> getItemOptionNames() {
         Set<String> names = new HashSet<String>();

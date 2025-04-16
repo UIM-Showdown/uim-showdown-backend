@@ -7,7 +7,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.uimshowdown.bingo.models.Challenge;
+import org.uimshowdown.bingo.models.CollectionLogGroup;
 import org.uimshowdown.bingo.models.ContributionMethod;
+import org.uimshowdown.bingo.models.Player;
 
 @Configuration
 @ConfigurationProperties("competition")
@@ -42,6 +44,12 @@ public class CompetitionConfiguration {
     private List<RecordConfig> records;
     
     private List<CollectionLogGroupConfig> collectionLogGroups;
+    
+    private double maxRoundingErrorForContributionPoints;
+    
+    private int sigFigsForTilePointsPerTier;
+    
+    private int sigFigsForContributionPoints;
     
     public String getEventName() {
         return eventName;
@@ -155,9 +163,36 @@ public class CompetitionConfiguration {
         this.collectionLogGroups = collectionLogGroups;
     }
     
+    public double getMaxRoundingErrorForContributionPoints() {
+        return maxRoundingErrorForContributionPoints;
+    }
+
+    public void setMaxRoundingErrorForContributionPoints(double maxRoundingErrorForContributionPoints) {
+        this.maxRoundingErrorForContributionPoints = maxRoundingErrorForContributionPoints;
+    }
+
+    public int getSigFigsForTilePointsPerTier() {
+        return sigFigsForTilePointsPerTier;
+    }
+
+    public void setSigFigsForTilePointsPerTier(int sigFigsForTilePointsPerTier) {
+        this.sigFigsForTilePointsPerTier = sigFigsForTilePointsPerTier;
+    }
+
+    public int getSigFigsForContributionPoints() {
+        return sigFigsForContributionPoints;
+    }
+
+    public void setSigFigsForContributionPoints(int sigFigsForContributionPoints) {
+        this.sigFigsForContributionPoints = sigFigsForContributionPoints;
+    }
+
     public static class TileConfig {
         private String name;
         private String abbreviation;
+        private double maxRoundingErrorForContributionPoints = -1;
+        private int sigFigsForTilePointsPerTier = -1;
+        private int sigFigsForContributionPoints = -1;
         private List<ContributionMethodConfig> contributionMethods;
         
         public String getName() {
@@ -172,6 +207,24 @@ public class CompetitionConfiguration {
         public void setAbbreviation(String abbreviation) {
             this.abbreviation = abbreviation;
         }
+        public double getMaxRoundingErrorForContributionPoints() {
+            return maxRoundingErrorForContributionPoints;
+        }
+        public void setMaxRoundingErrorForContributionPoints(double maxRoundingErrorForContributionPoints) {
+            this.maxRoundingErrorForContributionPoints = maxRoundingErrorForContributionPoints;
+        }
+        public int getSigFigsForTilePointsPerTier() {
+            return sigFigsForTilePointsPerTier;
+        }
+        public void setSigFigsForTilePointsPerTier(int sigFigsForTilePointsPerTier) {
+            this.sigFigsForTilePointsPerTier = sigFigsForTilePointsPerTier;
+        }
+        public int getSigFigsForContributionPoints() {
+            return sigFigsForContributionPoints;
+        }
+        public void setSigFigsForContributionPoints(int sigFigsForContributionPoints) {
+            this.sigFigsForContributionPoints = sigFigsForContributionPoints;
+        }
         public List<ContributionMethodConfig> getContributionMethods() {
             return contributionMethods;
         }
@@ -182,7 +235,7 @@ public class CompetitionConfiguration {
     
     public static class ContributionMethodConfig {
         private String name;
-        private String type;
+        private ContributionMethod.Type type;
         private ContributionMethod.Category category;
         private double ehtRate;
         private String templeID;
@@ -193,10 +246,10 @@ public class CompetitionConfiguration {
         public void setName(String name) {
             this.name = name;
         }
-        public String getType() {
+        public ContributionMethod.Type getType() {
             return type;
         }
-        public void setType(String type) {
+        public void setType(ContributionMethod.Type type) {
             this.type = type;
         }
         public ContributionMethod.Category getCategory() {
@@ -277,14 +330,14 @@ public class CompetitionConfiguration {
     }
     
     public static class RecordConfig {
-        private String skill;
+        private Player.Skill skill;
         private String description;
         private List<HandicapConfig> handicaps;
         
-        public String getSkill() {
+        public Player.Skill getSkill() {
             return skill;
         }
-        public void setSkill(String skill) {
+        public void setSkill(Player.Skill skill) {
             this.skill = skill;
         }
         public String getDescription() {
@@ -321,7 +374,7 @@ public class CompetitionConfiguration {
     
     public static class CollectionLogGroupConfig {
         private String name;
-        private String type;
+        private CollectionLogGroup.Type type;
         private int[] bonusPointThresholds;
         private int[] counterPointValues;
         private String description;
@@ -333,10 +386,10 @@ public class CompetitionConfiguration {
         public void setName(String name) {
             this.name = name;
         }
-        public String getType() {
+        public CollectionLogGroup.Type getType() {
             return type;
         }
-        public void setType(String type) {
+        public void setType(CollectionLogGroup.Type type) {
             this.type = type;
         }
         public int[] getBonusPointThresholds() {
@@ -367,7 +420,9 @@ public class CompetitionConfiguration {
 
     public static class ItemConfig {
         private String name;
+        private String description;
         private int points = -1;
+        private List<String> itemOptions;
         
         public String getName() {
             return name;
@@ -380,6 +435,18 @@ public class CompetitionConfiguration {
         }
         public void setPoints(int points) {
             this.points = points;
+        }
+        public String getDescription() {
+            return description;
+        }
+        public void setDescription(String description) {
+            this.description = description;
+        }
+        public List<String> getItemOptions() {
+            return itemOptions;
+        }
+        public void setItemOptions(List<String> itemOptions) {
+            this.itemOptions = itemOptions;
         }
     }
     
