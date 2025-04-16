@@ -91,6 +91,9 @@ public class CollectionLogItem {
     @JsonProperty("itemOptions")
     public Set<String> getItemOptionNames() {
         Set<String> names = new HashSet<String>();
+        if(itemOptions == null) {
+            return names;
+        }
         for(ItemOption option : itemOptions) {
             names.add(option.getName());
         }

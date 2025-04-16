@@ -1,0 +1,147 @@
+competition:
+    eventName: "UIM Snowdown 2025"
+    startDatetime: "2025-01-31T00:00:00"
+    endDatetime: "2025-02-10T00:00:00"
+    templeCompetitionID: 28896
+    waitlistTeamName: "Wildy Waitlisters"
+    ehtPerTier: 30
+    eventPointsPerTier: [25, 23, 21, 19, 17, 15]
+    tierCap: -1
+    blackoutBonusEnabled: true
+    best3Of4Records: true
+    best3Of4Challenges: true
+    maxRoundingErrorForContributionPoints: 0.05
+    sigFigsForContributionPoints: 3
+    sigFigsForTilePointsPerTier: 3
+    tiles:
+        - name: "Test Tile 1"
+          abbreviation: "TT1"
+          contributionMethods:
+            - name: "Chambers of Xeric"
+              type: "KC"
+              category: "PVM"
+              ehtRate: 7.5
+              templeID: "Chambers of Xeric"
+            - name: "Slayer"
+              type: "XP"
+              category: "Skilling"
+              ehtRate: 63000
+              templeID: "Slayer"
+            - name: "Master Clues"
+              type: "KC"
+              category: "Other"
+              ehtRate: 2.4
+              templeID: "Clue_master"
+            - name: "Basilisk Knights"
+              type: "Submission"
+              category: "PVM"
+              ehtRate: 93
+        - name: "Test Tile 2"
+          abbreviation: "TT2"
+          contributionMethods:
+            - name: "Demonic Gorillas"
+              type: "Submission"
+              category: "PVM"
+              ehtRate: 85
+            - name: "Lizardman Shamans"
+              type: "Submission"
+              category: "PVM"
+              ehtRate: 150
+            - name: "Skotizo"
+              type: "KC"
+              category: "PVM"
+              ehtRate: 30
+              templeID: "Skotizo"
+        - name: "Test Tile 3"
+          abbreviation: "TT3"
+          contributionMethods:
+            - name: "Barrows: Items"
+              type: "Submission"
+              category: "PVM"
+              ehtRate: 1.3
+            - name: "Moons of Peril: Items"
+              type: "Submission"
+              category: "PVM"
+              ehtRate: 0.8
+            - name: "The Gauntlet"
+              type: "KC"
+              category: "PVM"
+              ehtRate: 10
+              templeID: "The Gauntlet"
+            - name: "The Corrupted Gauntlet"
+              type: "KC"
+              category: "PVM"
+              ehtRate: 7.2
+              templeID: "The Corrupted Gauntlet"
+            - name: "Elite Clues"
+              type: "KC"
+              category: "Other"
+              ehtRate: 5
+              templeID: "Clue_elite"
+    tileGroups:
+      - name: "Row 1"
+        tileNames: ["Test Tile 1", "Test Tile 2"]
+      - name: "Column 1"
+        tileNames: ["Test Tile 1", "Test Tile 3"]
+    challenges:
+      - name: "Barbarian Assault"
+        teamSize: 5
+        description: "Complete a full game of Barbarian Assault as quickly as possible! All players must be on your team."
+        type: "Speedrun"
+      - name: "Desert Treasure 2 Relay"
+        teamSize: 4
+        description: "Kill each Desert Treasure 2 boss as quickly as possible! Each boss must be killed by a different player."
+        type: "Relay"
+        relayComponents: ["The Whisperer", "The Leviathan", "Vardorvis", "Duke Sucellus"]
+      - name: "Chambers of Xeric: Challenge Mode"
+        teamSize: 3
+        description: "Complete a full 3-player CM raid as quickly as possible!"
+        type: "Speedrun"
+      - name: "Tombs of Amascut: Expert Mode"
+        teamSize: 3
+        description: "Complete a full 3-player 300+ invo TOA raid as quickly as possible!"
+        type: "Speedrun"
+    records:
+      - skill: "Agility"
+        description: "Get as much agility XP as you can in 6 hours!"
+      - skill: "Hunter"
+        description: "Get as much hunter XP as you can in 6 hours!"
+      - skill: "Mining"
+        description: "Get as much mining XP as you can in 6 hours!"
+      - skill: "Woodcutting"
+        description: "Get as much woodcutting XP as you can in 6 hours!"
+        handicaps:
+          - name: "Dragon axe"
+            multiplier: 1.13
+          - name: "Dragon 2h axe"
+            multiplier: 1.13
+    collectionLogGroups:
+      - name: "Agnostic Apparel"
+        type: "Checklist"
+        bonusPointThresholds: [2, 3]
+        description: "Bonus point at: 2 items, 3 items"
+        items:
+          - name: "Any Blessed D'hide Coif"
+            points: 2
+            itemOptions: ["Ancient coif", "Armadyl coif"]
+          - name: "Any Blessed D'hide Body"
+            points: 2
+            itemOptions: ["Ancient d'hide body", "Armadyl d'hide body"]
+      - name: "Beastly Blade"
+        type: "Checklist"
+        bonusPointThresholds: [2, 3]
+        description: "Bonus point at: 2 items, 3 items"
+        items:
+          - name: "Holy elixir"
+            points: 1
+          - name: "Arcane sigil"
+            points: 2
+          - name: "Elysian sigil"
+            points: 3
+      - name: "Not Just For Butterflies"
+        type: "Counter"
+        counterPointValues: [4, 3]
+        items:
+          - name: "Jar of chemicals"
+          - name: "Jar of darkness"
+          - name: "Jar of decay"
