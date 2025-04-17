@@ -133,10 +133,6 @@ public class ContributionMethod {
     public void setName(String name) {
         this.name = name;
     }
-    
-    public String getTempleId() {
-        return templeId;
-    }
 
     public void setTempleId(String templeId) {
         this.templeId = templeId;

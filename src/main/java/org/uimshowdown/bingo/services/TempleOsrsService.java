@@ -51,8 +51,8 @@ public class TempleOsrsService {
 
         Iterable<ContributionMethod> contributionMethods = contributionMethodRepository.findAll();
 
-        this.updatePlayerContributions(players, contributionMethods, Api.PVM);
-        this.updatePlayerContributions(players, contributionMethods, Api.SKILLING);
+        updatePlayerContributions(players, contributionMethods, Api.PVM);
+        updatePlayerContributions(players, contributionMethods, Api.SKILLING);
     }
 
     private void updatePlayerContributions(Map<String, Player> players, Iterable<ContributionMethod> contributionMethods, TempleOsrsService.Api api) throws IllegalArgumentException {
