@@ -106,6 +106,10 @@ public class ContributionMethod {
         return name;
     }
 
+    public String getTempleId() {
+        return templeId;
+    }
+
     public void setTile(Tile tile) {
         this.tile = tile;
     }
@@ -124,6 +128,10 @@ public class ContributionMethod {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setTempleId(String templeId) {
+        this.templeId = templeId;
     }
 
     @JsonProperty("tilePointsPerContribution")
