@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -25,7 +24,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 @Component
 public class TempleOsrsService {
 
-    public enum Api { PVM, SKILLING }
+    public enum Api { CLUES_PVM, SKILLING }
 
     @Autowired
     private CompetitionConfiguration competitionConfiguration;
@@ -41,7 +40,7 @@ public class TempleOsrsService {
     private PlayerRepository playerRepository;
 
     public void updateCompetition() {
-        // We produce a map of RSN/Player key value pairs so that we can do constant time searches against the participants list
+        // Producing a map of RSN/player key value pairs so that we can do constant time searches against the participants list
         Map<String, Player> players = StreamSupport
             .stream(playerRepository.findAll().spliterator(), false)
             .collect(Collectors.toMap(
@@ -49,41 +48,31 @@ public class TempleOsrsService {
                 Function.identity()
             ));
 
-        Iterable<ContributionMethod> contributionMethods = contributionMethodRepository.findAll();
-
-        updatePlayerContributions(players, contributionMethods, Api.PVM);
-        updatePlayerContributions(players, contributionMethods, Api.SKILLING);
-    }
-
-    private void updatePlayerContributions(Map<String, Player> players, Iterable<ContributionMethod> contributionMethods, TempleOsrsService.Api api) throws IllegalArgumentException {
-        String apiPath;
-        Predicate<ContributionMethod> filterBy;
-
-        switch (api) {
-            case PVM:
-                apiPath = "/api/competition_info_v2.php?id={competition_id}&details=1&skill=Obor";
-                filterBy = contributionMethod ->
-                    contributionMethod.getContributionMethodCategory() == ContributionMethod.Category.PVM
-                    && contributionMethod.getContributionMethodType() == ContributionMethod.Type.KC;
-                break;
-            case SKILLING:
-                apiPath = "/api/competition_info_v2.php?id={competition_id}&details=1";
-                filterBy = contributionMethod ->
-                    contributionMethod.getContributionMethodCategory() == ContributionMethod.Category.SKILLING
-                    && contributionMethod.getContributionMethodType() == ContributionMethod.Type.XP;
-                break;
-            default:
-                throw new IllegalArgumentException("The given API is not supported!");
-        }
-
-        // We produce a map of temple ID/Skilling XP contribution methods so that we can perform constant time searches against all fields in the `detailed_gains` object
-        Map<String, ContributionMethod> relevantContributionMethods = StreamSupport
-            .stream(contributionMethods.spliterator(), false)
-            .filter(filterBy)
+        // Producing a map of temple ID/contribution methods so that we can perform constant time searches against all fields in the `detailed_gains` object
+        Map<String, ContributionMethod> contributionMethods = StreamSupport
+            .stream(contributionMethodRepository.findAll().spliterator(), false)
             .collect(Collectors.toMap(
                 ContributionMethod::getTempleId,
                 Function.identity()
             ));
+
+        updatePlayerContributions(players, contributionMethods, Api.CLUES_PVM);
+        updatePlayerContributions(players, contributionMethods, Api.SKILLING);
+    }
+
+    private void updatePlayerContributions(Map<String, Player> players, Map<String, ContributionMethod> contributionMethods, TempleOsrsService.Api api) throws IllegalArgumentException {
+        String apiPath;
+
+        switch (api) {
+            case CLUES_PVM:
+                apiPath = "/api/competition_info_v2.php?id={competition_id}&details=1&skill=Obor";
+                break;
+            case SKILLING:
+                apiPath = "/api/competition_info_v2.php?id={competition_id}&details=1";
+                break;
+            default:
+                throw new IllegalArgumentException("The given API is not supported!");
+        }
 
         try {
             JsonNode competitionGains = restClient
@@ -91,6 +80,10 @@ public class TempleOsrsService {
                 .uri(apiPath, competitionConfiguration.getTempleCompetitionID())
                 .retrieve()
                 .body(JsonNode.class);
+
+            if (competitionGains == null) {
+                throw new IllegalStateException("Expected a response body, but received nothing!");
+            }
 
             if (competitionGains.get("data").get("participants").isArray() == false) {
                 throw new IllegalStateException(String.format("Expected `data.participants` to be a JSON array! Instead received: `%s`", competitionGains.asText()));
@@ -102,36 +95,36 @@ public class TempleOsrsService {
                     continue;
                 }
 
-                JsonNode detailedGains = participant.get("detailed_gains");
-                if (detailedGains == null) {
+                JsonNode detailedPlayerGains = participant.get("detailed_gains");
+                if (detailedPlayerGains == null) {
                     continue;
                 }
 
-                List<Contribution> relevantGainContributions = StreamSupport
+                List<Contribution> relevantContributions = StreamSupport
                     .stream(
-                        Spliterators.spliteratorUnknownSize(detailedGains.fields(), Spliterator.ORDERED),
+                        Spliterators.spliteratorUnknownSize(detailedPlayerGains.fields(), Spliterator.ORDERED),
                         false
                     )
                     .filter(
-                        skillGain ->
-                            relevantContributionMethods.containsKey(skillGain.getKey())
-                            && skillGain.getValue().get("end_xp").asInt() > skillGain.getValue().get("start_xp").asInt()
+                        playerGain ->
+                            contributionMethods.containsKey(playerGain.getKey())
+                            && playerGain.getValue().get("end_xp").asInt() > playerGain.getValue().get("start_xp").asInt()
                     )
                     .map(
-                        skillGain -> new Contribution(
+                        playerGain -> new Contribution(
                             player,
-                            relevantContributionMethods.get(skillGain.getKey()),
-                            skillGain.getValue().get("start_xp").asInt(),
-                            skillGain.getValue().get("end_xp").asInt()
+                            contributionMethods.get(playerGain.getKey()),
+                            playerGain.getValue().get("start_xp").asInt(),
+                            playerGain.getValue().get("end_xp").asInt()
                         )
                     )
                     .toList();
 
-                player.getContributions().addAll(relevantGainContributions);
+                player.getContributions().addAll(relevantContributions);
                 playerRepository.save(player);
             }
         } catch (Throwable e) {
-            /** @todo Broadcast to a Discord `#errors` channel that pulling the competition skill gains failed */
+            /** @todo Broadcast to a Discord `#errors` channel that updating player contributions via Temple's API failed */
             return;
         }
     }
