@@ -10,6 +10,7 @@ import org.uimshowdown.bingo.repositories.CollectionLogGroupRepository;
 import org.uimshowdown.bingo.repositories.CollectionLogItemRepository;
 import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
 import org.uimshowdown.bingo.repositories.ContributionRepository;
+import org.uimshowdown.bingo.repositories.ItemOptionRepository;
 import org.uimshowdown.bingo.repositories.PlayerChallengeCompletionRepository;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
 import org.uimshowdown.bingo.repositories.PlayerScoreboardRepository;
@@ -46,6 +47,7 @@ public class TestUtils {
     @Autowired TeamScoreboardRepository teamScoreboardRepository;
     @Autowired TileProgressRepository tileProgressRepository;
     @Autowired TileRepository tileRepository;
+    @Autowired ItemOptionRepository itemOptionRepository;
     
     public void resetDB() {
         challengeCompletionRepository.deleteAll();
@@ -68,6 +70,7 @@ public class TestUtils {
         teamScoreboardRepository.deleteAll();
         tileProgressRepository.deleteAll();
         tileRepository.deleteAll();
+        itemOptionRepository.deleteAll();
     }
 
 }

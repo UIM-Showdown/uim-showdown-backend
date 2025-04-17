@@ -1,5 +1,6 @@
 package org.uimshowdown.bingo.controllers;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.uimshowdown.bingo.configuration.CompetitionConfiguration;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.Team;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
@@ -17,6 +19,10 @@ import org.uimshowdown.bingo.services.TempleOsrsService;
 
 @RestController
 public class AdminController {
+    
+    @Autowired
+    private CompetitionConfiguration competitionConfiguration;
+    
     @Autowired
     private PlayerRepository playerRepository;
 
@@ -66,6 +72,16 @@ public class AdminController {
             (String) requestBody.get("abbreviation"),
             (String) requestBody.get("color")
         );
+        return ResponseEntity.ok().build();
+    }
+    
+    @PostMapping("/admin/initializeCompetition")
+    public ResponseEntity<Object> initializeCompetition() {
+        Date now = new Date();
+        if(now.after(competitionConfiguration.getStartDatetime()) && now.before(competitionConfiguration.getEndDatetime())) {
+            return ResponseEntity.badRequest().body("Event currently in progress");
+        }
+        eventDataInitializationService.initializeCompetition();
         return ResponseEntity.ok().build();
     }
     

@@ -54,6 +54,10 @@ public class Tile {
         return contributionMethods;
     }
 
+    public void setContributionMethods(Set<ContributionMethod> contributionMethods) {
+        this.contributionMethods = contributionMethods;
+    }
+
     public Set<TileProgress> getProgress() {
         return progress;
     }

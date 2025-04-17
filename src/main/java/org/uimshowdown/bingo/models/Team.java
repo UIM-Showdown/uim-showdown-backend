@@ -77,6 +77,10 @@ public class Team {
         return players;
     }
 
+    public void setPlayers(Set<Player> players) {
+        this.players = players;
+    }
+
     public Set<TileProgress> getTileProgress() {
         return tileProgress;
     }
@@ -95,6 +99,9 @@ public class Team {
     
     @JsonProperty("captains")
     public Set<Player> getCaptains() {
+        if(this.players == null) {
+            return null;
+        }
         Set<Player> captains = new HashSet<Player>();
         for(Player player : this.players) {
             if(player.isCaptain()) {

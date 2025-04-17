@@ -75,6 +75,10 @@ public class Challenge {
     public Set<ChallengeRelayComponent> getRelayComponents() {
         return relayComponents;
     }
+    
+    public void setRelayComponents(Set<ChallengeRelayComponent> relayComponents) {
+        this.relayComponents = relayComponents;
+    }
 
     public int getTeamSize() {
         return teamSize;
