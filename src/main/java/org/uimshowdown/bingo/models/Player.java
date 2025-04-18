@@ -141,6 +141,10 @@ public class Player {
         captain = isCaptain;
     }
 
+    public void setContributions(Set<Contribution> contributions) {
+        this.contributions = contributions;
+    }
+
     public void setDiscordName(String discordName) {
         this.discordName = discordName;
     }

@@ -1,7 +1,7 @@
 package org.uimshowdown.bingo.services;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.function.Function;
@@ -39,6 +39,9 @@ public class TempleOsrsService {
     @Autowired
     private PlayerRepository playerRepository;
 
+    /**
+     * @implNote Filtering out contribution methods that have null temple IDs is done to prevent a `IllegalStateException` due to duplicate keys during the map creation process.
+     */
     public void updateCompetition() {
         // Producing a map of RSN/player key value pairs so that we can do constant time searches against the participants list
         Map<String, Player> players = StreamSupport
@@ -51,6 +54,7 @@ public class TempleOsrsService {
         // Producing a map of temple ID/contribution methods so that we can perform constant time searches against all fields in the `detailed_gains` object
         Map<String, ContributionMethod> contributionMethods = StreamSupport
             .stream(contributionMethodRepository.findAll().spliterator(), false)
+            .filter(contributionMethod -> contributionMethod.getTempleId() != null)
             .collect(Collectors.toMap(
                 ContributionMethod::getTempleId,
                 Function.identity()
@@ -100,27 +104,47 @@ public class TempleOsrsService {
                     continue;
                 }
 
-                List<Contribution> relevantContributions = StreamSupport
+                // Map contributions to contribution methods for constant time searches
+                Map<ContributionMethod, Contribution> currentPlayerContributions = player
+                    .getContributions()
+                    .stream()
+                    .collect(Collectors.toMap(
+                        Contribution::getContributionMethod,
+                        Function.identity()
+                    ));
+
+                Set<Contribution> updatedContributions = StreamSupport
                     .stream(
                         Spliterators.spliteratorUnknownSize(detailedPlayerGains.fields(), Spliterator.ORDERED),
                         false
                     )
                     .filter(
                         playerGain ->
-                            contributionMethods.containsKey(playerGain.getKey())
-                            && playerGain.getValue().get("end_xp").asInt() > playerGain.getValue().get("start_xp").asInt()
+                            contributionMethods.containsKey(playerGain.getKey()) // is this player gain relevant to the comp?
+                            && playerGain.getValue().get("end_xp").asInt() > playerGain.getValue().get("start_xp").asInt() // has the player contributed to it at all?
                     )
                     .map(
-                        playerGain -> new Contribution(
-                            player,
-                            contributionMethods.get(playerGain.getKey()),
-                            playerGain.getValue().get("start_xp").asInt(),
-                            playerGain.getValue().get("end_xp").asInt()
-                        )
-                    )
-                    .toList();
+                        playerGain -> {
+                            ContributionMethod contributionMethod = contributionMethods.get(playerGain.getKey());
+                            Contribution currentPlayerContribution = currentPlayerContributions.get(contributionMethod);
+                            if (currentPlayerContribution == null) {
+                                return new Contribution(
+                                    player,
+                                    contributionMethod,
+                                    playerGain.getValue().get("start_xp").asInt(),
+                                    playerGain.getValue().get("end_xp").asInt()
+                                );
+                            }
 
-                player.getContributions().addAll(relevantContributions);
+                            currentPlayerContribution.setFinalValue(playerGain.getValue().get("end_xp").asInt());
+                            return currentPlayerContribution;
+                        }
+                    )
+                    .collect(Collectors.toSet());
+
+                // This approach is taken since `player.getContributions().addAll(updatedContributions)` will prioritize existing contributions over updated ones
+                updatedContributions.addAll(currentPlayerContributions.values());
+                player.setContributions(updatedContributions);
                 playerRepository.save(player);
             }
         } catch (Throwable e) {
