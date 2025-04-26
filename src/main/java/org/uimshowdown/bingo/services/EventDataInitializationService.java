@@ -21,6 +21,7 @@ import org.uimshowdown.bingo.models.CollectionLogChecklistGroup;
 import org.uimshowdown.bingo.models.CollectionLogCounterGroup;
 import org.uimshowdown.bingo.models.CollectionLogGroup;
 import org.uimshowdown.bingo.models.CollectionLogItem;
+import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.ItemOption;
 import org.uimshowdown.bingo.models.Player;
@@ -337,6 +338,7 @@ public class EventDataInitializationService {
         if(team.getPlayers() == null) {
             team.setPlayers(new HashSet<Player>());
         }
+        player.setContributions(generateEmptyContributions(player));
         team.getPlayers().add(player);
         teamRepository.save(team);
     }
@@ -353,6 +355,14 @@ public class EventDataInitializationService {
         team.setAbbreviation(abbreviation);
         team.setColor(color);
         teamRepository.save(team);
+    }
+    
+    private Set<Contribution> generateEmptyContributions(Player player) {
+        Set<Contribution> contributions = new HashSet<Contribution>();
+        for(ContributionMethod contributionMethod : contributionMethodRepository.findAll()) {
+            contributions.add(new Contribution(player, contributionMethod, 0, 0));
+        }
+        return contributions;
     }
     
 }
