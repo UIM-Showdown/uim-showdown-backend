@@ -3,10 +3,13 @@ package org.uimshowdown.bingo.services;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.ChallengeConfig;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.CollectionLogGroupConfig;
@@ -328,8 +331,20 @@ public class EventDataInitializationService {
      * @param isCaptain
      * @param teamName
      */
-    public void addPlayer(String discordName, String rsn, Boolean isCaptain, String teamName) {
-        Team team = teamRepository.findByName(teamName).get();
+    public void addPlayer(String discordName, String rsn, Boolean isCaptain, String teamName) throws Exception {
+        Optional<Team> teamOpt = teamRepository.findByName(teamName);
+        if(teamOpt.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Team not found: " + teamName);
+        }
+        Optional<Player> discordNameOpt = playerRepository.findByDiscordName(discordName);
+        if(discordNameOpt.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Player already exists with Discord name: " + discordName);
+        }
+        Optional<Player> rsnOpt = playerRepository.findByRsn(rsn);
+        if(rsnOpt.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Player already exists with rsn: " + rsn);
+        }
+        Team team = teamOpt.get();
         Player player = new Player();
         player.setCaptainStatus(isCaptain);
         player.setDiscordName(discordName);
@@ -349,7 +364,11 @@ public class EventDataInitializationService {
      * @param abbreviation
      * @param color
      */
-    public void addTeam(String name, String abbreviation, String color) {
+    public void addTeam(String name, String abbreviation, String color) throws Exception {
+        Optional<Team> teamOpt = teamRepository.findByName(name);
+        if(teamOpt.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Team already exists: " + name);
+        }
         Team team = new Team();
         team.setName(name);
         team.setAbbreviation(abbreviation);

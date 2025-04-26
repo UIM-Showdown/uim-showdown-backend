@@ -36,7 +36,7 @@ public class AdminController {
     private TempleOsrsService templeOsrsService;
 
     @PostMapping("/admin/addPlayer")
-    public ResponseEntity<Void> addPlayer(@RequestBody Map<String, Object> requestBody) {
+    public ResponseEntity<Void> addPlayer(@RequestBody Map<String, Object> requestBody) throws Exception {
         eventDataInitializationService.addPlayer(
             (String) requestBody.get("discordName"),
             (String) requestBody.get("rsn"),
@@ -66,7 +66,7 @@ public class AdminController {
     }
     
     @PostMapping("/admin/addTeam")
-    public ResponseEntity<Void> addTeam(@RequestBody Map<String, Object> requestBody) {
+    public ResponseEntity<Void> addTeam(@RequestBody Map<String, Object> requestBody) throws Exception {
         eventDataInitializationService.addTeam(
             (String) requestBody.get("name"),
             (String) requestBody.get("abbreviation"),
