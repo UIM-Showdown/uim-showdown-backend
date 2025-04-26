@@ -1,6 +1,7 @@
 package org.uimshowdown.bingo.models;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -54,7 +55,7 @@ public class Submission {
     private String reviewer;
 
     @OneToMany(mappedBy = "submission", cascade = CascadeType.ALL)
-    private Set<SubmissionScreenshotUrl> screenshotUrls;
+    private Set<SubmissionScreenshotUrl> screenshotUrls = new HashSet<SubmissionScreenshotUrl>();
 
     @Column
     @Enumerated(EnumType.STRING)

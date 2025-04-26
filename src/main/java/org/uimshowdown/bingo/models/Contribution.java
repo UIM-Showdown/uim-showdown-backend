@@ -39,10 +39,13 @@ public class Contribution {
     private String finalValueScreenshotUrl;
 
     @Column(name = "staff_adjustment")
-    private int staffAdjustment;
+    private int staffAdjustment = 0;
 
     @Column(name = "unranked_starting_value")
-    private int unrankedStartingValue;
+    private int unrankedStartingValue = -1;
+    
+    @Column(name = "is_empty")
+    private boolean isEmpty = true;
 
     /**
      * Classes that define constructors must also include a no-arg constructor.
@@ -52,11 +55,12 @@ public class Contribution {
         
     }
 
-    public Contribution(Player player, ContributionMethod contributionMethod, int initialValue, int finalValue) {
+    public Contribution(Player player, ContributionMethod contributionMethod, int initialValue, int finalValue, boolean isEmpty) {
         this.player = player;
         this.contributionMethod = contributionMethod;
         this.initialValue = initialValue;
         this.finalValue = finalValue;
+        this.isEmpty = isEmpty;
     }
 
     public int getId() {
@@ -94,6 +98,10 @@ public class Contribution {
     public int getUnrankedStartingValue() {
         return unrankedStartingValue;
     }
+    
+    public boolean isEmpty() {
+        return isEmpty;
+    }
 
     public void setContributionMethod(ContributionMethod contributionMethod) {
         this.contributionMethod = contributionMethod;
@@ -125,6 +133,27 @@ public class Contribution {
 
     public void setUnrankedStartingValue(int unrankedStartingValue) {
         this.unrankedStartingValue = unrankedStartingValue;
+    }
+    
+    public void setIsEmpty(boolean isEmpty) {
+        this.isEmpty = isEmpty;
+    }
+    
+    /**
+     * Returns the final number of units contributed, which is the difference between the final 
+     * and start values (with the start value overridden with the unranked starting value if needed), 
+     * plus the staff adjustment.
+     * @return
+     */
+    public int getUnitsContributed() {
+        if(isEmpty) {
+            return 0;
+        }
+        if(unrankedStartingValue == -1) {
+            return finalValue - initialValue + staffAdjustment;
+        } else {
+            return finalValue - unrankedStartingValue + staffAdjustment;
+        }
     }
 
     @Override

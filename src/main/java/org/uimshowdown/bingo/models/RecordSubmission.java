@@ -23,9 +23,15 @@ public class RecordSubmission extends Submission {
 
     @Column(name = "submitted_at", nullable = true)
     private Timestamp submittedAt;
+    
+    @Column(name = "completed_at")
+    private Timestamp completedAt;
+    
+    @Column(name = "video_url", nullable = true, length = 512)
+    private String videoUrl;
 
     @Column
-    private int value;
+    private int rawValue;
 
     public RecordHandicap getHandicap() {
         return handicap;
@@ -38,9 +44,25 @@ public class RecordSubmission extends Submission {
     public Timestamp getSubmittedAt() {
         return submittedAt;
     }
+    
+    public Timestamp getCompletedAt() {
+        return completedAt;
+    }
+    
+    public String getVideoUrl() {
+        return videoUrl;
+    }
 
+    public int getRawValue() {
+        return rawValue;
+    }
+    
     public int getValue() {
-        return value;
+        if(handicap != null) {
+            return (int) (rawValue * handicap.getMultiplier());
+        } else {
+            return rawValue;
+        }
     }
 
     public void setHandicap(RecordHandicap recordHandicap) {
@@ -54,9 +76,17 @@ public class RecordSubmission extends Submission {
     public void setSubmittedAt(Timestamp submittedAt) {
         this.submittedAt = submittedAt;
     }
+    
+    public void setCompletedAt(Timestamp completedAt) {
+        this.completedAt = completedAt;
+    }
+    
+    public void setVideoURL(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setRawValue(int rawValue) {
+        this.rawValue = rawValue;
     }
     
     @Override

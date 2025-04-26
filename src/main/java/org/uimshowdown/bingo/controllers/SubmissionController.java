@@ -1,5 +1,6 @@
 package org.uimshowdown.bingo.controllers;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -7,9 +8,13 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.ChallengeSubmission;
@@ -33,6 +38,7 @@ import org.uimshowdown.bingo.repositories.PlayerRepository;
 import org.uimshowdown.bingo.repositories.RecordHandicapRepository;
 import org.uimshowdown.bingo.repositories.RecordRepository;
 import org.uimshowdown.bingo.repositories.SubmissionRepository;
+import org.uimshowdown.bingo.services.SubmissionApprovalService;
 
 @RestController
 public class SubmissionController {
@@ -61,11 +67,23 @@ public class SubmissionController {
     @Autowired
     private CollectionLogItemRepository collectionLogItemRepository;
     
+    @Autowired
+    private SubmissionApprovalService submissionApprovalService;
+    
     @SuppressWarnings("unchecked")
     @PostMapping("/submissions/contribution")
     public Map<String, Object> createContributionSubmission(@RequestBody Map<String, Object> requestBody) {
-        Player player = playerRepository.findByRsn((String) requestBody.get("rsn")).get();
-        ContributionMethod contributionMethod = contributionMethodRepository.findByName((String) requestBody.get("methodName")).get();
+        Player player = playerRepository.findByRsn((String) requestBody.get("rsn")).orElse(null);
+        ContributionMethod contributionMethod = contributionMethodRepository.findByName((String) requestBody.get("methodName")).orElse(null);
+        if(player == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found: " + (String) requestBody.get("rsn"));
+        }
+        if(contributionMethod == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Contribution not found: " + (String) requestBody.get("methodName"));
+        }
+        if(contributionMethod.getContributionMethodType() != ContributionMethod.Type.SUBMISSION) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Contribution method is not a submission-based method: " + (String) requestBody.get("methodName"));
+        }
         
         ContributionSubmission submission = new ContributionSubmission();
         submission.setContributionMethod(contributionMethod);
@@ -126,7 +144,6 @@ public class SubmissionController {
         return responseBody;
     }
     
-    @SuppressWarnings("unchecked")
     @PostMapping("/submissions/record")
     public Map<String, Object> createRecordSubmission(@RequestBody Map<String, Object> requestBody) {
         Player player = playerRepository.findByRsn((String) requestBody.get("rsn")).get();
@@ -140,19 +157,15 @@ public class SubmissionController {
         submission.setRecord(record);
         submission.setPlayer(player);
         submission.setSubmissionState(Submission.State.OPEN);
-        submission.setValue((int) requestBody.get("value"));
+        submission.setRawValue((int) requestBody.get("rawValue"));
         submission.setType(Submission.Type.RECORD);
+        submission.setCompletedAt(Timestamp.valueOf((String) requestBody.get("completedAt")));
+        submission.setVideoURL((String) requestBody.get("videoUrl"));
         if(handicap != null) {
             submission.setHandicap(handicap);
         }
         
         Set<SubmissionScreenshotUrl> urls = new HashSet<SubmissionScreenshotUrl>();
-        for(String url : (List<String>) requestBody.get("screenshotURLs")) {
-            SubmissionScreenshotUrl submissionScreenshotUrl = new SubmissionScreenshotUrl();
-            submissionScreenshotUrl.setScreenshotUrl(url);
-            submissionScreenshotUrl.setSubmission(submission);
-            urls.add(submissionScreenshotUrl);
-        }
         submission.setScreenshotUrls(urls);
         
         Submission returnedSubmission = submissionRepository.save(submission);
@@ -204,10 +217,19 @@ public class SubmissionController {
     }
     
     @SuppressWarnings("unchecked")
-    @PostMapping("/submissions/unrankedstartingid")
-    public Map<String, Object> createUnrankedStartingIDSubmission(@RequestBody Map<String, Object> requestBody) {
-        Player player = playerRepository.findByRsn((String) requestBody.get("rsn")).get();
-        ContributionMethod contributionMethod = contributionMethodRepository.findByName((String) requestBody.get("methodName")).get();
+    @PostMapping("/submissions/unrankedstartingvalue")
+    public Map<String, Object> createUnrankedStartingValueSubmission(@RequestBody Map<String, Object> requestBody) {
+        Player player = playerRepository.findByRsn((String) requestBody.get("rsn")).orElse(null);
+        ContributionMethod contributionMethod = contributionMethodRepository.findByName((String) requestBody.get("methodName")).orElse(null);
+        if(player == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found: " + (String) requestBody.get("rsn"));
+        }
+        if(contributionMethod == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Contribution not found: " + (String) requestBody.get("methodName"));
+        }
+        if(contributionMethod.getContributionMethodType() != ContributionMethod.Type.KC || contributionMethod.getTempleId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Contribution method is not a Temple-tracked KC method: " + (String) requestBody.get("methodName"));
+        }
         
         UnrankedStartingValueSubmission submission = new UnrankedStartingValueSubmission();
         submission.setContributionMethod(contributionMethod);
@@ -230,6 +252,20 @@ public class SubmissionController {
         Map<String, Object> responseBody = new HashMap<String, Object>();
         responseBody.put("id", returnedSubmission.getId());
         return responseBody;
+    }
+    
+    @PatchMapping("/submissions/{id}")
+    public void approveOrDenySubmission(@PathVariable int id, @RequestBody Map<String, String> requestBody) throws Exception {
+        Submission.State state = Submission.State.valueOf(requestBody.get("state"));
+        if(state == Submission.State.OPEN) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot re-open submission");
+        }
+        if(state == Submission.State.DENIED) {
+            submissionApprovalService.denySubmission(id);
+        }
+        if(state == Submission.State.APPROVED) {
+            submissionApprovalService.approveSubmission(id);
+        }
     }
 
 }

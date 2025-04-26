@@ -71,6 +71,14 @@ public class RecordCompletion {
     public String getVideoUrl() {
         return videoUrl;
     }
+    
+    public int getValue() {
+        if(handicap != null) {
+            return (int) (rawValue * handicap.getMultiplier());
+        } else {
+            return rawValue;
+        }
+    }
 
     public void setCompletedAt(Timestamp completedAt) {
         this.completedAt = completedAt;

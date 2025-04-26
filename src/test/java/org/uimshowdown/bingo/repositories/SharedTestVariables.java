@@ -1,8 +1,5 @@
 package org.uimshowdown.bingo.repositories;
 
-import java.sql.Timestamp;
-import java.time.Instant;
-
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeCompletion;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
@@ -85,8 +82,6 @@ public class SharedTestVariables {
     public static ChallengeCompletion makeTestChallengeCompletion(Challenge challenge, Team team) {
         ChallengeCompletion challengeCompletion =  new ChallengeCompletion();
         challengeCompletion.setChallenge(challenge);
-        challengeCompletion.setCompletedAt(new Timestamp(Instant.now().toEpochMilli()));
-        challengeCompletion.setSeconds(75.0);
         challengeCompletion.setTeam(team);
         return challengeCompletion;
     }
@@ -166,7 +161,7 @@ public class SharedTestVariables {
         testRecordSubmission.setPlayer(player);
         testRecordSubmission.setRecord(record);
         testRecordSubmission.setSubmissionState(Submission.State.OPEN);
-        testRecordSubmission.setValue(1);
+        testRecordSubmission.setRawValue(1);
         return testRecordSubmission;
     }
 

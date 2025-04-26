@@ -97,6 +97,10 @@ public class Team {
         this.name = name;
     }
     
+    public void setChallengeCompletions(Set<ChallengeCompletion> challengeCompletions) {
+        this.challengeCompletions = challengeCompletions;
+    }
+    
     @JsonProperty("captains")
     public Set<Player> getCaptains() {
         if(this.players == null) {

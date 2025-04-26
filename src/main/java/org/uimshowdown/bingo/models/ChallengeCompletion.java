@@ -1,10 +1,14 @@
 package org.uimshowdown.bingo.models;
 
-import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import com.google.common.collect.Collections2;
+
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,17 +32,11 @@ public class ChallengeCompletion {
     private Challenge challenge;
 
     @OneToMany(mappedBy = "challengeCompletion", cascade = CascadeType.ALL)
-    private Set<PlayerChallengeCompletion> playerChallengeCompletions;
+    private Set<PlayerChallengeCompletion> playerChallengeCompletions = new HashSet<PlayerChallengeCompletion>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
-
-    @Column(name = "completed_at", nullable = true)
-    private Timestamp completedAt;
-
-    @Column
-    private double seconds;
 
     public int getId() {
         return id;
@@ -56,14 +54,6 @@ public class ChallengeCompletion {
         return team;
     }
 
-    public Timestamp getCompletedAt() {
-        return completedAt;
-    }
-
-    public double getSeconds() {
-        return seconds;
-    }
-
     public void setChallenge(Challenge challenge) {
         this.challenge = challenge;
     }
@@ -71,13 +61,91 @@ public class ChallengeCompletion {
     public void setTeam(Team team) {
         this.team = team;
     }
-
-    public void setCompletedAt(Timestamp completedAt) {
-        this.completedAt = completedAt;
+    
+    public boolean isComplete() {
+       return getSeconds() > 0;
     }
-
-    public void setSeconds(double seconds) {
-        this.seconds = seconds;
+    
+    private boolean hasRelayComponent(ChallengeRelayComponent component) {
+        for(PlayerChallengeCompletion completion : playerChallengeCompletions) {
+            if(component.equals(completion.getChallengeRelayComponent())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Returns the completion time for the challenge in seconds, or -1.0 if the challenge is incomplete.
+     * 
+     * For a team speedrun, this is the fastest time for which there are X different players with submissions of that time 
+     * or faster (to account for float accuracy or attempts where not everyone has submitted yet), where X is the team size.
+     * 
+     * For a relay, this is the fastest sum of X different submissions from distinct players with distinct relay components, 
+     * where X is the team size.
+     * 
+     * @return
+     */
+    public double getSeconds() {
+        if(playerChallengeCompletions == null) {
+            playerChallengeCompletions = new HashSet<PlayerChallengeCompletion>();
+        }
+        if(challenge.getType() == Challenge.Type.SPEEDRUN) {
+            if(challenge.getTeamSize() > playerChallengeCompletions.size()) { // Not enough individual submissions
+                return -1.0;
+            }
+            // A player can only have one player challenge completion for a team speedrun (non-relay), so all our player completions 
+            // are from separate players. This means we can do a hack here by returning the time of the X'th fastest time, where 
+            // X is the team size. This accounts for having a slower but "complete" time, and a faster but "incomplete" time where 
+            // not everyone has submitted (in which case the X'th fastest time is a part of the "complete" one).
+            PlayerChallengeCompletion[] completions = playerChallengeCompletions.toArray(new PlayerChallengeCompletion[0]);
+            double[] times = new double[completions.length];
+            for(int i = 0; i < completions.length; i++) {
+                times[i] = completions[i].getSeconds();
+            }
+            Arrays.sort(times);
+            return times[challenge.getTeamSize() - 1];
+        } else if(challenge.getType() == Challenge.Type.RELAY){
+            for(ChallengeRelayComponent component : challenge.getRelayComponents()) {
+                if(!hasRelayComponent(component)) { // Missing a relay component
+                    return -1.0;
+                }
+            }
+            // We have to find the lowest sum of X different player challenge completion times with distinct players and relay components, 
+            // where X is the team size. This is a hack to just check all of the different combinations.
+            //
+            // Basically we get every possible ordering of completions and take the first X elements of each ordering, then 
+            // see if that subset is valid as a relay completion. Then, find the minimum sum of all valid subsets.
+            double fastestSum = -1.0;
+            Collection<List<PlayerChallengeCompletion>> orderings = Collections2.permutations(playerChallengeCompletions);
+            for(List<PlayerChallengeCompletion> ordering : orderings) {
+                List<PlayerChallengeCompletion> subset = ordering.subList(0, challenge.getTeamSize());
+                boolean subsetIsValid = true;
+                for(PlayerChallengeCompletion completion1 : subset) {
+                    for(PlayerChallengeCompletion completion2 : subset) {
+                        if(!completion1.equals(completion2) && completion1.getPlayer().equals(completion2.getPlayer())) {
+                            subsetIsValid = false;
+                        }
+                        if(!completion1.equals(completion2) && completion1.getChallengeRelayComponent().equals(completion2.getChallengeRelayComponent())) {
+                            subsetIsValid = false;
+                        }
+                    }
+                }
+                if(subsetIsValid) {
+                    double sum = 0;
+                    for(PlayerChallengeCompletion completion : subset) {
+                        sum += completion.getSeconds();
+                    }
+                    if(fastestSum < 0 || sum < fastestSum) {
+                        fastestSum = sum;
+                    }
+                }
+            }
+            // It's possible that fastestSum can still be unchanged at this point, in which case there aren't enough unique players for the relay to be complete.
+            // In this case, fastestSum is still -1, so we're still returning the right thing.
+            return fastestSum;
+        }
+        return -1.0;
     }
 
     @Override
