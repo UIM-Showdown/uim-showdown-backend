@@ -47,7 +47,7 @@ public class TempleOsrsService {
         Map<String, Player> players = StreamSupport
             .stream(playerRepository.findAll().spliterator(), false)
             .collect(Collectors.toMap(
-                Player::getRsn,
+                player -> player.getRsn().toLowerCase(), // TempleOSRS uses OSRS chat capitalization logic (i.e. only one capital per word)
                 Function.identity()
             ));
 
@@ -69,7 +69,7 @@ public class TempleOsrsService {
 
         switch (api) {
             case CLUES_PVM:
-                apiPath = "/api/competition_info_v2.php?id={competition_id}&details=1&skill=Obor";
+                apiPath = "/api/competition_info_v2.php?id={competition_id}&details=1&skill=obor";
                 break;
             case SKILLING:
                 apiPath = "/api/competition_info_v2.php?id={competition_id}&details=1";
@@ -94,7 +94,7 @@ public class TempleOsrsService {
             }
 
             for (JsonNode participant : competitionGains.get("data").get("participants")) {
-                Player player = players.get(participant.get("username").asText());
+                Player player = players.get(participant.get("username").asText().toLowerCase());
                 if (player == null) {
                     continue;
                 }
@@ -121,7 +121,6 @@ public class TempleOsrsService {
                     .filter(
                         playerGain ->
                             contributionMethods.containsKey(playerGain.getKey()) // is this player gain relevant to the comp?
-                            && playerGain.getValue().get("end_xp").asInt() > playerGain.getValue().get("start_xp").asInt() // has the player contributed to it at all?
                     )
                     .map(
                         playerGain -> {
@@ -135,7 +134,8 @@ public class TempleOsrsService {
                                     playerGain.getValue().get("end_xp").asInt()
                                 );
                             }
-
+                            
+                            currentPlayerContribution.setInitialValue(playerGain.getValue().get("start_xp").asInt());
                             currentPlayerContribution.setFinalValue(playerGain.getValue().get("end_xp").asInt());
                             return currentPlayerContribution;
                         }
