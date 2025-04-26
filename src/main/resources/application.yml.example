@@ -78,6 +78,7 @@ competition:
               type: "XP"
               category: "Skilling"
               ehtRate: 63000
+              templeID: "Slayer"
         - name: "Of Beasts and Brothers"
           abbreviation: "OB&B"
           contributionMethods:
@@ -297,11 +298,11 @@ competition:
               category: "PVM"
               ehtRate: 88
               templeID: "Thermonuclear Smoke Devil"
-            - name: "Duke Succelus"
+            - name: "Duke Sucellus"
               type: "KC"
               category: "PVM"
               ehtRate: 23
-              templeID: "Duke Succelus"
+              templeID: "Duke Sucellus"
             - name: "The Leviathan"
               type: "KC"
               category: "PVM"
