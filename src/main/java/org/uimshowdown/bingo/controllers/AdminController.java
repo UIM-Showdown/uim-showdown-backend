@@ -15,6 +15,7 @@ import org.uimshowdown.bingo.models.Team;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
 import org.uimshowdown.bingo.repositories.TeamRepository;
 import org.uimshowdown.bingo.services.EventDataInitializationService;
+import org.uimshowdown.bingo.services.TempleOsrsService;
 
 @RestController
 public class AdminController {
@@ -30,6 +31,9 @@ public class AdminController {
     
     @Autowired
     private EventDataInitializationService eventDataInitializationService;
+
+    @Autowired
+    private TempleOsrsService templeOsrsService;
 
     @PostMapping("/admin/addPlayer")
     public ResponseEntity<Void> addPlayer(@RequestBody Map<String, Object> requestBody) {
@@ -81,4 +85,10 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
     
+    @PostMapping("/admin/pullTemple")
+    public ResponseEntity<Void> pullTemple() {
+        templeOsrsService.updateCompetition();
+        return ResponseEntity.ok().build();
+    }
+
 }
