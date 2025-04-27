@@ -261,10 +261,10 @@ public class SubmissionController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot re-open submission");
         }
         if(state == Submission.State.DENIED) {
-            submissionApprovalService.denySubmission(id);
+            submissionApprovalService.denySubmission(id, requestBody.get("reviewer"));
         }
         if(state == Submission.State.APPROVED) {
-            submissionApprovalService.approveSubmission(id);
+            submissionApprovalService.approveSubmission(id, requestBody.get("reviewer"));
         }
     }
 

@@ -2,6 +2,7 @@ package org.uimshowdown.bingo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.uimshowdown.bingo.repositories.ChallengeCompletionRepository;
 import org.uimshowdown.bingo.repositories.ChallengeRelayComponentRepository;
 import org.uimshowdown.bingo.repositories.ChallengeRepository;
@@ -49,21 +50,19 @@ public class TestUtils {
     @Autowired TileRepository tileRepository;
     @Autowired ItemOptionRepository itemOptionRepository;
     
+    @Transactional
     public void resetDB() {
         challengeCompletionRepository.deleteAll();
         challengeRelayComponentRepository.deleteAll();
-        challengeRepository.deleteAll();
         collectionLogCompletionRepository.deleteAll();
         collectionLogGroupRepository.deleteAll();
         collectionLogItemRepository.deleteAll();
-        contributionMethodRepository.deleteAll();
         contributionRepository.deleteAll();
         playerChallengeCompletionRepository.deleteAll();
         playerRepository.deleteAll();
         playerScoreboardRepository.deleteAll();
         recordCompletionRepository.deleteAll();
         recordHandicapRepository.deleteAll();
-        recordRepository.deleteAll();
         submissionRepository.deleteAll();
         submissionScreenshotUrlRepository.deleteAll();
         teamRepository.deleteAll();
@@ -71,6 +70,9 @@ public class TestUtils {
         tileProgressRepository.deleteAll();
         tileRepository.deleteAll();
         itemOptionRepository.deleteAll();
+        challengeRepository.deleteAll();
+        contributionMethodRepository.deleteAll();
+        recordRepository.deleteAll();
     }
 
 }

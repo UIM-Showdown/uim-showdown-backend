@@ -1,5 +1,9 @@
 package org.uimshowdown.bingo.services;
 
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.HashSet;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -37,7 +41,7 @@ public class SubmissionApprovalService {
      * @param id
      * @throws Exception
      */
-    public void denySubmission(int id) throws Exception {
+    public void denySubmission(int id, String reviewer) throws Exception {
         Submission submission = submissionRepository.findById(id).orElse(null);
         if(submission == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Submission not found: " + id);
@@ -49,6 +53,8 @@ public class SubmissionApprovalService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Submission is already approved");
         }
         submission.setSubmissionState(Submission.State.DENIED);
+        submission.setReviewedAt(new Timestamp(new Date().getTime()));
+        submission.setReviewer(reviewer);
         submissionRepository.save(submission);
     }
     
@@ -57,7 +63,7 @@ public class SubmissionApprovalService {
      * @param id
      * @throws Exception
      */
-    public void approveSubmission(int id) throws Exception {
+    public void approveSubmission(int id, String reviewer) throws Exception {
         Submission submission = submissionRepository.findById(id).orElse(null);
         if(submission == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Submission not found: " + id);
@@ -84,6 +90,8 @@ public class SubmissionApprovalService {
             processUnrankedStartingValueSubmission((UnrankedStartingValueSubmission) submission);
         }
         submission.setSubmissionState(Submission.State.APPROVED);
+        submission.setReviewedAt(new Timestamp(new Date().getTime()));
+        submission.setReviewer(reviewer);
         submissionRepository.save(submission);
     }
     
@@ -97,6 +105,9 @@ public class SubmissionApprovalService {
         
         // Remove the old player challenge completion if it exists
         PlayerChallengeCompletion existingPlayerChallengeCompletion = null;
+        if(player.getPlayerChallengeCompletions() == null) {
+            player.setPlayerChallengeCompletions(new HashSet<PlayerChallengeCompletion>());
+        }
         for(PlayerChallengeCompletion completion : player.getPlayerChallengeCompletions()) {
             boolean sameChallenge = completion.getChallenge().equals(submission.getChallenge());
             boolean sameComponent = completion.getChallengeRelayComponent() == null && submission.getRelayComponent() == null
@@ -115,7 +126,7 @@ public class SubmissionApprovalService {
                 existingPlayerChallengeCompletion.setScreenshotUrl(urls[0].getScreenshotUrl());
             }
             existingPlayerChallengeCompletion.setSeconds(submission.getSeconds());
-            playerChallengeCompletionRepository.save(existingPlayerChallengeCompletion);
+            existingPlayerChallengeCompletion = playerChallengeCompletionRepository.save(existingPlayerChallengeCompletion);
             return;
         }
         
@@ -138,6 +149,8 @@ public class SubmissionApprovalService {
         playerCompletion.setSeconds(submission.getSeconds());
         playerCompletion.setChallengeCompletion(existingChallengeCompletion);
         playerCompletion = playerChallengeCompletionRepository.save(playerCompletion);
+        player.getPlayerChallengeCompletions().add(playerCompletion);
+        playerRepository.save(player);
     }
     
     /**
@@ -147,6 +160,9 @@ public class SubmissionApprovalService {
      */
     private void processCollectionLogSubmission(CollectionLogSubmission submission) throws Exception {
         Player player = submission.getPlayer();
+        if(player.getCollectionLogCompletions() == null) {
+            player.setCollectionLogCompletions(new HashSet<CollectionLogCompletion>());
+        }
         for(CollectionLogCompletion completion : player.getCollectionLogCompletions()) {
             if(completion.getItem().equals(submission.getItem())) { // Player already has a completion for this item
                 return;
@@ -202,6 +218,9 @@ public class SubmissionApprovalService {
     private void processRecordSubmission(RecordSubmission submission) throws Exception {
         Player player = submission.getPlayer();
         RecordCompletion existingCompletion = null;
+        if(player.getRecordCompletions() == null) {
+            player.setRecordCompletions(new HashSet<RecordCompletion>());
+        }
         for(RecordCompletion completion : player.getRecordCompletions()) {
             if(completion.getRecord().equals(submission.getRecord())) {
                 existingCompletion = completion;
