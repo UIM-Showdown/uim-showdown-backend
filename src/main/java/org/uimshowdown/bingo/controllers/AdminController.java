@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration;
+import org.uimshowdown.bingo.models.Contribution;
+import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.Team;
+import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
 import org.uimshowdown.bingo.repositories.TeamRepository;
 import org.uimshowdown.bingo.services.EventDataInitializationService;
@@ -28,6 +31,9 @@ public class AdminController {
 
     @Autowired
     private TeamRepository teamRepository;
+    
+    @Autowired
+    private ContributionMethodRepository contributionMethodRepository;
     
     @Autowired
     private EventDataInitializationService eventDataInitializationService;
@@ -88,6 +94,20 @@ public class AdminController {
     @PostMapping("/admin/pullTemple")
     public ResponseEntity<Void> pullTemple() {
         templeOsrsService.updateCompetition();
+        return ResponseEntity.ok().build();
+    }
+    
+    @PostMapping("/admin/setStaffAdjustment")
+    public ResponseEntity<Void> setStaffAdjustment(@RequestBody Map<String, Object> requestBody) {
+        Player player = playerRepository.findByRsn((String) requestBody.get("rsn")).get();
+        ContributionMethod method = contributionMethodRepository.findByName((String) requestBody.get("contributionMethodName")).get();
+        for(Contribution contribution : player.getContributions()) {
+            if(contribution.getContributionMethod().equals(method)) {
+                contribution.setStaffAdjustment((int) requestBody.get("adjustment"));
+                break;
+            }
+        }
+        playerRepository.save(player);
         return ResponseEntity.ok().build();
     }
 
