@@ -10,6 +10,6 @@ public interface CollectionLogItemRepository extends CrudRepository<CollectionLo
     Iterable<CollectionLogItem> findAllByGroupId(int collectionLogGroupId);
     Optional<CollectionLogItem> findByName(String name);
     
-    @Query(value = "SELECT collection_log_items.* FROM collection_log_items JOIN item_options ON collection_log_items.id = item_options.item_id WHERE collection_log_items.name = ?1 OR item_options.name = ?1 LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT collection_log_items.* FROM collection_log_items LEFT JOIN item_options ON collection_log_items.id = item_options.item_id WHERE collection_log_items.name = ?1 OR item_options.name = ?1 LIMIT 1", nativeQuery = true)
     Optional<CollectionLogItem> findByNameOrOption(String nameOrOption);
 }

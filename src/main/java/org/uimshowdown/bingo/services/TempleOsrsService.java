@@ -131,7 +131,8 @@ public class TempleOsrsService {
                                     player,
                                     contributionMethod,
                                     playerGain.getValue().get("start_xp").asInt(),
-                                    playerGain.getValue().get("end_xp").asInt()
+                                    playerGain.getValue().get("end_xp").asInt(),
+                                    false
                                 );
                             }
                             

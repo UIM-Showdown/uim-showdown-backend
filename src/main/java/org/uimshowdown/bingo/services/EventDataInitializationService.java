@@ -3,7 +3,6 @@ package org.uimshowdown.bingo.services;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import org.uimshowdown.bingo.configuration.CompetitionConfiguration.ItemConfig;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.RecordConfig;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.TileConfig;
 import org.uimshowdown.bingo.models.Challenge;
+import org.uimshowdown.bingo.models.ChallengeCompletion;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.CollectionLogChecklistGroup;
 import org.uimshowdown.bingo.models.CollectionLogCounterGroup;
@@ -332,19 +332,16 @@ public class EventDataInitializationService {
      * @param teamName
      */
     public void addPlayer(String discordName, String rsn, Boolean isCaptain, String teamName) throws Exception {
-        Optional<Team> teamOpt = teamRepository.findByName(teamName);
-        if(teamOpt.isEmpty()) {
+        Team team = teamRepository.findByName(teamName).orElse(null);
+        if(team == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Team not found: " + teamName);
         }
-        Optional<Player> discordNameOpt = playerRepository.findByDiscordName(discordName);
-        if(discordNameOpt.isPresent()) {
+        if(playerRepository.findByDiscordName(discordName).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Player already exists with Discord name: " + discordName);
         }
-        Optional<Player> rsnOpt = playerRepository.findByRsn(rsn);
-        if(rsnOpt.isPresent()) {
+        if(playerRepository.findByRsn(rsn).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Player already exists with rsn: " + rsn);
         }
-        Team team = teamOpt.get();
         Player player = new Player();
         player.setCaptainStatus(isCaptain);
         player.setDiscordName(discordName);
@@ -365,23 +362,39 @@ public class EventDataInitializationService {
      * @param color
      */
     public void addTeam(String name, String abbreviation, String color) throws Exception {
-        Optional<Team> teamOpt = teamRepository.findByName(name);
-        if(teamOpt.isPresent()) {
+        if(teamRepository.findByName(name).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Team already exists: " + name);
         }
         Team team = new Team();
         team.setName(name);
         team.setAbbreviation(abbreviation);
         team.setColor(color);
+        team.setChallengeCompletions(generateEmptyChallengeCompletions(team));
         teamRepository.save(team);
     }
     
+    /**
+     * Returns a set of "empty" (start/end values are 0) contributions for a player, for all contribution methods
+     * @param player
+     * @return
+     */
     private Set<Contribution> generateEmptyContributions(Player player) {
         Set<Contribution> contributions = new HashSet<Contribution>();
         for(ContributionMethod contributionMethod : contributionMethodRepository.findAll()) {
-            contributions.add(new Contribution(player, contributionMethod, 0, 0));
+            contributions.add(new Contribution(player, contributionMethod, 0, 0, true));
         }
         return contributions;
+    }
+    
+    private Set<ChallengeCompletion> generateEmptyChallengeCompletions(Team team) {
+        Set<ChallengeCompletion> completions = new HashSet<ChallengeCompletion>();
+        for(Challenge challenge : challengeRepository.findAll()) {
+            ChallengeCompletion completion = new ChallengeCompletion();
+            completion.setChallenge(challenge);
+            completion.setTeam(team);
+            completions.add(completion);
+        }
+        return completions;
     }
     
 }

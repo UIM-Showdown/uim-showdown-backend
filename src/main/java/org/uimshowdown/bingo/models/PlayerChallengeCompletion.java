@@ -25,6 +25,10 @@ public class PlayerChallengeCompletion {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player_id")
     private Player player;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "challenge_id")
+    private Challenge challenge;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "relay_component_id", nullable = true)
@@ -59,6 +63,10 @@ public class PlayerChallengeCompletion {
     public double getSeconds() {
         return seconds;
     }
+    
+    public Challenge getChallenge() {
+        return challenge;
+    }
 
     public void setChallengeCompletion(ChallengeCompletion challengeCompletion) {
         this.challengeCompletion = challengeCompletion;
@@ -78,6 +86,10 @@ public class PlayerChallengeCompletion {
 
     public void setSeconds(double seconds) {
         this.seconds = seconds;
+    }
+    
+    public void setChallenge(Challenge challenge) {
+        this.challenge = challenge;
     }
 
     @Override

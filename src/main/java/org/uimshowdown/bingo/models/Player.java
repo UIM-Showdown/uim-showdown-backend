@@ -144,6 +144,18 @@ public class Player {
     public void setContributions(Set<Contribution> contributions) {
         this.contributions = contributions;
     }
+    
+    public void setPlayerChallengeCompletions(Set<PlayerChallengeCompletion> playerChallengeCompletions) {
+        this.playerChallengeCompletions = playerChallengeCompletions;
+    }
+    
+    public void setRecordCompletions(Set<RecordCompletion> recordCompletions) {
+        this.recordCompletions = recordCompletions;
+    }
+    
+    public void setCollectionLogCompletions(Set<CollectionLogCompletion> collectionLogCompletions) {
+        this.collectionLogCompletions = collectionLogCompletions;
+    }
 
     public void setDiscordName(String discordName) {
         this.discordName = discordName;
