@@ -14,6 +14,7 @@ import org.uimshowdown.bingo.configuration.CompetitionConfiguration;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.TileGroupConfig;
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeCompletion;
+import org.uimshowdown.bingo.models.ChallengeLeaderboardEntry;
 import org.uimshowdown.bingo.models.CollectionLogChecklistGroup;
 import org.uimshowdown.bingo.models.CollectionLogCompletion;
 import org.uimshowdown.bingo.models.CollectionLogCounterGroup;
@@ -25,6 +26,7 @@ import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.PlayerScoreboard;
 import org.uimshowdown.bingo.models.Record;
 import org.uimshowdown.bingo.models.RecordCompletion;
+import org.uimshowdown.bingo.models.RecordLeaderboardEntry;
 import org.uimshowdown.bingo.models.Team;
 import org.uimshowdown.bingo.models.TeamScoreboard;
 import org.uimshowdown.bingo.models.Tile;
@@ -282,7 +284,7 @@ public class ScoreboardCalculationService {
     }
     
     /**
-     * Updates event points from records for all team scoreboards
+     * Updates event points from records and record leaderboard entries for all team scoreboards
      */
     private void calculateAllRecords() {
         // Assemble a leaderboard for each record
@@ -318,6 +320,12 @@ public class ScoreboardCalculationService {
                 int pointsFromDistance = (int) ((double) competitionConfiguration.getRecordDistancePoints() * (1.0 - ((double)distanceFromFirstPlace / ((double) firstPlaceCompletion.getValue() * competitionConfiguration.getRecordDistanceCutoffPercentage()))));
                 int totalPoints = pointsFromPlace + pointsFromDistance;
                 recordPoints.add(totalPoints);
+                RecordLeaderboardEntry leaderboardEntry = team.getScoreboard().getRecordLeaderboardEntry(record);
+                leaderboardEntry.setPlace(place);
+                leaderboardEntry.setPlayerName(teamCompletion.getPlayer().getRsn());
+                leaderboardEntry.setPoints(totalPoints);
+                leaderboardEntry.setSkill(record.getSkill());
+                leaderboardEntry.setValue(teamCompletion.getValue());
             }
             
             // Take the top X point values based on configuration
@@ -373,6 +381,17 @@ public class ScoreboardCalculationService {
                 int pointsFromDistance = (int) (competitionConfiguration.getRecordDistancePoints() * (1 - (distanceFromFirstPlace / (firstPlaceCompletion.getSeconds() * competitionConfiguration.getRecordDistanceCutoffPercentage() - 1))));
                 int totalPoints = pointsFromPlace + pointsFromDistance;
                 challengePoints.add(totalPoints);
+                ChallengeLeaderboardEntry leaderboardEntry = team.getScoreboard().getChallengeLeaderboardEntry(challenge);
+                leaderboardEntry.setPlace(place);
+                List<String> playerNames = new ArrayList<String>();
+                for(Player player : teamCompletion.getPlayers()) {
+                    playerNames.add(player.getRsn());
+                }
+                leaderboardEntry.setPlayerNames(String.join(", ", playerNames));
+                leaderboardEntry.setPoints(totalPoints);
+                leaderboardEntry.setChallengeName(challenge.getName());
+                leaderboardEntry.setSeconds(teamCompletion.getSeconds());
+                leaderboardEntry.setPlace(place);
             }
             
             // Take the top X point values based on configuration

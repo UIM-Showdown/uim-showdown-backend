@@ -19,6 +19,7 @@ import org.uimshowdown.bingo.configuration.CompetitionConfiguration.RecordConfig
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.TileConfig;
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeCompletion;
+import org.uimshowdown.bingo.models.ChallengeLeaderboardEntry;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.CollectionLogChecklistGroup;
 import org.uimshowdown.bingo.models.CollectionLogCounterGroup;
@@ -31,6 +32,7 @@ import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.PlayerScoreboard;
 import org.uimshowdown.bingo.models.Record;
 import org.uimshowdown.bingo.models.RecordHandicap;
+import org.uimshowdown.bingo.models.RecordLeaderboardEntry;
 import org.uimshowdown.bingo.models.Team;
 import org.uimshowdown.bingo.models.TeamScoreboard;
 import org.uimshowdown.bingo.models.Tile;
@@ -379,6 +381,8 @@ public class EventDataInitializationService {
         team.setTileProgresses(generateEmptyTileProgresses(team));
         TeamScoreboard scoreboard = new TeamScoreboard();
         scoreboard.setTeam(team);
+        scoreboard.setRecordLeaderboardEntries(generateEmptyRecordLeaderboardEntries(scoreboard));
+        scoreboard.setChallengeLeaderboardEntries(generateEmptyChallengeLeaderboardEntries(scoreboard));
         team.setScoreboard(scoreboard);
         teamRepository.save(team);
     }
@@ -416,6 +420,36 @@ public class EventDataInitializationService {
             progresses.add(progress);
         }
         return progresses;
+    }
+    
+    private Set<RecordLeaderboardEntry> generateEmptyRecordLeaderboardEntries(TeamScoreboard scoreboard) {
+        Set<RecordLeaderboardEntry> entries = new HashSet<RecordLeaderboardEntry>();
+        for(Record record : recordRepository.findAll()) {
+            RecordLeaderboardEntry entry = new RecordLeaderboardEntry();
+            entry.setPlace(-1);
+            entry.setPlayerName(null);
+            entry.setPoints(-1);
+            entry.setSkill(record.getSkill());
+            entry.setTeamScoreboard(scoreboard);
+            entry.setValue(-1);
+            entries.add(entry);
+        }
+        return entries;
+    }
+    
+    private Set<ChallengeLeaderboardEntry> generateEmptyChallengeLeaderboardEntries(TeamScoreboard scoreboard) {
+        Set<ChallengeLeaderboardEntry> entries = new HashSet<ChallengeLeaderboardEntry>();
+        for(Challenge challenge: challengeRepository.findAll()) {
+            ChallengeLeaderboardEntry entry = new ChallengeLeaderboardEntry();
+            entry.setChallengeName(challenge.getName());
+            entry.setPlace(-1);
+            entry.setPlayerNames(null);
+            entry.setPoints(-1);
+            entry.setSeconds(-1.0);
+            entry.setTeamScoreboard(scoreboard);
+            entries.add(entry);
+        }
+        return entries;
     }
     
 }

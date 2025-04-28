@@ -11,7 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tile_progress")
+@Table(name = "tile_progresses")
 public class TileProgress {
     
     @Id
