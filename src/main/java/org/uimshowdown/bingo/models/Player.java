@@ -168,6 +168,10 @@ public class Player {
     public void setTeam(Team team) {
         this.team = team;
     }
+    
+    public void setScoreboard(PlayerScoreboard scoreboard) {
+        this.scoreboard = scoreboard;
+    }
 
     @Override
     public boolean equals(Object obj) {

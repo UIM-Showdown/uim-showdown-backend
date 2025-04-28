@@ -35,9 +35,25 @@ public class CompetitionConfiguration {
     
     private boolean blackoutBonusEnabled;
     
-    private boolean best3Of4Records;
+    private int topNumberOfRecordsToUse;
     
-    private boolean best3Of4Challenges;
+    private int recordPlacePoints;
+    
+    private int recordPlacePointsFalloff;
+    
+    private int recordDistancePoints;
+    
+    private double recordDistanceCutoffPercentage;
+    
+    private int topNumberOfChallengesToUse;
+    
+    private int challengePlacePoints;
+    
+    private int challengePlacePointsFalloff;
+    
+    private int challengeDistancePoints;
+    
+    private double challengeDistanceCutoffPercentage;
     
     private List<TileConfig> tiles;
     
@@ -127,20 +143,84 @@ public class CompetitionConfiguration {
         this.blackoutBonusEnabled = blackoutBonusEnabled;
     }
 
-    public boolean isBest3Of4Records() {
-        return best3Of4Records;
+    public int getTopNumberOfRecordsToUse() {
+        return topNumberOfRecordsToUse;
     }
 
-    public void setBest3Of4Records(boolean best3Of4Records) {
-        this.best3Of4Records = best3Of4Records;
+    public void setTopNumberOfRecordsToUse(int topNumberOfRecordsToUse) {
+        this.topNumberOfRecordsToUse = topNumberOfRecordsToUse;
     }
 
-    public boolean isBest3OfCchallenges() {
-        return best3Of4Challenges;
+    public int getRecordPlacePoints() {
+        return recordPlacePoints;
     }
 
-    public void setBest3Of4Challenges(boolean best3Of4Challenges) {
-        this.best3Of4Challenges = best3Of4Challenges;
+    public void setRecordPlacePoints(int recordPlacePoints) {
+        this.recordPlacePoints = recordPlacePoints;
+    }
+
+    public int getRecordPlacePointsFalloff() {
+        return recordPlacePointsFalloff;
+    }
+
+    public void setRecordPlacePointsFalloff(int recordPlacePointsFalloff) {
+        this.recordPlacePointsFalloff = recordPlacePointsFalloff;
+    }
+
+    public int getRecordDistancePoints() {
+        return recordDistancePoints;
+    }
+
+    public void setRecordDistancePoints(int recordDistancePoints) {
+        this.recordDistancePoints = recordDistancePoints;
+    }
+
+    public double getRecordDistanceCutoffPercentage() {
+        return recordDistanceCutoffPercentage;
+    }
+
+    public void setRecordDistanceCutoffPercentage(double recordDistanceCutoffPercentage) {
+        this.recordDistanceCutoffPercentage = recordDistanceCutoffPercentage;
+    }
+
+    public int getTopNumberOfChallengesToUse() {
+        return topNumberOfChallengesToUse;
+    }
+
+    public void setTopNumberOfChallengesToUse(int topNumberOfChallengesToUse) {
+        this.topNumberOfChallengesToUse = topNumberOfChallengesToUse;
+    }
+
+    public int getChallengePlacePoints() {
+        return challengePlacePoints;
+    }
+
+    public void setChallengePlacePoints(int challengePlacePoints) {
+        this.challengePlacePoints = challengePlacePoints;
+    }
+
+    public int getChallengePlacePointsFalloff() {
+        return challengePlacePointsFalloff;
+    }
+
+    public void setChallengePlacePointsFalloff(int challengePlacePointsFalloff) {
+        this.challengePlacePointsFalloff = challengePlacePointsFalloff;
+    }
+
+    public int getChallengeDistancePoints() {
+        return challengeDistancePoints;
+    }
+
+    public void setChallengeDistancePoints(int challengeDistancePoints) {
+        this.challengeDistancePoints = challengeDistancePoints;
+    }
+
+    public double getChallengeDistanceCutoffPercentage() {
+        return challengeDistanceCutoffPercentage;
+    }
+
+    public void setChallengeDistanceCutoffPercentage(double challengeDistanceCutoffPercentage) {
+        this.challengeDistanceCutoffPercentage = challengeDistanceCutoffPercentage;
     }
 
     public List<TileConfig> getTiles() {

@@ -51,7 +51,7 @@ public class Team {
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<TileProgress> tileProgress;
+    private Set<TileProgress> tileProgresses;
 
     public String getAbbreviation() {
         return abbreviation;
@@ -81,8 +81,16 @@ public class Team {
         this.players = players;
     }
 
-    public Set<TileProgress> getTileProgress() {
-        return tileProgress;
+    public Set<TileProgress> getTileProgresses() {
+        return tileProgresses;
+    }
+    
+    public void setTileProgresses(Set<TileProgress> tileProgresses) {
+        this.tileProgresses = tileProgresses;
+    }
+    
+    public TeamScoreboard getScoreboard() {
+        return scoreboard;
     }
 
     public void setAbbreviation(String abbreviation) {
@@ -101,6 +109,10 @@ public class Team {
         this.challengeCompletions = challengeCompletions;
     }
     
+    public void setScoreboard(TeamScoreboard scoreboard) {
+        this.scoreboard = scoreboard;
+    }
+    
     @JsonProperty("captains")
     public Set<Player> getCaptains() {
         if(this.players == null) {
@@ -113,6 +125,31 @@ public class Team {
             }
         }
         return captains;
+    }
+    
+    @JsonIgnore
+    public RecordCompletion getBestRecordCompletion(Record record) {
+        RecordCompletion best = null;
+        for(Player player : players) {
+            for(RecordCompletion completion : player.getRecordCompletions()) {
+                if(completion.record.equals(record)) {
+                    if(best == null || completion.getValue() > best.getValue()) {
+                        best = completion;
+                    }
+                }
+            }
+        }
+        return best;
+    }
+    
+    @JsonIgnore
+    public ChallengeCompletion getChallengeCompletion(Challenge challenge) {
+        for(ChallengeCompletion completion : challengeCompletions) {
+            if(completion.getChallenge().equals(challenge)) {
+                return completion;
+            }
+        }
+        return null;
     }
 
     @Override

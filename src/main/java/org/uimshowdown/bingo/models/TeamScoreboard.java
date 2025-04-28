@@ -80,7 +80,7 @@ public class TeamScoreboard {
         eventPoints = points;
     }
 
-    public void setEventPointsFromChallenge(int points) {
+    public void setEventPointsFromChallenges(int points) {
         eventPointsFromChallenges = points;
     }
 

@@ -77,80 +77,76 @@ public class TempleOsrsService {
             default:
                 throw new IllegalArgumentException("The given API is not supported!");
         }
+        
+        JsonNode competitionGains = restClient
+            .get()
+            .uri(apiPath, competitionConfiguration.getTempleCompetitionID())
+            .retrieve()
+            .body(JsonNode.class);
 
-        try {
-            JsonNode competitionGains = restClient
-                .get()
-                .uri(apiPath, competitionConfiguration.getTempleCompetitionID())
-                .retrieve()
-                .body(JsonNode.class);
+        if (competitionGains == null) {
+            throw new IllegalStateException("Expected a response body, but received nothing!");
+        }
 
-            if (competitionGains == null) {
-                throw new IllegalStateException("Expected a response body, but received nothing!");
+        if (competitionGains.get("data").get("participants").isArray() == false) {
+            throw new IllegalStateException(String.format("Expected `data.participants` to be a JSON array! Instead received: `%s`", competitionGains.asText()));
+        }
+
+        for (JsonNode participant : competitionGains.get("data").get("participants")) {
+            Player player = players.get(participant.get("username").asText().toLowerCase());
+            if (player == null) {
+                continue;
             }
 
-            if (competitionGains.get("data").get("participants").isArray() == false) {
-                throw new IllegalStateException(String.format("Expected `data.participants` to be a JSON array! Instead received: `%s`", competitionGains.asText()));
+            JsonNode detailedPlayerGains = participant.get("detailed_gains");
+            if (detailedPlayerGains == null) {
+                continue;
             }
 
-            for (JsonNode participant : competitionGains.get("data").get("participants")) {
-                Player player = players.get(participant.get("username").asText().toLowerCase());
-                if (player == null) {
-                    continue;
-                }
+            // Map contributions to contribution methods for constant time searches
+            Map<ContributionMethod, Contribution> currentPlayerContributions = player
+                .getContributions()
+                .stream()
+                .collect(Collectors.toMap(
+                    Contribution::getContributionMethod,
+                    Function.identity()
+                ));
 
-                JsonNode detailedPlayerGains = participant.get("detailed_gains");
-                if (detailedPlayerGains == null) {
-                    continue;
-                }
-
-                // Map contributions to contribution methods for constant time searches
-                Map<ContributionMethod, Contribution> currentPlayerContributions = player
-                    .getContributions()
-                    .stream()
-                    .collect(Collectors.toMap(
-                        Contribution::getContributionMethod,
-                        Function.identity()
-                    ));
-
-                Set<Contribution> updatedContributions = StreamSupport
-                    .stream(
-                        Spliterators.spliteratorUnknownSize(detailedPlayerGains.fields(), Spliterator.ORDERED),
-                        false
-                    )
-                    .filter(
-                        playerGain ->
-                            contributionMethods.containsKey(playerGain.getKey()) // is this player gain relevant to the comp?
-                    )
-                    .map(
-                        playerGain -> {
-                            ContributionMethod contributionMethod = contributionMethods.get(playerGain.getKey());
-                            Contribution currentPlayerContribution = currentPlayerContributions.get(contributionMethod);
-                            if (currentPlayerContribution == null) {
-                                return new Contribution(
-                                    player,
-                                    contributionMethod,
-                                    playerGain.getValue().get("start_xp").asInt(),
-                                    playerGain.getValue().get("end_xp").asInt(),
-                                    false
-                                );
-                            }
-                            
-                            currentPlayerContribution.setInitialValue(playerGain.getValue().get("start_xp").asInt());
-                            currentPlayerContribution.setFinalValue(playerGain.getValue().get("end_xp").asInt());
-                            return currentPlayerContribution;
+            Set<Contribution> updatedContributions = StreamSupport
+                .stream(
+                    Spliterators.spliteratorUnknownSize(detailedPlayerGains.fields(), Spliterator.ORDERED),
+                    false
+                )
+                .filter(
+                    playerGain ->
+                        contributionMethods.containsKey(playerGain.getKey()) // is this player gain relevant to the comp?
+                )
+                .map(
+                    playerGain -> {
+                        ContributionMethod contributionMethod = contributionMethods.get(playerGain.getKey());
+                        Contribution currentPlayerContribution = currentPlayerContributions.get(contributionMethod);
+                        if (currentPlayerContribution == null) {
+                            return new Contribution(
+                                player,
+                                contributionMethod,
+                                playerGain.getValue().get("start_xp").asInt(),
+                                playerGain.getValue().get("end_xp").asInt(),
+                                false
+                            );
                         }
-                    )
-                    .collect(Collectors.toSet());
+                        
+                        currentPlayerContribution.setIsEmpty(false);
+                        currentPlayerContribution.setInitialValue(playerGain.getValue().get("start_xp").asInt());
+                        currentPlayerContribution.setFinalValue(playerGain.getValue().get("end_xp").asInt());
+                        return currentPlayerContribution;
+                    }
+                )
+                .collect(Collectors.toSet());
 
-                // This approach is taken since `player.getContributions().addAll(updatedContributions)` will prioritize existing contributions over updated ones
-                updatedContributions.addAll(currentPlayerContributions.values());
-                player.setContributions(updatedContributions);
-                playerRepository.save(player);
-            }
-        } catch (Throwable e) {
-            /** @todo Broadcast to a Discord `#errors` channel that updating player contributions via Temple's API failed */
-            return;
+            // This approach is taken since `player.getContributions().addAll(updatedContributions)` will prioritize existing contributions over updated ones
+            updatedContributions.addAll(currentPlayerContributions.values());
+            player.setContributions(updatedContributions);
+            playerRepository.save(player);
         }
     }
 }

@@ -28,10 +28,13 @@ import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.ItemOption;
 import org.uimshowdown.bingo.models.Player;
+import org.uimshowdown.bingo.models.PlayerScoreboard;
 import org.uimshowdown.bingo.models.Record;
 import org.uimshowdown.bingo.models.RecordHandicap;
 import org.uimshowdown.bingo.models.Team;
+import org.uimshowdown.bingo.models.TeamScoreboard;
 import org.uimshowdown.bingo.models.Tile;
+import org.uimshowdown.bingo.models.TileProgress;
 import org.uimshowdown.bingo.repositories.ChallengeCompletionRepository;
 import org.uimshowdown.bingo.repositories.ChallengeRelayComponentRepository;
 import org.uimshowdown.bingo.repositories.ChallengeRepository;
@@ -351,6 +354,9 @@ public class EventDataInitializationService {
             team.setPlayers(new HashSet<Player>());
         }
         player.setContributions(generateEmptyContributions(player));
+        PlayerScoreboard scoreboard = new PlayerScoreboard();
+        scoreboard.setPlayer(player);
+        player.setScoreboard(scoreboard);
         team.getPlayers().add(player);
         teamRepository.save(team);
     }
@@ -370,6 +376,10 @@ public class EventDataInitializationService {
         team.setAbbreviation(abbreviation);
         team.setColor(color);
         team.setChallengeCompletions(generateEmptyChallengeCompletions(team));
+        team.setTileProgresses(generateEmptyTileProgresses(team));
+        TeamScoreboard scoreboard = new TeamScoreboard();
+        scoreboard.setTeam(team);
+        team.setScoreboard(scoreboard);
         teamRepository.save(team);
     }
     
@@ -395,6 +405,17 @@ public class EventDataInitializationService {
             completions.add(completion);
         }
         return completions;
+    }
+    
+    private Set<TileProgress> generateEmptyTileProgresses(Team team) {
+        Set<TileProgress> progresses = new HashSet<TileProgress>();
+        for(Tile tile : tileRepository.findAll()) {
+            TileProgress progress = new TileProgress();
+            progress.setTile(tile);
+            progress.setTeam(team);
+            progresses.add(progress);
+        }
+        return progresses;
     }
     
 }

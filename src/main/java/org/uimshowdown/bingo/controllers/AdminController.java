@@ -18,6 +18,7 @@ import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
 import org.uimshowdown.bingo.repositories.TeamRepository;
 import org.uimshowdown.bingo.services.EventDataInitializationService;
+import org.uimshowdown.bingo.services.ScoreboardCalculationService;
 import org.uimshowdown.bingo.services.TempleOsrsService;
 
 @RestController
@@ -40,6 +41,9 @@ public class AdminController {
 
     @Autowired
     private TempleOsrsService templeOsrsService;
+    
+    @Autowired
+    private ScoreboardCalculationService scoreboardCalculationService;
 
     @PostMapping("/admin/addPlayer")
     public ResponseEntity<Void> addPlayer(@RequestBody Map<String, Object> requestBody) throws Exception {
@@ -108,6 +112,12 @@ public class AdminController {
             }
         }
         playerRepository.save(player);
+        return ResponseEntity.ok().build();
+    }
+    
+    @PostMapping("/admin/calculate")
+    public ResponseEntity<Void> calculate() {
+        scoreboardCalculationService.calculate();
         return ResponseEntity.ok().build();
     }
 
