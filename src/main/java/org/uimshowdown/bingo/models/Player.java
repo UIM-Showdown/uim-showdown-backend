@@ -172,6 +172,16 @@ public class Player {
     public void setScoreboard(PlayerScoreboard scoreboard) {
         this.scoreboard = scoreboard;
     }
+    
+    @JsonIgnore
+    public Contribution getContribution(ContributionMethod method) {
+        for(Contribution contribution : this.getContributions()) {
+            if(contribution.getContributionMethod().equals(method)) {
+                return contribution;
+            }
+        }
+        return null;
+    }
 
     @Override
     public boolean equals(Object obj) {

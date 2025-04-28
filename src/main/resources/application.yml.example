@@ -35,7 +35,16 @@ competition:
     maxRoundingErrorForContributionPoints: 0.05
     sigFigsForContributionPoints: 3
     sigFigsForTilePointsPerTier: 3
-    tiles:
+    slayerXPPenalties:
+        '[Grotesque Guardians]': 1350
+        '[Abyssal Sire]': 650
+        'Kraken': 255
+        'Cerberus': 690
+        'Araxxor': 1708
+        '[Thermonuclear Smoke Devil]': 240
+        '[Alchemical Hydra]': 1320
+        'TzTok-Jad': 37000
+        'TzKal-Zuk': 125000
     tiles:
         - name: "COX Tile"
           abbreviation: "CoX"
@@ -83,7 +92,7 @@ competition:
               templeID: "Skotizo"
             - name: "Slayer"
               type: "Temple_XP"
-              category: "Skilling"
+              category: "PVM"
               ehtRate: 63000
               templeID: "Slayer"
         - name: "Of Beasts and Brothers"

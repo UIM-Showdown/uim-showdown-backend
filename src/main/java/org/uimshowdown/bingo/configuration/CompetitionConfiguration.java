@@ -2,6 +2,7 @@ package org.uimshowdown.bingo.configuration;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -70,6 +71,8 @@ public class CompetitionConfiguration {
     private int sigFigsForTilePointsPerTier;
     
     private int sigFigsForContributionPoints;
+    
+    private Map<String, Integer> slayerXPPenalties; 
     
     public String getEventName() {
         return eventName;
@@ -285,6 +288,14 @@ public class CompetitionConfiguration {
 
     public void setSigFigsForContributionPoints(int sigFigsForContributionPoints) {
         this.sigFigsForContributionPoints = sigFigsForContributionPoints;
+    }
+
+    public Map<String, Integer> getSlayerXPPenalties() {
+        return slayerXPPenalties;
+    }
+
+    public void setSlayerXPPenalties(Map<String, Integer> slayerXPPenalties) {
+        this.slayerXPPenalties = slayerXPPenalties;
     }
 
     public static class TileConfig {
