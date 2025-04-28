@@ -41,18 +41,18 @@ competition:
               ehtRate: 2.4
               templeID: "Clue_master"
             - name: "Basilisk Knights"
-              type: "Submission"
+              type: "Submission_KC"
               category: "PVM"
               ehtRate: 93
         - name: "Test Tile 2"
           abbreviation: "TT2"
           contributionMethods:
             - name: "Demonic Gorillas"
-              type: "Submission"
+              type: "Submission_KC"
               category: "PVM"
               ehtRate: 85
             - name: "Lizardman Shamans"
-              type: "Submission"
+              type: "Submission_KC"
               category: "PVM"
               ehtRate: 150
             - name: "Skotizo"
@@ -64,11 +64,11 @@ competition:
           abbreviation: "TT3"
           contributionMethods:
             - name: "Barrows: Items"
-              type: "Submission"
+              type: "Submission_Item_Drop"
               category: "PVM"
               ehtRate: 1.3
             - name: "Moons of Peril: Items"
-              type: "Submission"
+              type: "Submission_Item_Drop"
               category: "PVM"
               ehtRate: 0.8
             - name: "The Gauntlet"

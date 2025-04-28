@@ -36,6 +36,7 @@ competition:
     sigFigsForContributionPoints: 3
     sigFigsForTilePointsPerTier: 3
     tiles:
+    tiles:
         - name: "COX Tile"
           abbreviation: "CoX"
           contributionMethods:
@@ -50,11 +51,11 @@ competition:
               ehtRate: 6
               templeID: "Chambers of Xeric Challenge Mode"
             - name: "CoX: Purples <= 5"
-              type: "Submission"
+              type: "Submission_Item_Drop"
               category: "PVM"
               ehtRate: 0.113
             - name: "CoX: Purples > 5"
-              type: "Submission"
+              type: "Submission_Item_Drop"
               category: "PVM"
               ehtRate: 0.225
             - name: "Master Clues"
@@ -66,15 +67,15 @@ competition:
           abbreviation: "Slayer"
           contributionMethods:
             - name: "Basilisk Knights"
-              type: "Submission"
+              type: "Submission_KC"
               category: "PVM"
               ehtRate: 93
             - name: "Demonic Gorillas"
-              type: "Submission"
+              type: "Submission_KC"
               category: "PVM"
               ehtRate: 85
             - name: "Lizardman Shamans"
-              type: "Submission"
+              type: "Submission_KC"
               category: "PVM"
               ehtRate: 150
             - name: "Skotizo"
@@ -91,11 +92,11 @@ competition:
           abbreviation: "OB&B"
           contributionMethods:
             - name: "Barrows: Items"
-              type: "Submission"
+              type: "Submission_Item_Drop"
               category: "PVM"
               ehtRate: 1.3
             - name: "Moons of Peril: Items"
-              type: "Submission"
+              type: "Submission_Item_Drop"
               category: "PVM"
               ehtRate: 0.8
             - name: "The Gauntlet"
@@ -129,17 +130,17 @@ competition:
             - name: "Tempoross"
               type: "KC"
               category: "PVM"
-              ehtRate: 187.5
+              ehtRate: 21
               templeID: "Tempoross"
         - name: "Deathpile Management"
           abbreviation: "DM"
           contributionMethods:
             - name: "LMS: Kills"
-              type: "Submission"
+              type: "Submission_Other"
               category: "Other"
               ehtRate: 25
             - name: "Revenants: Ether"
-              type: "Submission"
+              type: "Submission_Item_Drop"
               category: "PVM"
               ehtRate: 1200
             - name: "Artio"
@@ -196,7 +197,7 @@ competition:
               ehtRate: 27
               templeID: "Kril Tsutsaroth"
             - name: "Nex: Effective KC"
-              type: "Submission"
+              type: "Submission_Item_Drop"
               category: "PVM"
               ehtRate: 75
             - name: "Phantom Muspah"
@@ -233,7 +234,7 @@ competition:
               ehtRate: 400000
               templeID: "Farming"
             - name: "Farming Contracts"
-              type: "Submission"
+              type: "Submission_Other"
               category: "Skilling"
               ehtRate: 8
             - name: "Hespori"
@@ -242,7 +243,7 @@ competition:
               ehtRate: 5
               templeID: "Hespori"
             - name: "Tithe Farm Points"
-              type: "Submission"
+              type: "Submission_Other"
               category: "Skilling"
               ehtRate: 110
         - name: "Constructing Nightmares"
@@ -340,11 +341,11 @@ competition:
               ehtRate: 2.4
               templeID: "Theatre of Blood Challenge Mode"
             - name: "ToB: Purples"
-              type: "Submission"
+              type: "Submission_Item_Drop"
               category: "PVM"
               ehtRate: 0.4
             - name: "Barbarian Assault Points"
-              type: "Submission"
+              type: "Submission_Other"
               category: "Other"
               ehtRate: 1200
             - name: "Hueycoatl"
@@ -386,7 +387,7 @@ competition:
               ehtRate: 85
               templeID: "Dagannoth Prime"
             - name: "Scurrius: Spines"
-              type: "Submission"
+              type: "Submission_Item_Drop"
               category: "PVM"
               ehtRate: 1.8
         - name: "Exterminator"
@@ -418,19 +419,19 @@ competition:
               ehtRate: 54
               templeID: "Sarachnis"
             - name: "MTA: Alchemist's Playground"
-              type: "Submission"
+              type: "Submission_Other"
               category: "Other"
               ehtRate: 340
             - name: "MTA: Creature Graveyard"
-              type: "Submission"
+              type: "Submission_Other"
               category: "Other"
               ehtRate: 1080
             - name: "MTA: Enchanting Chamber"
-              type: "Submission"
+              type: "Submission_Other"
               category: "Other"
               ehtRate: 15000
             - name: "MTA: Telekinetic Theatre"
-              type: "Submission"
+              type: "Submission_Other"
               category: "Other"
               ehtRate: 285
         - name: "Zalcano Coded"
@@ -488,11 +489,11 @@ competition:
               ehtRate: 3
               templeID: "Tombs of Amascut Expert"
             - name: "ToA: Purples <= 12"
-              type: "Submission"
+              type: "Submission_Item_Drop"
               category: "PVM"
               ehtRate: 0.3
             - name: "ToA: Purples > 12"
-              type: "Submission"
+              type: "Submission_Item_Drop"
               category: "PVM"
               ehtRate: 0.55
             - name: "Kalphite Queen"

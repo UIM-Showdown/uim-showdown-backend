@@ -24,7 +24,7 @@ public class ContributionMethod {
     
     public enum Category { PVM, SKILLING, OTHER }
     
-    public enum Type { KC, SUBMISSION, XP }
+    public enum Type { KC, XP, SUBMISSION_KC, SUBMISSION_ITEM_DROP, SUBMISSION_OTHER }
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

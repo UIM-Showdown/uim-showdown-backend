@@ -174,7 +174,7 @@ public class EventDataInitializationServiceTests {
         assertTrue(Math.abs(otherMethod.getEhtRate() - 2.4) < 0.0001); // ehtRate == 2.4
         assertEquals("Clue_master", otherMethod.getTempleId());
         assertEquals("Basilisk Knights", submissionMethod.getName());
-        assertEquals(ContributionMethod.Type.SUBMISSION, submissionMethod.getContributionMethodType());
+        assertEquals(ContributionMethod.Type.SUBMISSION_KC, submissionMethod.getContributionMethodType());
         assertEquals(ContributionMethod.Category.PVM, submissionMethod.getContributionMethodCategory());
         assertTrue(Math.abs(submissionMethod.getEhtRate() - 93) < 0.0001); // ehtRate == 93
         assertEquals(null, submissionMethod.getTempleId());

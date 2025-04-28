@@ -81,7 +81,8 @@ public class SubmissionController {
         if(contributionMethod == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Contribution not found: " + (String) requestBody.get("methodName"));
         }
-        if(contributionMethod.getContributionMethodType() != ContributionMethod.Type.SUBMISSION) {
+        ContributionMethod.Type type = contributionMethod.getContributionMethodType();
+        if(type != ContributionMethod.Type.SUBMISSION_KC && type != ContributionMethod.Type.SUBMISSION_ITEM_DROP && type != ContributionMethod.Type.SUBMISSION_OTHER) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Contribution method is not a submission-based method: " + (String) requestBody.get("methodName"));
         }
         
