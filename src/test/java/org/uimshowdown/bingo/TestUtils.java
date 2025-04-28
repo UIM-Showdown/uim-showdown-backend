@@ -56,7 +56,6 @@ public class TestUtils {
         challengeRelayComponentRepository.deleteAll();
         collectionLogCompletionRepository.deleteAll();
         collectionLogGroupRepository.deleteAll();
-        collectionLogItemRepository.deleteAll();
         contributionRepository.deleteAll();
         playerChallengeCompletionRepository.deleteAll();
         playerRepository.deleteAll();
@@ -73,6 +72,7 @@ public class TestUtils {
         challengeRepository.deleteAll();
         contributionMethodRepository.deleteAll();
         recordRepository.deleteAll();
+        collectionLogItemRepository.deleteAll();
     }
 
 }

@@ -126,7 +126,7 @@ public class SubmissionApprovalService {
                 existingPlayerChallengeCompletion.setScreenshotUrl(urls[0].getScreenshotUrl());
             }
             existingPlayerChallengeCompletion.setSeconds(submission.getSeconds());
-            existingPlayerChallengeCompletion = playerChallengeCompletionRepository.save(existingPlayerChallengeCompletion);
+            playerRepository.save(player);
             return;
         }
         
@@ -148,7 +148,6 @@ public class SubmissionApprovalService {
         }
         playerCompletion.setSeconds(submission.getSeconds());
         playerCompletion.setChallengeCompletion(existingChallengeCompletion);
-        playerCompletion = playerChallengeCompletionRepository.save(playerCompletion);
         player.getPlayerChallengeCompletions().add(playerCompletion);
         playerRepository.save(player);
     }
@@ -236,7 +235,7 @@ public class SubmissionApprovalService {
             existingCompletion.setHandicap(submission.getHandicap());
             existingCompletion.setRawValue(submission.getRawValue());
             existingCompletion.setVideoUrl(submission.getVideoUrl());
-            recordCompletionRepository.save(existingCompletion);
+            playerRepository.save(player);
             return;
         }
         
@@ -248,7 +247,8 @@ public class SubmissionApprovalService {
         completion.setRawValue(submission.getRawValue());
         completion.setRecord(submission.getRecord());
         completion.setVideoUrl(submission.getVideoUrl());
-        recordCompletionRepository.save(completion);
+        player.getRecordCompletions().add(completion);
+        playerRepository.save(player);
     }
     
     /**

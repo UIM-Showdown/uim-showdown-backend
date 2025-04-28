@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.junit.jupiter.api.AfterEach;
@@ -182,7 +181,7 @@ public class SubmissionApprovalServiceTests {
     
     @AfterEach
     public void tearDown() {
-        //testUtils.resetDB();
+        testUtils.resetDB();
     }
     
     @Test
@@ -295,14 +294,13 @@ public class SubmissionApprovalServiceTests {
                 challengeCompletion = completion;
             }
         }
-        Iterator<PlayerChallengeCompletion> completionIter = playerChallengeCompletionRepository.findAllByPlayerId(player.getId()).iterator();
-        PlayerChallengeCompletion playerCompletion = completionIter.next();
+        PlayerChallengeCompletion playerCompletion = player.getPlayerChallengeCompletions().toArray(new PlayerChallengeCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission.getSubmissionState());
         assertEquals("Test Reviewer", submission.getReviewer());
         assertTrue(Math.abs(submission.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertFalse(completionIter.hasNext());
+        assertEquals(1, player.getPlayerChallengeCompletions().size());
         assertNotNull(playerCompletion);
         assertEquals("Test URL", playerCompletion.getScreenshotUrl());
         assertEquals(challenge, playerCompletion.getChallenge());
@@ -340,14 +338,13 @@ public class SubmissionApprovalServiceTests {
                 challengeCompletion = completion;
             }
         }
-        Iterator<PlayerChallengeCompletion> completionIter2 = playerChallengeCompletionRepository.findAllByPlayerId(player.getId()).iterator();
-        PlayerChallengeCompletion playerCompletion2 = completionIter2.next();
+        PlayerChallengeCompletion playerCompletion2 = player.getPlayerChallengeCompletions().toArray(new PlayerChallengeCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission2.getSubmissionState());
         assertEquals("Test Reviewer", submission2.getReviewer());
         assertTrue(Math.abs(submission2.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertFalse(completionIter2.hasNext());
+        assertEquals(1, player.getPlayerChallengeCompletions().size());
         assertNotNull(playerCompletion2);
         assertEquals("Test URL 2", playerCompletion2.getScreenshotUrl());
         assertEquals(challenge, playerCompletion2.getChallenge());
@@ -385,14 +382,13 @@ public class SubmissionApprovalServiceTests {
                 challengeCompletion = completion;
             }
         }
-        Iterator<PlayerChallengeCompletion> completionIter3 = playerChallengeCompletionRepository.findAllByPlayerId(player.getId()).iterator();
-        PlayerChallengeCompletion playerCompletion3 = completionIter3.next();
+        PlayerChallengeCompletion playerCompletion3 = player.getPlayerChallengeCompletions().toArray(new PlayerChallengeCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission3.getSubmissionState());
         assertEquals("Test Reviewer", submission3.getReviewer());
         assertTrue(Math.abs(submission3.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertFalse(completionIter3.hasNext());
+        assertEquals(1, player.getPlayerChallengeCompletions().size());
         assertNotNull(playerCompletion3);
         assertEquals("Test URL 2", playerCompletion3.getScreenshotUrl());
         assertEquals(challenge, playerCompletion3.getChallenge());
@@ -435,14 +431,13 @@ public class SubmissionApprovalServiceTests {
                 challengeCompletion = completion;
             }
         }
-        Iterator<PlayerChallengeCompletion> completionIter = playerChallengeCompletionRepository.findAllByPlayerId(player.getId()).iterator();
-        PlayerChallengeCompletion playerCompletion = completionIter.next();
+        PlayerChallengeCompletion playerCompletion = player.getPlayerChallengeCompletions().toArray(new PlayerChallengeCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission.getSubmissionState());
         assertEquals("Test Reviewer", submission.getReviewer());
         assertTrue(Math.abs(submission.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertFalse(completionIter.hasNext());
+        assertEquals(1, player.getPlayerChallengeCompletions().size());
         assertNotNull(playerCompletion);
         assertEquals("Test URL", playerCompletion.getScreenshotUrl());
         assertEquals(challenge, playerCompletion.getChallenge());
@@ -478,14 +473,13 @@ public class SubmissionApprovalServiceTests {
                 challengeCompletion = completion;
             }
         }
-        Iterator<PlayerChallengeCompletion> completionIter2 = playerChallengeCompletionRepository.findAllByPlayerId(player.getId()).iterator();
-        PlayerChallengeCompletion playerCompletion2 = completionIter2.next();
+        PlayerChallengeCompletion playerCompletion2 = player.getPlayerChallengeCompletions().toArray(new PlayerChallengeCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission2.getSubmissionState());
         assertEquals("Test Reviewer", submission2.getReviewer());
         assertTrue(Math.abs(submission2.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertFalse(completionIter2.hasNext());
+        assertEquals(1, player.getPlayerChallengeCompletions().size());
         assertNotNull(playerCompletion2);
         assertEquals("Test URL 2", playerCompletion2.getScreenshotUrl());
         assertEquals(challenge, playerCompletion2.getChallenge());
@@ -521,14 +515,13 @@ public class SubmissionApprovalServiceTests {
                 challengeCompletion = completion;
             }
         }
-        Iterator<PlayerChallengeCompletion> completionIter3 = playerChallengeCompletionRepository.findAllByPlayerId(player.getId()).iterator();
-        PlayerChallengeCompletion playerCompletion3 = completionIter3.next();
+        PlayerChallengeCompletion playerCompletion3 = player.getPlayerChallengeCompletions().toArray(new PlayerChallengeCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission3.getSubmissionState());
         assertEquals("Test Reviewer", submission3.getReviewer());
         assertTrue(Math.abs(submission3.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertFalse(completionIter3.hasNext());
+        assertEquals(1, player.getPlayerChallengeCompletions().size());
         assertNotNull(playerCompletion3);
         assertEquals("Test URL 2", playerCompletion3.getScreenshotUrl());
         assertEquals(challenge, playerCompletion3.getChallenge());
@@ -569,7 +562,7 @@ public class SubmissionApprovalServiceTests {
         assertEquals("Test Reviewer", submission.getReviewer());
         assertTrue(Math.abs(submission.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertTrue(player.getCollectionLogCompletions().size() == 1);
+        assertEquals(1, player.getCollectionLogCompletions().size());
         assertNotNull(completion);
         assertEquals("Test URL", completion.getScreenshotUrl());
         assertEquals(item, completion.getItem());
@@ -602,7 +595,7 @@ public class SubmissionApprovalServiceTests {
         assertEquals("Test Reviewer", submission2.getReviewer());
         assertTrue(Math.abs(submission2.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertTrue(player.getCollectionLogCompletions().size() == 1);
+        assertEquals(1, player.getCollectionLogCompletions().size());
         assertNotNull(completion2);
         assertEquals("Test URL", completion2.getScreenshotUrl());
         assertEquals(item, completion2.getItem());
@@ -642,7 +635,7 @@ public class SubmissionApprovalServiceTests {
         assertEquals("Test Reviewer", submission.getReviewer());
         assertTrue(Math.abs(submission.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertTrue(player.getContributions().size() == 1);
+        assertEquals(1, player.getContributions().size());
         assertNotNull(contribution);
         assertFalse(contribution.isEmpty());
         assertEquals(method, contribution.getContributionMethod());
@@ -680,7 +673,7 @@ public class SubmissionApprovalServiceTests {
         assertEquals("Test Reviewer", submission2.getReviewer());
         assertTrue(Math.abs(submission2.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertTrue(player.getContributions().size() == 1);
+        assertEquals(1, player.getContributions().size());
         assertNotNull(contribution2);
         assertFalse(contribution2.isEmpty());
         assertEquals(method, contribution2.getContributionMethod());
@@ -718,7 +711,7 @@ public class SubmissionApprovalServiceTests {
         assertEquals("Test Reviewer", submission3.getReviewer());
         assertTrue(Math.abs(submission3.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertTrue(player.getContributions().size() == 1);
+        assertEquals(1, player.getContributions().size());
         assertNotNull(contribution3);
         assertFalse(contribution3.isEmpty());
         assertEquals(method, contribution3.getContributionMethod());
@@ -753,14 +746,13 @@ public class SubmissionApprovalServiceTests {
         submission = (RecordSubmission) submissionRepository.findById(id).get();
         player = playerRepository.findById(player.getId()).get();
         
-        Iterator<RecordCompletion> completionIter = recordCompletionRepository.findAllByPlayerId(player.getId()).iterator();
-        RecordCompletion completion = completionIter.next();
+        RecordCompletion completion = player.getRecordCompletions().toArray(new RecordCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission.getSubmissionState());
         assertEquals("Test Reviewer", submission.getReviewer());
         assertTrue(Math.abs(submission.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertFalse(completionIter.hasNext());
+        assertEquals(1, player.getRecordCompletions().size());
         assertNotNull(completion);
         assertEquals(Timestamp.valueOf("2025-04-27 00:00:00"), completion.getCompletedAt());
         assertEquals(player, completion.getPlayer());
@@ -769,11 +761,6 @@ public class SubmissionApprovalServiceTests {
         assertEquals("Test Video URL", completion.getVideoUrl());
         
         // Submit a better record - Update the existing completion
-        // For some reason relating to transaction logic in a testing context, the player object doesn't get properly updated, 
-        // so we have to manually set the completions
-        Set<RecordCompletion> completions = new HashSet<RecordCompletion>();
-        completions.add(completion);
-        player.setRecordCompletions(completions);
         RecordSubmission submission2 = new RecordSubmission();
         submission2.setRecord(record);
         submission2.setRawValue(2000);
@@ -790,14 +777,13 @@ public class SubmissionApprovalServiceTests {
         submission2 = (RecordSubmission) submissionRepository.findById(id2).get();
         player = playerRepository.findById(player.getId()).get();
         
-        Iterator<RecordCompletion> completionIter2 = recordCompletionRepository.findAllByPlayerId(player.getId()).iterator();
-        RecordCompletion completion2 = completionIter2.next();
+        RecordCompletion completion2 = player.getRecordCompletions().toArray(new RecordCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission2.getSubmissionState());
         assertEquals("Test Reviewer", submission2.getReviewer());
         assertTrue(Math.abs(submission2.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertFalse(completionIter2.hasNext());
+        assertEquals(1, player.getRecordCompletions().size());
         assertNotNull(completion2);
         assertEquals(Timestamp.valueOf("2025-04-28 00:00:00"), completion2.getCompletedAt());
         assertEquals(player, completion2.getPlayer());
@@ -806,11 +792,6 @@ public class SubmissionApprovalServiceTests {
         assertEquals("Test Video URL 2", completion2.getVideoUrl());
         
         // Submit a worse record - Update the existing completion
-        // For some reason relating to transaction logic in a testing context, the player object doesn't get properly updated, 
-        // so we have to manually set the completions
-        Set<RecordCompletion> completions2 = new HashSet<RecordCompletion>();
-        completions2.add(completion2);
-        player.setRecordCompletions(completions2);
         RecordSubmission submission3 = new RecordSubmission();
         submission3.setRecord(record);
         submission3.setRawValue(500);
@@ -827,14 +808,13 @@ public class SubmissionApprovalServiceTests {
         submission3 = (RecordSubmission) submissionRepository.findById(id3).get();
         player = playerRepository.findById(player.getId()).get();
         
-        Iterator<RecordCompletion> completionIter3 = recordCompletionRepository.findAllByPlayerId(player.getId()).iterator();
-        RecordCompletion completion3 = completionIter3.next();
+        RecordCompletion completion3 = player.getRecordCompletions().toArray(new RecordCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission3.getSubmissionState());
         assertEquals("Test Reviewer", submission3.getReviewer());
         assertTrue(Math.abs(submission3.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertFalse(completionIter3.hasNext());
+        assertEquals(1, player.getRecordCompletions().size());
         assertNotNull(completion3);
         assertEquals(Timestamp.valueOf("2025-04-28 00:00:00"), completion3.getCompletedAt());
         assertEquals(player, completion3.getPlayer());
@@ -868,14 +848,13 @@ public class SubmissionApprovalServiceTests {
         submission = (RecordSubmission) submissionRepository.findById(id).get();
         player = playerRepository.findById(player.getId()).get();
         
-        Iterator<RecordCompletion> completionIter = recordCompletionRepository.findAllByPlayerId(player.getId()).iterator();
-        RecordCompletion completion = completionIter.next();
+        RecordCompletion completion = player.getRecordCompletions().toArray(new RecordCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission.getSubmissionState());
         assertEquals("Test Reviewer", submission.getReviewer());
         assertTrue(Math.abs(submission.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertFalse(completionIter.hasNext());
+        assertEquals(1, player.getRecordCompletions().size());
         assertNotNull(completion);
         assertEquals(Timestamp.valueOf("2025-04-27 00:00:00"), completion.getCompletedAt());
         assertEquals(player, completion.getPlayer());
@@ -885,11 +864,6 @@ public class SubmissionApprovalServiceTests {
         assertEquals(handicap, completion.getHandicap());
         
         // Submit a better record - Update the existing completion
-        // For some reason relating to transaction logic in a testing context, the player object doesn't get properly updated, 
-        // so we have to manually set the completions
-        Set<RecordCompletion> completions = new HashSet<RecordCompletion>();
-        completions.add(completion);
-        player.setRecordCompletions(completions);
         RecordSubmission submission2 = new RecordSubmission();
         submission2.setRecord(record);
         submission2.setRawValue(2000);
@@ -907,14 +881,13 @@ public class SubmissionApprovalServiceTests {
         submission2 = (RecordSubmission) submissionRepository.findById(id2).get();
         player = playerRepository.findById(player.getId()).get();
         
-        Iterator<RecordCompletion> completionIter2 = recordCompletionRepository.findAllByPlayerId(player.getId()).iterator();
-        RecordCompletion completion2 = completionIter2.next();
+        RecordCompletion completion2 = player.getRecordCompletions().toArray(new RecordCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission2.getSubmissionState());
         assertEquals("Test Reviewer", submission2.getReviewer());
         assertTrue(Math.abs(submission2.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertFalse(completionIter2.hasNext());
+        assertEquals(1, player.getRecordCompletions().size());
         assertNotNull(completion2);
         assertEquals(Timestamp.valueOf("2025-04-28 00:00:00"), completion2.getCompletedAt());
         assertEquals(player, completion2.getPlayer());
@@ -924,11 +897,6 @@ public class SubmissionApprovalServiceTests {
         assertEquals(handicap, completion2.getHandicap());
         
         // Submit a worse record - Update the existing completion
-        // For some reason relating to transaction logic in a testing context, the player object doesn't get properly updated, 
-        // so we have to manually set the completions
-        Set<RecordCompletion> completions2 = new HashSet<RecordCompletion>();
-        completions2.add(completion2);
-        player.setRecordCompletions(completions2);
         RecordSubmission submission3 = new RecordSubmission();
         submission3.setRecord(record);
         submission3.setRawValue(500);
@@ -946,14 +914,13 @@ public class SubmissionApprovalServiceTests {
         submission3 = (RecordSubmission) submissionRepository.findById(id3).get();
         player = playerRepository.findById(player.getId()).get();
         
-        Iterator<RecordCompletion> completionIter3 = recordCompletionRepository.findAllByPlayerId(player.getId()).iterator();
-        RecordCompletion completion3 = completionIter3.next();
+        RecordCompletion completion3 = player.getRecordCompletions().toArray(new RecordCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission3.getSubmissionState());
         assertEquals("Test Reviewer", submission3.getReviewer());
         assertTrue(Math.abs(submission3.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertFalse(completionIter3.hasNext());
+        assertEquals(1, player.getRecordCompletions().size());
         assertNotNull(completion3);
         assertEquals(Timestamp.valueOf("2025-04-28 00:00:00"), completion3.getCompletedAt());
         assertEquals(player, completion3.getPlayer());

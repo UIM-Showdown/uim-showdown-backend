@@ -224,7 +224,7 @@ public class SharedTestVariables {
     public static TeamScoreboard makeTestTeamScoreboard(Team team) {
         TeamScoreboard testTeamScoreboard = new TeamScoreboard();
         testTeamScoreboard.setEventPoints(1);
-        testTeamScoreboard.setEventPointsFromChallenge(0);
+        testTeamScoreboard.setEventPointsFromChallenges(0);
         testTeamScoreboard.setEventPointsFromCollectionLogItems(1);
         testTeamScoreboard.setEventPointsFromGroups(0);
         testTeamScoreboard.setEventPointsFromRecords(0);
