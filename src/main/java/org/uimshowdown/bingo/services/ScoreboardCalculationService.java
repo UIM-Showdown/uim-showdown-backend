@@ -207,7 +207,13 @@ public class ScoreboardCalculationService {
             for(Player player : team.getPlayers()) {
                 for(Contribution contribution : player.getContributions()) {
                     if(contribution.getContributionMethod().equals(method)) {
-                        tilePointsContributed += contribution.getUnitsContributed() * method.getTilePointsPerContribution();
+                        if(method.getDiminishedThreshold() != -1 && contribution.getUnitsContributed() > method.getDiminishedThreshold()) {
+                            int pointsUntilThreshold = method.getDiminishedThreshold() * method.getTilePointsPerContribution();
+                            int pointsAfterThreshold = (int) ((contribution.getUnitsContributed() - method.getDiminishedThreshold()) * method.getTilePointsPerContribution() * method.getDiminishedMultiplier());
+                            tilePointsContributed += pointsUntilThreshold + pointsAfterThreshold;
+                        } else {                            
+                            tilePointsContributed += contribution.getUnitsContributed() * method.getTilePointsPerContribution();
+                        }
                         break;
                     }
                 }

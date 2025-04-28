@@ -140,6 +140,8 @@ public class EventDataInitializationService {
                 method.setEhtRate(methodConfig.getEhtRate());
                 method.setTempleId(methodConfig.getTempleID());
                 method.setTile(tile);
+                method.setDiminishedThreshold(methodConfig.getDiminishedThreshold());
+                method.setDiminishedMultiplier(methodConfig.getDiminishedMultiplier());
                 contributionMethods.add(method);
             }
             tile.setContributionMethods(contributionMethods);

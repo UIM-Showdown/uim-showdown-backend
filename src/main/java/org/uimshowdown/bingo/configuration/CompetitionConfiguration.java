@@ -339,6 +339,8 @@ public class CompetitionConfiguration {
         private ContributionMethod.Category category;
         private double ehtRate;
         private String templeID;
+        private int diminishedThreshold = -1;
+        private double diminishedMultiplier = -1.0;
         
         public String getName() {
             return name;
@@ -369,6 +371,18 @@ public class CompetitionConfiguration {
         }
         public void setTempleID(String templeID) {
             this.templeID = templeID;
+        }
+        public int getDiminishedThreshold() {
+            return diminishedThreshold;
+        }
+        public void setDiminishedThreshold(int diminishedThreshold) {
+            this.diminishedThreshold = diminishedThreshold;
+        }
+        public double getDiminishedMultiplier() {
+            return diminishedMultiplier;
+        }
+        public void setDiminishedMultiplier(double diminishedMultiplier) {
+            this.diminishedMultiplier = diminishedMultiplier;
         }
     }
     

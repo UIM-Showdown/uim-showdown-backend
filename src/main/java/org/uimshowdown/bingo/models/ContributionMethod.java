@@ -73,6 +73,14 @@ public class ContributionMethod {
     @Column(length = 64)
     @JsonProperty
     private String templeId;
+    
+    @Column
+    @JsonProperty
+    private int diminishedThreshold = -1;
+    
+    @Column
+    @JsonProperty
+    private double diminishedMultiplier = -1.0;
 
     public int getId() {
         return id;
@@ -144,6 +152,38 @@ public class ContributionMethod {
 
     public void setTilePointsPerContribution(int tilePointsPerContribution) {
         this.tilePointsPerContribution = tilePointsPerContribution;
+    }
+
+    public int getDiminishedThreshold() {
+        return diminishedThreshold;
+    }
+
+    public void setDiminishedThreshold(int diminishedThreshold) {
+        this.diminishedThreshold = diminishedThreshold;
+    }
+
+    public double getDiminishedMultiplier() {
+        return diminishedMultiplier;
+    }
+
+    public void setDiminishedMultiplier(double diminishedMultiplier) {
+        this.diminishedMultiplier = diminishedMultiplier;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setContributionSubmissions(Set<ContributionSubmission> contributionSubmissions) {
+        this.contributionSubmissions = contributionSubmissions;
+    }
+
+    public void setPlayerContributions(Set<Contribution> playerContributions) {
+        this.playerContributions = playerContributions;
+    }
+
+    public void setUnrankedStartingValueSubmissions(Set<UnrankedStartingValueSubmission> unrankedStartingValueSubmissions) {
+        this.unrankedStartingValueSubmissions = unrankedStartingValueSubmissions;
     }
 
     @Override

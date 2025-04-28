@@ -50,14 +50,12 @@ competition:
               category: "PVM"
               ehtRate: 6
               templeID: "Chambers of Xeric Challenge Mode"
-            - name: "CoX: Purples <= 5"
+            - name: "CoX: Purples"
               type: "Submission_Item_Drop"
               category: "PVM"
               ehtRate: 0.113
-            - name: "CoX: Purples > 5"
-              type: "Submission_Item_Drop"
-              category: "PVM"
-              ehtRate: 0.225
+              diminishedThreshold: 5
+              diminishedMultiplier: 0.5
             - name: "Master Clues"
               type: "Temple_KC"
               category: "Other"
@@ -488,14 +486,12 @@ competition:
               category: "PVM"
               ehtRate: 3
               templeID: "Tombs of Amascut Expert"
-            - name: "ToA: Purples <= 12"
+            - name: "ToA: Purples"
               type: "Submission_Item_Drop"
               category: "PVM"
               ehtRate: 0.3
-            - name: "ToA: Purples > 12"
-              type: "Submission_Item_Drop"
-              category: "PVM"
-              ehtRate: 0.55
+              diminishedThreshold: 12
+              diminishedMultiplier: 0.5
             - name: "Kalphite Queen"
               type: "Temple_KC"
               category: "PVM"
