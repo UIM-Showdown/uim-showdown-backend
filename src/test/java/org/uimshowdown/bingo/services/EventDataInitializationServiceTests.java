@@ -159,17 +159,17 @@ public class EventDataInitializationServiceTests {
         assertTrue(testTile1.getContributionMethods().contains(otherMethod));
         assertTrue(testTile1.getContributionMethods().contains(submissionMethod));
         assertEquals("Chambers of Xeric", pvmMethod.getName());
-        assertEquals(ContributionMethod.Type.KC, pvmMethod.getContributionMethodType());
+        assertEquals(ContributionMethod.Type.TEMPLE_KC, pvmMethod.getContributionMethodType());
         assertEquals(ContributionMethod.Category.PVM, pvmMethod.getContributionMethodCategory());
         assertTrue(Math.abs(pvmMethod.getEhtRate() - 7.5) < 0.0001); // ehtRate == 7.5
         assertEquals("Chambers of Xeric", pvmMethod.getTempleId());
         assertEquals("Slayer", skillingMethod.getName());
-        assertEquals(ContributionMethod.Type.XP, skillingMethod.getContributionMethodType());
+        assertEquals(ContributionMethod.Type.TEMPLE_XP, skillingMethod.getContributionMethodType());
         assertEquals(ContributionMethod.Category.SKILLING, skillingMethod.getContributionMethodCategory());
         assertTrue(Math.abs(skillingMethod.getEhtRate() - 63000) < 0.0001); // ehtRate == 63000
         assertEquals("Slayer", skillingMethod.getTempleId());
         assertEquals("Master Clues", otherMethod.getName());
-        assertEquals(ContributionMethod.Type.KC, otherMethod.getContributionMethodType());
+        assertEquals(ContributionMethod.Type.TEMPLE_KC, otherMethod.getContributionMethodType());
         assertEquals(ContributionMethod.Category.OTHER, otherMethod.getContributionMethodCategory());
         assertTrue(Math.abs(otherMethod.getEhtRate() - 2.4) < 0.0001); // ehtRate == 2.4
         assertEquals("Clue_master", otherMethod.getTempleId());

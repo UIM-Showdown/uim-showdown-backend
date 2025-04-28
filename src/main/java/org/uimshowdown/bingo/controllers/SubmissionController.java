@@ -228,7 +228,7 @@ public class SubmissionController {
         if(contributionMethod == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Contribution not found: " + (String) requestBody.get("methodName"));
         }
-        if(contributionMethod.getContributionMethodType() != ContributionMethod.Type.KC || contributionMethod.getTempleId() == null) {
+        if(contributionMethod.getContributionMethodType() != ContributionMethod.Type.TEMPLE_KC || contributionMethod.getTempleId() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Contribution method is not a Temple-tracked KC method: " + (String) requestBody.get("methodName"));
         }
         

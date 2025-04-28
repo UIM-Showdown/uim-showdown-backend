@@ -115,7 +115,7 @@ public class SharedTestVariables {
     public static ContributionMethod makeTestContributionMethod(Tile tile) {
         ContributionMethod testContributionMethod = new ContributionMethod();
         testContributionMethod.setContributionMethodCategory(ContributionMethod.Category.PVM);
-        testContributionMethod.setContributionMethodType(ContributionMethod.Type.KC);
+        testContributionMethod.setContributionMethodType(ContributionMethod.Type.TEMPLE_KC);
         testContributionMethod.setEhtRate(25.0);
         testContributionMethod.setName("Calvar'ion");
         testContributionMethod.setTile(tile);
