@@ -146,7 +146,7 @@ public class Contribution {
      * @return
      */
     public int getUnitsContributed() {
-        if(isEmpty) {
+        if(isEmpty || !isRanked()) {
             return 0;
         }
         if(unrankedStartingValue == -1) {
@@ -154,6 +154,17 @@ public class Contribution {
         } else {
             return finalValue - unrankedStartingValue + staffAdjustment;
         }
+    }
+    
+    /**
+     * Returns true if the contribution is enough to be ranked on the OSRS hiscores, or if this is not a hiscores-tracked boss
+     * @return
+     */
+    public boolean isRanked() {
+        if(contributionMethod.getContributionMethodType() != ContributionMethod.Type.TEMPLE_KC) {
+            return true;
+        }
+        return finalValue >= contributionMethod.getRankingThreshold();
     }
 
     @Override

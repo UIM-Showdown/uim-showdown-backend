@@ -352,6 +352,7 @@ public class CompetitionConfiguration {
         private String templeID;
         private int diminishedThreshold = -1;
         private double diminishedMultiplier = -1.0;
+        private int rankingThreshold = 5;
         
         public String getName() {
             return name;
@@ -394,6 +395,12 @@ public class CompetitionConfiguration {
         }
         public void setDiminishedMultiplier(double diminishedMultiplier) {
             this.diminishedMultiplier = diminishedMultiplier;
+        }
+        public int getRankingThreshold() {
+            return rankingThreshold;
+        }
+        public void setRankingThreshold(int rankingThreshold) {
+            this.rankingThreshold = rankingThreshold;
         }
     }
     

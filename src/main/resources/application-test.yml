@@ -40,16 +40,17 @@ competition:
               category: "PVM"
               ehtRate: 7.5
               templeID: "Chambers of Xeric"
-            - name: "Slayer"
+            - name: "Cooking"
               type: "Temple_XP"
-              category: "PVM"
-              ehtRate: 63000
-              templeID: "Slayer"
+              category: "Skilling"
+              ehtRate: 400000
+              templeID: "Cooking"
             - name: "Master Clues"
               type: "Temple_KC"
               category: "Other"
               ehtRate: 2.4
               templeID: "Clue_master"
+              rankedThreshold: 1
             - name: "Basilisk Knights"
               type: "Submission_KC"
               category: "PVM"
@@ -96,6 +97,7 @@ competition:
               category: "Other"
               ehtRate: 5
               templeID: "Clue_elite"
+              rankedThreshold: 1
     tileGroups:
       - name: "Row 1"
         tileNames: ["Test Tile 1", "Test Tile 2"]

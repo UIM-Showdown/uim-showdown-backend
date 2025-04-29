@@ -140,7 +140,7 @@ public class EventDataInitializationServiceTests {
         Tile testTile2 = tileRepository.findByName("Test Tile 2").get();
         Tile testTile3 = tileRepository.findByName("Test Tile 3").get();
         ContributionMethod pvmMethod = contributionMethodRepository.findByName("Chambers of Xeric").get();
-        ContributionMethod skillingMethod = contributionMethodRepository.findByName("Slayer").get();
+        ContributionMethod skillingMethod = contributionMethodRepository.findByName("Cooking").get();
         ContributionMethod otherMethod = contributionMethodRepository.findByName("Master Clues").get();
         ContributionMethod submissionMethod = contributionMethodRepository.findByName("Basilisk Knights").get();
         assertNotNull(testTile1);
@@ -163,11 +163,11 @@ public class EventDataInitializationServiceTests {
         assertEquals(ContributionMethod.Category.PVM, pvmMethod.getContributionMethodCategory());
         assertTrue(Math.abs(pvmMethod.getEhtRate() - 7.5) < 0.0001); // ehtRate == 7.5
         assertEquals("Chambers of Xeric", pvmMethod.getTempleId());
-        assertEquals("Slayer", skillingMethod.getName());
+        assertEquals("Cooking", skillingMethod.getName());
         assertEquals(ContributionMethod.Type.TEMPLE_XP, skillingMethod.getContributionMethodType());
         assertEquals(ContributionMethod.Category.SKILLING, skillingMethod.getContributionMethodCategory());
-        assertTrue(Math.abs(skillingMethod.getEhtRate() - 63000) < 0.0001); // ehtRate == 63000
-        assertEquals("Slayer", skillingMethod.getTempleId());
+        assertTrue(Math.abs(skillingMethod.getEhtRate() - 400000) < 0.0001); // ehtRate == 63000
+        assertEquals("Cooking", skillingMethod.getTempleId());
         assertEquals("Master Clues", otherMethod.getName());
         assertEquals(ContributionMethod.Type.TEMPLE_KC, otherMethod.getContributionMethodType());
         assertEquals(ContributionMethod.Category.OTHER, otherMethod.getContributionMethodCategory());

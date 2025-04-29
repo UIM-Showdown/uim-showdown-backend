@@ -81,6 +81,10 @@ public class ContributionMethod {
     @Column
     @JsonProperty
     private double diminishedMultiplier = -1.0;
+    
+    @Column
+    @JsonProperty
+    private int rankingThreshold = 5;
 
     public int getId() {
         return id;
@@ -184,6 +188,14 @@ public class ContributionMethod {
 
     public void setUnrankedStartingValueSubmissions(Set<UnrankedStartingValueSubmission> unrankedStartingValueSubmissions) {
         this.unrankedStartingValueSubmissions = unrankedStartingValueSubmissions;
+    }
+
+    public int getRankingThreshold() {
+        return rankingThreshold;
+    }
+
+    public void setRankingThreshold(int rankingThreshold) {
+        this.rankingThreshold = rankingThreshold;
     }
 
     @Override

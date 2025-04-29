@@ -69,7 +69,7 @@ public class TempleOsrsService {
 
         switch (api) {
             case CLUES_PVM:
-                apiPath = "/api/competition_info_v2.php?id={competition_id}&details=1&skill=obor";
+                apiPath = "/api/competition_info_v2.php?id={competition_id}&details=1&skill=obor&altunranked=1";
                 break;
             case SKILLING:
                 apiPath = "/api/competition_info_v2.php?id={competition_id}&details=1";

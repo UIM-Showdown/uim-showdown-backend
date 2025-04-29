@@ -70,6 +70,7 @@ competition:
               category: "Other"
               ehtRate: 2.4
               templeID: "Clue_master"
+              rankedThreshold: 1
         - name: "Slayer"
           abbreviation: "Slayer"
           contributionMethods:
@@ -121,6 +122,7 @@ competition:
               category: "Other"
               ehtRate: 5
               templeID: "Clue_elite"
+              rankedThreshold: 1
         - name: "trout cooker"
           abbreviation: "tc"
           contributionMethods:
@@ -227,6 +229,7 @@ competition:
               category: "PVM"
               ehtRate: 0.8
               templeID: "TzKal-Zuk"
+              rankedThreshold: 1
         - name: "Hunter Gatherer"
           abbreviation: "HG"
           contributionMethods:
@@ -482,6 +485,7 @@ competition:
               category: "Other"
               ehtRate: 11
               templeID: "Clue_medium"
+              rankedThreshold: 1
         - name: "My Desert, My Dune"
           abbreviation: "MDMD"
           contributionMethods:
@@ -516,6 +520,7 @@ competition:
               category: "Other"
               ehtRate: 7.5
               templeID: "Clue_hard"
+              rankedThreshold: 1
         - name: "Steal from the Rich"
           abbreviation: "SftR"
           contributionMethods:
@@ -529,11 +534,13 @@ competition:
               category: "Other"
               ehtRate: 40
               templeID: "Clue_beginner"
+              rankedThreshold: 1
             - name: "Easy Clues"
               type: "Temple_KC"
               category: "Other"
               ehtRate: 25
               templeID: "Clue_easy"
+              rankedThreshold: 1
     tileGroups:
       - name: "Row 1"
         tileNames: ["COX Tile", "Slayer", "Of Beasts and Brothers", "trout cooker"]
