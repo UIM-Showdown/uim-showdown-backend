@@ -19,10 +19,6 @@ public class PlayerChallengeCompletion {
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "challenge_completion_id")
-    private ChallengeCompletion challengeCompletion;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player_id")
     private Player player;
     
@@ -45,7 +41,7 @@ public class PlayerChallengeCompletion {
     }
 
     public ChallengeCompletion getChallengeCompletion() {
-        return challengeCompletion;
+        return player.getTeam().getChallengeCompletion(challenge);
     }
 
     public Player getPlayer() {
@@ -66,10 +62,6 @@ public class PlayerChallengeCompletion {
     
     public Challenge getChallenge() {
         return challenge;
-    }
-
-    public void setChallengeCompletion(ChallengeCompletion challengeCompletion) {
-        this.challengeCompletion = challengeCompletion;
     }
 
     public void setPlayer(Player player) {

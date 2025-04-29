@@ -184,11 +184,11 @@ public class SharedTestVariables {
         return testPlayer;
     }
 
-    public static PlayerChallengeCompletion makeTestPlayerChallengeCompletion(ChallengeCompletion challengeCompletion, ChallengeRelayComponent challengeRelayComponent, Player player) {
+    public static PlayerChallengeCompletion makeTestPlayerChallengeCompletion(ChallengeRelayComponent challengeRelayComponent, Player player) {
         PlayerChallengeCompletion testPlayerChallengeCompletion = new PlayerChallengeCompletion();
-        testPlayerChallengeCompletion.setChallengeCompletion(challengeCompletion);
         testPlayerChallengeCompletion.setPlayer(player);
         testPlayerChallengeCompletion.setRelayComponent(challengeRelayComponent);
+        testPlayerChallengeCompletion.setChallenge(challengeRelayComponent.getChallenge());
         testPlayerChallengeCompletion.setScreenshotUrl("https://www.reddit.com/media?url=https%3A%2F%2Fi.redd.it%2Fs61jozhbbxk61.png");
         testPlayerChallengeCompletion.setSeconds(75.0);
         return testPlayerChallengeCompletion;

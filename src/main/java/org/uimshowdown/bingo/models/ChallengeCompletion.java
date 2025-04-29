@@ -9,7 +9,6 @@ import java.util.Set;
 
 import com.google.common.collect.Collections2;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +16,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,9 +30,6 @@ public class ChallengeCompletion {
     @JoinColumn(name = "challenge_id")
     private Challenge challenge;
 
-    @OneToMany(mappedBy = "challengeCompletion", cascade = CascadeType.ALL)
-    private Set<PlayerChallengeCompletion> playerChallengeCompletions = new HashSet<PlayerChallengeCompletion>();
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
@@ -48,7 +43,15 @@ public class ChallengeCompletion {
     }
 
     public Set<PlayerChallengeCompletion> getPlayerChallengeCompletions() {
-        return playerChallengeCompletions;
+        Set<PlayerChallengeCompletion> completions = new HashSet<PlayerChallengeCompletion>();
+        for(Player player : team.getPlayers()) {
+            for(PlayerChallengeCompletion completion : player.getPlayerChallengeCompletions()) {
+                if(completion.getChallenge().equals(this.challenge)) {
+                    completions.add(completion);
+                }
+            }
+        }
+        return completions;
     }
 
     public Team getTeam() {
@@ -68,7 +71,7 @@ public class ChallengeCompletion {
     }
     
     private boolean hasRelayComponent(ChallengeRelayComponent component) {
-        for(PlayerChallengeCompletion completion : playerChallengeCompletions) {
+        for(PlayerChallengeCompletion completion : this.getPlayerChallengeCompletions()) {
             if(component.equals(completion.getChallengeRelayComponent())) {
                 return true;
             }
@@ -88,9 +91,7 @@ public class ChallengeCompletion {
      * @return
      */
     public double getSeconds() {
-        if(playerChallengeCompletions == null) {
-            playerChallengeCompletions = new HashSet<PlayerChallengeCompletion>();
-        }
+        Set<PlayerChallengeCompletion> playerChallengeCompletions = getPlayerChallengeCompletions();
         if(challenge.getType() == Challenge.Type.SPEEDRUN) {
             if(challenge.getTeamSize() > playerChallengeCompletions.size()) { // Not enough individual submissions
                 return -1.0;
@@ -156,9 +157,7 @@ public class ChallengeCompletion {
      * @return
      */
     public List<Player> getPlayers() {
-        if(playerChallengeCompletions == null) {
-            playerChallengeCompletions = new HashSet<PlayerChallengeCompletion>();
-        }
+        Set<PlayerChallengeCompletion> playerChallengeCompletions = getPlayerChallengeCompletions();
         if(challenge.getType() == Challenge.Type.SPEEDRUN) {
             if(challenge.getTeamSize() > playerChallengeCompletions.size()) { // Not enough individual submissions
                 return null;

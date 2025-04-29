@@ -383,8 +383,10 @@ public class EventDataInitializationService {
         team.setTileProgresses(generateEmptyTileProgresses(team));
         TeamScoreboard scoreboard = new TeamScoreboard();
         scoreboard.setTeam(team);
-        scoreboard.setRecordLeaderboardEntries(generateEmptyRecordLeaderboardEntries(scoreboard));
-        scoreboard.setChallengeLeaderboardEntries(generateEmptyChallengeLeaderboardEntries(scoreboard));
+        if(!team.getName().equals(competitionConfiguration.getWaitlistTeamName())) { // Waitlist team doesn't get leaderboard entries       
+            scoreboard.setRecordLeaderboardEntries(generateEmptyRecordLeaderboardEntries(scoreboard));
+            scoreboard.setChallengeLeaderboardEntries(generateEmptyChallengeLeaderboardEntries(scoreboard));
+        }
         team.setScoreboard(scoreboard);
         teamRepository.save(team);
     }

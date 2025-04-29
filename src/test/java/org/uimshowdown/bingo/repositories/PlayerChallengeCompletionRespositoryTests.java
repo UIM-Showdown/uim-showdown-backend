@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.Challenge;
-import org.uimshowdown.bingo.models.ChallengeCompletion;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.PlayerChallengeCompletion;
@@ -31,9 +30,6 @@ public class PlayerChallengeCompletionRespositoryTests {
     private ChallengeRepository challengeRepository;
 
     @Autowired
-    private ChallengeCompletionRepository challengeCompletionRepository;
-
-    @Autowired
     private ChallengeRelayComponentRepository challengeRelayComponentRepository;
 
     @Autowired
@@ -46,7 +42,6 @@ public class PlayerChallengeCompletionRespositoryTests {
     private TeamRepository teamRepository;
 
     private Challenge testChallenge;
-    private ChallengeCompletion testChallengeCompletion;
     private ChallengeRelayComponent testChallengeRelayComponent;
     private Player testPlayer;
     private PlayerChallengeCompletion testPlayerChallengeCompletion;
@@ -58,35 +53,13 @@ public class PlayerChallengeCompletionRespositoryTests {
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
         testChallenge = challengeRepository.save(SharedTestVariables.makeTestChallenge());
-        testChallengeCompletion = challengeCompletionRepository.save(SharedTestVariables.makeTestChallengeCompletion(testChallenge, testTeam));
         testChallengeRelayComponent = challengeRelayComponentRepository.save(SharedTestVariables.makeTestChallengeRelayComponent(testChallenge));
-        testPlayerChallengeCompletion = playerChallengeCompletionRepository.save(SharedTestVariables.makeTestPlayerChallengeCompletion(testChallengeCompletion, testChallengeRelayComponent, testPlayer));
+        testPlayerChallengeCompletion = playerChallengeCompletionRepository.save(SharedTestVariables.makeTestPlayerChallengeCompletion(testChallengeRelayComponent, testPlayer));
     }
 
     @AfterAll
     public void tearDown() {
         testUtils.resetDB();
-    }
-
-    @Test
-    @Transactional
-    public void Should_FindTestPlayerChallengeCompletion_When_GivenTestChallengeCompletionId() {
-        Iterable<PlayerChallengeCompletion> playerChallengeCompletions = playerChallengeCompletionRepository.findAllByChallengeCompletionId(testChallengeCompletion.getId());
-
-        assertThat(playerChallengeCompletions)
-            .isNotNull()
-            .isNotEmpty()
-            .contains(testPlayerChallengeCompletion);
-    }
-
-    @Test
-    @Transactional
-    public void Should_NotFindTestPlayerChallengeCompletion_When_GivenWrongChallengeCompletionId() {
-        Iterable<PlayerChallengeCompletion> playerChallengeCompletions = playerChallengeCompletionRepository.findAllByChallengeCompletionId(0);
-
-        assertThat(playerChallengeCompletions)
-            .isNotNull()
-            .doesNotContain(testPlayerChallengeCompletion);
     }
 
     @Test

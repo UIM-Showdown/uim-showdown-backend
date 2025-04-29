@@ -298,6 +298,9 @@ public class ScoreboardCalculationService {
         for(Record record : recordRepository.findAll()) {            
             List<RecordCompletion> leaderboard = new ArrayList<RecordCompletion>();
             for(Team team : teamRepository.findAll()) {
+                if(team.getName().equals(competitionConfiguration.getWaitlistTeamName())) {
+                    continue; // Waitlist team isn't on the leaderboard
+                }
                 RecordCompletion bestRecord = team.getBestRecordCompletion(record);
                 if(bestRecord != null) {
                     leaderboard.add(bestRecord);
@@ -308,6 +311,9 @@ public class ScoreboardCalculationService {
         }
         
         for(Team team : teamRepository.findAll()) {
+            if(team.getName().equals(competitionConfiguration.getWaitlistTeamName())) {
+                continue; // Waitlist team isn't on the leaderboard
+            }
             // Assemble a list of point values for each record
             List<Integer> recordPoints = new ArrayList<Integer>();
             for(Record record : recordRepository.findAll()) {
@@ -356,9 +362,12 @@ public class ScoreboardCalculationService {
     private void calculateAllChallenges() {
         // Assemble a leaderboard for each record
         Map<Challenge, List<ChallengeCompletion>> completionLeaderboards = new HashMap<Challenge, List<ChallengeCompletion>>();
-        for(Challenge challenge : challengeRepository.findAll()) {            
+        for(Challenge challenge : challengeRepository.findAll()) {
             List<ChallengeCompletion> leaderboard = new ArrayList<ChallengeCompletion>();
             for(Team team : teamRepository.findAll()) {
+                if(team.getName().equals(competitionConfiguration.getWaitlistTeamName())) {
+                    continue; // Waitlist team isn't on the leaderboard
+                }
                 ChallengeCompletion completion = team.getChallengeCompletion(challenge);
                 if(completion != null && completion.isComplete()) {
                     leaderboard.add(completion);
@@ -369,6 +378,9 @@ public class ScoreboardCalculationService {
         }
         
         for(Team team : teamRepository.findAll()) {
+            if(team.getName().equals(competitionConfiguration.getWaitlistTeamName())) {
+                continue; // Waitlist team isn't on the leaderboard
+            }
             // Assemble a list of point values for each record
             List<Integer> challengePoints = new ArrayList<Integer>();
             for(Challenge challenge : challengeRepository.findAll()) {

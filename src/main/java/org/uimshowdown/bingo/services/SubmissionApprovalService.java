@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
-import org.uimshowdown.bingo.models.ChallengeCompletion;
 import org.uimshowdown.bingo.models.ChallengeSubmission;
 import org.uimshowdown.bingo.models.CollectionLogCompletion;
 import org.uimshowdown.bingo.models.CollectionLogSubmission;
@@ -131,13 +130,6 @@ public class SubmissionApprovalService {
         }
         
         // Old one didn't exist, so make a new one
-        ChallengeCompletion existingChallengeCompletion = null;
-        for(ChallengeCompletion completion : player.getTeam().getChallengeCompletions()) {
-            if(completion.getChallenge().equals(submission.getChallenge())) {
-                existingChallengeCompletion = completion;
-                break;
-            }
-        }
         PlayerChallengeCompletion playerCompletion = new PlayerChallengeCompletion();
         playerCompletion.setChallenge(submission.getChallenge());
         playerCompletion.setPlayer(player);
@@ -147,7 +139,6 @@ public class SubmissionApprovalService {
             playerCompletion.setScreenshotUrl(urls[0].getScreenshotUrl());
         }
         playerCompletion.setSeconds(submission.getSeconds());
-        playerCompletion.setChallengeCompletion(existingChallengeCompletion);
         player.getPlayerChallengeCompletions().add(playerCompletion);
         playerRepository.save(player);
     }
