@@ -102,25 +102,25 @@ public class EventDataInitializationService {
      */
     private void dropAllData() {
         challengeCompletionRepository.deleteAll();
-        challengeRelayComponentRepository.deleteAll();
-        challengeRepository.deleteAll();
         collectionLogCompletionRepository.deleteAll();
-        collectionLogGroupRepository.deleteAll();
-        collectionLogItemRepository.deleteAll();
-        contributionMethodRepository.deleteAll();
         contributionRepository.deleteAll();
         playerChallengeCompletionRepository.deleteAll();
         playerRepository.deleteAll();
         playerScoreboardRepository.deleteAll();
         recordCompletionRepository.deleteAll();
         recordHandicapRepository.deleteAll();
-        recordRepository.deleteAll();
         submissionRepository.deleteAll();
         submissionScreenshotUrlRepository.deleteAll();
         teamRepository.deleteAll();
         teamScoreboardRepository.deleteAll();
         tileProgressRepository.deleteAll();
         tileRepository.deleteAll();
+        contributionMethodRepository.deleteAll();
+        challengeRelayComponentRepository.deleteAll();
+        challengeRepository.deleteAll();
+        recordRepository.deleteAll();
+        collectionLogGroupRepository.deleteAll();
+        collectionLogItemRepository.deleteAll();
     }
     
     /**

@@ -7,4 +7,5 @@ import org.uimshowdown.bingo.models.Tile;
 
 public interface TileRepository extends CrudRepository<Tile, Integer> {
     Optional<Tile> findByName(String name);
+    Iterable<Tile> findByOrderByIdAsc();
 }

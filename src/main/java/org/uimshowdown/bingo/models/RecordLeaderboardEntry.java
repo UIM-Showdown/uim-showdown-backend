@@ -31,7 +31,7 @@ public class RecordLeaderboardEntry {
     @Enumerated(EnumType.STRING)
     private Player.Skill skill;
     
-    @Column(length = 64)
+    @Column(name = "player_name", length = 64)
     private String playerName;
     
     @Column

@@ -72,7 +72,9 @@ public class CompetitionConfiguration {
     
     private int sigFigsForContributionPoints;
     
-    private Map<String, Integer> slayerXPPenalties; 
+    private Map<String, Integer> slayerXPPenalties;
+    
+    private String petCollectionLogGroupName;
     
     public String getEventName() {
         return eventName;
@@ -296,6 +298,14 @@ public class CompetitionConfiguration {
 
     public void setSlayerXPPenalties(Map<String, Integer> slayerXPPenalties) {
         this.slayerXPPenalties = slayerXPPenalties;
+    }
+
+    public String getPetCollectionLogGroupName() {
+        return petCollectionLogGroupName;
+    }
+
+    public void setPetCollectionLogGroupName(String petCollectionLogGroupName) {
+        this.petCollectionLogGroupName = petCollectionLogGroupName;
     }
 
     public static class TileConfig {

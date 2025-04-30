@@ -175,12 +175,35 @@ public class Player {
     
     @JsonIgnore
     public Contribution getContribution(ContributionMethod method) {
-        for(Contribution contribution : this.getContributions()) {
+        for(Contribution contribution : contributions) {
             if(contribution.getContributionMethod().equals(method)) {
                 return contribution;
             }
         }
         return null;
+    }
+    
+    @JsonIgnore
+    public RecordCompletion getRecordCompletion(Record record) {
+        for(RecordCompletion completion : recordCompletions) {
+            if(completion.getRecord().equals(record)) {
+                return completion;
+            }
+        }
+        return null;
+    }
+    
+    @JsonIgnore
+    public PlayerChallengeCompletion getBestPlayerChallengeCompletion(Challenge challenge, ChallengeRelayComponent relayComponent) {
+        PlayerChallengeCompletion bestCompletion = null;
+        for(PlayerChallengeCompletion completion : playerChallengeCompletions) {
+            if(completion.getChallenge().equals(challenge) && ((relayComponent == null && completion.getChallengeRelayComponent() == null) || completion.getChallengeRelayComponent().equals(relayComponent))) {
+                if(bestCompletion == null || completion.getSeconds() < bestCompletion.getSeconds()) {
+                    bestCompletion = completion;
+                }
+            }
+        }
+        return bestCompletion;
     }
 
     @Override

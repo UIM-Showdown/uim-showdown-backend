@@ -7,4 +7,5 @@ import org.uimshowdown.bingo.models.CollectionLogGroup;
 
 public interface CollectionLogGroupRepository extends CrudRepository<CollectionLogGroup, Integer> {
     Optional<CollectionLogGroup> findByName(String name);
+    Iterable<CollectionLogGroup> findByOrderByIdAsc();
 }

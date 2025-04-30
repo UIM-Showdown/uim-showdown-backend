@@ -31,6 +31,7 @@ competition:
         '[Alchemical Hydra]': 1320
         'TzTok-Jad': 37000
         'TzKal-Zuk': 125000
+    petCollectionLogGroupName: 'Companion Collection'
     tiles:
         - name: "Test Tile 1"
           abbreviation: "TT1"

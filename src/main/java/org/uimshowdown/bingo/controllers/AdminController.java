@@ -17,6 +17,7 @@ import org.uimshowdown.bingo.models.Team;
 import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
 import org.uimshowdown.bingo.repositories.TeamRepository;
+import org.uimshowdown.bingo.services.DataOutputService;
 import org.uimshowdown.bingo.services.EventDataInitializationService;
 import org.uimshowdown.bingo.services.ScoreboardCalculationService;
 import org.uimshowdown.bingo.services.TempleOsrsService;
@@ -44,6 +45,9 @@ public class AdminController {
     
     @Autowired
     private ScoreboardCalculationService scoreboardCalculationService;
+    
+    @Autowired
+    DataOutputService dataOutputService;
 
     @PostMapping("/admin/addPlayer")
     public ResponseEntity<Void> addPlayer(@RequestBody Map<String, Object> requestBody) throws Exception {
@@ -95,9 +99,9 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
     
-    @PostMapping("/admin/pullTemple")
-    public ResponseEntity<Void> pullTemple() {
-        templeOsrsService.updateCompetition();
+    @PostMapping("/admin/initializeDataOutputSheet")
+    public ResponseEntity<Void> initializeDataOutputSheet() throws Exception {
+        dataOutputService.initializeTabs();
         return ResponseEntity.ok().build();
     }
     
@@ -115,9 +119,33 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
     
-    @PostMapping("/admin/calculate")
-    public ResponseEntity<Void> calculate() {
+    @PostMapping("/admin/updateCompetition")
+    public ResponseEntity<Void> updateCompetition() throws Exception {
+        long templeDuration = 0;
+        long calculateDuration = 0;
+        long outputDuration = 0;
+        long start = 0;
+        long end = 0;
+        
+        start = new Date().getTime();
+        templeOsrsService.updateCompetition();
+        end = new Date().getTime();
+        templeDuration = end - start;
+        System.out.println("Temple pull complete in " + templeDuration + " ms");
+        
+        start = new Date().getTime();
         scoreboardCalculationService.calculate();
+        end = new Date().getTime();
+        calculateDuration = end - start;
+        System.out.println("Calculation complete in " + calculateDuration + " ms");
+        
+        start = new Date().getTime();
+        dataOutputService.outputData();
+        end = new Date().getTime();
+        outputDuration = end - start;
+        System.out.println("Output complete in " + outputDuration + " ms");
+        
+        System.out.println("Full competition update complete in " + (templeDuration + calculateDuration + outputDuration) + " ms");
         return ResponseEntity.ok().build();
     }
 
