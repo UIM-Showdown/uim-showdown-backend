@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -126,25 +128,32 @@ public class AdminController {
         if(!contributionMethodRepository.findAll().iterator().hasNext()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Competition has not been initialized");
         }
-        long start = 0;
-        long end = 0;
+        if(!teamRepository.findAll().iterator().hasNext()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Teams have not been created");
+        }
         
-        start = new Date().getTime();
         templeOsrsService.updateCompetition();
-        end = new Date().getTime();
-        System.out.println(end - start);
-        
-        start = new Date().getTime();
         scoreboardCalculationService.calculate();
-        end = new Date().getTime();
-        System.out.println(end - start);
-        
-        start = new Date().getTime();
         dataOutputService.outputData();
-        end = new Date().getTime();
-        System.out.println(end - start);
         
         return ResponseEntity.ok().build();
+    }
+    
+    /**
+     * Automatically calls the updateCompetition() endpoint method at the top of every minute.
+     * 
+     * This method is annotated with "Transactional" because it's not in a request context and therefore doesn't 
+     * automatically have a transaction created. The "readOnly" value is a misnomer - it won't fail upon trying to write;
+     * it just signals to the transaction manager that certain optimizations can be taken that work best when it's not writing 
+     * (which makes it significantly faster anyway even though we're doing writes).
+     * @throws Exception
+     */
+    @Scheduled(cron = "0 * * * * *")
+    @Transactional(readOnly=true)
+    public void updateCompetitionScheduled() throws Exception {
+        try {            
+            updateCompetition();
+        } catch(ResponseStatusException e) {} // This means the comp isn't initialized, so we don't need to worry about this failing
     }
 
 }
