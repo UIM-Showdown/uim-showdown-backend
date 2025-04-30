@@ -4,11 +4,13 @@ import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
@@ -121,31 +123,27 @@ public class AdminController {
     
     @PostMapping("/admin/updateCompetition")
     public ResponseEntity<Void> updateCompetition() throws Exception {
-        long templeDuration = 0;
-        long calculateDuration = 0;
-        long outputDuration = 0;
+        if(!contributionMethodRepository.findAll().iterator().hasNext()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Competition has not been initialized");
+        }
         long start = 0;
         long end = 0;
         
         start = new Date().getTime();
         templeOsrsService.updateCompetition();
         end = new Date().getTime();
-        templeDuration = end - start;
-        System.out.println("Temple pull complete in " + templeDuration + " ms");
+        System.out.println(end - start);
         
         start = new Date().getTime();
         scoreboardCalculationService.calculate();
         end = new Date().getTime();
-        calculateDuration = end - start;
-        System.out.println("Calculation complete in " + calculateDuration + " ms");
+        System.out.println(end - start);
         
         start = new Date().getTime();
         dataOutputService.outputData();
         end = new Date().getTime();
-        outputDuration = end - start;
-        System.out.println("Output complete in " + outputDuration + " ms");
+        System.out.println(end - start);
         
-        System.out.println("Full competition update complete in " + (templeDuration + calculateDuration + outputDuration) + " ms");
         return ResponseEntity.ok().build();
     }
 

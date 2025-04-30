@@ -614,7 +614,7 @@ competition:
             itemOptions: ["Ancient shield", "Armadyl shield", "Bandos shield", "Guthix shield", "Saradomin shield", "Zamorak shield"]
           - name: "Any Blessed D'hide Boots"
             points: 2
-            itemOptions: ["Ancient boots", "Armadyl boots", "Bandos boots", "Guthix boots", "Saradomin boots", "Zamorak boots"]
+            itemOptions: ["Ancient d'hide boots", "Armadyl d'hide boots", "Bandos d'hide boots", "Guthix d'hide boots", "Saradomin d'hide boots", "Zamorak d'hide boots"]
       - name: "Radiant Raiments"
         type: "Checklist"
         bonusPointThresholds: [3, 6, 9]

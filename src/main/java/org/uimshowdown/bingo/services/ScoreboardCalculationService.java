@@ -53,8 +53,6 @@ public class ScoreboardCalculationService {
     @Autowired RecordRepository recordRepository;
     @Autowired ChallengeRepository challengeRepository;
     
-    
-    
     public void calculate() {
         List<Team> teams = new ArrayList<Team>();
         for(Team team : teamRepository.findAll()) {
