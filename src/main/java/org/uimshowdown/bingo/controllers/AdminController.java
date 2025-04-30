@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -28,6 +29,8 @@ import org.uimshowdown.bingo.services.TempleOsrsService;
 
 @RestController
 public class AdminController {
+    
+    @Autowired Environment environment;
     
     @Autowired
     private CompetitionConfiguration competitionConfiguration;
@@ -151,6 +154,11 @@ public class AdminController {
     @Scheduled(cron = "0 * * * * *")
     @Transactional(readOnly=true)
     public void updateCompetitionScheduled() throws Exception {
+        for(String profile : environment.getActiveProfiles()) {
+            if(profile.equals("test")) { // We're in the middle of JUnit tests
+                return;
+            }
+        }
         try {            
             updateCompetition();
         } catch(ResponseStatusException e) {} // This means the comp isn't initialized, so we don't need to worry about this failing
