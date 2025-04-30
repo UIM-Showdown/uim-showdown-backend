@@ -19,9 +19,6 @@ import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration;
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
-import org.uimshowdown.bingo.models.CollectionLogChecklistGroup;
-import org.uimshowdown.bingo.models.CollectionLogCounterGroup;
-import org.uimshowdown.bingo.models.CollectionLogGroup;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
@@ -33,7 +30,6 @@ import org.uimshowdown.bingo.repositories.ChallengeCompletionRepository;
 import org.uimshowdown.bingo.repositories.ChallengeRelayComponentRepository;
 import org.uimshowdown.bingo.repositories.ChallengeRepository;
 import org.uimshowdown.bingo.repositories.CollectionLogCompletionRepository;
-import org.uimshowdown.bingo.repositories.CollectionLogGroupRepository;
 import org.uimshowdown.bingo.repositories.CollectionLogItemRepository;
 import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
 import org.uimshowdown.bingo.repositories.ContributionRepository;
@@ -68,7 +64,6 @@ public class EventDataInitializationServiceTests {
     @Autowired ChallengeRelayComponentRepository challengeRelayComponentRepository;
     @Autowired ChallengeRepository challengeRepository;
     @Autowired CollectionLogCompletionRepository collectionLogCompletionRepository;
-    @Autowired CollectionLogGroupRepository collectionLogGroupRepository;
     @Autowired CollectionLogItemRepository collectionLogItemRepository;
     @Autowired ContributionMethodRepository contributionMethodRepository;
     @Autowired ContributionRepository contributionRepository;
@@ -252,98 +247,37 @@ public class EventDataInitializationServiceTests {
         assertTrue(recordWithHandicaps.getHandicaps().contains(handicap1));
         assertTrue(recordWithHandicaps.getHandicaps().contains(handicap2));
         
-        // Validate collection log groups
-        CollectionLogGroup checklistGroupWithOptions = collectionLogGroupRepository.findByName("Agnostic Apparel").get();
-        CollectionLogGroup checklistGroupWithoutOptions = collectionLogGroupRepository.findByName("Beastly Blade").get();
-        CollectionLogGroup counterGroup = collectionLogGroupRepository.findByName("Not Just For Butterflies").get();
+        // Validate collection log Items
         CollectionLogItem item1 = collectionLogItemRepository.findByName("Any Blessed D'hide Coif").get();
-        CollectionLogItem item2 = collectionLogItemRepository.findByName("Any Blessed D'hide Body").get();
-        CollectionLogItem item3 = collectionLogItemRepository.findByName("Holy elixir").get();
-        CollectionLogItem item4 = collectionLogItemRepository.findByName("Arcane sigil").get();
-        CollectionLogItem item5 = collectionLogItemRepository.findByName("Elysian sigil").get();
-        CollectionLogItem item6 = collectionLogItemRepository.findByName("Jar of chemicals").get();
-        CollectionLogItem item7 = collectionLogItemRepository.findByName("Jar of darkness").get();
-        CollectionLogItem item8 = collectionLogItemRepository.findByName("Jar of decay").get();
-        assertNotNull(checklistGroupWithOptions);
-        assertNotNull(checklistGroupWithoutOptions);
-        assertNotNull(counterGroup);
+        CollectionLogItem item2 = collectionLogItemRepository.findByName("Holy elixir").get();
+        CollectionLogItem item3 = collectionLogItemRepository.findByName("Jar of chemicals").get();
+        CollectionLogItem item4 = collectionLogItemRepository.findByName("Phoenix").get();
+        
         assertNotNull(item1);
         assertNotNull(item2);
         assertNotNull(item3);
         assertNotNull(item4);
-        assertNotNull(item5);
-        assertNotNull(item6);
-        assertNotNull(item7);
-        assertNotNull(item8);
         
-        // Validate group/item/option properties are populated correctly
-        assertEquals("Agnostic Apparel", checklistGroupWithOptions.getName());
-        assertEquals(CollectionLogGroup.Type.CHECKLIST, checklistGroupWithOptions.getType());
-        int[] bonusPointThresholds1 = ((CollectionLogChecklistGroup) checklistGroupWithOptions).getBonusPointThresholds();
-        assertEquals(2, bonusPointThresholds1.length);
-        assertEquals(2, bonusPointThresholds1[0]);
-        assertEquals(3, bonusPointThresholds1[1]);
-        assertEquals("Bonus point at: 2 items, 3 items", checklistGroupWithOptions.getDescription());
-        assertTrue(checklistGroupWithOptions.getItems().contains(item1));
-        assertTrue(checklistGroupWithOptions.getItems().contains(item2));
+        // Validate item/option properties are populated correctly
         assertEquals("Any Blessed D'hide Coif", item1.getName());
         assertEquals(2, item1.getPoints());
-        assertEquals(checklistGroupWithOptions, item1.getGroup());
+        assertEquals(CollectionLogItem.Type.NORMAL, item1.getType());
         Set<String> expectedItemNames1 = new HashSet<String>();
         expectedItemNames1.add("Ancient coif");
         expectedItemNames1.add("Armadyl coif");
         assertEquals(expectedItemNames1, item1.getItemOptionNames());
-        assertEquals("Any Blessed D'hide Body", item2.getName());
-        assertEquals(2, item2.getPoints());
-        assertEquals(checklistGroupWithOptions, item2.getGroup());
-        Set<String> expectedItemNames2 = new HashSet<String>();
-        expectedItemNames2.add("Ancient d'hide body");
-        expectedItemNames2.add("Armadyl d'hide body");
-        assertEquals(expectedItemNames2, item2.getItemOptionNames());
-        assertEquals("Beastly Blade", checklistGroupWithoutOptions.getName());
-        assertEquals(CollectionLogGroup.Type.CHECKLIST, checklistGroupWithoutOptions.getType());
-        int[] bonusPointThresholds2 = ((CollectionLogChecklistGroup) checklistGroupWithoutOptions).getBonusPointThresholds();
-        assertEquals(2, bonusPointThresholds2.length);
-        assertEquals(2, bonusPointThresholds2[0]);
-        assertEquals(3, bonusPointThresholds2[1]);
-        assertEquals("Bonus point at: 2 items, 3 items", checklistGroupWithoutOptions.getDescription());
-        assertTrue(checklistGroupWithoutOptions.getItems().contains(item3));
-        assertTrue(checklistGroupWithoutOptions.getItems().contains(item4));
-        assertTrue(checklistGroupWithoutOptions.getItems().contains(item5));
-        assertEquals("Holy elixir", item3.getName());
-        assertEquals(1, item3.getPoints());
-        assertEquals(checklistGroupWithoutOptions, item3.getGroup());
-        assertEquals(new HashSet<String>(), item3.getItemOptionNames());
-        assertEquals("Arcane sigil", item4.getName());
-        assertEquals(2, item4.getPoints());
-        assertEquals(checklistGroupWithoutOptions, item4.getGroup());
-        assertEquals(new HashSet<String>(), item4.getItemOptionNames());
-        assertEquals("Elysian sigil", item5.getName());
-        assertEquals(3, item5.getPoints());
-        assertEquals(checklistGroupWithoutOptions, item5.getGroup());
-        assertEquals(new HashSet<String>(), item5.getItemOptionNames());
-        assertEquals("Not Just For Butterflies", counterGroup.getName());
-        assertEquals(CollectionLogGroup.Type.COUNTER, counterGroup.getType());
-        int[] pointValues = ((CollectionLogCounterGroup) counterGroup).getCounterPointValues();
-        assertEquals(2, pointValues.length);
-        assertEquals(4, pointValues[0]);
-        assertEquals(3, pointValues[1]);
-        assertNull(counterGroup.getDescription());
-        assertTrue(counterGroup.getItems().contains(item6));
-        assertTrue(counterGroup.getItems().contains(item7));
-        assertTrue(counterGroup.getItems().contains(item8));
-        assertEquals("Jar of chemicals", item6.getName());
-        assertEquals(-1, item6.getPoints());
-        assertEquals(counterGroup, item6.getGroup());
-        assertEquals(new HashSet<String>(), item6.getItemOptionNames());
-        assertEquals("Jar of darkness", item7.getName());
-        assertEquals(-1, item7.getPoints());
-        assertEquals(counterGroup, item7.getGroup());
-        assertEquals(new HashSet<String>(), item7.getItemOptionNames());
-        assertEquals("Jar of decay", item8.getName());
-        assertEquals(-1, item8.getPoints());
-        assertEquals(counterGroup, item8.getGroup());
-        assertEquals(new HashSet<String>(), item8.getItemOptionNames());        
+        
+        assertEquals("Holy elixir", item2.getName());
+        assertEquals(1, item2.getPoints());
+        assertEquals(CollectionLogItem.Type.NORMAL, item2.getType());
+        
+        assertEquals("Jar of chemicals", item3.getName());
+        assertEquals(0, item3.getPoints());
+        assertEquals(CollectionLogItem.Type.JAR, item3.getType());
+        
+        assertEquals("Phoenix", item4.getName());
+        assertEquals(0, item4.getPoints());
+        assertEquals(CollectionLogItem.Type.PET, item4.getType());
     }
 
 }

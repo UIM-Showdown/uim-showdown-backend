@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.CollectionLogCompletion;
-import org.uimshowdown.bingo.models.CollectionLogGroup;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.Team;
@@ -32,9 +31,6 @@ public class CollectionLogCompletionRepositoryTests {
     private CollectionLogCompletionRepository collectionLogCompletionRepository;
 
     @Autowired
-    private CollectionLogGroupRepository collectionLogGroupRepository;
-
-    @Autowired
     private CollectionLogItemRepository collectionLogItemRepository;
 
     @Autowired
@@ -44,7 +40,6 @@ public class CollectionLogCompletionRepositoryTests {
     private TeamRepository teamRepository;
 
     private CollectionLogCompletion testCollectionLogCompletion;
-    private CollectionLogGroup testCollectionLogGroup;
     private CollectionLogItem testCollectionLogItem;
     private Player testPlayer;
     private Team testTeam;
@@ -54,8 +49,7 @@ public class CollectionLogCompletionRepositoryTests {
         testUtils.resetDB();
         testTeam = teamRepository.save(SharedTestVariables.makeTestTeam());
         testPlayer = playerRepository.save(SharedTestVariables.makeTestPlayer(testTeam));
-        testCollectionLogGroup = collectionLogGroupRepository.save(SharedTestVariables.makeTestCollectionLogChecklistGroup());
-        testCollectionLogItem = collectionLogItemRepository.save(SharedTestVariables.makeTestCollectionLogItem(testCollectionLogGroup));
+        testCollectionLogItem = collectionLogItemRepository.save(SharedTestVariables.makeTestCollectionLogItem());
         testCollectionLogCompletion = collectionLogCompletionRepository.save(SharedTestVariables.makeTestCollectionLogCompletion(testCollectionLogItem, testPlayer));
     }
 

@@ -44,7 +44,6 @@ import org.uimshowdown.bingo.repositories.ChallengeCompletionRepository;
 import org.uimshowdown.bingo.repositories.ChallengeRelayComponentRepository;
 import org.uimshowdown.bingo.repositories.ChallengeRepository;
 import org.uimshowdown.bingo.repositories.CollectionLogCompletionRepository;
-import org.uimshowdown.bingo.repositories.CollectionLogGroupRepository;
 import org.uimshowdown.bingo.repositories.CollectionLogItemRepository;
 import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
 import org.uimshowdown.bingo.repositories.ContributionRepository;
@@ -76,7 +75,6 @@ public class SubmissionApprovalServiceTests {
     @Autowired ChallengeRelayComponentRepository challengeRelayComponentRepository;
     @Autowired ChallengeRepository challengeRepository;
     @Autowired CollectionLogCompletionRepository collectionLogCompletionRepository;
-    @Autowired CollectionLogGroupRepository collectionLogGroupRepository;
     @Autowired CollectionLogItemRepository collectionLogItemRepository;
     @Autowired ContributionMethodRepository contributionMethodRepository;
     @Autowired ContributionRepository contributionRepository;

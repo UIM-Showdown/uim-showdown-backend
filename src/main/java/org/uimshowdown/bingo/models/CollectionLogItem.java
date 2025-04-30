@@ -9,18 +9,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "collection_log_items")
 public class CollectionLogItem {
+    
+    public enum Type { NORMAL, PET, JAR }
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +31,11 @@ public class CollectionLogItem {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<CollectionLogCompletion> completions;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id")
-    @JsonIgnore
-    private CollectionLogGroup group;
+    
+    @Column
+    @Enumerated(EnumType.STRING)
+    @JsonProperty
+    private Type type = Type.NORMAL;
     
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -42,7 +43,7 @@ public class CollectionLogItem {
     
     @Column(nullable = true)
     @JsonProperty
-    private Integer points;
+    private Integer points = 0;
 
     @Column(length = 512)
     @JsonProperty
@@ -62,10 +63,6 @@ public class CollectionLogItem {
 
     public Set<CollectionLogCompletion> getCompletions() {
         return completions;
-    }
-
-    public CollectionLogGroup getGroup() {
-        return group;
     }
     
     public Integer getPoints() {
@@ -104,10 +101,6 @@ public class CollectionLogItem {
     public Set<CollectionLogSubmission> getSubmissions() {
         return submissions;
     }
-
-    public void setGroup(CollectionLogGroup collectionLogGroup) {
-        group = collectionLogGroup;
-    }
     
     public void setPoints(Integer points) {
         this.points = points;
@@ -119,6 +112,26 @@ public class CollectionLogItem {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setCompletions(Set<CollectionLogCompletion> completions) {
+        this.completions = completions;
+    }
+
+    public void setSubmissions(Set<CollectionLogSubmission> submissions) {
+        this.submissions = submissions;
     }
 
     @Override

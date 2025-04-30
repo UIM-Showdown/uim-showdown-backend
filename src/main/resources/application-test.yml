@@ -31,7 +31,8 @@ competition:
         '[Alchemical Hydra]': 1320
         'TzTok-Jad': 37000
         'TzKal-Zuk': 125000
-    petCollectionLogGroupName: 'Companion Collection'
+    petPointValues: [7, 5, 3, 1]
+    jarPointValues: [4, 3, 2, 1]
     tiles:
         - name: "Test Tile 1"
           abbreviation: "TT1"
@@ -136,33 +137,13 @@ competition:
             multiplier: 1.13
           - name: "Dragon 2h axe"
             multiplier: 1.13
-    collectionLogGroups:
-      - name: "Agnostic Apparel"
-        type: "Checklist"
-        bonusPointThresholds: [2, 3]
-        description: "Bonus point at: 2 items, 3 items"
-        items:
-          - name: "Any Blessed D'hide Coif"
-            points: 2
-            itemOptions: ["Ancient coif", "Armadyl coif"]
-          - name: "Any Blessed D'hide Body"
-            points: 2
-            itemOptions: ["Ancient d'hide body", "Armadyl d'hide body"]
-      - name: "Beastly Blade"
-        type: "Checklist"
-        bonusPointThresholds: [2, 3]
-        description: "Bonus point at: 2 items, 3 items"
-        items:
-          - name: "Holy elixir"
-            points: 1
-          - name: "Arcane sigil"
-            points: 2
-          - name: "Elysian sigil"
-            points: 3
-      - name: "Not Just For Butterflies"
-        type: "Counter"
-        counterPointValues: [4, 3]
-        items:
-          - name: "Jar of chemicals"
-          - name: "Jar of darkness"
-          - name: "Jar of decay"
+    collectionLogItems:
+        - name: "Any Blessed D'hide Coif"
+          points: 2
+          itemOptions: ["Ancient coif", "Armadyl coif"]
+        - name: "Holy elixir"
+          points: 1
+    pets:
+        - "Phoenix"
+    jars:
+        - "Jar of chemicals"

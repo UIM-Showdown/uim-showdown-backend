@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.uimshowdown.bingo.models.Challenge;
-import org.uimshowdown.bingo.models.CollectionLogGroup;
+import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
 
@@ -64,7 +64,11 @@ public class CompetitionConfiguration {
     
     private List<RecordConfig> records;
     
-    private List<CollectionLogGroupConfig> collectionLogGroups;
+    private List<CollectionLogItemConfig> collectionLogItems;
+    
+    private List<String> pets;
+    
+    private List<String> jars;
     
     private double maxRoundingErrorForContributionPoints;
     
@@ -74,7 +78,9 @@ public class CompetitionConfiguration {
     
     private Map<String, Integer> slayerXPPenalties;
     
-    private String petCollectionLogGroupName;
+    private int[] petPointValues;
+    
+    private int[] jarPointValues;
     
     public String getEventName() {
         return eventName;
@@ -260,12 +266,12 @@ public class CompetitionConfiguration {
         this.records = records;
     }
 
-    public List<CollectionLogGroupConfig> getCollectionLogGroups() {
-        return collectionLogGroups;
+    public List<CollectionLogItemConfig> getCollectionLogItems() {
+        return collectionLogItems;
     }
 
-    public void setCollectionLogGroups(List<CollectionLogGroupConfig> collectionLogGroups) {
-        this.collectionLogGroups = collectionLogGroups;
+    public void setCollectionLogItems(List<CollectionLogItemConfig> collectionLogItems) {
+        this.collectionLogItems = collectionLogItems;
     }
     
     public double getMaxRoundingErrorForContributionPoints() {
@@ -300,12 +306,36 @@ public class CompetitionConfiguration {
         this.slayerXPPenalties = slayerXPPenalties;
     }
 
-    public String getPetCollectionLogGroupName() {
-        return petCollectionLogGroupName;
+    public int[] getPetPointValues() {
+        return petPointValues;
     }
 
-    public void setPetCollectionLogGroupName(String petCollectionLogGroupName) {
-        this.petCollectionLogGroupName = petCollectionLogGroupName;
+    public void setPetPointValues(int[] petPointValues) {
+        this.petPointValues = petPointValues;
+    }
+
+    public int[] getJarPointValues() {
+        return jarPointValues;
+    }
+
+    public void setJarPointValues(int[] jarPointValues) {
+        this.jarPointValues = jarPointValues;
+    }
+
+    public List<String> getPets() {
+        return pets;
+    }
+
+    public void setPets(List<String> pets) {
+        this.pets = pets;
+    }
+
+    public List<String> getJars() {
+        return jars;
+    }
+
+    public void setJars(List<String> jars) {
+        this.jars = jars;
     }
 
     public static class TileConfig {
@@ -514,56 +544,11 @@ public class CompetitionConfiguration {
         }
     }
     
-    public static class CollectionLogGroupConfig {
-        private String name;
-        private CollectionLogGroup.Type type;
-        private int[] bonusPointThresholds;
-        private int[] counterPointValues;
-        private String description;
-        private List<ItemConfig> items;
-        
-        public String getName() {
-            return name;
-        }
-        public void setName(String name) {
-            this.name = name;
-        }
-        public CollectionLogGroup.Type getType() {
-            return type;
-        }
-        public void setType(CollectionLogGroup.Type type) {
-            this.type = type;
-        }
-        public int[] getBonusPointThresholds() {
-            return bonusPointThresholds;
-        }
-        public void setBonusPointThresholds(int[] bonusPointThresholds) {
-            this.bonusPointThresholds = bonusPointThresholds;
-        }
-        public int[] getCounterPointValues() {
-            return counterPointValues;
-        }
-        public void setCounterPointValues(int[] counterPointValues) {
-            this.counterPointValues = counterPointValues;
-        }
-        public String getDescription() {
-            return description;
-        }
-        public void setDescription(String description) {
-            this.description = description;
-        }
-        public List<ItemConfig> getItems() {
-            return items;
-        }
-        public void setItems(List<ItemConfig> items) {
-            this.items = items;
-        }
-    }
-
-    public static class ItemConfig {
+    public static class CollectionLogItemConfig {
         private String name;
         private String description;
-        private int points = -1;
+        private CollectionLogItem.Type type = CollectionLogItem.Type.NORMAL;
+        private int points = 0;
         private List<String> itemOptions;
         
         public String getName() {
@@ -589,6 +574,12 @@ public class CompetitionConfiguration {
         }
         public void setItemOptions(List<String> itemOptions) {
             this.itemOptions = itemOptions;
+        }
+        public CollectionLogItem.Type getType() {
+            return type;
+        }
+        public void setType(CollectionLogItem.Type type) {
+            this.type = type;
         }
     }
     

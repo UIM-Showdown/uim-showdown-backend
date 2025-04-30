@@ -4,10 +4,7 @@ import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeCompletion;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.ChallengeSubmission;
-import org.uimshowdown.bingo.models.CollectionLogChecklistGroup;
 import org.uimshowdown.bingo.models.CollectionLogCompletion;
-import org.uimshowdown.bingo.models.CollectionLogCounterGroup;
-import org.uimshowdown.bingo.models.CollectionLogGroup;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.CollectionLogSubmission;
 import org.uimshowdown.bingo.models.Contribution;
@@ -36,28 +33,9 @@ public class SharedTestVariables {
         return testCollectionLogCompletion;
     }
 
-    public static CollectionLogGroup makeTestCollectionLogChecklistGroup() {
-        CollectionLogChecklistGroup testCollectionLogGroup = new CollectionLogChecklistGroup();
-        testCollectionLogGroup.setBonusPointThresholds(new int[] {3, 5, 7});
-        testCollectionLogGroup.setDescription("Clue scroll rewards");
-        testCollectionLogGroup.setName("For the Love of the Gamba!");
-        testCollectionLogGroup.setType(CollectionLogGroup.Type.CHECKLIST);
-        return testCollectionLogGroup;
-    }
-
-    public static CollectionLogCounterGroup makeTestCollectionLogCounterGroup() {
-        CollectionLogCounterGroup testCollectionLogCounterGroup = new CollectionLogCounterGroup();
-        testCollectionLogCounterGroup.setCounterPointValues(new int[] {7, 5, 3, 1});
-        testCollectionLogCounterGroup.setDescription("Pets!");
-        testCollectionLogCounterGroup.setName("Pets");
-        testCollectionLogCounterGroup.setType(CollectionLogGroup.Type.COUNTER);
-        return testCollectionLogCounterGroup;
-    }
-
-    public static CollectionLogItem makeTestCollectionLogItem(CollectionLogGroup collectionLogGroup) {
+    public static CollectionLogItem makeTestCollectionLogItem() {
         CollectionLogItem testCollectionLogItem = new CollectionLogItem();
         testCollectionLogItem.setDescription("Boots we chase, yet rarely use.");
-        testCollectionLogItem.setGroup(collectionLogGroup);
         testCollectionLogItem.setName("Ranger Boots");
         return testCollectionLogItem;
     }

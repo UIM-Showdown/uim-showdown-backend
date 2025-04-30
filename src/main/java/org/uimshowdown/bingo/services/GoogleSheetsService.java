@@ -80,8 +80,8 @@ public class GoogleSheetsService {
             requests.add(new Request().setAddSheet(new AddSheetRequest().setProperties(new SheetProperties().setTitle("unf_RelayComponents" + abbr).setIndex(index++))));
             requests.add(new Request().setAddSheet(new AddSheetRequest().setProperties(new SheetProperties().setTitle("unf_ProgressOverview" + abbr).setIndex(index++))));
             requests.add(new Request().setAddSheet(new AddSheetRequest().setProperties(new SheetProperties().setTitle("unf_Progress" + abbr).setIndex(index++))));
-            requests.add(new Request().setAddSheet(new AddSheetRequest().setProperties(new SheetProperties().setTitle("unf_ClogChecklists" + abbr).setIndex(index++))));
-            requests.add(new Request().setAddSheet(new AddSheetRequest().setProperties(new SheetProperties().setTitle("unf_ClogCounters" + abbr).setIndex(index++))));
+            requests.add(new Request().setAddSheet(new AddSheetRequest().setProperties(new SheetProperties().setTitle("unf_ClogItems" + abbr).setIndex(index++))));
+            requests.add(new Request().setAddSheet(new AddSheetRequest().setProperties(new SheetProperties().setTitle("unf_PetsAndJars" + abbr).setIndex(index++))));
         }
         
         tabsRequest.setRequests(requests);

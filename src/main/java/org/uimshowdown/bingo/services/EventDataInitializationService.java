@@ -11,19 +11,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.ChallengeConfig;
-import org.uimshowdown.bingo.configuration.CompetitionConfiguration.CollectionLogGroupConfig;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.ContributionMethodConfig;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.HandicapConfig;
-import org.uimshowdown.bingo.configuration.CompetitionConfiguration.ItemConfig;
+import org.uimshowdown.bingo.configuration.CompetitionConfiguration.CollectionLogItemConfig;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.RecordConfig;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.TileConfig;
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeCompletion;
 import org.uimshowdown.bingo.models.ChallengeLeaderboardEntry;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
-import org.uimshowdown.bingo.models.CollectionLogChecklistGroup;
-import org.uimshowdown.bingo.models.CollectionLogCounterGroup;
-import org.uimshowdown.bingo.models.CollectionLogGroup;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
@@ -41,7 +37,6 @@ import org.uimshowdown.bingo.repositories.ChallengeCompletionRepository;
 import org.uimshowdown.bingo.repositories.ChallengeRelayComponentRepository;
 import org.uimshowdown.bingo.repositories.ChallengeRepository;
 import org.uimshowdown.bingo.repositories.CollectionLogCompletionRepository;
-import org.uimshowdown.bingo.repositories.CollectionLogGroupRepository;
 import org.uimshowdown.bingo.repositories.CollectionLogItemRepository;
 import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
 import org.uimshowdown.bingo.repositories.ContributionRepository;
@@ -68,7 +63,6 @@ public class EventDataInitializationService {
     @Autowired ChallengeRelayComponentRepository challengeRelayComponentRepository;
     @Autowired ChallengeRepository challengeRepository;
     @Autowired CollectionLogCompletionRepository collectionLogCompletionRepository;
-    @Autowired CollectionLogGroupRepository collectionLogGroupRepository;
     @Autowired CollectionLogItemRepository collectionLogItemRepository;
     @Autowired ContributionMethodRepository contributionMethodRepository;
     @Autowired ContributionRepository contributionRepository;
@@ -94,7 +88,7 @@ public class EventDataInitializationService {
         initializeTiles();
         initializeChallenges();
         initializeRecords();
-        initializeCollectionLogGroups();
+        initializeCollectionLogItems();
     }
     
     /**
@@ -119,7 +113,6 @@ public class EventDataInitializationService {
         challengeRelayComponentRepository.deleteAll();
         challengeRepository.deleteAll();
         recordRepository.deleteAll();
-        collectionLogGroupRepository.deleteAll();
         collectionLogItemRepository.deleteAll();
     }
     
@@ -198,45 +191,39 @@ public class EventDataInitializationService {
     }
     
     /**
-     * Creates all rows in the "collection_log_groups", "collection_log_items", and "item_options" tables 
+     * Creates all rows in the "collection_log_items" and "item_options" tables 
      * based on the config file
      */
-    private void initializeCollectionLogGroups() {
-        for(CollectionLogGroupConfig groupConfig : competitionConfiguration.getCollectionLogGroups()) {
-            CollectionLogGroup group;
-            if(groupConfig.getType().equals(CollectionLogGroup.Type.CHECKLIST)) {
-                group = new CollectionLogChecklistGroup();
-                CollectionLogChecklistGroup checklistGroup = (CollectionLogChecklistGroup) group;
-                checklistGroup.setBonusPointThresholds(groupConfig.getBonusPointThresholds());
-            } else {
-                group = new CollectionLogCounterGroup();
-                CollectionLogCounterGroup counterGroup = (CollectionLogCounterGroup) group;
-                counterGroup.setCounterPointValues(groupConfig.getCounterPointValues());
-            }
-            group.setName(groupConfig.getName());
-            group.setDescription(groupConfig.getDescription());
-            group.setType(groupConfig.getType());
-            Set<CollectionLogItem> items = new HashSet<CollectionLogItem>();
-            for(ItemConfig itemConfig : groupConfig.getItems()) {
-                CollectionLogItem item = new CollectionLogItem();
-                item.setName(itemConfig.getName());
-                item.setDescription(itemConfig.getDescription());
-                item.setPoints(itemConfig.getPoints());
-                Set<ItemOption> itemOptions = new HashSet<ItemOption>();
-                if(itemConfig.getItemOptions() != null) {                    
-                    for(String optionName : itemConfig.getItemOptions()) {
-                        ItemOption itemOption = new ItemOption();
-                        itemOption.setName(optionName);
-                        itemOption.setItem(item);
-                        itemOptions.add(itemOption);
-                    }
+    private void initializeCollectionLogItems() {
+        for(CollectionLogItemConfig itemConfig : competitionConfiguration.getCollectionLogItems()) {
+            CollectionLogItem item = new CollectionLogItem();
+            item.setName(itemConfig.getName());
+            item.setDescription(itemConfig.getDescription());
+            item.setPoints(itemConfig.getPoints());
+            item.setType(itemConfig.getType());
+            Set<ItemOption> itemOptions = new HashSet<ItemOption>();
+            if(itemConfig.getItemOptions() != null) {                    
+                for(String optionName : itemConfig.getItemOptions()) {
+                    ItemOption itemOption = new ItemOption();
+                    itemOption.setName(optionName);
+                    itemOption.setItem(item);
+                    itemOptions.add(itemOption);
                 }
-                item.setItemOptions(itemOptions);
-                item.setGroup(group);
-                items.add(item);
             }
-            group.setItems(items);
-            collectionLogGroupRepository.save(group);
+            item.setItemOptions(itemOptions);
+            collectionLogItemRepository.save(item);
+        }
+        for(String pet : competitionConfiguration.getPets()) {
+            CollectionLogItem item = new CollectionLogItem();
+            item.setName(pet);
+            item.setType(CollectionLogItem.Type.PET);
+            collectionLogItemRepository.save(item);
+        }
+        for(String jar : competitionConfiguration.getJars()) {
+            CollectionLogItem item = new CollectionLogItem();
+            item.setName(jar);
+            item.setType(CollectionLogItem.Type.JAR);
+            collectionLogItemRepository.save(item);
         }
     }
     

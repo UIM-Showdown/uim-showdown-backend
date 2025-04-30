@@ -15,8 +15,6 @@ import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeLeaderboardEntry;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.CollectionLogCompletion;
-import org.uimshowdown.bingo.models.CollectionLogCounterGroup;
-import org.uimshowdown.bingo.models.CollectionLogGroup;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
@@ -33,7 +31,6 @@ import org.uimshowdown.bingo.repositories.ChallengeLeaderboardEntryRepository;
 import org.uimshowdown.bingo.repositories.ChallengeRelayComponentRepository;
 import org.uimshowdown.bingo.repositories.ChallengeRepository;
 import org.uimshowdown.bingo.repositories.CollectionLogCompletionRepository;
-import org.uimshowdown.bingo.repositories.CollectionLogGroupRepository;
 import org.uimshowdown.bingo.repositories.CollectionLogItemRepository;
 import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
 import org.uimshowdown.bingo.repositories.PlayerScoreboardRepository;
@@ -64,7 +61,6 @@ public class DataOutputService {
     @Autowired ChallengeRelayComponentRepository challengeRelayComponentRepository;
     @Autowired ContributionMethodRepository contributionMethodRepository;
     @Autowired CollectionLogItemRepository collectionLogItemRepository;
-    @Autowired CollectionLogGroupRepository collectionLogGroupRepository;
     
     public void outputData() throws Exception {
         
@@ -98,8 +94,8 @@ public class DataOutputService {
             updates.add(googleSheetsService.createUpdateRequest("unf_RelayComponents" + team.getAbbreviation(), generateBlankRows(50, 50)));
             updates.add(googleSheetsService.createUpdateRequest("unf_ProgressOverview" + team.getAbbreviation(), generateBlankRows(50, 50)));
             updates.add(googleSheetsService.createUpdateRequest("unf_Progress" + team.getAbbreviation(), generateBlankRows(50, 50)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_ClogChecklists" + team.getAbbreviation(), generateBlankRows(50, 50)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_ClogCounters" + team.getAbbreviation(), generateBlankRows(50, 50)));
+            updates.add(googleSheetsService.createUpdateRequest("unf_ClogItems" + team.getAbbreviation(), generateBlankRows(50, 50)));
+            updates.add(googleSheetsService.createUpdateRequest("unf_PetsAndJars" + team.getAbbreviation(), generateBlankRows(50, 50)));
             updates.add(googleSheetsService.createUpdateRequest("unf_BoardDetails" + team.getAbbreviation(), getBoardDetailsRows(team)));
             updates.add(googleSheetsService.createUpdateRequest("unf_RecordDetails" + team.getAbbreviation(), getRecordDetailsRows(team)));
             updates.add(googleSheetsService.createUpdateRequest("unf_ChallengeDetails" + team.getAbbreviation(), getChallengeDetailsRows(team)));
@@ -107,8 +103,8 @@ public class DataOutputService {
             updates.add(googleSheetsService.createUpdateRequest("unf_RelayComponents" + team.getAbbreviation(), getRelayComponentsRows(team)));
             updates.add(googleSheetsService.createUpdateRequest("unf_ProgressOverview" + team.getAbbreviation(), getProgressOverviewRows(team)));
             updates.add(googleSheetsService.createUpdateRequest("unf_Progress" + team.getAbbreviation(), getProgressRows(team)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_ClogChecklists" + team.getAbbreviation(), getClogChecklistsRows(team)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_ClogCounters" + team.getAbbreviation(), getClogCountersRows(team)));
+            updates.add(googleSheetsService.createUpdateRequest("unf_ClogItems" + team.getAbbreviation(), getClogItems(team)));
+            updates.add(googleSheetsService.createUpdateRequest("unf_PetsAndJars" + team.getAbbreviation(), getPetsAndJars(team)));
         }
         googleSheetsService.executeBatchUpdate(updates);
     }
@@ -404,7 +400,7 @@ public class DataOutputService {
                 continue; // Clog completions from waitlisted players don't count
             }
             String itemName = completion.getItem().getName();
-            if(completion.getItem().getGroup().getName().equals(competitionConfiguration.getPetCollectionLogGroupName())) {
+            if(completion.getItem().getType() == CollectionLogItem.Type.PET) {
                 if(petCounts.get(itemName) != null) {
                     petCounts.put(itemName, petCounts.get(itemName) + 1);
                 } else {
@@ -672,7 +668,7 @@ public class DataOutputService {
         return rows;
     }
     
-    private List<List<Object>> getClogChecklistsRows(Team team) {
+    private List<List<Object>> getClogItems(Team team) {
         List<List<Object>> rows = new ArrayList<List<Object>>();
         List<CollectionLogItem> items = new ArrayList<CollectionLogItem>();
         for(CollectionLogItem item : collectionLogItemRepository.findByOrderByIdAsc()) {
@@ -687,7 +683,7 @@ public class DataOutputService {
         
         // Add detail rows
         for(CollectionLogItem item : items) {
-            if(item.getGroup().getType() == CollectionLogGroup.Type.CHECKLIST) {                
+            if(item.getType() == CollectionLogItem.Type.NORMAL) {        
                 List<Object> row = new ArrayList<Object>();
                 row.add(item.getName());
                 boolean hasItem = false;
@@ -704,49 +700,60 @@ public class DataOutputService {
         return rows;
     }
     
-    private List<List<Object>> getClogCountersRows(Team team) {
+    private List<List<Object>> getPetsAndJars(Team team) {
         List<List<Object>> rows = new ArrayList<List<Object>>();
-        List<CollectionLogGroup> groups = new ArrayList<CollectionLogGroup>();
-        for(CollectionLogGroup group : collectionLogGroupRepository.findByOrderByIdAsc()) {
-            groups.add(group);
-        }
-        List<CollectionLogItem> itemsCompleted = new ArrayList<CollectionLogItem>();
-        for(Player player : team.getPlayers()) {
-            for(CollectionLogCompletion completion : player.getCollectionLogCompletions()) {
-                itemsCompleted.add(completion.getItem());
-            }
-        }
         
         // Add title row
         List<Object> titleRow = new ArrayList<Object>();
-        titleRow.add("group");
+        titleRow.add("type");
         titleRow.add("items");
         titleRow.add("points");
         rows.add(titleRow);
         
-        // Add detail rows
-        for(CollectionLogGroup group : groups) {
-            if(group.getType() == CollectionLogGroup.Type.COUNTER) {
-                CollectionLogCounterGroup counterGroup = (CollectionLogCounterGroup) group;
-                List<Object> row = new ArrayList<Object>();
-                row.add(counterGroup.getName());
-                int pointIndex = 0;
-                int pointsFromGroup = 0;
-                int items = 0;
-                for(CollectionLogItem item : itemsCompleted) {
-                    if(counterGroup.getItems().contains(item)) {
-                        items++;
-                        pointsFromGroup += counterGroup.getCounterPointValues()[pointIndex];
-                        if(pointIndex + 1 < counterGroup.getCounterPointValues().length) {
-                            pointIndex++;
-                        }
+        // Sum up points from pets - Dupes count here
+        int pointsFromPets = 0;
+        int petPointIndex = 0;
+        int petsCollected = 0;
+        for(Player player : team.getPlayers()) {
+            for(CollectionLogCompletion completion : player.getCollectionLogCompletions()) {
+                if(completion.getItem().getType() == CollectionLogItem.Type.PET) {
+                    petsCollected++;
+                    pointsFromPets += competitionConfiguration.getPetPointValues()[petPointIndex];
+                    if(petPointIndex + 1 < competitionConfiguration.getPetPointValues().length) {
+                        petPointIndex++;
                     }
                 }
-                row.add(items);
-                row.add(pointsFromGroup);
-                rows.add(row);
             }
         }
+        
+        // Sum up points from jars - Dupes count here
+        int pointsFromJars = 0;
+        int jarPointIndex = 0;
+        int jarsCollected = 0;
+        for(Player player : team.getPlayers()) {
+            for(CollectionLogCompletion completion : player.getCollectionLogCompletions()) {
+                if(completion.getItem().getType() == CollectionLogItem.Type.JAR) {
+                    jarsCollected++;
+                    pointsFromJars += competitionConfiguration.getJarPointValues()[jarPointIndex];
+                    if(jarPointIndex + 1 < competitionConfiguration.getJarPointValues().length) {
+                        jarPointIndex++;
+                    }
+                }
+            }
+        }
+        
+        // Add pet/jar rows
+        List<Object> petRow = new ArrayList<Object>();
+        petRow.add("pets");
+        petRow.add(petsCollected);
+        petRow.add(pointsFromPets);
+        List<Object> jarRow = new ArrayList<Object>();
+        jarRow.add("jars");
+        jarRow.add(jarsCollected);
+        jarRow.add(pointsFromJars);
+        rows.add(petRow);
+        rows.add(jarRow);
+        
         return rows;
     }
     

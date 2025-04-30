@@ -15,10 +15,7 @@ import org.uimshowdown.bingo.configuration.CompetitionConfiguration.TileGroupCon
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeCompletion;
 import org.uimshowdown.bingo.models.ChallengeLeaderboardEntry;
-import org.uimshowdown.bingo.models.CollectionLogChecklistGroup;
 import org.uimshowdown.bingo.models.CollectionLogCompletion;
-import org.uimshowdown.bingo.models.CollectionLogCounterGroup;
-import org.uimshowdown.bingo.models.CollectionLogGroup;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
@@ -32,7 +29,7 @@ import org.uimshowdown.bingo.models.TeamScoreboard;
 import org.uimshowdown.bingo.models.Tile;
 import org.uimshowdown.bingo.models.TileProgress;
 import org.uimshowdown.bingo.repositories.ChallengeRepository;
-import org.uimshowdown.bingo.repositories.CollectionLogGroupRepository;
+import org.uimshowdown.bingo.repositories.CollectionLogItemRepository;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
 import org.uimshowdown.bingo.repositories.PlayerScoreboardRepository;
 import org.uimshowdown.bingo.repositories.RecordRepository;
@@ -49,7 +46,7 @@ public class ScoreboardCalculationService {
     @Autowired PlayerRepository playerRepository;
     @Autowired TeamRepository teamRepository;
     @Autowired TileProgressRepository tileProgressRepository;
-    @Autowired CollectionLogGroupRepository collectionLogGroupRepository;
+    @Autowired CollectionLogItemRepository collectionLogItemRepository;
     @Autowired RecordRepository recordRepository;
     @Autowired ChallengeRepository challengeRepository;
     
@@ -147,53 +144,49 @@ public class ScoreboardCalculationService {
         }
         scoreboard.setEventPointsFromGroups(pointsFromGroups);
         
-        // Sum up points from collection log items
-        // We need to keep track of both the TOTAL list of items completed (including duplicates), and the list of 
-        // UNIQUE items completed (not including duplicates). This is because counter groups count duplicates.
-        int pointsFromClog = 0;
-        List<CollectionLogItem> itemsCompleted = new ArrayList<CollectionLogItem>();
+        // Sum up points from normal collection log items - This is for UNIQUE items only
         Set<CollectionLogItem> uniqueItemsCompleted = new HashSet<CollectionLogItem>(); // Automatically removes duplicates
         for(Player player : team.getPlayers()) {
             for(CollectionLogCompletion completion : player.getCollectionLogCompletions()) {
-                itemsCompleted.add(completion.getItem());
-                uniqueItemsCompleted.add(completion.getItem());
+                if(completion.getItem().getType() == CollectionLogItem.Type.NORMAL) {                    
+                    uniqueItemsCompleted.add(completion.getItem());
+                }
             }
         }
-        
-        // Points from individual items
+        int pointsFromClog = 0;
         for(CollectionLogItem item : uniqueItemsCompleted) {
             pointsFromClog += item.getPoints();
         }
         
-        // Points from group bonuses
-        for(CollectionLogGroup group : collectionLogGroupRepository.findAll()) {
-            if(group.getType() == CollectionLogGroup.Type.CHECKLIST) {
-                CollectionLogChecklistGroup checklistGroup = (CollectionLogChecklistGroup) group;
-                int itemsInGroup = 0;
-                for(CollectionLogItem item : uniqueItemsCompleted) {
-                    if(checklistGroup.getItems().contains(item)) {
-                        itemsInGroup++;
-                    }
-                }
-                for(int bonusPointThreshold : checklistGroup.getBonusPointThresholds()) {
-                    if(itemsInGroup >= bonusPointThreshold) {
-                        pointsFromClog++;
-                    }
-                }
-            } else if(group.getType() == CollectionLogGroup.Type.COUNTER) {
-                CollectionLogCounterGroup counterGroup = (CollectionLogCounterGroup) group;
-                int pointIndex = 0;
-                for(CollectionLogItem item : itemsCompleted) {
-                    if(counterGroup.getItems().contains(item)) {
-                        pointsFromClog += counterGroup.getCounterPointValues()[pointIndex];
-                        if(pointIndex + 1 < counterGroup.getCounterPointValues().length) {
-                            pointIndex++;
-                        }
+        // Sum up points from pets - Dupes count here
+        int pointsFromPets = 0;
+        int petPointIndex = 0;
+        for(Player player : team.getPlayers()) {
+            for(CollectionLogCompletion completion : player.getCollectionLogCompletions()) {
+                if(completion.getItem().getType() == CollectionLogItem.Type.PET) {
+                    pointsFromPets += competitionConfiguration.getPetPointValues()[petPointIndex];
+                    if(petPointIndex + 1 < competitionConfiguration.getPetPointValues().length) {
+                        petPointIndex++;
                     }
                 }
             }
         }
-        scoreboard.setEventPointsFromCollectionLogItems(pointsFromClog);
+        
+        // Sum up points from jars - Dupes count here
+        int pointsFromJars = 0;
+        int jarPointIndex = 0;
+        for(Player player : team.getPlayers()) {
+            for(CollectionLogCompletion completion : player.getCollectionLogCompletions()) {
+                if(completion.getItem().getType() == CollectionLogItem.Type.JAR) {
+                    pointsFromJars += competitionConfiguration.getJarPointValues()[jarPointIndex];
+                    if(jarPointIndex + 1 < competitionConfiguration.getJarPointValues().length) {
+                        jarPointIndex++;
+                    }
+                }
+            }
+        }
+        
+        scoreboard.setEventPointsFromCollectionLogItems(pointsFromClog + pointsFromPets + pointsFromJars);
     }
     
     /**

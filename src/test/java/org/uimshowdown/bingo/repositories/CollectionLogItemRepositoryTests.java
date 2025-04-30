@@ -13,7 +13,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
-import org.uimshowdown.bingo.models.CollectionLogGroup;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 
 @SpringBootTest
@@ -24,47 +23,21 @@ public class CollectionLogItemRepositoryTests {
     
     @Autowired
     private TestUtils testUtils;
-    
-    @Autowired
-    private CollectionLogGroupRepository collectionLogGroupRepository;
 
     @Autowired
     private CollectionLogItemRepository collectionLogItemRepository;
 
-    private CollectionLogGroup testCollectionLogGroup;
     private CollectionLogItem testCollectionLogItem;
 
     @BeforeAll
     public void setUp() {
         testUtils.resetDB();
-        testCollectionLogGroup = collectionLogGroupRepository.save(SharedTestVariables.makeTestCollectionLogChecklistGroup());
-        testCollectionLogItem = collectionLogItemRepository.save(SharedTestVariables.makeTestCollectionLogItem(testCollectionLogGroup));
+        testCollectionLogItem = collectionLogItemRepository.save(SharedTestVariables.makeTestCollectionLogItem());
     }
 
     @AfterAll
     public void tearDown() {
         testUtils.resetDB();
-    }
-
-    @Test
-    @Transactional
-    public void Should_FindTestCollectionLogItem_When_GivenTestCollectionLogGroupId() {
-        Iterable<CollectionLogItem> collectionLogItems = collectionLogItemRepository.findAllByGroupId(testCollectionLogGroup.getId());
-
-        assertThat(collectionLogItems)
-            .isNotNull()
-            .isNotEmpty()
-            .contains(testCollectionLogItem);
-    }
-
-    @Test
-    @Transactional
-    public void Should_NotFindTestCollectionLogItem_When_GivenWrongCollectionLogGroupId() {
-        Iterable<CollectionLogItem> collectionLogItems = collectionLogItemRepository.findAllByGroupId(0);
-
-        assertThat(collectionLogItems)
-            .isNotNull()
-            .doesNotContain(testCollectionLogItem);
     }
 
     @Test
