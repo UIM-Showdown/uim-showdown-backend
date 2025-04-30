@@ -151,6 +151,25 @@ public class Team {
         }
         return null;
     }
+    
+    @JsonIgnore
+    public TileProgress getTileProgress(Tile tile) {
+        for(TileProgress tileProgress : tileProgresses) {
+            if(tileProgress.getTile().equals(tile)) {
+                return tileProgress;
+            }
+        }
+        return null;
+    }
+    
+    @JsonIgnore
+    public Set<CollectionLogCompletion> getCollectionLogCompletions() {
+        Set<CollectionLogCompletion> completions = new HashSet<CollectionLogCompletion>();
+        for(Player player : players) {
+            completions.addAll(player.getCollectionLogCompletions());
+        }
+        return completions;
+    }
 
     @Override
     public boolean equals(Object obj) {

@@ -25,10 +25,10 @@ public class ChallengeLeaderboardEntry {
     @Column
     private int place;
     
-    @Column(length = 64)
+    @Column(name = "challenge_name", length = 64)
     private String challengeName;
     
-    @Column(length = 1024)
+    @Column(name = "player_names", length = 1024)
     private String playerNames;
     
     @Column

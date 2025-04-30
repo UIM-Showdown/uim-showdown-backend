@@ -141,7 +141,7 @@ public class TeamScoreboard {
     
     public ChallengeLeaderboardEntry getChallengeLeaderboardEntry(Challenge challenge) {
         for(ChallengeLeaderboardEntry entry : challengeLeaderboardEntries) {
-            if(entry.getChallengeName() == challenge.getName()) {
+            if(entry.getChallengeName().equals(challenge.getName())) {
                 return entry;
             }
         }

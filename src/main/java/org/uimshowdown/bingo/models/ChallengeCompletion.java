@@ -178,6 +178,7 @@ public class ChallengeCompletion {
                     players.add(completion.getPlayer());
                 }
             }
+            return players;
         } else if(challenge.getType() == Challenge.Type.RELAY){
             for(ChallengeRelayComponent component : challenge.getRelayComponents()) {
                 if(!hasRelayComponent(component)) { // Missing a relay component

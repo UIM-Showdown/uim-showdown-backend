@@ -7,4 +7,5 @@ import org.uimshowdown.bingo.models.Challenge;
 
 public interface ChallengeRepository extends CrudRepository<Challenge, Integer> {
     Optional<Challenge> findByName(String name);
+    Iterable<Challenge> findByOrderByIdAsc();
 }

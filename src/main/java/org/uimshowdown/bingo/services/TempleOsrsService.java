@@ -62,6 +62,10 @@ public class TempleOsrsService {
 
         updatePlayerContributions(players, contributionMethods, Api.CLUES_PVM);
         updatePlayerContributions(players, contributionMethods, Api.SKILLING);
+        for(Player player : players.values()) {
+            handleSlayerXPPenalties(player);
+            playerRepository.save(player);
+        }
     }
 
     private void updatePlayerContributions(Map<String, Player> players, Map<String, ContributionMethod> contributionMethods, TempleOsrsService.Api api) throws IllegalArgumentException {
@@ -146,8 +150,6 @@ public class TempleOsrsService {
             // This approach is taken since `player.getContributions().addAll(updatedContributions)` will prioritize existing contributions over updated ones
             updatedContributions.addAll(currentPlayerContributions.values());
             player.setContributions(updatedContributions);
-            handleSlayerXPPenalties(player);
-            playerRepository.save(player);
         }
     }
     

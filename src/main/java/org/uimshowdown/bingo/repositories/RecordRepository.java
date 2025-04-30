@@ -8,4 +8,5 @@ import org.uimshowdown.bingo.models.Record;
 
 public interface RecordRepository extends CrudRepository<Record, Integer> {
     Optional<Record> findBySkill(Player.Skill skill);
+    Iterable<Record> findByOrderByIdAsc();
 }

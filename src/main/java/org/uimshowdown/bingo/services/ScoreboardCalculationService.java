@@ -56,7 +56,9 @@ public class ScoreboardCalculationService {
     
     
     public void calculate() {
+        List<Team> teams = new ArrayList<Team>();
         for(Team team : teamRepository.findAll()) {
+            teams.add(team);
             for(Player player : team.getPlayers()) {
                 calculatePlayerScoreboard(player);
             }
@@ -67,6 +69,9 @@ public class ScoreboardCalculationService {
         calculateAllRecords();
         calculateAllChallenges();
         calculateAllTotalPoints();
+        for(Team team : teams) {
+            teamRepository.save(team);
+        }
     }
     
     /**
@@ -191,7 +196,6 @@ public class ScoreboardCalculationService {
             }
         }
         scoreboard.setEventPointsFromCollectionLogItems(pointsFromClog);
-        teamRepository.save(team);
     }
     
     /**
@@ -231,7 +235,6 @@ public class ScoreboardCalculationService {
         }
         tileProgress.setTier(tier);
         tileProgress.setPercentageToNextTier((double) pointsTowardsNextTier / (double) tile.getPointsPerTier());
-        tileProgressRepository.save(tileProgress);
     }
     
     /**
@@ -286,7 +289,6 @@ public class ScoreboardCalculationService {
         scoreboard.setOtherTileContribution(otherPoints);
         
         scoreboard.setTotalTileContribution(pvmPoints + skillingPoints + otherPoints);
-        playerRepository.save(player);
     }
     
     /**
@@ -306,7 +308,7 @@ public class ScoreboardCalculationService {
                     leaderboard.add(bestRecord);
                 }
             }
-            leaderboard.sort((RecordCompletion c1, RecordCompletion c2) -> c2.getValue() - c1.getValue()); // Ascending sort
+            leaderboard.sort((RecordCompletion c1, RecordCompletion c2) -> c2.getValue() - c1.getValue()); // Descending sort
             completionLeaderboards.put(record, leaderboard);
         }
         
@@ -352,7 +354,6 @@ public class ScoreboardCalculationService {
                 valuesUsed++;
             }
             team.getScoreboard().setEventPointsFromRecords(pointsFromRecords);
-            teamRepository.save(team);
         }
     }
         
@@ -373,7 +374,7 @@ public class ScoreboardCalculationService {
                     leaderboard.add(completion);
                 }
             }
-            leaderboard.sort((ChallengeCompletion c1, ChallengeCompletion c2) -> c1.getSeconds() - c2.getSeconds() < 0 ? -1 : 1); // Descending sort
+            leaderboard.sort((ChallengeCompletion c1, ChallengeCompletion c2) -> c1.getSeconds() - c2.getSeconds() < 0 ? -1 : 1); // Ascending sort
             completionLeaderboards.put(challenge, leaderboard);
         }
         
@@ -390,13 +391,13 @@ public class ScoreboardCalculationService {
                 }
                 List<ChallengeCompletion> leaderboard = completionLeaderboards.get(challenge);
                 ChallengeCompletion firstPlaceCompletion = leaderboard.get(0);
-                if(teamCompletion.getSeconds() > firstPlaceCompletion.getSeconds() * competitionConfiguration.getRecordDistanceCutoffPercentage()) {
+                if(teamCompletion.getSeconds() > firstPlaceCompletion.getSeconds() * competitionConfiguration.getChallengeDistanceCutoffPercentage()) {
                     continue;
                 }
-                int place = leaderboard.indexOf(teamCompletion);
-                int pointsFromPlace = competitionConfiguration.getRecordPlacePoints() - ((place - 1) * competitionConfiguration.getRecordPlacePointsFalloff());
+                int place = leaderboard.indexOf(teamCompletion) + 1;
+                int pointsFromPlace = competitionConfiguration.getChallengePlacePoints() - ((place - 1) * competitionConfiguration.getChallengePlacePointsFalloff());
                 double distanceFromFirstPlace = teamCompletion.getSeconds() - firstPlaceCompletion.getSeconds();
-                int pointsFromDistance = (int) (competitionConfiguration.getRecordDistancePoints() * (1 - (distanceFromFirstPlace / (firstPlaceCompletion.getSeconds() * competitionConfiguration.getRecordDistanceCutoffPercentage() - 1))));
+                int pointsFromDistance = (int) (competitionConfiguration.getRecordDistancePoints() * (1 - (distanceFromFirstPlace / ((firstPlaceCompletion.getSeconds() * competitionConfiguration.getChallengeDistanceCutoffPercentage()) - firstPlaceCompletion.getSeconds()))));
                 int totalPoints = pointsFromPlace + pointsFromDistance;
                 challengePoints.add(totalPoints);
                 ChallengeLeaderboardEntry leaderboardEntry = team.getScoreboard().getChallengeLeaderboardEntry(challenge);
@@ -423,7 +424,6 @@ public class ScoreboardCalculationService {
                 pointsFromChallenges += points;
             }
             team.getScoreboard().setEventPointsFromChallenges(pointsFromChallenges);
-            teamRepository.save(team);
         }
     }
     
@@ -440,7 +440,6 @@ public class ScoreboardCalculationService {
             points += scoreboard.getEventPointsFromRecords();
             points += scoreboard.getEventPointsFromChallenges();
             scoreboard.setEventPoints(points);
-            teamRepository.save(team);
         }
     }
 
