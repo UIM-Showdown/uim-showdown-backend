@@ -160,7 +160,9 @@ public class DataOutputService {
             for(Player captain : team.getCaptains()) {
                 captains += captain.getRsn() + " & ";
             }
-            captains = captains.substring(0, captains.length() - 3);
+            if(!captains.equals("")) {                
+                captains = captains.substring(0, captains.length() - 3);
+            }
             List<Player> players = new ArrayList<Player>(team.getPlayers());
             players.sort((p1, p2) -> p2.getScoreboard().getTotalTileContribution() - p1.getScoreboard().getTotalTileContribution() < 0 ? -1 : 1); // Descending
             String mvp = players.get(0).getRsn();
