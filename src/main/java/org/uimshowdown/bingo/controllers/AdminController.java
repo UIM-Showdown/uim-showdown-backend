@@ -159,8 +159,11 @@ public class AdminController {
                 return;
             }
         }
-        try {            
+        try {
+            long start = new Date().getTime();
             updateCompetition();
+            long end = new Date().getTime();
+            System.out.println("Completed a scheduled update in " + (end - start) + " ms");
         } catch(ResponseStatusException e) {} // This means the comp isn't initialized, so we don't need to worry about this failing
     }
 
