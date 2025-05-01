@@ -92,6 +92,7 @@ public class SubmissionController {
         submission.setSubmissionState(Submission.State.OPEN);
         submission.setValue((int) requestBody.get("value"));
         submission.setType(Submission.Type.CONTRIBUTION);
+        submission.setDescription((String) requestBody.get("description"));
         
         Set<SubmissionScreenshotUrl> urls = new HashSet<SubmissionScreenshotUrl>();
         for(String url : (List<String>) requestBody.get("screenshotURLs")) {
@@ -125,6 +126,7 @@ public class SubmissionController {
         submission.setSubmissionState(Submission.State.OPEN);
         submission.setSeconds((double) requestBody.get("seconds"));
         submission.setType(Submission.Type.CHALLENGE);
+        submission.setDescription((String) requestBody.get("description"));
         if(relayComponent != null) {
             submission.setRelayComponent(relayComponent);
         }
@@ -162,6 +164,7 @@ public class SubmissionController {
         submission.setType(Submission.Type.RECORD);
         submission.setCompletedAt(Timestamp.valueOf((String) requestBody.get("completedAt")));
         submission.setVideoURL((String) requestBody.get("videoUrl"));
+        submission.setDescription((String) requestBody.get("description"));
         if(handicap != null) {
             submission.setHandicap(handicap);
         }
@@ -197,6 +200,7 @@ public class SubmissionController {
         submission.setPlayer(player);
         submission.setSubmissionState(Submission.State.OPEN);
         submission.setType(Submission.Type.COLLECTION_LOG);
+        submission.setDescription((String) requestBody.get("description"));
         if(itemOption != null) {
             submission.setItemOption(itemOption);
         }
@@ -238,6 +242,7 @@ public class SubmissionController {
         submission.setSubmissionState(Submission.State.OPEN);
         submission.setValue((int) requestBody.get("value"));
         submission.setType(Submission.Type.UNRANKED_STARTING_VALUE);
+        submission.setDescription((String) requestBody.get("description"));
         
         Set<SubmissionScreenshotUrl> urls = new HashSet<SubmissionScreenshotUrl>();
         for(String url : (List<String>) requestBody.get("screenshotURLs")) {
@@ -256,17 +261,28 @@ public class SubmissionController {
     }
     
     @PatchMapping("/submissions/{id}")
-    public void approveOrDenySubmission(@PathVariable int id, @RequestBody Map<String, String> requestBody) throws Exception {
+    public Map<String, Object> approveOrDenySubmission(@PathVariable int id, @RequestBody Map<String, String> requestBody) throws Exception {
         Submission.State state = Submission.State.valueOf(requestBody.get("state"));
         if(state == Submission.State.OPEN) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot re-open submission");
         }
         if(state == Submission.State.DENIED) {
-            submissionApprovalService.denySubmission(id, requestBody.get("reviewer"));
+            Submission submission = submissionApprovalService.denySubmission(id, requestBody.get("reviewer"));
+            Map<String, Object> response = new HashMap<String, Object>();
+            response.put("id", submission.getId());
+            response.put("description", submission.getDescription());
+            response.put("state", submission.getState());
+            return response;
         }
         if(state == Submission.State.APPROVED) {
-            submissionApprovalService.approveSubmission(id, requestBody.get("reviewer"));
+            Submission submission = submissionApprovalService.approveSubmission(id, requestBody.get("reviewer"));
+            Map<String, Object> response = new HashMap<String, Object>();
+            response.put("id", submission.getId());
+            response.put("description", submission.getDescription());
+            response.put("state", submission.getState());
+            return response;
         }
+        return null;
     }
 
 }

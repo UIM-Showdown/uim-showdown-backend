@@ -40,7 +40,7 @@ public class SubmissionApprovalService {
      * @param id
      * @throws Exception
      */
-    public void denySubmission(int id, String reviewer) throws Exception {
+    public Submission denySubmission(int id, String reviewer) throws Exception {
         Submission submission = submissionRepository.findById(id).orElse(null);
         if(submission == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Submission not found: " + id);
@@ -54,7 +54,7 @@ public class SubmissionApprovalService {
         submission.setSubmissionState(Submission.State.DENIED);
         submission.setReviewedAt(new Timestamp(new Date().getTime()));
         submission.setReviewer(reviewer);
-        submissionRepository.save(submission);
+        return submissionRepository.save(submission);
     }
     
     /**
@@ -62,7 +62,7 @@ public class SubmissionApprovalService {
      * @param id
      * @throws Exception
      */
-    public void approveSubmission(int id, String reviewer) throws Exception {
+    public Submission approveSubmission(int id, String reviewer) throws Exception {
         Submission submission = submissionRepository.findById(id).orElse(null);
         if(submission == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Submission not found: " + id);
@@ -91,7 +91,7 @@ public class SubmissionApprovalService {
         submission.setSubmissionState(Submission.State.APPROVED);
         submission.setReviewedAt(new Timestamp(new Date().getTime()));
         submission.setReviewer(reviewer);
-        submissionRepository.save(submission);
+        return submissionRepository.save(submission);
     }
     
     /**

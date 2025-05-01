@@ -1,5 +1,7 @@
 package org.uimshowdown.bingo.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -13,9 +15,11 @@ public class UnrankedStartingValueSubmission extends Submission {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contribution_method_id")
+    @JsonProperty
     private ContributionMethod contributionMethod;
 
     @Column
+    @JsonProperty
     private int value;
 
     public ContributionMethod getContributionMethod() {

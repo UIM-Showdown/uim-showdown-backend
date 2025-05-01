@@ -446,6 +446,15 @@ competition:
                 type: "Submission_Other"
                 category: "Other"
                 ehtRate: 285
+              - name: "Pest Control Games"
+                type: "Submission_Other"
+                category: "Other"
+                ehtRate: 25
+              - name: "Soul Wars Zeal"
+                type: "Temple_KC"
+                category: "Other"
+                ehtRate: 325
+                templeID: "Soul Wars Zeal"
         - name: "Zalcano Coded"
           abbreviation: "ZC"
           contributionMethods:

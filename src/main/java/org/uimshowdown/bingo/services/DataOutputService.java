@@ -659,7 +659,9 @@ public class DataOutputService {
         rows.add(titleRow);
         
         // Add detail rows
-        for(Player player : team.getPlayers()) {
+        List<Player> players = new ArrayList<Player>(team.getPlayers());
+        players.sort((p1, p2) -> p1.getId() - p2.getId()); // Ascending
+        for(Player player : players) {
             List<Object> row = new ArrayList<Object>();
             row.add(player.getRsn());
             for(ContributionMethod method : methods) {

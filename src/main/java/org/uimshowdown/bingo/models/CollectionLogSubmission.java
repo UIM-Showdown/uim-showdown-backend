@@ -1,5 +1,7 @@
 package org.uimshowdown.bingo.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,10 +14,12 @@ public class CollectionLogSubmission extends Submission {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
+    @JsonProperty
     private CollectionLogItem item;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_option_id")
+    @JsonProperty
     private ItemOption itemOption;
 
     public CollectionLogItem getItem() {

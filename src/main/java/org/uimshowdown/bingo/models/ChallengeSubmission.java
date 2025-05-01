@@ -1,5 +1,7 @@
 package org.uimshowdown.bingo.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -13,13 +15,16 @@ public class ChallengeSubmission extends Submission {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "challenge_id")
+    @JsonProperty
     private Challenge challenge;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "challenge_relay_component_id")
+    @JsonProperty
     private ChallengeRelayComponent relayComponent;
 
     @Column
+    @JsonProperty
     private double seconds;
 
     public Challenge getChallenge() {

@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
@@ -37,28 +38,35 @@ public class Submission {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player_id")
+    @JsonProperty
     private Player player;
     
     @Column(name = "submitted_at")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonProperty
     private Timestamp submittedAt;
 
     @Column(name = "reviewed_at", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonProperty
     private Timestamp reviewedAt;
 
     @Column(name = "reviewer", nullable = true, length = 64)
+    @JsonProperty
     private String reviewer;
 
     @OneToMany(mappedBy = "submission", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<SubmissionScreenshotUrl> screenshotUrls = new HashSet<SubmissionScreenshotUrl>();
 
     @Column
     @Enumerated(EnumType.STRING)
+    @JsonProperty
     private State state;
     
     /** insert and update are managed by discriminator mechanics */
@@ -66,6 +74,10 @@ public class Submission {
     @Enumerated(EnumType.STRING)
     @JsonProperty
     private Type type;
+    
+    @Column(name = "description", length = 64)
+    @JsonProperty
+    private String description;
 
     public int getId() {
         return id;
@@ -93,6 +105,17 @@ public class Submission {
 
     public Set<SubmissionScreenshotUrl> getScreenshotUrls() {
         return screenshotUrls;
+    }
+    
+    @JsonProperty("screenshotUrls")
+    public Set<String> getScreenshotUrlStrings() {
+        Set<String> urls = new HashSet<String>();
+        if(screenshotUrls != null) {
+            for(SubmissionScreenshotUrl url : screenshotUrls) {
+                urls.add(url.getScreenshotUrl());
+            }
+        }
+        return urls;
     }
     
     public void setScreenshotUrls(Set<SubmissionScreenshotUrl> screenshotUrls) {
@@ -125,6 +148,26 @@ public class Submission {
     
     public void setType(Type type) throws IllegalArgumentException {
         this.type = type;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
