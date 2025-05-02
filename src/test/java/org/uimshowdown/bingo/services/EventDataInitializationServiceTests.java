@@ -1,10 +1,13 @@
 package org.uimshowdown.bingo.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.AfterEach;
@@ -92,27 +95,30 @@ public class EventDataInitializationServiceTests {
     
     @Test
     @Transactional
-    public void addTeamAndPlayers() throws Exception {
-        eventDataInitializationService.addTeam("test-team", "TT", "FFFFFF");
+    public void addPlayer() throws Exception {
+        Team team = new Team();
+        team.setName("test-team");
+        team.setAbbreviation("TT");
+        team.setColor("FFFFFF");
+        List<String> captainRsns = new ArrayList<String>();
+        captainRsns.add("test-rsn1");
+        team.setCaptainRsns(captainRsns);
         
-        Team team = teamRepository.findByName("test-team").get();
-        assertEquals("test-team", team.getName());
-        assertEquals("TT", team.getAbbreviation());
-        assertEquals("FFFFFF", team.getColor());
-        assertTrue(team.getPlayers().isEmpty());
-        assertTrue(team.getCaptains().isEmpty());
+        teamRepository.save(team);
         
-        eventDataInitializationService.addPlayer("test-discordname1", "test-rsn1", true, "test-team");
-        eventDataInitializationService.addPlayer("test-discordname2", "test-rsn2", false, "test-team");
+        eventDataInitializationService.addPlayer("test-discordname1", "test-rsn1", "test-team");
+        eventDataInitializationService.addPlayer("test-discordname2", "test-rsn2", "test-team");
         
         Player player1 = playerRepository.findByRsn("test-rsn1").get();
         assertEquals("test-discordname1", player1.getDiscordName());
         assertEquals("test-rsn1", player1.getRsn());
         assertEquals(team, player1.getTeam());
+        assertTrue(player1.isCaptain());
         Player player2 = playerRepository.findByRsn("test-rsn2").get();
         assertEquals("test-discordname2", player2.getDiscordName());
         assertEquals("test-rsn2", player2.getRsn());
         assertEquals(team, player2.getTeam());
+        assertFalse(player2.isCaptain());
         
         team = teamRepository.findByName("test-team").get();
         HashSet<Player> expectedPlayers = new HashSet<Player>();
@@ -121,7 +127,6 @@ public class EventDataInitializationServiceTests {
         HashSet<Player> expectedCaptains = new HashSet<Player>();
         expectedCaptains.add(player1);
         assertEquals(expectedPlayers, team.getPlayers());
-        assertEquals(expectedCaptains, team.getCaptains());
     }
     
     @Test

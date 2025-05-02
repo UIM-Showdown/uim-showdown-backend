@@ -1,6 +1,8 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -52,6 +54,10 @@ public class Team {
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<TileProgress> tileProgresses = new HashSet<TileProgress>();
+    
+    @Column(name = "captain_rsns_csv", length = 256)
+    @JsonIgnore
+    private String captainsCSV = "";
 
     public String getAbbreviation() {
         return abbreviation;
@@ -114,14 +120,12 @@ public class Team {
     }
     
     @JsonProperty("captains")
-    public Set<Player> getCaptains() {
-        Set<Player> captains = new HashSet<Player>();
-        for(Player player : this.players) {
-            if(player.isCaptain()) {
-                captains.add(player);
-            }
-        }
-        return captains;
+    public List<String> getCaptainRsns() {
+        return Arrays.asList(captainsCSV.split(","));
+    }
+    
+    public void setCaptainRsns(List<String> captainRsns) {
+        this.captainsCSV = String.join(",", captainRsns);
     }
     
     @JsonIgnore

@@ -56,6 +56,8 @@ public class CompetitionConfiguration {
     
     private double challengeDistanceCutoffPercentage;
     
+    private List<TeamConfig> teams;
+    
     private List<TileConfig> tiles;
     
     private List<TileGroupConfig> tileGroups;
@@ -233,6 +235,14 @@ public class CompetitionConfiguration {
     public void setChallengeDistanceCutoffPercentage(double challengeDistanceCutoffPercentage) {
         this.challengeDistanceCutoffPercentage = challengeDistanceCutoffPercentage;
     }
+    
+    public List<TeamConfig> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(List<TeamConfig> teams) {
+        this.teams = teams;
+    }
 
     public List<TileConfig> getTiles() {
         return tiles;
@@ -336,6 +346,38 @@ public class CompetitionConfiguration {
 
     public void setJars(List<String> jars) {
         this.jars = jars;
+    }
+    
+    public static class TeamConfig {
+        private String name;
+        private String abbreviation;
+        private String color;
+        private List<String> captains;
+        
+        public String getName() {
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+        public String getAbbreviation() {
+            return abbreviation;
+        }
+        public void setAbbreviation(String abbreviation) {
+            this.abbreviation = abbreviation;
+        }
+        public String getColor() {
+            return color;
+        }
+        public void setColor(String color) {
+            this.color = color;
+        }
+        public List<String> getCaptains() {
+            return captains;
+        }
+        public void setCaptains(List<String> captains) {
+            this.captains = captains;
+        }
     }
 
     public static class TileConfig {

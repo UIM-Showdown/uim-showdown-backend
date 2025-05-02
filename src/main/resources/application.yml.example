@@ -47,6 +47,55 @@ competition:
         'TzKal-Zuk': 125000
     petPointValues: [7, 5, 3, 1]
     jarPointValues: [4, 3, 2, 1]
+    teams:
+        - name: "HAG"
+          abbreviation: "HAG"
+          color: "FFFFFF"
+          captains:
+              - "Smash Space"
+              - "Kochininako"
+        - name: "BAUBAU"
+          abbreviation: "BAUBAU"
+          color: "FFFFFF"
+          captains:
+              - "Fuwam0co"
+              - "Llerblore"
+        - name: "NP"
+          abbreviation: "NP"
+          color: "FFFFFF"
+          captains:
+              - "Sanguime"
+              - "Mitaka Asa"
+        - name: "CC"
+          abbreviation: "CC"
+          color: "FFFFFF"
+          captains:
+              - "Cal_C"
+              - "Lillian Bear"
+        - name: "STACKED"
+          abbreviation: "S"
+          color: "FFFFFF"
+          captains:
+              - "Shv"
+              - "0g Cloud"
+        - name: "GLORP"
+          abbreviation: "GLORP"
+          color: "FFFFFF"
+          captains:
+              - "G Arbage"
+              - "Serversrshit"
+        - name: "IDLE"
+          abbreviation: "IDLE"
+          color: "FFFFFF"
+          captains:
+              - "Main Ruik"
+              - "Uimkonna"
+        - name: "ZZZ"
+          abbreviation: "ZZZ"
+          color: "FFFFFF"
+          captains:
+              - "Saul Bagman"
+              - "Wherebowfa"
     tiles:
         - name: "COX Tile"
           abbreviation: "CoX"

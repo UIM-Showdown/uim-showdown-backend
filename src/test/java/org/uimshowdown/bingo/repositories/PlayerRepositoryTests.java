@@ -93,13 +93,4 @@ public class PlayerRepositoryTests {
         assertThat(roster).contains(testPlayer, testCaptain);
     }
     
-    @Test
-    @Transactional
-    public void getCaptains() {
-        Set<Player> roster = playerRepository.getTeamCaptains(testTeam.getId());
-        assertThat(roster)
-        .contains(testCaptain)
-        .doesNotContain(testPlayer);
-    }
-    
 }

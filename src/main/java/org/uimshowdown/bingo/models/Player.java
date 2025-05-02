@@ -53,10 +53,6 @@ public class Player {
     @JsonProperty
     private int id;
 
-    @Column
-    @JsonIgnore
-    private boolean captain;
-
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Contribution> contributions = new HashSet<Contribution>();
@@ -135,11 +131,7 @@ public class Player {
     }
 
     public boolean isCaptain() {
-        return captain;
-    }
-
-    public void setCaptainStatus(boolean isCaptain) {
-        captain = isCaptain;
+        return team.getCaptainRsns().contains(rsn);
     }
 
     public void setContributions(Set<Contribution> contributions) {

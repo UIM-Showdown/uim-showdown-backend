@@ -33,110 +33,116 @@ competition:
         'TzKal-Zuk': 125000
     petPointValues: [7, 5, 3, 1]
     jarPointValues: [4, 3, 2, 1]
+    teams:
+        - name: "Test team"
+          abbreviation: "TT"
+          color: "FFFFFF"
+          captains:
+              - "Test Player 1"
     tiles:
         - name: "Test Tile 1"
           abbreviation: "TT1"
           contributionMethods:
-            - name: "Chambers of Xeric"
-              type: "Temple_KC"
-              category: "PVM"
-              ehtRate: 7.5
-              templeID: "Chambers of Xeric"
-            - name: "Cooking"
-              type: "Temple_XP"
-              category: "Skilling"
-              ehtRate: 400000
-              templeID: "Cooking"
-            - name: "Master Clues"
-              type: "Temple_KC"
-              category: "Other"
-              ehtRate: 2.4
-              templeID: "Clue_master"
-              rankedThreshold: 1
-            - name: "Basilisk Knights"
-              type: "Submission_KC"
-              category: "PVM"
-              ehtRate: 93
+              - name: "Chambers of Xeric"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 7.5
+                templeID: "Chambers of Xeric"
+              - name: "Cooking"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 400000
+                templeID: "Cooking"
+              - name: "Master Clues"
+                type: "Temple_KC"
+                category: "Other"
+                ehtRate: 2.4
+                templeID: "Clue_master"
+                rankedThreshold: 1
+              - name: "Basilisk Knights"
+                type: "Submission_KC"
+                category: "PVM"
+                ehtRate: 93
         - name: "Test Tile 2"
           abbreviation: "TT2"
           contributionMethods:
-            - name: "Demonic Gorillas"
-              type: "Submission_KC"
-              category: "PVM"
-              ehtRate: 85
-            - name: "Lizardman Shamans"
-              type: "Submission_KC"
-              category: "PVM"
-              ehtRate: 150
-            - name: "Skotizo"
-              type: "Temple_KC"
-              category: "PVM"
-              ehtRate: 30
-              templeID: "Skotizo"
+              - name: "Demonic Gorillas"
+                type: "Submission_KC"
+                category: "PVM"
+                ehtRate: 85
+              - name: "Lizardman Shamans"
+                type: "Submission_KC"
+                category: "PVM"
+                ehtRate: 150
+              - name: "Skotizo"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 30
+                templeID: "Skotizo"
         - name: "Test Tile 3"
           abbreviation: "TT3"
           contributionMethods:
-            - name: "Barrows: Items"
-              type: "Submission_Item_Drop"
-              category: "PVM"
-              ehtRate: 1.3
-            - name: "Moons of Peril: Items"
-              type: "Submission_Item_Drop"
-              category: "PVM"
-              ehtRate: 0.8
-            - name: "The Gauntlet"
-              type: "Temple_KC"
-              category: "PVM"
-              ehtRate: 10
-              templeID: "The Gauntlet"
-            - name: "The Corrupted Gauntlet"
-              type: "Temple_KC"
-              category: "PVM"
-              ehtRate: 7.2
-              templeID: "The Corrupted Gauntlet"
-            - name: "Elite Clues"
-              type: "Temple_KC"
-              category: "Other"
-              ehtRate: 5
-              templeID: "Clue_elite"
-              rankedThreshold: 1
+              - name: "Barrows: Items"
+                type: "Submission_Item_Drop"
+                category: "PVM"
+                ehtRate: 1.3
+              - name: "Moons of Peril: Items"
+                type: "Submission_Item_Drop"
+                category: "PVM"
+                ehtRate: 0.8
+              - name: "The Gauntlet"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 10
+                templeID: "The Gauntlet"
+              - name: "The Corrupted Gauntlet"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 7.2
+                templeID: "The Corrupted Gauntlet"
+              - name: "Elite Clues"
+                type: "Temple_KC"
+                category: "Other"
+                ehtRate: 5
+                templeID: "Clue_elite"
+                rankedThreshold: 1
     tileGroups:
-      - name: "Row 1"
-        tileNames: ["Test Tile 1", "Test Tile 2"]
-      - name: "Column 1"
-        tileNames: ["Test Tile 1", "Test Tile 3"]
+        - name: "Row 1"
+          tileNames: ["Test Tile 1", "Test Tile 2"]
+        - name: "Column 1"
+          tileNames: ["Test Tile 1", "Test Tile 3"]
     challenges:
-      - name: "Barbarian Assault"
-        teamSize: 5
-        description: "Complete a full game of Barbarian Assault as quickly as possible! All players must be on your team."
-        type: "Speedrun"
-      - name: "Desert Treasure 2 Relay"
-        teamSize: 4
-        description: "Kill each Desert Treasure 2 boss as quickly as possible! Each boss must be killed by a different player."
-        type: "Relay"
-        relayComponents: ["The Whisperer", "The Leviathan", "Vardorvis", "Duke Sucellus"]
-      - name: "Chambers of Xeric: Challenge Mode"
-        teamSize: 3
-        description: "Complete a full 3-player CM raid as quickly as possible!"
-        type: "Speedrun"
-      - name: "Tombs of Amascut: Expert Mode"
-        teamSize: 3
-        description: "Complete a full 3-player 300+ invo TOA raid as quickly as possible!"
-        type: "Speedrun"
+        - name: "Barbarian Assault"
+          teamSize: 5
+          description: "Complete a full game of Barbarian Assault as quickly as possible! All players must be on your team."
+          type: "Speedrun"
+        - name: "Desert Treasure 2 Relay"
+          teamSize: 4
+          description: "Kill each Desert Treasure 2 boss as quickly as possible! Each boss must be killed by a different player."
+          type: "Relay"
+          relayComponents: ["The Whisperer", "The Leviathan", "Vardorvis", "Duke Sucellus"]
+        - name: "Chambers of Xeric: Challenge Mode"
+          teamSize: 3
+          description: "Complete a full 3-player CM raid as quickly as possible!"
+          type: "Speedrun"
+        - name: "Tombs of Amascut: Expert Mode"
+          teamSize: 3
+          description: "Complete a full 3-player 300+ invo TOA raid as quickly as possible!"
+          type: "Speedrun"
     records:
-      - skill: "Agility"
-        description: "Get as much agility XP as you can in 6 hours!"
-      - skill: "Hunter"
-        description: "Get as much hunter XP as you can in 6 hours!"
-      - skill: "Mining"
-        description: "Get as much mining XP as you can in 6 hours!"
-      - skill: "Woodcutting"
-        description: "Get as much woodcutting XP as you can in 6 hours!"
-        handicaps:
-          - name: "Dragon axe"
-            multiplier: 1.13
-          - name: "Dragon 2h axe"
-            multiplier: 1.13
+        - skill: "Agility"
+          description: "Get as much agility XP as you can in 6 hours!"
+        - skill: "Hunter"
+          description: "Get as much hunter XP as you can in 6 hours!"
+        - skill: "Mining"
+          description: "Get as much mining XP as you can in 6 hours!"
+        - skill: "Woodcutting"
+          description: "Get as much woodcutting XP as you can in 6 hours!"
+          handicaps:
+              - name: "Dragon axe"
+                multiplier: 1.13
+              - name: "Dragon 2h axe"
+                multiplier: 1.13
     collectionLogItems:
         - name: "Any Blessed D'hide Coif"
           points: 2

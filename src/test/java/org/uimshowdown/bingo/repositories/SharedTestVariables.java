@@ -145,7 +145,6 @@ public class SharedTestVariables {
 
     public static Player makeTestPlayer(Team team) {
         Player testPlayer = new Player();
-        testPlayer.setCaptainStatus(false);
         testPlayer.setDiscordName("flashcards");
         testPlayer.setRsn("Flashcards");
         testPlayer.setTeam(team);
@@ -154,11 +153,9 @@ public class SharedTestVariables {
     
     public static Player makeTestCaptain(Team team) {
         Player testPlayer = new Player();
-        testPlayer.setCaptainStatus(true);
         testPlayer.setDiscordName("derek_mk");
         testPlayer.setRsn("DerekMK");
         testPlayer.setTeam(team);
-        testPlayer.setCaptainStatus(true);
         return testPlayer;
     }
 

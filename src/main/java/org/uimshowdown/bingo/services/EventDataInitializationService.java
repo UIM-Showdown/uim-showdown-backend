@@ -15,6 +15,7 @@ import org.uimshowdown.bingo.configuration.CompetitionConfiguration.Contribution
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.HandicapConfig;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.CollectionLogItemConfig;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.RecordConfig;
+import org.uimshowdown.bingo.configuration.CompetitionConfiguration.TeamConfig;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.TileConfig;
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeCompletion;
@@ -89,6 +90,7 @@ public class EventDataInitializationService {
         initializeChallenges();
         initializeRecords();
         initializeCollectionLogItems();
+        initializeTeams();
     }
     
     /**
@@ -228,6 +230,29 @@ public class EventDataInitializationService {
     }
     
     /**
+     * Creates all rows in the "teams" table based on the config file
+     */
+    private void initializeTeams() {
+        for(TeamConfig teamConfig : competitionConfiguration.getTeams()) {
+            Team team = new Team();
+            team.setName(teamConfig.getName());
+            team.setAbbreviation(teamConfig.getAbbreviation());
+            team.setColor(teamConfig.getAbbreviation());
+            team.setCaptainRsns(teamConfig.getCaptains());
+            team.setChallengeCompletions(generateEmptyChallengeCompletions(team));
+            team.setTileProgresses(generateEmptyTileProgresses(team));
+            TeamScoreboard scoreboard = new TeamScoreboard();
+            scoreboard.setTeam(team);
+            if(!team.getName().equals(competitionConfiguration.getWaitlistTeamName())) { // Waitlist team doesn't get leaderboard entries       
+                scoreboard.setRecordLeaderboardEntries(generateEmptyRecordLeaderboardEntries(scoreboard));
+                scoreboard.setChallengeLeaderboardEntries(generateEmptyChallengeLeaderboardEntries(scoreboard));
+            }
+            team.setScoreboard(scoreboard);
+            teamRepository.save(team);
+        }
+    }
+    
+    /**
      * Helper method to round a double to the nearest int with the given number of significant figures.
      * 
      * For example:
@@ -325,7 +350,7 @@ public class EventDataInitializationService {
      * @param isCaptain
      * @param teamName
      */
-    public void addPlayer(String discordName, String rsn, Boolean isCaptain, String teamName) throws Exception {
+    public void addPlayer(String discordName, String rsn, String teamName) throws Exception {
         Team team = teamRepository.findByName(teamName).orElse(null);
         if(team == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Team not found: " + teamName);
@@ -337,7 +362,6 @@ public class EventDataInitializationService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Player already exists with rsn: " + rsn);
         }
         Player player = new Player();
-        player.setCaptainStatus(isCaptain);
         player.setDiscordName(discordName);
         player.setRsn(rsn);
         player.setTeam(team);
@@ -346,32 +370,6 @@ public class EventDataInitializationService {
         scoreboard.setPlayer(player);
         player.setScoreboard(scoreboard);
         team.getPlayers().add(player);
-        teamRepository.save(team);
-    }
-    
-    /**
-     * Creates a new team
-     * @param name
-     * @param abbreviation
-     * @param color
-     */
-    public void addTeam(String name, String abbreviation, String color) throws Exception {
-        if(teamRepository.findByName(name).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Team already exists: " + name);
-        }
-        Team team = new Team();
-        team.setName(name);
-        team.setAbbreviation(abbreviation);
-        team.setColor(color);
-        team.setChallengeCompletions(generateEmptyChallengeCompletions(team));
-        team.setTileProgresses(generateEmptyTileProgresses(team));
-        TeamScoreboard scoreboard = new TeamScoreboard();
-        scoreboard.setTeam(team);
-        if(!team.getName().equals(competitionConfiguration.getWaitlistTeamName())) { // Waitlist team doesn't get leaderboard entries       
-            scoreboard.setRecordLeaderboardEntries(generateEmptyRecordLeaderboardEntries(scoreboard));
-            scoreboard.setChallengeLeaderboardEntries(generateEmptyChallengeLeaderboardEntries(scoreboard));
-        }
-        team.setScoreboard(scoreboard);
         teamRepository.save(team);
     }
     

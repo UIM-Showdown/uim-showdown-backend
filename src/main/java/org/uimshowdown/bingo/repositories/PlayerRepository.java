@@ -13,7 +13,4 @@ public interface PlayerRepository extends CrudRepository<Player, Integer> {
     
     @Query(value = "SELECT * FROM players WHERE team_id = ?1", nativeQuery = true)
     Set<Player> getTeamRoster(int teamId);
-    
-    @Query(value = "SELECT * FROM players WHERE team_id = ?1 AND captain = 1", nativeQuery = true)
-    Set<Player> getTeamCaptains(int teamId);
 }

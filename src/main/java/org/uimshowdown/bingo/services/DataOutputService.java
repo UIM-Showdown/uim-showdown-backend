@@ -151,8 +151,8 @@ public class DataOutputService {
         for(TeamScoreboard scoreboard : scoreboards) {
             Team team = scoreboard.getTeam();
             String captains = "";
-            for(Player captain : team.getCaptains()) {
-                captains += captain.getRsn() + " & ";
+            for(String captain : team.getCaptainRsns()) {
+                captains += captain + " & ";
             }
             if(!captains.equals("")) {                
                 captains = captains.substring(0, captains.length() - 3);

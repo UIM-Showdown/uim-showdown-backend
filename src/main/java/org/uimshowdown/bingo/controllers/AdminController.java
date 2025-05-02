@@ -75,7 +75,6 @@ public class AdminController {
         eventDataInitializationService.addPlayer(
             (String) requestBody.get("discordName"),
             (String) requestBody.get("rsn"),
-            (Boolean) requestBody.get("isCaptain"),
             (String) requestBody.get("teamName")
         );
         return ResponseEntity.ok().build();
@@ -100,28 +99,13 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
     
-    @PostMapping("/admin/addTeam")
-    public ResponseEntity<Void> addTeam(@RequestBody Map<String, Object> requestBody) throws Exception {
-        eventDataInitializationService.addTeam(
-            (String) requestBody.get("name"),
-            (String) requestBody.get("abbreviation"),
-            (String) requestBody.get("color")
-        );
-        return ResponseEntity.ok().build();
-    }
-    
     @PostMapping("/admin/initializeCompetition")
-    public ResponseEntity<Object> initializeCompetition() {
+    public ResponseEntity<Object> initializeCompetition() throws Exception {
         Date now = new Date();
         if(now.after(competitionConfiguration.getStartDatetime()) && now.before(competitionConfiguration.getEndDatetime())) {
             return ResponseEntity.badRequest().body("Event currently in progress");
         }
         eventDataInitializationService.initializeCompetition();
-        return ResponseEntity.ok().build();
-    }
-    
-    @PostMapping("/admin/initializeDataOutputSheet")
-    public ResponseEntity<Void> initializeDataOutputSheet() throws Exception {
         dataOutputService.initializeTabs();
         return ResponseEntity.ok().build();
     }
@@ -142,11 +126,8 @@ public class AdminController {
     
     @PostMapping("/admin/updateCompetition")
     public ResponseEntity<Void> updateCompetition() throws Exception {
-        if(!contributionMethodRepository.findAll().iterator().hasNext()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Competition has not been initialized");
-        }
         if(!teamRepository.findAll().iterator().hasNext()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Teams have not been created");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Competition has not been initialized");
         }
         
         templeOsrsService.updateCompetition();
@@ -186,17 +167,18 @@ public class AdminController {
     @Scheduled(cron = "0 * * * * *")
     @Transactional(readOnly=true)
     public void updateCompetitionScheduled() throws Exception {
+        if(!teamRepository.findAll().iterator().hasNext()) {
+            return; // Comp has not been initialize; do nothing
+        }
         for(String profile : environment.getActiveProfiles()) {
             if(profile.equals("test")) { // We're in the middle of JUnit tests
                 return;
             }
         }
-        try {
-            long start = new Date().getTime();
-            updateCompetition();
-            long end = new Date().getTime();
-            System.out.println("Completed a scheduled update in " + (end - start) + " ms");
-        } catch(ResponseStatusException e) {} // This means the comp isn't initialized, so we don't need to worry about this failing
+        long start = new Date().getTime();
+        updateCompetition();
+        long end = new Date().getTime();
+        System.out.println("Completed a scheduled update in " + (end - start) + " ms");
     }
 
 }
