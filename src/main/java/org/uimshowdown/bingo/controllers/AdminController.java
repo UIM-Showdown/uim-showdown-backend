@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,8 +21,11 @@ import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.Team;
+import org.uimshowdown.bingo.repositories.CollectionLogCompletionRepository;
 import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
+import org.uimshowdown.bingo.repositories.PlayerChallengeCompletionRepository;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
+import org.uimshowdown.bingo.repositories.RecordCompletionRepository;
 import org.uimshowdown.bingo.repositories.TeamRepository;
 import org.uimshowdown.bingo.services.DataOutputService;
 import org.uimshowdown.bingo.services.EventDataInitializationService;
@@ -52,6 +57,15 @@ public class AdminController {
     
     @Autowired
     private ScoreboardCalculationService scoreboardCalculationService;
+    
+    @Autowired
+    private RecordCompletionRepository recordCompletionRepository;
+    
+    @Autowired
+    private PlayerChallengeCompletionRepository playerChallengeCompletionRepository;
+    
+    @Autowired
+    private CollectionLogCompletionRepository collectionLogCompletionRepository;
     
     @Autowired
     DataOutputService dataOutputService;
@@ -139,6 +153,24 @@ public class AdminController {
         scoreboardCalculationService.calculate();
         dataOutputService.outputData();
         
+        return ResponseEntity.ok().build();
+    }
+    
+    @DeleteMapping("/admin/recordCompletions/{id}")
+    public ResponseEntity<Void> deleteRecordCompletion(@PathVariable int id) {
+        recordCompletionRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+    
+    @DeleteMapping("/admin/playerChallengeCompletions/{id}")
+    public ResponseEntity<Void> deletePlayerChallengeCompletion(@PathVariable int id) {
+        playerChallengeCompletionRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+    
+    @DeleteMapping("/admin/collectionLogCompletions/{id}")
+    public ResponseEntity<Void> deleteCollectionLogCompletion(@PathVariable int id) {
+        collectionLogCompletionRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
     

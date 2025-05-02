@@ -311,7 +311,12 @@ public class ScoreboardCalculationService {
             List<Integer> recordPoints = new ArrayList<Integer>();
             for(Record record : recordRepository.findAll()) {
                 RecordCompletion teamCompletion = team.getBestRecordCompletion(record);
-                if(teamCompletion == null) {
+                if(teamCompletion == null) { // Need to reset the leaderboard entry in case their last record completion was deleted
+                    RecordLeaderboardEntry leaderboardEntry = team.getScoreboard().getRecordLeaderboardEntry(record);
+                    leaderboardEntry.setPlace(-1);
+                    leaderboardEntry.setPlayerName(null);
+                    leaderboardEntry.setPoints(-1);
+                    leaderboardEntry.setValue(-1);
                     continue;
                 }
                 List<RecordCompletion> leaderboard = completionLeaderboards.get(record);
@@ -329,7 +334,6 @@ public class ScoreboardCalculationService {
                 leaderboardEntry.setPlace(place);
                 leaderboardEntry.setPlayerName(teamCompletion.getPlayer().getRsn());
                 leaderboardEntry.setPoints(totalPoints);
-                leaderboardEntry.setSkill(record.getSkill());
                 leaderboardEntry.setValue(teamCompletion.getValue());
             }
             
@@ -378,6 +382,11 @@ public class ScoreboardCalculationService {
             for(Challenge challenge : challengeRepository.findAll()) {
                 ChallengeCompletion teamCompletion = team.getChallengeCompletion(challenge);
                 if(teamCompletion == null || !teamCompletion.isComplete()) {
+                    ChallengeLeaderboardEntry leaderboardEntry = team.getScoreboard().getChallengeLeaderboardEntry(challenge);
+                    leaderboardEntry.setPlace(-1);
+                    leaderboardEntry.setPlayerNames(null);
+                    leaderboardEntry.setPoints(-1);
+                    leaderboardEntry.setSeconds(-1.0);
                     continue;
                 }
                 List<ChallengeCompletion> leaderboard = completionLeaderboards.get(challenge);
@@ -391,15 +400,13 @@ public class ScoreboardCalculationService {
                 int pointsFromDistance = (int) (competitionConfiguration.getRecordDistancePoints() * (1 - (distanceFromFirstPlace / ((firstPlaceCompletion.getSeconds() * competitionConfiguration.getChallengeDistanceCutoffPercentage()) - firstPlaceCompletion.getSeconds()))));
                 int totalPoints = pointsFromPlace + pointsFromDistance;
                 challengePoints.add(totalPoints);
-                ChallengeLeaderboardEntry leaderboardEntry = team.getScoreboard().getChallengeLeaderboardEntry(challenge);
-                leaderboardEntry.setPlace(place);
                 List<String> playerNames = new ArrayList<String>();
                 for(Player player : teamCompletion.getPlayers()) {
                     playerNames.add(player.getRsn());
                 }
+                ChallengeLeaderboardEntry leaderboardEntry = team.getScoreboard().getChallengeLeaderboardEntry(challenge);
                 leaderboardEntry.setPlayerNames(String.join(", ", playerNames));
                 leaderboardEntry.setPoints(totalPoints);
-                leaderboardEntry.setChallengeName(challenge.getName());
                 leaderboardEntry.setSeconds(teamCompletion.getSeconds());
                 leaderboardEntry.setPlace(place);
             }
