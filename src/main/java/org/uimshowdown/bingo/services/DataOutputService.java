@@ -63,48 +63,42 @@ public class DataOutputService {
     @Autowired CollectionLogItemRepository collectionLogItemRepository;
     
     public void outputData() throws Exception {
+        List<ValueRange> rowLists = new ArrayList<ValueRange>();
+        rowLists.add(googleSheetsService.createUpdateRequest("unf_LastUpdated", getLastUpdatedRows()));
+        rowLists.add(googleSheetsService.createUpdateRequest("unf_StandingsMainLeaderboard", getMainLeaderboardRows()));
+        rowLists.add(googleSheetsService.createUpdateRequest("unf_StandingsRecordLeaderboard", getRecordLeaderboardRows()));
+        rowLists.add(googleSheetsService.createUpdateRequest("unf_StandingsChallengeLeaderboard", getChallengeLeaderboardRows()));
+        rowLists.add(googleSheetsService.createUpdateRequest("unf_StandingsMVPLeaderboard", getMVPLeaderboardRows()));
+        rowLists.add(googleSheetsService.createUpdateRequest("unf_MVPDetails", getMVPDetailsRows()));
+        rowLists.add(googleSheetsService.createUpdateRequest("unf_MVPExtras", getMVPExtrasRows()));
+        for(Team team : teamRepository.findAll()) {
+            rowLists.add(googleSheetsService.createUpdateRequest("unf_BoardDetails" + team.getAbbreviation(), getBoardDetailsRows(team)));
+            rowLists.add(googleSheetsService.createUpdateRequest("unf_RecordDetails" + team.getAbbreviation(), getRecordDetailsRows(team)));
+            rowLists.add(googleSheetsService.createUpdateRequest("unf_ChallengeDetails" + team.getAbbreviation(), getChallengeDetailsRows(team)));
+            rowLists.add(googleSheetsService.createUpdateRequest("unf_MVPRace" + team.getAbbreviation(), getMVPRaceRows(team)));
+            rowLists.add(googleSheetsService.createUpdateRequest("unf_RelayComponents" + team.getAbbreviation(), getRelayComponentsRows(team)));
+            rowLists.add(googleSheetsService.createUpdateRequest("unf_ProgressOverview" + team.getAbbreviation(), getProgressOverviewRows(team)));
+            rowLists.add(googleSheetsService.createUpdateRequest("unf_Progress" + team.getAbbreviation(), getProgressRows(team)));
+            rowLists.add(googleSheetsService.createUpdateRequest("unf_ClogItems" + team.getAbbreviation(), getClogItems(team)));
+            rowLists.add(googleSheetsService.createUpdateRequest("unf_PetsAndJars" + team.getAbbreviation(), getPetsAndJars(team)));
+        }
         
+        // We need to clear the tabs before writing to them because some tabs (especially leaderboards) might end up with 
+        // fewer values than before.
+        //
         // There's not an easy way to include "clear tab" requests in the same batch update as "update values" requests, 
         // and if we do a "clear tab" batch request beforehand, everything will look blank to players while it's updating.
         // Because of this, we're doing a bit of a hack by filling the tab with blank rows before adding the actual values.
         //
-        // Clearing the data isn't strictly necessary, but it helps for cleaning up bad data that ended up in the wrong spot 
-        // and won't be overwritten by a new update.
+        // Basically, we're clearing the full range of what we're about to update, along with 10 extra rows of the same length as 
+        // the data.
         
         List<ValueRange> updates = new ArrayList<ValueRange>();
-        updates.add(googleSheetsService.createUpdateRequest("unf_LastUpdated", generateBlankRows(50, 50)));
-        updates.add(googleSheetsService.createUpdateRequest("unf_StandingsMainLeaderboard", generateBlankRows(50, 50)));
-        updates.add(googleSheetsService.createUpdateRequest("unf_StandingsRecordLeaderboard", generateBlankRows(50, 50)));
-        updates.add(googleSheetsService.createUpdateRequest("unf_StandingsChallengeLeaderboard", generateBlankRows(50, 50)));
-        updates.add(googleSheetsService.createUpdateRequest("unf_StandingsMVPLeaderboard", generateBlankRows(50, 50)));
-        updates.add(googleSheetsService.createUpdateRequest("unf_MVPDetails", generateBlankRows(50, 50)));
-        updates.add(googleSheetsService.createUpdateRequest("unf_MVPExtras", generateBlankRows(50, 50)));
-        updates.add(googleSheetsService.createUpdateRequest("unf_LastUpdated", getLastUpdatedRows()));
-        updates.add(googleSheetsService.createUpdateRequest("unf_StandingsMainLeaderboard", getMainLeaderboardRows()));
-        updates.add(googleSheetsService.createUpdateRequest("unf_StandingsRecordLeaderboard", getRecordLeaderboardRows()));
-        updates.add(googleSheetsService.createUpdateRequest("unf_StandingsChallengeLeaderboard", getChallengeLeaderboardRows()));
-        updates.add(googleSheetsService.createUpdateRequest("unf_StandingsMVPLeaderboard", getMVPLeaderboardRows()));
-        updates.add(googleSheetsService.createUpdateRequest("unf_MVPDetails", getMVPDetailsRows()));
-        updates.add(googleSheetsService.createUpdateRequest("unf_MVPExtras", getMVPExtrasRows()));
-        for(Team team : teamRepository.findAll()) {
-            updates.add(googleSheetsService.createUpdateRequest("unf_BoardDetails" + team.getAbbreviation(), generateBlankRows(50, 50)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_RecordDetails" + team.getAbbreviation(), generateBlankRows(50, 50)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_ChallengeDetails" + team.getAbbreviation(), generateBlankRows(50, 50)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_MVPRace" + team.getAbbreviation(), generateBlankRows(50, 50)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_RelayComponents" + team.getAbbreviation(), generateBlankRows(50, 50)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_ProgressOverview" + team.getAbbreviation(), generateBlankRows(50, 50)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_Progress" + team.getAbbreviation(), generateBlankRows(50, 50)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_ClogItems" + team.getAbbreviation(), generateBlankRows(50, 50)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_PetsAndJars" + team.getAbbreviation(), generateBlankRows(50, 50)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_BoardDetails" + team.getAbbreviation(), getBoardDetailsRows(team)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_RecordDetails" + team.getAbbreviation(), getRecordDetailsRows(team)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_ChallengeDetails" + team.getAbbreviation(), getChallengeDetailsRows(team)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_MVPRace" + team.getAbbreviation(), getMVPRaceRows(team)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_RelayComponents" + team.getAbbreviation(), getRelayComponentsRows(team)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_ProgressOverview" + team.getAbbreviation(), getProgressOverviewRows(team)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_Progress" + team.getAbbreviation(), getProgressRows(team)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_ClogItems" + team.getAbbreviation(), getClogItems(team)));
-            updates.add(googleSheetsService.createUpdateRequest("unf_PetsAndJars" + team.getAbbreviation(), getPetsAndJars(team)));
+        for(ValueRange rowList : rowLists) {
+            int numColumns = rowList.getValues().get(0).size();
+            int numRows = rowList.getValues().size();
+            updates.add(googleSheetsService.createUpdateRequest(rowList.getRange(), generateBlankRows(numColumns, numRows + 10)));
+            updates.add(rowList);
         }
         googleSheetsService.executeBatchUpdate(updates);
     }
