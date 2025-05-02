@@ -143,6 +143,24 @@ public class EventDataInitializationService {
     }
     
     /**
+     * Updates the tile with the given ID and all included contribution methods to use the current numbers 
+     * in the configuraiton file. 
+     * @param id
+     */
+    public void reinitializeTile(int id) {
+        Tile tile = tileRepository.findById(id).get();
+        TileConfig tileConfig = null;
+        for(TileConfig config : competitionConfiguration.getTiles()) {
+            if(config.getName().equals(tile.getName())) {
+                tileConfig = config;
+                break;
+            }
+        }
+        initializeTilePoints(tile, tileConfig);
+        tileRepository.save(tile);
+    }
+    
+    /**
      * Creates all rows in the "challenges" and "challenge_relay_components" tables based on the config file
      */
     private void initializeChallenges() {

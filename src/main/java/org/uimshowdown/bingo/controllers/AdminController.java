@@ -155,6 +155,12 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
     
+    @PostMapping("/admin/reinitializeTile/{id}")
+    public ResponseEntity<Void> reinitializeTile(@PathVariable int id) {
+        eventDataInitializationService.reinitializeTile(id);
+        return ResponseEntity.ok().build();
+    }
+    
     /**
      * Automatically calls the updateCompetition() endpoint method at the top of every minute.
      * 
