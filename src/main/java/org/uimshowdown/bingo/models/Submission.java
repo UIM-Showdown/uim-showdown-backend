@@ -1,13 +1,12 @@
 package org.uimshowdown.bingo.models;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
@@ -21,7 +20,6 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -59,10 +57,10 @@ public class Submission {
     @Column(name = "reviewer", nullable = true, length = 64)
     @JsonProperty
     private String reviewer;
-
-    @OneToMany(mappedBy = "submission", cascade = CascadeType.ALL)
+    
+    @Column(name = "screenshot_urls_csv", length = 2048)
     @JsonIgnore
-    private Set<SubmissionScreenshotUrl> screenshotUrls = new HashSet<SubmissionScreenshotUrl>();
+    private String screenshotUrlsCSV = "";
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -102,24 +100,14 @@ public class Submission {
     public void setSubmittedAt(Timestamp submittedAt) {
         this.submittedAt = submittedAt;
     }
-
-    public Set<SubmissionScreenshotUrl> getScreenshotUrls() {
-        return screenshotUrls;
-    }
     
     @JsonProperty("screenshotUrls")
-    public Set<String> getScreenshotUrlStrings() {
-        Set<String> urls = new HashSet<String>();
-        if(screenshotUrls != null) {
-            for(SubmissionScreenshotUrl url : screenshotUrls) {
-                urls.add(url.getScreenshotUrl());
-            }
-        }
-        return urls;
+    public List<String> getScreenshotUrls() {
+        return Arrays.asList(screenshotUrlsCSV.split(","));
     }
     
-    public void setScreenshotUrls(Set<SubmissionScreenshotUrl> screenshotUrls) {
-        this.screenshotUrls = screenshotUrls;
+    public void setScreenshotUrls(List<String> screenshotUrlsCSV) {
+        this.screenshotUrlsCSV = String.join(",", screenshotUrlsCSV);
     }
 
     public State getSubmissionState() {

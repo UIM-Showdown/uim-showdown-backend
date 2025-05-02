@@ -17,7 +17,6 @@ import org.uimshowdown.bingo.models.PlayerChallengeCompletion;
 import org.uimshowdown.bingo.models.RecordCompletion;
 import org.uimshowdown.bingo.models.RecordSubmission;
 import org.uimshowdown.bingo.models.Submission;
-import org.uimshowdown.bingo.models.SubmissionScreenshotUrl;
 import org.uimshowdown.bingo.models.UnrankedStartingValueSubmission;
 import org.uimshowdown.bingo.repositories.PlayerChallengeCompletionRepository;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
@@ -116,9 +115,8 @@ public class SubmissionApprovalService {
             }
         }
         if(existingPlayerChallengeCompletion != null) { // Update the existing one
-            SubmissionScreenshotUrl[] urls = submission.getScreenshotUrls().toArray(new SubmissionScreenshotUrl[0]);
-            if(urls.length > 0) {
-                existingPlayerChallengeCompletion.setScreenshotUrl(urls[0].getScreenshotUrl());
+            if(submission.getScreenshotUrls().size() > 0) {
+                existingPlayerChallengeCompletion.setScreenshotUrl(submission.getScreenshotUrls().get(0));
             }
             existingPlayerChallengeCompletion.setSeconds(submission.getSeconds());
             playerRepository.save(player);
@@ -130,9 +128,8 @@ public class SubmissionApprovalService {
         playerCompletion.setChallenge(submission.getChallenge());
         playerCompletion.setPlayer(player);
         playerCompletion.setRelayComponent(submission.getRelayComponent());
-        SubmissionScreenshotUrl[] urls = submission.getScreenshotUrls().toArray(new SubmissionScreenshotUrl[0]);
-        if(urls.length > 0) {
-            playerCompletion.setScreenshotUrl(urls[0].getScreenshotUrl());
+        if(submission.getScreenshotUrls().size() > 0) {
+            playerCompletion.setScreenshotUrl(submission.getScreenshotUrls().get(0));
         }
         playerCompletion.setSeconds(submission.getSeconds());
         player.getPlayerChallengeCompletions().add(playerCompletion);
@@ -154,9 +151,8 @@ public class SubmissionApprovalService {
         CollectionLogCompletion completion = new CollectionLogCompletion();
         completion.setPlayer(player);
         completion.setItem(submission.getItem());
-        SubmissionScreenshotUrl[] urls = submission.getScreenshotUrls().toArray(new SubmissionScreenshotUrl[0]);
-        if(urls.length > 0) {
-            completion.setScreenshotUrl(urls[0].getScreenshotUrl());
+        if(submission.getScreenshotUrls().size() > 0) {
+            completion.setScreenshotUrl(submission.getScreenshotUrls().get(0));
         }
         player.getCollectionLogCompletions().add(completion);
         playerRepository.save(player);
@@ -177,15 +173,13 @@ public class SubmissionApprovalService {
                 if(contribution.isEmpty()) {
                     contribution.setInitialValue(submission.getValue());
                     contribution.setIsEmpty(false);
-                    SubmissionScreenshotUrl[] urls = submission.getScreenshotUrls().toArray(new SubmissionScreenshotUrl[0]);
-                    if(urls.length > 0) {
-                        contribution.setInitialValueScreenshotUrl(urls[0].getScreenshotUrl());
+                    if(submission.getScreenshotUrls().size() > 0) {
+                        contribution.setInitialValueScreenshotUrl(submission.getScreenshotUrls().get(0));
                     }
                 }
                 contribution.setFinalValue(submission.getValue());
-                SubmissionScreenshotUrl[] urls = submission.getScreenshotUrls().toArray(new SubmissionScreenshotUrl[0]);
-                if(urls.length > 0) {
-                    contribution.setFinalValueScreenshotUrl(urls[0].getScreenshotUrl());
+                if(submission.getScreenshotUrls().size() > 0) {
+                    contribution.setFinalValueScreenshotUrl(submission.getScreenshotUrls().get(0));
                 }
                 break;
             }

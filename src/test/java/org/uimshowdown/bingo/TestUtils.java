@@ -18,7 +18,6 @@ import org.uimshowdown.bingo.repositories.RecordCompletionRepository;
 import org.uimshowdown.bingo.repositories.RecordHandicapRepository;
 import org.uimshowdown.bingo.repositories.RecordRepository;
 import org.uimshowdown.bingo.repositories.SubmissionRepository;
-import org.uimshowdown.bingo.repositories.SubmissionScreenshotUrlRepository;
 import org.uimshowdown.bingo.repositories.TeamRepository;
 import org.uimshowdown.bingo.repositories.TeamScoreboardRepository;
 import org.uimshowdown.bingo.repositories.TileProgressRepository;
@@ -41,7 +40,6 @@ public class TestUtils {
     @Autowired RecordHandicapRepository recordHandicapRepository;
     @Autowired RecordRepository recordRepository;
     @Autowired SubmissionRepository submissionRepository;
-    @Autowired SubmissionScreenshotUrlRepository submissionScreenshotUrlRepository;
     @Autowired TeamRepository teamRepository;
     @Autowired TeamScoreboardRepository teamScoreboardRepository;
     @Autowired TileProgressRepository tileProgressRepository;
@@ -60,7 +58,6 @@ public class TestUtils {
         recordCompletionRepository.deleteAll();
         recordHandicapRepository.deleteAll();
         submissionRepository.deleteAll();
-        submissionScreenshotUrlRepository.deleteAll();
         teamRepository.deleteAll();
         teamScoreboardRepository.deleteAll();
         tileProgressRepository.deleteAll();

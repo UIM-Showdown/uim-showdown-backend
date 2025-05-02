@@ -1,8 +1,8 @@
 package org.uimshowdown.bingo.controllers;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -28,7 +28,6 @@ import org.uimshowdown.bingo.models.Record;
 import org.uimshowdown.bingo.models.RecordHandicap;
 import org.uimshowdown.bingo.models.RecordSubmission;
 import org.uimshowdown.bingo.models.Submission;
-import org.uimshowdown.bingo.models.SubmissionScreenshotUrl;
 import org.uimshowdown.bingo.models.UnrankedStartingValueSubmission;
 import org.uimshowdown.bingo.repositories.ChallengeRelayComponentRepository;
 import org.uimshowdown.bingo.repositories.ChallengeRepository;
@@ -93,15 +92,7 @@ public class SubmissionController {
         submission.setValue((int) requestBody.get("value"));
         submission.setType(Submission.Type.CONTRIBUTION);
         submission.setDescription((String) requestBody.get("description"));
-        
-        Set<SubmissionScreenshotUrl> urls = new HashSet<SubmissionScreenshotUrl>();
-        for(String url : (List<String>) requestBody.get("screenshotURLs")) {
-            SubmissionScreenshotUrl submissionScreenshotUrl = new SubmissionScreenshotUrl();
-            submissionScreenshotUrl.setScreenshotUrl(url);
-            submissionScreenshotUrl.setSubmission(submission);
-            urls.add(submissionScreenshotUrl);
-        }
-        submission.setScreenshotUrls(urls);
+        submission.setScreenshotUrls((List<String>) requestBody.get("screenshotURLs"));
         
         Submission returnedSubmission = submissionRepository.save(submission);
         
@@ -130,15 +121,7 @@ public class SubmissionController {
         if(relayComponent != null) {
             submission.setRelayComponent(relayComponent);
         }
-        
-        Set<SubmissionScreenshotUrl> urls = new HashSet<SubmissionScreenshotUrl>();
-        for(String url : (List<String>) requestBody.get("screenshotURLs")) {
-            SubmissionScreenshotUrl submissionScreenshotUrl = new SubmissionScreenshotUrl();
-            submissionScreenshotUrl.setScreenshotUrl(url);
-            submissionScreenshotUrl.setSubmission(submission);
-            urls.add(submissionScreenshotUrl);
-        }
-        submission.setScreenshotUrls(urls);
+        submission.setScreenshotUrls((List<String>) requestBody.get("screenshotURLs"));
         
         Submission returnedSubmission = submissionRepository.save(submission);
         
@@ -168,9 +151,7 @@ public class SubmissionController {
         if(handicap != null) {
             submission.setHandicap(handicap);
         }
-        
-        Set<SubmissionScreenshotUrl> urls = new HashSet<SubmissionScreenshotUrl>();
-        submission.setScreenshotUrls(urls);
+        submission.setScreenshotUrls(new ArrayList<String>());
         
         Submission returnedSubmission = submissionRepository.save(submission);
         
@@ -204,15 +185,7 @@ public class SubmissionController {
         if(itemOption != null) {
             submission.setItemOption(itemOption);
         }
-        
-        Set<SubmissionScreenshotUrl> urls = new HashSet<SubmissionScreenshotUrl>();
-        for(String url : (List<String>) requestBody.get("screenshotURLs")) {
-            SubmissionScreenshotUrl submissionScreenshotUrl = new SubmissionScreenshotUrl();
-            submissionScreenshotUrl.setScreenshotUrl(url);
-            submissionScreenshotUrl.setSubmission(submission);
-            urls.add(submissionScreenshotUrl);
-        }
-        submission.setScreenshotUrls(urls);
+        submission.setScreenshotUrls((List<String>) requestBody.get("screenshotURLs"));
         
         Submission returnedSubmission = submissionRepository.save(submission);
         
@@ -243,15 +216,7 @@ public class SubmissionController {
         submission.setValue((int) requestBody.get("value"));
         submission.setType(Submission.Type.UNRANKED_STARTING_VALUE);
         submission.setDescription((String) requestBody.get("description"));
-        
-        Set<SubmissionScreenshotUrl> urls = new HashSet<SubmissionScreenshotUrl>();
-        for(String url : (List<String>) requestBody.get("screenshotURLs")) {
-            SubmissionScreenshotUrl submissionScreenshotUrl = new SubmissionScreenshotUrl();
-            submissionScreenshotUrl.setScreenshotUrl(url);
-            submissionScreenshotUrl.setSubmission(submission);
-            urls.add(submissionScreenshotUrl);
-        }
-        submission.setScreenshotUrls(urls);
+        submission.setScreenshotUrls((List<String>) requestBody.get("screenshotURLs"));
         
         Submission returnedSubmission = submissionRepository.save(submission);
         
