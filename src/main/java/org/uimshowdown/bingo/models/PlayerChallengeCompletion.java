@@ -8,6 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 
 @Entity
@@ -35,6 +37,10 @@ public class PlayerChallengeCompletion {
 
     @Column
     private double seconds;
+    
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "submission_id")
+    private ChallengeSubmission submission;
 
     public int getId() {
         return id;
@@ -82,6 +88,30 @@ public class PlayerChallengeCompletion {
     
     public void setChallenge(Challenge challenge) {
         this.challenge = challenge;
+    }
+
+    public ChallengeSubmission getSubmission() {
+        return submission;
+    }
+
+    public void setSubmission(ChallengeSubmission submission) {
+        this.submission = submission;
+    }
+
+    public ChallengeRelayComponent getRelayComponent() {
+        return relayComponent;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    @PreRemove
+    private void preRemove() {
+        if(submission != null) { 
+            submission.setCompletion(null);
+            submission = null;
+        }
     }
 
     @Override

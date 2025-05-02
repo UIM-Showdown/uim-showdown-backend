@@ -249,5 +249,15 @@ public class SubmissionController {
         }
         return null;
     }
+    
+    @PatchMapping("/submissions/{id}/undo")
+    public Map<String, Object> undoDecision(@PathVariable int id) throws Exception {
+        Submission submission = submissionApprovalService.undoDecision(id);
+        Map<String, Object> response = new HashMap<String, Object>();
+        response.put("id", submission.getId());
+        response.put("description", submission.getDescription());
+        response.put("state", submission.getState());
+        return response;
+    }
 
 }

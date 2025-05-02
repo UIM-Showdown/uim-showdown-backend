@@ -5,12 +5,14 @@ import java.sql.Timestamp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("RECORD")
@@ -37,6 +39,9 @@ public class RecordSubmission extends Submission {
     @Column
     @JsonIgnore
     private int rawValue;
+    
+    @OneToOne(mappedBy = "submission", cascade = CascadeType.ALL)
+    private RecordCompletion completion;
 
     public RecordHandicap getHandicap() {
         return handicap;
@@ -94,6 +99,18 @@ public class RecordSubmission extends Submission {
         }
         
         super.setType(type);
+    }
+
+    public RecordCompletion getCompletion() {
+        return completion;
+    }
+
+    public void setCompletion(RecordCompletion completion) {
+        this.completion = completion;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
     
 }

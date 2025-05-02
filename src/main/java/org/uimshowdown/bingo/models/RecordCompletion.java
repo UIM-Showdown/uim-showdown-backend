@@ -10,6 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -43,6 +45,10 @@ public class RecordCompletion {
 
     @Column(name = "video_url", nullable = true, length = 512)
     public String videoUrl;
+    
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "submission_id")
+    private RecordSubmission submission;
 
     public int getId() {
         return id;
@@ -102,6 +108,26 @@ public class RecordCompletion {
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+    }
+
+    public RecordSubmission getSubmission() {
+        return submission;
+    }
+
+    public void setSubmission(RecordSubmission submission) {
+        this.submission = submission;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    @PreRemove
+    private void preRemove() {
+        if(submission != null) {            
+            submission.setCompletion(null);
+            submission = null;
+        }
     }
 
     @Override

@@ -2,11 +2,13 @@ package org.uimshowdown.bingo.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("COLLECTION_LOG")
@@ -21,6 +23,9 @@ public class CollectionLogSubmission extends Submission {
     @JoinColumn(name = "item_option_id")
     @JsonProperty
     private ItemOption itemOption;
+    
+    @OneToOne(mappedBy = "submission", cascade = CascadeType.ALL)
+    private CollectionLogCompletion completion;
 
     public CollectionLogItem getItem() {
         return item;
@@ -45,6 +50,18 @@ public class CollectionLogSubmission extends Submission {
         }
         
         super.setType(type);
+    }
+
+    public CollectionLogCompletion getCompletion() {
+        return completion;
+    }
+
+    public void setCompletion(CollectionLogCompletion completion) {
+        this.completion = completion;
+    }
+
+    public ItemOption getItemOption() {
+        return itemOption;
     }
     
 }

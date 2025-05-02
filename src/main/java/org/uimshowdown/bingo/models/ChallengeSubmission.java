@@ -2,12 +2,14 @@ package org.uimshowdown.bingo.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("CHALLENGE")
@@ -26,6 +28,9 @@ public class ChallengeSubmission extends Submission {
     @Column
     @JsonProperty
     private double seconds;
+    
+    @OneToOne(mappedBy = "submission", cascade = CascadeType.ALL)
+    private PlayerChallengeCompletion completion;
 
     public Challenge getChallenge() {
         return challenge;
@@ -58,6 +63,14 @@ public class ChallengeSubmission extends Submission {
         }
         
         super.setType(type);
+    }
+
+    public PlayerChallengeCompletion getCompletion() {
+        return completion;
+    }
+
+    public void setCompletion(PlayerChallengeCompletion completion) {
+        this.completion = completion;
     }
     
 }

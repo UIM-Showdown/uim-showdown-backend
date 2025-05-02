@@ -98,8 +98,8 @@ public class EventDataInitializationService {
         challengeCompletionRepository.deleteAll();
         collectionLogCompletionRepository.deleteAll();
         contributionRepository.deleteAll();
-        playerChallengeCompletionRepository.deleteAll();
         playerRepository.deleteAll();
+        playerChallengeCompletionRepository.deleteAll();
         playerScoreboardRepository.deleteAll();
         recordCompletionRepository.deleteAll();
         recordHandicapRepository.deleteAll();

@@ -8,6 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,6 +30,10 @@ public class CollectionLogCompletion {
 
     @Column(name = "screenshot_url", length = 512)
     private String screenshotUrl;
+    
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "submission_id")
+    private CollectionLogSubmission submission;
 
     public int getId() {
         return id;
@@ -55,6 +61,26 @@ public class CollectionLogCompletion {
 
     public void setScreenshotUrl(String screenshotUrl) {
         this.screenshotUrl = screenshotUrl;
+    }
+
+    public CollectionLogSubmission getSubmission() {
+        return submission;
+    }
+
+    public void setSubmission(CollectionLogSubmission submission) {
+        this.submission = submission;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    @PreRemove
+    private void preRemove() {
+        if(submission != null) {            
+            submission.setCompletion(null);
+            submission = null;
+        }
     }
 
     @Override
