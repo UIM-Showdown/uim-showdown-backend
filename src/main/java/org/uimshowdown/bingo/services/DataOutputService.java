@@ -156,10 +156,17 @@ public class DataOutputService {
             }
             if(!captains.equals("")) {                
                 captains = captains.substring(0, captains.length() - 3);
+            } else {
+                captains = "None";
             }
             List<Player> players = new ArrayList<Player>(team.getPlayers());
             players.sort((p1, p2) -> p2.getScoreboard().getTotalTileContribution() - p1.getScoreboard().getTotalTileContribution() < 0 ? -1 : 1); // Descending
-            String mvp = players.get(0).getRsn();
+            String mvp;
+            if(!players.isEmpty()) {
+                mvp = players.get(0).getRsn();
+            } else {                
+                mvp = "None";
+            }
             List<Object> row = new ArrayList<Object>();
             row.add(i++);
             row.add(team.getName());
