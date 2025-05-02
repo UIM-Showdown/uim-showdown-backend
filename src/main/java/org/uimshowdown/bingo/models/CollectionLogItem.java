@@ -30,7 +30,7 @@ public class CollectionLogItem {
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<CollectionLogCompletion> completions;
+    private Set<CollectionLogCompletion> completions = new HashSet<CollectionLogCompletion>();
     
     @Column
     @Enumerated(EnumType.STRING)
@@ -39,7 +39,7 @@ public class CollectionLogItem {
     
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<ItemOption> itemOptions;
+    private Set<ItemOption> itemOptions = new HashSet<ItemOption>();
     
     @Column(nullable = true)
     @JsonProperty
@@ -55,7 +55,7 @@ public class CollectionLogItem {
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<CollectionLogSubmission> submissions;
+    private Set<CollectionLogSubmission> submissions = new HashSet<CollectionLogSubmission>();
 
     public int getId() {
         return id;

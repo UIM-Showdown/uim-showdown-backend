@@ -341,9 +341,6 @@ public class EventDataInitializationService {
         player.setDiscordName(discordName);
         player.setRsn(rsn);
         player.setTeam(team);
-        if(team.getPlayers() == null) {
-            team.setPlayers(new HashSet<Player>());
-        }
         player.setContributions(generateEmptyContributions(player));
         PlayerScoreboard scoreboard = new PlayerScoreboard();
         scoreboard.setPlayer(player);

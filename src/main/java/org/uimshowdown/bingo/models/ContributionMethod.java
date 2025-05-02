@@ -1,4 +1,5 @@
 package org.uimshowdown.bingo.models;
+import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -33,11 +34,11 @@ public class ContributionMethod {
 
     @OneToMany(mappedBy = "contributionMethod", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<ContributionSubmission> contributionSubmissions;
+    private Set<ContributionSubmission> contributionSubmissions = new HashSet<ContributionSubmission>();
 
     @OneToMany(mappedBy = "contributionMethod", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Contribution> playerContributions;
+    private Set<Contribution> playerContributions = new HashSet<Contribution>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tile_id")
@@ -46,7 +47,7 @@ public class ContributionMethod {
 
     @OneToMany(mappedBy = "contributionMethod", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<UnrankedStartingValueSubmission> unrankedStartingValueSubmissions;
+    private Set<UnrankedStartingValueSubmission> unrankedStartingValueSubmissions = new HashSet<UnrankedStartingValueSubmission>();
 
     @Column(name = "category")
     @Enumerated(EnumType.STRING)

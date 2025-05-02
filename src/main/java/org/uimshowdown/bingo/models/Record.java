@@ -1,5 +1,6 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,7 +28,7 @@ public class Record {
 
     @OneToMany(mappedBy = "record", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<RecordCompletion> completions;
+    private Set<RecordCompletion> completions = new HashSet<RecordCompletion>();
 
     @Column(length = 512)
     @JsonProperty
@@ -35,7 +36,7 @@ public class Record {
 
     @OneToMany(mappedBy = "record", cascade = CascadeType.ALL)
     @JsonProperty
-    private Set<RecordHandicap> handicaps;
+    private Set<RecordHandicap> handicaps = new HashSet<RecordHandicap>();
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -44,7 +45,7 @@ public class Record {
 
     @OneToMany(mappedBy = "record", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<RecordSubmission> submissions;
+    private Set<RecordSubmission> submissions = new HashSet<RecordSubmission>();
 
     public int getId() {
         return id;

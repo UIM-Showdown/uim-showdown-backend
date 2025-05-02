@@ -1,5 +1,6 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -29,10 +30,10 @@ public class Tile {
     private int pointsPerTier;
 
     @OneToMany(mappedBy = "tile", cascade = CascadeType.ALL)
-    private Set<ContributionMethod> contributionMethods;
+    private Set<ContributionMethod> contributionMethods = new HashSet<ContributionMethod>();
 
     @OneToMany(mappedBy = "tile", cascade = CascadeType.ALL)
-    private Set<TileProgress> progress;
+    private Set<TileProgress> progress = new HashSet<TileProgress>();
 
     public int getId() {
         return id;

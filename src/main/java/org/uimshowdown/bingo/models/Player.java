@@ -1,5 +1,6 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -58,7 +59,7 @@ public class Player {
 
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Contribution> contributions;
+    private Set<Contribution> contributions = new HashSet<Contribution>();
 
     @Column(length = 64, name="discord_name", unique = true)
     @JsonProperty
@@ -66,15 +67,15 @@ public class Player {
 
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<CollectionLogCompletion> collectionLogCompletions;
+    private Set<CollectionLogCompletion> collectionLogCompletions = new HashSet<CollectionLogCompletion>();
 
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<PlayerChallengeCompletion> playerChallengeCompletions;
+    private Set<PlayerChallengeCompletion> playerChallengeCompletions = new HashSet<PlayerChallengeCompletion>();
 
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<RecordCompletion> recordCompletions;
+    private Set<RecordCompletion> recordCompletions = new HashSet<RecordCompletion>();
 
     @Column(length = 64, unique = true)
     @JsonProperty
@@ -86,7 +87,7 @@ public class Player {
 
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Submission> submissions;
+    private Set<Submission> submissions = new HashSet<Submission>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")

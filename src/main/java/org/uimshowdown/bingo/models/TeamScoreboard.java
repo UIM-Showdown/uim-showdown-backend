@@ -1,5 +1,6 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -45,10 +46,10 @@ public class TeamScoreboard {
     private int eventPointsFromTiles;
     
     @OneToMany(mappedBy = "teamScoreboard", cascade = CascadeType.ALL)
-    private Set<RecordLeaderboardEntry> recordLeaderboardEntries;
+    private Set<RecordLeaderboardEntry> recordLeaderboardEntries = new HashSet<RecordLeaderboardEntry>();
     
     @OneToMany(mappedBy = "teamScoreboard", cascade = CascadeType.ALL)
-    private Set<ChallengeLeaderboardEntry> challengeLeaderboardEntries;
+    private Set<ChallengeLeaderboardEntry> challengeLeaderboardEntries = new HashSet<ChallengeLeaderboardEntry>();
 
     public int getId() {
         return id;

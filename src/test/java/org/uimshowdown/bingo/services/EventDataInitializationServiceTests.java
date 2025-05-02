@@ -2,7 +2,6 @@ package org.uimshowdown.bingo.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
@@ -100,8 +99,8 @@ public class EventDataInitializationServiceTests {
         assertEquals("test-team", team.getName());
         assertEquals("TT", team.getAbbreviation());
         assertEquals("FFFFFF", team.getColor());
-        assertEquals(null, team.getPlayers());
-        assertEquals(null, team.getCaptains());
+        assertTrue(team.getPlayers().isEmpty());
+        assertTrue(team.getCaptains().isEmpty());
         
         eventDataInitializationService.addPlayer("test-discordname1", "test-rsn1", true, "test-team");
         eventDataInitializationService.addPlayer("test-discordname2", "test-rsn2", false, "test-team");
@@ -225,7 +224,7 @@ public class EventDataInitializationServiceTests {
         assertTrue(relayChallenge.getRelayComponents().contains(component2));
         assertTrue(relayChallenge.getRelayComponents().contains(component3));
         assertTrue(relayChallenge.getRelayComponents().contains(component4));
-        assertNull(speedrunChallenge.getRelayComponents());
+        assertTrue(speedrunChallenge.getRelayComponents().isEmpty());
         
         // Validate records
         Record recordWithHandicaps = recordRepository.findBySkill(Player.Skill.WOODCUTTING).get();

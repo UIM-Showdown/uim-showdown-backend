@@ -2,7 +2,6 @@ package org.uimshowdown.bingo.services;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -104,9 +103,6 @@ public class SubmissionApprovalService {
         
         // Remove the old player challenge completion if it exists
         PlayerChallengeCompletion existingPlayerChallengeCompletion = null;
-        if(player.getPlayerChallengeCompletions() == null) {
-            player.setPlayerChallengeCompletions(new HashSet<PlayerChallengeCompletion>());
-        }
         for(PlayerChallengeCompletion completion : player.getPlayerChallengeCompletions()) {
             boolean sameChallenge = completion.getChallenge().equals(submission.getChallenge());
             boolean sameComponent = completion.getChallengeRelayComponent() == null && submission.getRelayComponent() == null
@@ -150,9 +146,6 @@ public class SubmissionApprovalService {
      */
     private void processCollectionLogSubmission(CollectionLogSubmission submission) throws Exception {
         Player player = submission.getPlayer();
-        if(player.getCollectionLogCompletions() == null) {
-            player.setCollectionLogCompletions(new HashSet<CollectionLogCompletion>());
-        }
         for(CollectionLogCompletion completion : player.getCollectionLogCompletions()) {
             if(completion.getItem().equals(submission.getItem())) { // Player already has a completion for this item
                 return;
@@ -208,9 +201,6 @@ public class SubmissionApprovalService {
     private void processRecordSubmission(RecordSubmission submission) throws Exception {
         Player player = submission.getPlayer();
         RecordCompletion existingCompletion = null;
-        if(player.getRecordCompletions() == null) {
-            player.setRecordCompletions(new HashSet<RecordCompletion>());
-        }
         for(RecordCompletion completion : player.getRecordCompletions()) {
             if(completion.getRecord().equals(submission.getRecord())) {
                 existingCompletion = completion;

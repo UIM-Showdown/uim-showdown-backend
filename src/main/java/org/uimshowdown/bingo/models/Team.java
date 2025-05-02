@@ -31,7 +31,7 @@ public class Team {
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<ChallengeCompletion> challengeCompletions;
+    private Set<ChallengeCompletion> challengeCompletions = new HashSet<ChallengeCompletion>();
 
     @Column(length = 6)
     @JsonProperty
@@ -43,7 +43,7 @@ public class Team {
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     @JsonProperty
-    private Set<Player> players;
+    private Set<Player> players = new HashSet<Player>();
 
     @OneToOne(mappedBy = "team", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -51,7 +51,7 @@ public class Team {
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<TileProgress> tileProgresses;
+    private Set<TileProgress> tileProgresses = new HashSet<TileProgress>();
 
     public String getAbbreviation() {
         return abbreviation;
