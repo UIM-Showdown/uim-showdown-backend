@@ -53,7 +53,7 @@ public class GoogleSheetsService {
         List<Request> requests = new ArrayList<Request>();
         Spreadsheet spreadsheet = service.spreadsheets().get(sheetID).execute();
         
-        // Delete all the tabs except the first one, which we can't delete (and we will later rename)
+        // Delete all the unformatted tabs
         for(Sheet tab : spreadsheet.getSheets()) {
             if(tab.getProperties().getTitle().startsWith("unf_")) {
                 requests.add(new Request().setDeleteSheet(new DeleteSheetRequest().setSheetId(tab.getProperties().getSheetId())));
