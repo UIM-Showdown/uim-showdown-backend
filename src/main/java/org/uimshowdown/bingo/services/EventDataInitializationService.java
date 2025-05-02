@@ -252,7 +252,7 @@ public class EventDataInitializationService {
             Team team = new Team();
             team.setName(teamConfig.getName());
             team.setAbbreviation(teamConfig.getAbbreviation());
-            team.setColor(teamConfig.getAbbreviation());
+            team.setColor(teamConfig.getColor());
             team.setCaptainRsns(teamConfig.getCaptains());
             team.setChallengeCompletions(generateEmptyChallengeCompletions(team));
             team.setTileProgresses(generateEmptyTileProgresses(team));
