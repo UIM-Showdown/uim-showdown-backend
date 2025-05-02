@@ -60,34 +60,30 @@ public class TempleOsrsService {
                 Function.identity()
             ));
 
-        updatePlayerContributions(players, contributionMethods, Api.CLUES_PVM);
-        updatePlayerContributions(players, contributionMethods, Api.SKILLING);
+        updatePlayerContributions(players, contributionMethods, "/api/competition_info_v2.php?id={competition_id}&details=1&skill=obor&altunranked=1");
+        updatePlayerContributions(players, contributionMethods, "/api/competition_info_v2.php?id={competition_id}&details=1");
         for(Player player : players.values()) {
             handleSlayerXPPenalties(player);
             playerRepository.save(player);
         }
     }
 
-    private void updatePlayerContributions(Map<String, Player> players, Map<String, ContributionMethod> contributionMethods, TempleOsrsService.Api api) throws IllegalArgumentException {
-        String apiPath;
-
-        switch (api) {
-            case CLUES_PVM:
-                apiPath = "/api/competition_info_v2.php?id={competition_id}&details=1&skill=obor&altunranked=1";
-                break;
-            case SKILLING:
-                apiPath = "/api/competition_info_v2.php?id={competition_id}&details=1";
-                break;
-            default:
-                throw new IllegalArgumentException("The given API is not supported!");
+    private void updatePlayerContributions(Map<String, Player> players, Map<String, ContributionMethod> contributionMethods, String uri) throws IllegalArgumentException {
+        JsonNode competitionGains = null;
+        int attempt = 1;
+        try {
+            competitionGains = restClient
+                .get()
+                .uri(uri, competitionConfiguration.getTempleCompetitionID())
+                .retrieve()
+                .body(JsonNode.class);
+        } catch(Exception e) {
+            if(attempt == 3) {
+                throw e;
+            }
+            attempt++;
         }
         
-        JsonNode competitionGains = restClient
-            .get()
-            .uri(apiPath, competitionConfiguration.getTempleCompetitionID())
-            .retrieve()
-            .body(JsonNode.class);
-
         if (competitionGains == null) {
             throw new IllegalStateException("Expected a response body, but received nothing!");
         }

@@ -85,7 +85,15 @@ public class GoogleSheetsService {
         }
         
         tabsRequest.setRequests(requests);
-        service.spreadsheets().batchUpdate(sheetID, tabsRequest).execute();
+        int attempt = 1;
+        try {            
+            service.spreadsheets().batchUpdate(sheetID, tabsRequest).execute();
+        } catch(Exception e) {
+            if(attempt == 3) {
+                throw e;
+            }
+            attempt++;
+        }
     }
     
     public ValueRange createUpdateRequest(String range, List<List<Object>> data) {
@@ -95,12 +103,28 @@ public class GoogleSheetsService {
     public void executeSingleUpdate(String range, List<List<Object>> data) throws Exception {
         Sheets service = getSheetsService();
         ValueRange request = createUpdateRequest(range, data);
-        service.spreadsheets().values().update(sheetID, request.getRange(), request).setValueInputOption("RAW").execute();
+        int attempt = 1;
+        try {            
+            service.spreadsheets().values().update(sheetID, request.getRange(), request).setValueInputOption("RAW").execute();
+        } catch(Exception e) {
+            if(attempt == 3) {
+                throw e;
+            }
+            attempt++;
+        }
     }
     
     public void executeBatchUpdate(List<ValueRange> requests) throws Exception {
         Sheets service = getSheetsService();
-        service.spreadsheets().values().batchUpdate(sheetID, new BatchUpdateValuesRequest().setData(requests).setValueInputOption("RAW")).execute();
+        int attempt = 1;
+        try {            
+            service.spreadsheets().values().batchUpdate(sheetID, new BatchUpdateValuesRequest().setData(requests).setValueInputOption("RAW")).execute();
+        } catch(Exception e) {
+            if(attempt == 3) {
+                throw e;
+            }
+            attempt++;
+        }
     }
 
 }
