@@ -3,6 +3,9 @@ package org.uimshowdown.bingo.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,21 +21,27 @@ public class Tile {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty
     private int id;
 
     @Column(length = 64)
+    @JsonProperty
     private String name;
     
     @Column(length = 8)
+    @JsonProperty
     private String abbreviation;
 
     @Column(name = "points_per_tier")
+    @JsonProperty
     private int pointsPerTier;
 
     @OneToMany(mappedBy = "tile", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<ContributionMethod> contributionMethods = new HashSet<ContributionMethod>();
 
     @OneToMany(mappedBy = "tile", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<TileProgress> progress = new HashSet<TileProgress>();
 
     public int getId() {
