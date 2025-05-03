@@ -25,12 +25,14 @@ import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.Team;
+import org.uimshowdown.bingo.models.Tile;
 import org.uimshowdown.bingo.repositories.CollectionLogCompletionRepository;
 import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
 import org.uimshowdown.bingo.repositories.PlayerChallengeCompletionRepository;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
 import org.uimshowdown.bingo.repositories.RecordCompletionRepository;
 import org.uimshowdown.bingo.repositories.TeamRepository;
+import org.uimshowdown.bingo.repositories.TileRepository;
 import org.uimshowdown.bingo.services.DataOutputService;
 import org.uimshowdown.bingo.services.EventDataInitializationService;
 import org.uimshowdown.bingo.services.GoogleSheetsService;
@@ -49,6 +51,9 @@ public class AdminController {
     
     @Autowired
     private CompetitionConfiguration competitionConfiguration;
+    
+    @Autowired
+    private TileRepository tileRepository;
     
     @Autowired
     private PlayerRepository playerRepository;
@@ -156,9 +161,13 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
     
-    @PostMapping("/admin/reinitializeTile/{id}")
-    public ResponseEntity<Void> reinitializeTile(@PathVariable int id) {
-        eventDataInitializationService.reinitializeTile(id);
+    @PostMapping("/admin/reinitializeTile/{name}")
+    public ResponseEntity<Void> reinitializeTile(@PathVariable String name) {
+        Tile tile = tileRepository.findByName(name).orElse(null);
+        if(tile == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tile not found with that name");
+        }
+        eventDataInitializationService.reinitializeTile(tile.getId());
         return ResponseEntity.ok().build();
     }
     
