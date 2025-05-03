@@ -517,6 +517,9 @@ public class ScoreboardCalculationService {
     private void sendDiscordAnnouncements(Team team, Map<String, Integer> initialTiers, Map<String, Integer> finalTiers) {
         Guild guild = discordClient.getGuildById(guildId);
         String tierUpsTextChannelName = team.getAbbreviation().toLowerCase() + "-tier-ups";
+        if(guild.getTextChannelsByName(tierUpsTextChannelName, false).isEmpty()) { // Discord server has not been set up
+            return;
+        }
         TextChannel tierUpsTextChannel = guild.getTextChannelsByName(tierUpsTextChannelName, false).get(0);
         
         // Individual tiles
