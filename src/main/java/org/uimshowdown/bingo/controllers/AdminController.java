@@ -94,10 +94,27 @@ public class AdminController {
     @PatchMapping("/admin/changePlayerTeam")
     public ResponseEntity<Void> changePlayerTeam(@RequestBody Map<String, Object> requestBody) {
         Player player = playerRepository.findByRsn((String) requestBody.get("rsn")).get();
+        Team oldTeam = player.getTeam();
         Team newTeam = teamRepository.findByName((String) requestBody.get("teamName")).get();
 
         player.setTeam(newTeam);
         playerRepository.save(player);
+        
+        Guild guild = discordClient.getGuildById(guildId);
+        Role oldTeamRole = guild.getRolesByName(oldTeam.getName(), false).get(0);
+        Role newTeamRole = guild.getRolesByName(newTeam.getName(), false).get(0);
+        List<Member> members = guild.loadMembers().get();
+        Member member = null;
+        for(Member m : members) {
+            if(m.getUser().getName().equalsIgnoreCase(player.getDiscordName())) {
+                member = m;
+            }
+        }
+        if(member != null) {
+            guild.removeRoleFromMember(member, oldTeamRole).complete();
+            guild.addRoleToMember(member, newTeamRole).complete();
+        }
+        
         return ResponseEntity.ok().build();
     }
 
