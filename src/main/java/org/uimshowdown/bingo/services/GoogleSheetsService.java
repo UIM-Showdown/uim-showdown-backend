@@ -32,7 +32,10 @@ import com.google.auth.oauth2.ServiceAccountCredentials;
 public class GoogleSheetsService {
     
     @Value("${google.outputSheetID}")
-    private String sheetID;
+    private String outputSheetID;
+    
+    @Value("${google.signupSheetID}")
+    private String signupSheetID;
     
     @Autowired TeamRepository teamRepository;
     
@@ -51,7 +54,7 @@ public class GoogleSheetsService {
         Sheets service = getSheetsService();
         BatchUpdateSpreadsheetRequest tabsRequest = new BatchUpdateSpreadsheetRequest();
         List<Request> requests = new ArrayList<Request>();
-        Spreadsheet spreadsheet = service.spreadsheets().get(sheetID).execute();
+        Spreadsheet spreadsheet = service.spreadsheets().get(outputSheetID).execute();
         
         // Delete all the unformatted tabs
         for(Sheet tab : spreadsheet.getSheets()) {
@@ -87,7 +90,7 @@ public class GoogleSheetsService {
         tabsRequest.setRequests(requests);
         int attempt = 1;
         try {            
-            service.spreadsheets().batchUpdate(sheetID, tabsRequest).execute();
+            service.spreadsheets().batchUpdate(outputSheetID, tabsRequest).execute();
         } catch(Exception e) {
             if(attempt == 3) {
                 throw e;
@@ -105,7 +108,7 @@ public class GoogleSheetsService {
         ValueRange request = createUpdateRequest(range, data);
         int attempt = 1;
         try {            
-            service.spreadsheets().values().update(sheetID, request.getRange(), request).setValueInputOption("RAW").execute();
+            service.spreadsheets().values().update(outputSheetID, request.getRange(), request).setValueInputOption("RAW").execute();
         } catch(Exception e) {
             if(attempt == 3) {
                 throw e;
@@ -118,13 +121,27 @@ public class GoogleSheetsService {
         Sheets service = getSheetsService();
         int attempt = 1;
         try {            
-            service.spreadsheets().values().batchUpdate(sheetID, new BatchUpdateValuesRequest().setData(requests).setValueInputOption("RAW")).execute();
+            service.spreadsheets().values().batchUpdate(outputSheetID, new BatchUpdateValuesRequest().setData(requests).setValueInputOption("RAW")).execute();
         } catch(Exception e) {
             if(attempt == 3) {
                 throw e;
             }
             attempt++;
         }
+    }
+    
+    public List<String> getSignupDiscordNames() throws Exception {
+        Sheets service = getSheetsService();
+        ValueRange values = service.spreadsheets().values().get(signupSheetID, "Form Responses 1").execute();
+        List<String> discordNames = new ArrayList<String>();
+        for(List<Object> row : values.getValues()) {
+            String name = (String) row.get(3);
+            if(name.contains("Enter your Discord username")) {
+                continue; // This is the title row
+            }
+            discordNames.add(name);
+        }
+        return discordNames;
     }
 
 }

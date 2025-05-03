@@ -12,6 +12,11 @@ spring:
     jpa:
         hibernate:
             ddl-auto: "update"
+google:
+    outputSheetID: "<value>"
+    signupSheetID: "<value>"
+discord:
+    token: "<value>"
 competition:
     eventName: "UIM Snowdown 2025"
     startDatetime: "2025-05-01T00:00:00.000+00:00"

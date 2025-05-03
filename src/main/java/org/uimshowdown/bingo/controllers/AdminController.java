@@ -1,9 +1,13 @@
 package org.uimshowdown.bingo.controllers;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +33,14 @@ import org.uimshowdown.bingo.repositories.RecordCompletionRepository;
 import org.uimshowdown.bingo.repositories.TeamRepository;
 import org.uimshowdown.bingo.services.DataOutputService;
 import org.uimshowdown.bingo.services.EventDataInitializationService;
+import org.uimshowdown.bingo.services.GoogleSheetsService;
 import org.uimshowdown.bingo.services.ScoreboardCalculationService;
 import org.uimshowdown.bingo.services.TempleOsrsService;
+
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 
 @RestController
 public class AdminController {
@@ -69,6 +79,15 @@ public class AdminController {
     
     @Autowired
     DataOutputService dataOutputService;
+    
+    @Autowired
+    GoogleSheetsService googleSheetsService;
+    
+    @Autowired
+    JDA discordClient;
+    
+    @Value("${discord.guildId}")
+    long guildId;
 
     @PostMapping("/admin/addPlayer")
     public ResponseEntity<Void> addPlayer(@RequestBody Map<String, Object> requestBody) throws Exception {
@@ -161,6 +180,30 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
     
+    @PostMapping("/admin/updateCompetitorRole")
+    public Map<String, Object> updateCompetitorRole() throws Exception {
+        Guild guild = discordClient.getGuildById(guildId);
+        Role competitorRole = guild.getRolesByName("Competitor", false).get(0);
+        List<String> namesNotFound = new ArrayList<String>();
+        Map<String, Object> result = new HashMap<String, Object>();
+        List<Member> members = guild.loadMembers().get();
+        for(String discordName : googleSheetsService.getSignupDiscordNames()) {
+            Member member = null;
+            for(Member m : members) {
+                if(m.getUser().getName().equalsIgnoreCase(discordName)) {
+                    member = m;
+                }
+            }
+            if(member != null) {
+                guild.addRoleToMember(member, competitorRole).complete();
+            } else {
+                namesNotFound.add(discordName);
+            }
+        }
+        result.put("namesNotFound", namesNotFound);
+        return result;
+    }
+    
     /**
      * Automatically calls the updateCompetition() endpoint method at the top of every minute.
      * 
@@ -174,7 +217,7 @@ public class AdminController {
     @Transactional(readOnly=true)
     public void updateCompetitionScheduled() throws Exception {
         if(!teamRepository.findAll().iterator().hasNext()) {
-            return; // Comp has not been initialize; do nothing
+            return; // Comp has not been initialized; do nothing
         }
         for(String profile : environment.getActiveProfiles()) {
             if(profile.equals("test")) { // We're in the middle of JUnit tests
@@ -185,6 +228,26 @@ public class AdminController {
         updateCompetition();
         long end = new Date().getTime();
         System.out.println("Completed a scheduled update in " + (end - start) + " ms");
+    }
+    
+    /**
+     * Automatically calls the updateCompetitorRole() endpoint method at the top of every hour.
+     */
+    @Scheduled(cron = "0 0 * * * *")
+    @Transactional(readOnly=true)
+    public void updateCompetitorRoleScheduled() throws Exception {
+        if(!teamRepository.findAll().iterator().hasNext()) {
+            return; // Comp has not been initialized; do nothing
+        }
+        for(String profile : environment.getActiveProfiles()) {
+            if(profile.equals("test")) { // We're in the middle of JUnit tests
+                return;
+            }
+        }
+        long start = new Date().getTime();
+        updateCompetitorRole();
+        long end = new Date().getTime();
+        System.out.println("Updated competitor role in " + (end - start) + " ms");
     }
 
 }
