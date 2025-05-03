@@ -133,7 +133,7 @@ public class AdminController {
     }
     
     @PatchMapping("/admin/changePlayerDiscordName")
-    public ResponseEntity<Void> changeDiscordName(@RequestBody Map<String, Object> requestBody) {
+    public ResponseEntity<Void> changePlayerDiscordName(@RequestBody Map<String, Object> requestBody) {
         Player player = playerRepository.findByDiscordName((String) requestBody.get("oldDiscordName")).get();
         player.setDiscordName((String) requestBody.get("newDiscordName"));
         playerRepository.save(player);
