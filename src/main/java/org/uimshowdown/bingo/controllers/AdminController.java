@@ -156,24 +156,6 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
     
-    @DeleteMapping("/admin/recordCompletions/{id}")
-    public ResponseEntity<Void> deleteRecordCompletion(@PathVariable int id) {
-        recordCompletionRepository.deleteById(id);
-        return ResponseEntity.ok().build();
-    }
-    
-    @DeleteMapping("/admin/playerChallengeCompletions/{id}")
-    public ResponseEntity<Void> deletePlayerChallengeCompletion(@PathVariable int id) {
-        playerChallengeCompletionRepository.deleteById(id);
-        return ResponseEntity.ok().build();
-    }
-    
-    @DeleteMapping("/admin/collectionLogCompletions/{id}")
-    public ResponseEntity<Void> deleteCollectionLogCompletion(@PathVariable int id) {
-        collectionLogCompletionRepository.deleteById(id);
-        return ResponseEntity.ok().build();
-    }
-    
     @PostMapping("/admin/reinitializeTile/{id}")
     public ResponseEntity<Void> reinitializeTile(@PathVariable int id) {
         eventDataInitializationService.reinitializeTile(id);
