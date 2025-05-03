@@ -124,7 +124,7 @@ public class AdminController {
     }
 
     @PatchMapping("/admin/changePlayerRsn")
-    public ResponseEntity<Void> changeRsn(@RequestBody Map<String, Object> requestBody) {
+    public ResponseEntity<Void> changePlayerRsn(@RequestBody Map<String, Object> requestBody) {
         Player player = playerRepository.findByRsn((String) requestBody.get("oldRsn")).get();
         player.setRsn((String) requestBody.get("newRsn"));
         playerRepository.save(player);
