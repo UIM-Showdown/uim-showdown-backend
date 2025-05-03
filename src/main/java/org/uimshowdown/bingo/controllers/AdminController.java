@@ -123,7 +123,7 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/admin/changeRsn")
+    @PatchMapping("/admin/changePlayerRsn")
     public ResponseEntity<Void> changeRsn(@RequestBody Map<String, Object> requestBody) {
         Player player = playerRepository.findByRsn((String) requestBody.get("oldRsn")).get();
         player.setRsn((String) requestBody.get("newRsn"));
@@ -132,7 +132,7 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
     
-    @PatchMapping("/admin/changeDiscordName")
+    @PatchMapping("/admin/changePlayerDiscordName")
     public ResponseEntity<Void> changeDiscordName(@RequestBody Map<String, Object> requestBody) {
         Player player = playerRepository.findByDiscordName((String) requestBody.get("oldDiscordName")).get();
         player.setDiscordName((String) requestBody.get("newDiscordName"));
