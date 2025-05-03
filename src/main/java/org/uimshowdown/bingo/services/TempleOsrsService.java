@@ -43,7 +43,6 @@ public class TempleOsrsService {
     /**
      * @implNote Filtering out contribution methods that have null temple IDs is done to prevent a `IllegalStateException` due to duplicate keys during the map creation process.
      */
-    @Transactional
     public void updateCompetition() {
         // Producing a map of RSN/player key value pairs so that we can do constant time searches against the participants list
         Map<String, Player> players = StreamSupport

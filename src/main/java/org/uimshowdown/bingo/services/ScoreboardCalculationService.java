@@ -62,7 +62,6 @@ public class ScoreboardCalculationService {
     @Value("${discord.guildId}")
     long guildId;
     
-    @Transactional
     public void calculate() {
         List<Team> teams = new ArrayList<Team>();
         for(Team team : teamRepository.findAll()) {

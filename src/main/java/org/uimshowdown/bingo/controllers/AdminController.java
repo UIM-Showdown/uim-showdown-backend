@@ -14,6 +14,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -362,6 +363,7 @@ public class AdminController {
      * @throws Exception
      */
     @Scheduled(cron = "0 * * * * *")
+    @Transactional(readOnly=true)
     public void updateCompetitionScheduled() throws Exception {
         if(!teamRepository.findAll().iterator().hasNext()) {
             return; // Comp has not been initialized; do nothing

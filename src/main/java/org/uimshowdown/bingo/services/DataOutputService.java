@@ -63,7 +63,6 @@ public class DataOutputService {
     @Autowired ContributionMethodRepository contributionMethodRepository;
     @Autowired CollectionLogItemRepository collectionLogItemRepository;
     
-    @Transactional(readOnly=true)
     public void outputData() throws Exception {
         List<ValueRange> rowLists = new ArrayList<ValueRange>();
         rowLists.add(googleSheetsService.createUpdateRequest("unf_LastUpdated", getLastUpdatedRows()));
