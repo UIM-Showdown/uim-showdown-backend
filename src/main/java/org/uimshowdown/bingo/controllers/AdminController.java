@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,11 +25,8 @@ import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.Team;
 import org.uimshowdown.bingo.models.Tile;
-import org.uimshowdown.bingo.repositories.CollectionLogCompletionRepository;
 import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
-import org.uimshowdown.bingo.repositories.PlayerChallengeCompletionRepository;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
-import org.uimshowdown.bingo.repositories.RecordCompletionRepository;
 import org.uimshowdown.bingo.repositories.TeamRepository;
 import org.uimshowdown.bingo.repositories.TileRepository;
 import org.uimshowdown.bingo.services.DataOutputService;
@@ -72,15 +68,6 @@ public class AdminController {
     
     @Autowired
     private ScoreboardCalculationService scoreboardCalculationService;
-    
-    @Autowired
-    private RecordCompletionRepository recordCompletionRepository;
-    
-    @Autowired
-    private PlayerChallengeCompletionRepository playerChallengeCompletionRepository;
-    
-    @Autowired
-    private CollectionLogCompletionRepository collectionLogCompletionRepository;
     
     @Autowired
     DataOutputService dataOutputService;
