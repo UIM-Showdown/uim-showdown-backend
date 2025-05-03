@@ -170,7 +170,11 @@ public class TempleOsrsService {
                 kcWithPenalty--;
             }
             Contribution slayerContribution = player.getContribution(slayerMethod);
-            slayerContribution.setFinalValue(slayerContribution.getFinalValue() - (kcWithPenalty * slayerXPPenalties.get(methodName)));
+            int value = slayerContribution.getFinalValue() - (kcWithPenalty * slayerXPPenalties.get(methodName));
+            if(value < 0) {
+                value = 0;
+            }
+            slayerContribution.setFinalValue(value);
         }
     }
 }
