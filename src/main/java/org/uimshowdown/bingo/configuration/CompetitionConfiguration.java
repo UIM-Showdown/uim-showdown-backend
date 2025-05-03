@@ -18,10 +18,10 @@ public class CompetitionConfiguration {
     
     private String eventName;
     
-    @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(iso=DateTimeFormat.ISO.DATE_TIME)
     private Date startDatetime;
     
-    @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(iso=DateTimeFormat.ISO.DATE_TIME)
     private Date endDatetime;
     
     private int templeCompetitionID;
