@@ -14,7 +14,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -159,6 +158,7 @@ public class AdminController {
         for(Contribution contribution : player.getContributions()) {
             if(contribution.getContributionMethod().equals(method)) {
                 contribution.setStaffAdjustment((int) requestBody.get("adjustment"));
+                contribution.setIsEmpty(false);
                 break;
             }
         }
@@ -258,6 +258,18 @@ public class AdminController {
                     .complete();
             }
             
+            // Create tier-ups text channel
+            String tierUpsTextChannelName = team.getAbbreviation().toLowerCase() + "-tier-ups";
+            if(guild.getTextChannelsByName(tierUpsTextChannelName, false).isEmpty()) {
+                teamCategory.createTextChannel(tierUpsTextChannelName)
+                    .addRolePermissionOverride(defaultRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
+                    .addRolePermissionOverride(eventStaffRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
+                    .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), Arrays.asList(Permission.MESSAGE_SEND))
+                    .addRolePermissionOverride(cheerleaderRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), Arrays.asList(Permission.MESSAGE_SEND))
+                    .addRolePermissionOverride(captainRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), Arrays.asList(Permission.MESSAGE_SEND, Permission.MANAGE_CHANNEL))
+                    .complete();
+            }
+            
             // Create general text channel
             String generalTextChannelName = team.getAbbreviation().toLowerCase() + "-general";
             if(guild.getTextChannelsByName(generalTextChannelName, false).isEmpty()) {
@@ -348,7 +360,6 @@ public class AdminController {
      * @throws Exception
      */
     @Scheduled(cron = "0 * * * * *")
-    @Transactional(readOnly=true)
     public void updateCompetitionScheduled() throws Exception {
         if(!teamRepository.findAll().iterator().hasNext()) {
             return; // Comp has not been initialized; do nothing
@@ -368,7 +379,6 @@ public class AdminController {
      * Automatically calls the updateCompetitorRole() endpoint method at the top of every hour.
      */
     @Scheduled(cron = "0 0 * * * *")
-    @Transactional(readOnly=true)
     public void updateCompetitorRoleScheduled() throws Exception {
         if(!teamRepository.findAll().iterator().hasNext()) {
             return; // Comp has not been initialized; do nothing

@@ -9,7 +9,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.TileGroupConfig;
 import org.uimshowdown.bingo.models.Challenge;
@@ -36,6 +38,11 @@ import org.uimshowdown.bingo.repositories.RecordRepository;
 import org.uimshowdown.bingo.repositories.TeamRepository;
 import org.uimshowdown.bingo.repositories.TeamScoreboardRepository;
 import org.uimshowdown.bingo.repositories.TileProgressRepository;
+import org.uimshowdown.bingo.repositories.TileRepository;
+
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 
 @Component
 public class ScoreboardCalculationService {
@@ -49,7 +56,13 @@ public class ScoreboardCalculationService {
     @Autowired CollectionLogItemRepository collectionLogItemRepository;
     @Autowired RecordRepository recordRepository;
     @Autowired ChallengeRepository challengeRepository;
+    @Autowired TileRepository tileRepository;
+    @Autowired JDA discordClient;
     
+    @Value("${discord.guildId}")
+    long guildId;
+    
+    @Transactional
     public void calculate() {
         List<Team> teams = new ArrayList<Team>();
         for(Team team : teamRepository.findAll()) {
@@ -78,6 +91,7 @@ public class ScoreboardCalculationService {
      */
     private void calculateTeamScoreboard(Team team) {
         TeamScoreboard scoreboard = team.getScoreboard();
+        Map<String, Integer> initialTiers = getTiers(team);
         
         // Update tile progresses
         for(TileProgress progress : team.getTileProgresses()) {
@@ -187,6 +201,8 @@ public class ScoreboardCalculationService {
         }
         
         scoreboard.setEventPointsFromCollectionLogItems(pointsFromClog + pointsFromPets + pointsFromJars);
+        Map<String, Integer> finalTiers = getTiers(team);
+        sendDiscordAnnouncements(team, initialTiers, finalTiers);
     }
     
     /**
@@ -438,6 +454,96 @@ public class ScoreboardCalculationService {
             points += scoreboard.getEventPointsFromRecords();
             points += scoreboard.getEventPointsFromChallenges();
             scoreboard.setEventPoints(points);
+        }
+    }
+    
+    /**
+     * Returns a map of tier/group names and their associated tiers. Used to find tier-ups to send Discord notifications.
+     * @param scoreboard
+     * @return
+     */
+    private Map<String, Integer> getTiers(Team team) {
+        Map<String, Integer> tiers = new HashMap<String, Integer>();
+        
+        // Individual tiles
+        for(TileProgress tileProgress : team.getTileProgresses()) {
+            tiers.put(tileProgress.getTile().getName(), tileProgress.getTier());
+        }
+        
+        // Groups
+        for(TileGroupConfig groupConfig : competitionConfiguration.getTileGroups()) {
+            List<TileProgress> progresses = new ArrayList<TileProgress>();
+            for(String tileName : groupConfig.getTileNames()) {
+                for(TileProgress progress : team.getTileProgresses()) {
+                    if(progress.getTile().getName().equals(tileName)) {
+                        progresses.add(progress);
+                        break;
+                    }
+                }
+            }
+            // The tier of the group is the tier of the lowest tile in the group
+            int lowestTier = progresses.get(0).getTier();
+            for(TileProgress progress: progresses) {
+                if(progress.getTier() < lowestTier) {
+                    lowestTier = progress.getTier();
+                }
+            }
+            tiers.put(groupConfig.getName(), lowestTier);
+        }
+        
+        // Blackout
+        if(competitionConfiguration.isBlackoutBonusEnabled()) {
+            List<TileProgress> progresses = new ArrayList<TileProgress>();
+            progresses.addAll(team.getTileProgresses());
+            // The tier of the group is the tier of the lowest tile in the group
+            int lowestTier = progresses.get(0).getTier();
+            for(TileProgress progress: progresses) {
+                if(progress.getTier() < lowestTier) {
+                    lowestTier = progress.getTier();
+                }
+            }
+            tiers.put("Blackout", lowestTier);
+        }
+        
+        return tiers;
+    }
+    
+    /**
+     * Sends a message to the team's tier-ups channel for each tier-up
+     * @param team
+     * @param initialTiers
+     * @param finalTiers
+     */
+    private void sendDiscordAnnouncements(Team team, Map<String, Integer> initialTiers, Map<String, Integer> finalTiers) {
+        Guild guild = discordClient.getGuildById(guildId);
+        String tierUpsTextChannelName = team.getAbbreviation().toLowerCase() + "-tier-ups";
+        TextChannel tierUpsTextChannel = guild.getTextChannelsByName(tierUpsTextChannelName, false).get(0);
+        
+        // Individual tiles
+        List<String> tileNames = new ArrayList<String>();
+        for(Tile tile : tileRepository.findByOrderByIdAsc()) {
+            tileNames.add(tile.getName());
+        }
+        for(String tileName : tileNames) {
+            if(finalTiers.get(tileName) > initialTiers.get(tileName)) {
+                tierUpsTextChannel.sendMessage("Congratuluations! Your team has reached tier " + finalTiers.get(tileName) + " in " + tileName + "!").complete();
+            }
+        }
+        
+        // Tile groups
+        List<String> groupNames = new ArrayList<String>();
+        for(TileGroupConfig tileGroupConfig : competitionConfiguration.getTileGroups()) {
+            groupNames.add(tileGroupConfig.getName());
+        }
+        for(String groupName : groupNames) {
+            if(finalTiers.get(groupName) > initialTiers.get(groupName)) {
+                tierUpsTextChannel.sendMessage("Congratuluations! Your team has reached tier " + finalTiers.get(groupName) + " in " + groupName + "!").complete();
+            }
+        }
+        
+        // Blackout
+        if(finalTiers.get("Blackout") > initialTiers.get("Blackout")) {
+            tierUpsTextChannel.sendMessage("Congratuluations! Your team has reached a tier " + finalTiers.get("Blackout") + " blackout!").complete();
         }
     }
 
