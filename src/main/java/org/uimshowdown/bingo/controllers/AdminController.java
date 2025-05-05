@@ -356,10 +356,11 @@ public class AdminController {
     /**
      * Automatically calls the updateCompetition() endpoint method at the top of every minute.
      * 
-     * This method is annotated with "Transactional" because it's not in a request context and therefore doesn't 
-     * automatically have a transaction created. The "readOnly" value is a misnomer - it won't fail upon trying to write;
-     * it just signals to the transaction manager that certain optimizations can be taken that work best when it's not writing 
-     * (which makes it significantly faster anyway even though we're doing writes).
+     * This method is annotated with "Transactional" only to establish an active session in the entity manager; 
+     * we don't actually care about the atomicity of the action. The "readOnly" attribute keeps it from slowing down 
+     * a ton from trying to keep track of the entire thing as a transaction. This would normally cause errors when 
+     * we start doing write actions, but because we're doing them all through JPA repositories, it's already creating 
+     * small one-off write-enabled transactions for those, so we're good.
      * @throws Exception
      */
     @Scheduled(cron = "0 * * * * *")
