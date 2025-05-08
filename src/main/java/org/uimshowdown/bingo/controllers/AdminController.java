@@ -88,25 +88,21 @@ public class AdminController {
 
     @PostMapping("/admin/addPlayer")
     public ResponseEntity<Void> addPlayer(@RequestBody Map<String, Object> requestBody) throws Exception {
+        Guild guild = discordClient.getGuildById(guildId);
+        if(guild.getMembersByName((String) requestBody.get("discordName"), true).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Player not found in server with name: " + (String) requestBody.get("discordName"));
+        }
+        
         eventDataInitializationService.addPlayer(
             (String) requestBody.get("discordName"),
             (String) requestBody.get("rsn"),
             (String) requestBody.get("teamName")
         );
         
-        Guild guild = discordClient.getGuildById(guildId);
         if(!guild.getRolesByName((String) requestBody.get("teamName"), true).isEmpty()) {
+            Member member = guild.getMembersByName((String) requestBody.get("discordName"), true).get(0);
             Role teamRole = guild.getRolesByName((String) requestBody.get("teamName"), true).get(0);
-            List<Member> members = guild.loadMembers().get();
-            Member member = null;
-            for(Member m : members) {
-                if(m.getUser().getName().equalsIgnoreCase((String) requestBody.get("discordName"))) {
-                    member = m;
-                }
-            }
-            if(member != null) {
-                guild.addRoleToMember(member, teamRole).complete();
-            }
+            guild.addRoleToMember(member, teamRole).submit();
         }
         
         return ResponseEntity.ok().build();
@@ -114,6 +110,7 @@ public class AdminController {
 
     @PatchMapping("/admin/changePlayerTeam")
     public ResponseEntity<Void> changePlayerTeam(@RequestBody Map<String, Object> requestBody) {
+        
         Player player = playerRepository.findByRsn((String) requestBody.get("rsn")).get();
         Team oldTeam = player.getTeam();
         Team newTeam = teamRepository.findByName((String) requestBody.get("teamName")).get();
@@ -122,20 +119,12 @@ public class AdminController {
         playerRepository.save(player);
         
         Guild guild = discordClient.getGuildById(guildId);
-        if(!guild.getRolesByName(oldTeam.getName(), false).isEmpty() && !guild.getRolesByName(newTeam.getName(), false).isEmpty()) {            
+        if(!guild.getRolesByName(oldTeam.getName(), false).isEmpty() && !guild.getRolesByName(newTeam.getName(), false).isEmpty()) {
             Role oldTeamRole = guild.getRolesByName(oldTeam.getName(), false).get(0);
             Role newTeamRole = guild.getRolesByName(newTeam.getName(), false).get(0);
-            List<Member> members = guild.loadMembers().get();
-            Member member = null;
-            for(Member m : members) {
-                if(m.getUser().getName().equalsIgnoreCase(player.getDiscordName())) {
-                    member = m;
-                }
-            }
-            if(member != null) {
-                guild.removeRoleFromMember(member, oldTeamRole).complete();
-                guild.addRoleToMember(member, newTeamRole).complete();
-            }
+            Member member = guild.getMembersByName(player.getDiscordName(), true).get(0);
+            guild.removeRoleFromMember(member, oldTeamRole).submit();
+            guild.addRoleToMember(member, newTeamRole).submit();
         }
         
         return ResponseEntity.ok().build();
@@ -214,18 +203,12 @@ public class AdminController {
         Role competitorRole = guild.getRolesByName("Competitor", false).get(0);
         List<String> namesNotFound = new ArrayList<String>();
         Map<String, Object> result = new HashMap<String, Object>();
-        List<Member> members = guild.loadMembers().get();
         for(String discordName : googleSheetsService.getSignupDiscordNames()) {
-            Member member = null;
-            for(Member m : members) {
-                if(m.getUser().getName().equalsIgnoreCase(discordName)) {
-                    member = m;
-                }
-            }
-            if(member != null) {
-                guild.addRoleToMember(member, competitorRole).complete();
-            } else {
+            if(guild.getMembersByName(discordName, true).isEmpty()) {
                 namesNotFound.add(discordName);
+            } else {
+                Member member = guild.getMembersByName(discordName, true).get(0);
+                guild.addRoleToMember(member, competitorRole).complete();
             }
         }
         result.put("namesNotFound", namesNotFound);
@@ -314,18 +297,12 @@ public class AdminController {
             }
             
             // Assign team role to players
-            List<Member> members = guild.loadMembers().get();
             for(Player player : team.getPlayers()) {
-                Member member = null;
-                for(Member m : members) {
-                    if(m.getUser().getName().equalsIgnoreCase(player.getDiscordName())) {
-                        member = m;
-                    }
-                }
-                if(member != null) {
-                    guild.addRoleToMember(member, teamRole).complete();
-                } else {
+                if(guild.getMembersByName(player.getDiscordName(), true).isEmpty()) {
                     namesNotFound.add(player.getDiscordName());
+                } else {
+                    Member member = guild.getMembersByName(player.getDiscordName(), true).get(0);
+                    guild.addRoleToMember(member, teamRole).complete();
                 }
             }
             
@@ -358,7 +335,7 @@ public class AdminController {
         }
         
         // De-assign competitor and captain role
-        List<Member> members = guild.loadMembers().get();
+        List<Member> members = guild.getMembers();
         for(Member member : members) {
             if(member.getRoles().contains(competitorRole)) {
                 guild.removeRoleFromMember(member, competitorRole).complete();

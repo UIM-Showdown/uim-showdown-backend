@@ -17,12 +17,18 @@ public class DiscordClientConfiguration {
     @Value("${discord.token}")
     private String token;
     
+    @Value("${discord.guildId}")
+    long guildId;
+    
     @Bean
-    public JDA discordClient() {
-        return JDABuilder.createLight(token)
+    public JDA discordClient() throws InterruptedException {
+        JDA client = JDABuilder.createLight(token)
             .enableIntents(EnumSet.of(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT))
             .setMemberCachePolicy(MemberCachePolicy.ALL)
-            .build();
+            .build()
+            .awaitReady();
+        client.getGuildById(guildId).loadMembers();
+        return client;
     }
 
 }
