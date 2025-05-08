@@ -88,14 +88,15 @@ public class GoogleSheetsService {
         }
         
         tabsRequest.setRequests(requests);
-        int attempt = 1;
-        try {            
-            service.spreadsheets().batchUpdate(outputSheetID, tabsRequest).execute();
-        } catch(Exception e) {
-            if(attempt == 3) {
-                throw e;
+        for(int attempt = 1; attempt <= 3; attempt++) {    
+            try {            
+                service.spreadsheets().batchUpdate(outputSheetID, tabsRequest).execute();
+                break;
+            } catch(Exception e) {
+                if(attempt == 3) {
+                    throw e;
+                }
             }
-            attempt++;
         }
     }
     
@@ -106,27 +107,29 @@ public class GoogleSheetsService {
     public void executeSingleUpdate(String range, List<List<Object>> data) throws Exception {
         Sheets service = getSheetsService();
         ValueRange request = createUpdateRequest(range, data);
-        int attempt = 1;
-        try {            
-            service.spreadsheets().values().update(outputSheetID, request.getRange(), request).setValueInputOption("RAW").execute();
-        } catch(Exception e) {
-            if(attempt == 3) {
-                throw e;
+        for(int attempt = 1; attempt <= 3; attempt++) {
+            try {            
+                service.spreadsheets().values().update(outputSheetID, request.getRange(), request).setValueInputOption("RAW").execute();
+                break;
+            } catch(Exception e) {
+                if(attempt == 3) {
+                    throw e;
+                }
             }
-            attempt++;
         }
     }
     
     public void executeBatchUpdate(List<ValueRange> requests) throws Exception {
         Sheets service = getSheetsService();
-        int attempt = 1;
-        try {            
-            service.spreadsheets().values().batchUpdate(outputSheetID, new BatchUpdateValuesRequest().setData(requests).setValueInputOption("RAW")).execute();
-        } catch(Exception e) {
-            if(attempt == 3) {
-                throw e;
+        for(int attempt = 1; attempt <= 3; attempt++) {            
+            try {
+                service.spreadsheets().values().batchUpdate(outputSheetID, new BatchUpdateValuesRequest().setData(requests).setValueInputOption("RAW")).execute();
+                break;
+            } catch(Exception e) {
+                if(attempt == 3) {
+                    throw e;
+                }
             }
-            attempt++;
         }
     }
     

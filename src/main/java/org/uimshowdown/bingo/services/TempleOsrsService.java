@@ -70,18 +70,19 @@ public class TempleOsrsService {
 
     private void updatePlayerContributions(Map<String, Player> players, Map<String, ContributionMethod> contributionMethods, String uri) throws IllegalArgumentException {
         JsonNode competitionGains = null;
-        int attempt = 1;
-        try {
-            competitionGains = restClient
-                .get()
-                .uri(uri, competitionConfiguration.getTempleCompetitionID())
-                .retrieve()
-                .body(JsonNode.class);
-        } catch(Exception e) {
-            if(attempt == 3) {
-                throw e;
+        for(int attempt = 1; attempt <= 3; attempt++) {            
+            try {
+                competitionGains = restClient
+                        .get()
+                        .uri(uri, competitionConfiguration.getTempleCompetitionID())
+                        .retrieve()
+                        .body(JsonNode.class);
+                break;
+            } catch(Exception e) {
+                if(attempt == 3) {
+                    throw e;
+                }
             }
-            attempt++;
         }
         
         if (competitionGains == null) {
