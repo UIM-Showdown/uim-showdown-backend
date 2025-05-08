@@ -93,6 +93,22 @@ public class AdminController {
             (String) requestBody.get("rsn"),
             (String) requestBody.get("teamName")
         );
+        
+        Guild guild = discordClient.getGuildById(guildId);
+        if(!guild.getRolesByName((String) requestBody.get("teamName"), true).isEmpty()) {
+            Role teamRole = guild.getRolesByName((String) requestBody.get("teamName"), true).get(0);
+            List<Member> members = guild.loadMembers().get();
+            Member member = null;
+            for(Member m : members) {
+                if(m.getUser().getName().equalsIgnoreCase((String) requestBody.get("discordName"))) {
+                    member = m;
+                }
+            }
+            if(member != null) {
+                guild.addRoleToMember(member, teamRole).complete();
+            }
+        }
+        
         return ResponseEntity.ok().build();
     }
 
