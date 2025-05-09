@@ -1,7 +1,5 @@
 package org.uimshowdown.bingo.models;
 
-import java.sql.Timestamp;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,8 +11,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "record_completions")
@@ -32,10 +28,6 @@ public class RecordCompletion {
     @JoinColumn(name = "player_id")
     private Player player;
 
-    @Column(name = "completed_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    public Timestamp completedAt;
-
     @Column(name = "raw_value")
     public int rawValue;
 
@@ -52,10 +44,6 @@ public class RecordCompletion {
 
     public int getId() {
         return id;
-    }
-
-    public Timestamp getCompletedAt() {
-        return completedAt;
     }
 
     public RecordHandicap getHandicap() {
@@ -84,10 +72,6 @@ public class RecordCompletion {
         } else {
             return rawValue;
         }
-    }
-
-    public void setCompletedAt(Timestamp completedAt) {
-        this.completedAt = completedAt;
     }
 
     public void setHandicap(RecordHandicap recordHandicap) {

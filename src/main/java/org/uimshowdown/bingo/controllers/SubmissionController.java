@@ -1,6 +1,5 @@
 package org.uimshowdown.bingo.controllers;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -145,7 +144,6 @@ public class SubmissionController {
         submission.setSubmissionState(Submission.State.OPEN);
         submission.setRawValue((int) requestBody.get("rawValue"));
         submission.setType(Submission.Type.RECORD);
-        submission.setCompletedAt(Timestamp.valueOf((String) requestBody.get("completedAt")));
         submission.setVideoURL((String) requestBody.get("videoUrl"));
         submission.setDescription((String) requestBody.get("description"));
         if(handicap != null) {

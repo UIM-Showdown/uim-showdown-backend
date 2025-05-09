@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -699,7 +698,6 @@ public class SubmissionApprovalServiceTests {
         submission.setRawValue(1000);
         submission.setPlayer(player);
         submission.setVideoURL("Test Video URL");
-        submission.setCompletedAt(Timestamp.valueOf("2025-04-27 00:00:00"));
         submission.setSubmissionState(Submission.State.OPEN);
         submission.setType(Submission.Type.RECORD);
         submission = submissionRepository.save(submission);
@@ -718,7 +716,6 @@ public class SubmissionApprovalServiceTests {
         
         assertEquals(1, player.getRecordCompletions().size());
         assertNotNull(completion);
-        assertEquals(Timestamp.valueOf("2025-04-27 00:00:00"), completion.getCompletedAt());
         assertEquals(player, completion.getPlayer());
         assertEquals(1000, completion.getRawValue());
         assertEquals(record, completion.getRecord());
@@ -730,7 +727,6 @@ public class SubmissionApprovalServiceTests {
         submission2.setRawValue(2000);
         submission2.setPlayer(player);
         submission2.setVideoURL("Test Video URL 2");
-        submission2.setCompletedAt(Timestamp.valueOf("2025-04-28 00:00:00"));
         submission2.setSubmissionState(Submission.State.OPEN);
         submission2.setType(Submission.Type.RECORD);
         submission2 = submissionRepository.save(submission2);
@@ -749,7 +745,6 @@ public class SubmissionApprovalServiceTests {
         
         assertEquals(1, player.getRecordCompletions().size());
         assertNotNull(completion2);
-        assertEquals(Timestamp.valueOf("2025-04-28 00:00:00"), completion2.getCompletedAt());
         assertEquals(player, completion2.getPlayer());
         assertEquals(2000, completion2.getRawValue());
         assertEquals(record, completion2.getRecord());
@@ -761,7 +756,6 @@ public class SubmissionApprovalServiceTests {
         submission3.setRawValue(500);
         submission3.setPlayer(player);
         submission3.setVideoURL("Test Video URL 3");
-        submission3.setCompletedAt(Timestamp.valueOf("2025-04-29 00:00:00"));
         submission3.setSubmissionState(Submission.State.OPEN);
         submission3.setType(Submission.Type.RECORD);
         submission3 = submissionRepository.save(submission3);
@@ -780,7 +774,6 @@ public class SubmissionApprovalServiceTests {
         
         assertEquals(1, player.getRecordCompletions().size());
         assertNotNull(completion3);
-        assertEquals(Timestamp.valueOf("2025-04-28 00:00:00"), completion3.getCompletedAt());
         assertEquals(player, completion3.getPlayer());
         assertEquals(2000, completion3.getRawValue());
         assertEquals(record, completion3.getRecord());
@@ -800,7 +793,6 @@ public class SubmissionApprovalServiceTests {
         submission.setRawValue(1000);
         submission.setPlayer(player);
         submission.setVideoURL("Test Video URL");
-        submission.setCompletedAt(Timestamp.valueOf("2025-04-27 00:00:00"));
         submission.setHandicap(handicap);
         submission.setSubmissionState(Submission.State.OPEN);
         submission.setType(Submission.Type.RECORD);
@@ -820,7 +812,6 @@ public class SubmissionApprovalServiceTests {
         
         assertEquals(1, player.getRecordCompletions().size());
         assertNotNull(completion);
-        assertEquals(Timestamp.valueOf("2025-04-27 00:00:00"), completion.getCompletedAt());
         assertEquals(player, completion.getPlayer());
         assertEquals(1000, completion.getRawValue());
         assertEquals(record, completion.getRecord());
@@ -833,7 +824,6 @@ public class SubmissionApprovalServiceTests {
         submission2.setRawValue(2000);
         submission2.setPlayer(player);
         submission2.setVideoURL("Test Video URL 2");
-        submission2.setCompletedAt(Timestamp.valueOf("2025-04-28 00:00:00"));
         submission2.setHandicap(handicap);
         submission2.setSubmissionState(Submission.State.OPEN);
         submission2.setType(Submission.Type.RECORD);
@@ -853,7 +843,6 @@ public class SubmissionApprovalServiceTests {
         
         assertEquals(1, player.getRecordCompletions().size());
         assertNotNull(completion2);
-        assertEquals(Timestamp.valueOf("2025-04-28 00:00:00"), completion2.getCompletedAt());
         assertEquals(player, completion2.getPlayer());
         assertEquals(2000, completion2.getRawValue());
         assertEquals(record, completion2.getRecord());
@@ -866,7 +855,6 @@ public class SubmissionApprovalServiceTests {
         submission3.setRawValue(500);
         submission3.setPlayer(player);
         submission3.setVideoURL("Test Video URL 3");
-        submission3.setCompletedAt(Timestamp.valueOf("2025-04-29 00:00:00"));
         submission3.setHandicap(handicap);
         submission3.setSubmissionState(Submission.State.OPEN);
         submission3.setType(Submission.Type.RECORD);
@@ -886,7 +874,6 @@ public class SubmissionApprovalServiceTests {
         
         assertEquals(1, player.getRecordCompletions().size());
         assertNotNull(completion3);
-        assertEquals(Timestamp.valueOf("2025-04-28 00:00:00"), completion3.getCompletedAt());
         assertEquals(player, completion3.getPlayer());
         assertEquals(2000, completion3.getRawValue());
         assertEquals(record, completion3.getRecord());

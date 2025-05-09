@@ -249,7 +249,6 @@ public class SubmissionApprovalService {
         }
         
         if(existingCompletion != null) { // Update the existing one
-            existingCompletion.setCompletedAt(submission.getCompletedAt());
             existingCompletion.setHandicap(submission.getHandicap());
             existingCompletion.setRawValue(submission.getRawValue());
             existingCompletion.setVideoUrl(submission.getVideoUrl());
@@ -259,7 +258,6 @@ public class SubmissionApprovalService {
         
         // Old one didn't exist, so make a new one
         RecordCompletion completion = new RecordCompletion();
-        completion.setCompletedAt(submission.getCompletedAt());
         completion.setHandicap(submission.getHandicap());
         completion.setPlayer(submission.getPlayer());
         completion.setRawValue(submission.getRawValue());

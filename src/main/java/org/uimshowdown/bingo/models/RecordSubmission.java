@@ -1,7 +1,5 @@
 package org.uimshowdown.bingo.models;
 
-import java.sql.Timestamp;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -28,10 +26,6 @@ public class RecordSubmission extends Submission {
     @JsonProperty
     private Record record;
     
-    @Column(name = "completed_at")
-    @JsonProperty
-    private Timestamp completedAt;
-    
     @Column(name = "video_url", nullable = true, length = 512)
     @JsonProperty
     private String videoUrl;
@@ -49,10 +43,6 @@ public class RecordSubmission extends Submission {
 
     public Record getRecord() {
         return record;
-    }
-    
-    public Timestamp getCompletedAt() {
-        return completedAt;
     }
     
     public String getVideoUrl() {
@@ -78,10 +68,6 @@ public class RecordSubmission extends Submission {
 
     public void setRecord(Record record) {
         this.record = record;
-    }
-    
-    public void setCompletedAt(Timestamp completedAt) {
-        this.completedAt = completedAt;
     }
     
     public void setVideoURL(String videoUrl) {
