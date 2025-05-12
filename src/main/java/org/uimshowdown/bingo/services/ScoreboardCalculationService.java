@@ -340,6 +340,9 @@ public class ScoreboardCalculationService {
                 }
                 int place = leaderboard.indexOf(teamCompletion) + 1;
                 int pointsFromPlace = competitionConfiguration.getRecordPlacePoints() - ((place - 1) * competitionConfiguration.getRecordPlacePointsFalloff());
+                if(pointsFromPlace < 0) { // Can happen if recordPlacePoints is low and there are lots of teams on the board
+                    pointsFromPlace = 0;
+                }
                 int distanceFromFirstPlace = firstPlaceCompletion.getValue() - teamCompletion.getValue();
                 int pointsFromDistance = (int) ((double) competitionConfiguration.getRecordDistancePoints() * (1.0 - ((double)distanceFromFirstPlace / ((double) firstPlaceCompletion.getValue() * competitionConfiguration.getRecordDistanceCutoffPercentage()))));
                 int totalPoints = pointsFromPlace + pointsFromDistance;
@@ -410,6 +413,9 @@ public class ScoreboardCalculationService {
                 }
                 int place = leaderboard.indexOf(teamCompletion) + 1;
                 int pointsFromPlace = competitionConfiguration.getChallengePlacePoints() - ((place - 1) * competitionConfiguration.getChallengePlacePointsFalloff());
+                if(pointsFromPlace < 0) { // Can happen if challengePlacePoints is low and there are lots of teams on the board
+                    pointsFromPlace = 0;
+                }
                 double distanceFromFirstPlace = teamCompletion.getSeconds() - firstPlaceCompletion.getSeconds();
                 int pointsFromDistance = (int) (competitionConfiguration.getRecordDistancePoints() * (1 - (distanceFromFirstPlace / ((firstPlaceCompletion.getSeconds() * competitionConfiguration.getChallengeDistanceCutoffPercentage()) - firstPlaceCompletion.getSeconds()))));
                 int totalPoints = pointsFromPlace + pointsFromDistance;

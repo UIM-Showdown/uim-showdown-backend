@@ -24,18 +24,18 @@ competition:
     templeCompetitionID: 28896
     waitlistTeamName: "Wilderness Waitlisters"
     ehtPerTier: 30
-    eventPointsPerTier: [25, 23, 21, 19, 17, 15]
+    eventPointsPerTier: [25, 23, 21, 19, 17, 15, 13, 11]
     tierCap: -1
     blackoutBonusEnabled: true
     topNumberOfRecordsToUse: 3
-    recordPlacePoints: 10
+    recordPlacePoints: 5
     recordPlacePointsFalloff: 1
-    recordDistancePoints: 10
+    recordDistancePoints: 20
     recordDistanceCutoffPercentage: 0.5
     topNumberOfChallengesToUse: 3
-    challengePlacePoints: 10
+    challengePlacePoints: 5
     challengePlacePointsFalloff: 1
-    challengeDistancePoints: 10
+    challengeDistancePoints: 20
     challengeDistanceCutoffPercentage: 2.0
     maxRoundingErrorForContributionPoints: 0.05
     sigFigsForContributionPoints: 3
