@@ -14,7 +14,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -348,16 +347,9 @@ public class AdminController {
     
     /**
      * Automatically calls the updateCompetition() endpoint method at the top of every minute.
-     * 
-     * This method is annotated with "Transactional" only to establish an active session in the entity manager; 
-     * we don't actually care about the atomicity of the action. The "readOnly" attribute keeps it from slowing down 
-     * a ton from trying to keep track of the entire thing as a transaction. This would normally cause errors when 
-     * we start doing write actions, but because we're doing them all through JPA repositories, it's already creating 
-     * small one-off write-enabled transactions for those, so we're good.
      * @throws Exception
      */
     @Scheduled(cron = "0 * * * * *")
-    @Transactional(readOnly=true)
     public void updateCompetitionScheduled() throws Exception {
         if(!teamRepository.findAll().iterator().hasNext()) {
             return; // Comp has not been initialized; do nothing
