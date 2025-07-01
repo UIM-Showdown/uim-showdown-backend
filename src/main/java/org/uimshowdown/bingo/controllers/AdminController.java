@@ -207,7 +207,9 @@ public class AdminController {
                 namesNotFound.add(discordName);
             } else {
                 Member member = guild.getMembersByName(discordName, true).get(0);
-                guild.addRoleToMember(member, competitorRole).complete();
+                if(!member.getRoles().contains(competitorRole)) {                    
+                    guild.addRoleToMember(member, competitorRole).complete();
+                }
             }
         }
         result.put("namesNotFound", namesNotFound);
@@ -301,7 +303,9 @@ public class AdminController {
                     namesNotFound.add(player.getDiscordName());
                 } else {
                     Member member = guild.getMembersByName(player.getDiscordName(), true).get(0);
-                    guild.addRoleToMember(member, teamRole).complete();
+                    if(!member.getRoles().contains(teamRole)) {                        
+                        guild.addRoleToMember(member, teamRole).complete();
+                    }
                 }
             }
             
