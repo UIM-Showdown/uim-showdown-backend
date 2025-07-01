@@ -139,6 +139,9 @@ public class GoogleSheetsService {
         List<String> discordNames = new ArrayList<String>();
         for(List<Object> row : values.getValues()) {
             String name = (String) row.get(4);
+            if(name == null || name.isEmpty()) {
+                continue;
+            }
             if(name.contains("Enter your Discord username")) {
                 continue; // This is the title row
             }
