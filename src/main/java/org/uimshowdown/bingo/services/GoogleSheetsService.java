@@ -135,10 +135,10 @@ public class GoogleSheetsService {
     
     public List<String> getSignupDiscordNames() throws Exception {
         Sheets service = getSheetsService();
-        ValueRange values = service.spreadsheets().values().get(signupSheetID, "Form Responses 1").execute();
+        ValueRange values = service.spreadsheets().values().get(signupSheetID, "Summer2025SignupsRAW").execute();
         List<String> discordNames = new ArrayList<String>();
         for(List<Object> row : values.getValues()) {
-            String name = (String) row.get(3);
+            String name = (String) row.get(4);
             if(name.contains("Enter your Discord username")) {
                 continue; // This is the title row
             }
