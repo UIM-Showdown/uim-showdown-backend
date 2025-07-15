@@ -135,7 +135,7 @@ public class GoogleSheetsService {
     
     public List<String> getSignupDiscordNames() throws Exception {
         Sheets service = getSheetsService();
-        ValueRange values = service.spreadsheets().values().get(signupSheetID, "Summer2025SignupsRAW").execute();
+        ValueRange values = service.spreadsheets().values().get(signupSheetID, "Summer2025Signups").execute();
         List<String> discordNames = new ArrayList<String>();
         for(List<Object> row : values.getValues()) {
             String name = (String) row.get(4);
