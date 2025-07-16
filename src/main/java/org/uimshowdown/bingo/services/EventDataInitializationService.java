@@ -144,7 +144,7 @@ public class EventDataInitializationService {
     
     /**
      * Updates the tile with the given ID and all included contribution methods to use the current numbers 
-     * in the configuraiton file. 
+     * in the configuration file. 
      * @param id
      */
     public void reinitializeTile(int id) {
@@ -154,6 +154,19 @@ public class EventDataInitializationService {
             if(config.getName().equals(tile.getName())) {
                 tileConfig = config;
                 break;
+            }
+        }
+        for(ContributionMethodConfig methodConfig : tileConfig.getContributionMethods()) {
+            for(ContributionMethod method : tile.getContributionMethods()) {
+                if(method.getName().equals(methodConfig.getName())) {
+                    method.setContributionMethodType(methodConfig.getType());
+                    method.setContributionMethodCategory(methodConfig.getCategory());
+                    method.setEhtRate(methodConfig.getEhtRate());
+                    method.setTempleId(methodConfig.getTempleID());
+                    method.setDiminishedThreshold(methodConfig.getDiminishedThreshold());
+                    method.setDiminishedMultiplier(methodConfig.getDiminishedMultiplier());
+                    break;
+                }
             }
         }
         initializeTilePoints(tile, tileConfig);
