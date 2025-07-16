@@ -2,6 +2,7 @@ package org.uimshowdown.bingo.services;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -521,6 +522,11 @@ public class ScoreboardCalculationService {
      * @param finalTiers
      */
     private void sendDiscordAnnouncements(Team team, Map<String, Integer> initialTiers, Map<String, Integer> finalTiers) {
+        Date startDate = competitionConfiguration.getStartDatetime();
+        Date endDate = competitionConfiguration.getEndDatetime();
+        if(new Date().before(startDate) || new Date().after(endDate)) { // Not within the event boundaries, so likely in sheet validation mode, so we don't want messages
+            return;
+        }
         Guild guild = discordClient.getGuildById(guildId);
         String tierUpsTextChannelName = team.getAbbreviation().toLowerCase() + "-tier-ups";
         if(guild.getTextChannelsByName(tierUpsTextChannelName, false).isEmpty()) { // Discord server has not been set up
