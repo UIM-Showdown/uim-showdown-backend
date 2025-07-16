@@ -243,9 +243,9 @@ public class AdminController {
                 teamCategory = guild.createCategory(team.getAbbreviation())
                     .addRolePermissionOverride(defaultRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                     .addRolePermissionOverride(eventStaffRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
-                    .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
-                    .addRolePermissionOverride(cheerleaderRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
-                    .addRolePermissionOverride(captainRole.getIdLong(), Arrays.asList(Permission.MANAGE_CHANNEL, Permission.VIEW_CHANNEL), null)
+                    .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.MESSAGE_ATTACH_FILES), null)
+                    .addRolePermissionOverride(cheerleaderRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.MESSAGE_ATTACH_FILES), null)
+                    .addRolePermissionOverride(captainRole.getIdLong(), Arrays.asList(Permission.MANAGE_CHANNEL, Permission.MESSAGE_MANAGE), null)
                     .complete();
             }
             
