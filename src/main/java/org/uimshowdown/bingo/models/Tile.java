@@ -1,6 +1,8 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,7 +40,7 @@ public class Tile {
 
     @OneToMany(mappedBy = "tile", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<ContributionMethod> contributionMethods = new HashSet<ContributionMethod>();
+    private List<ContributionMethod> contributionMethods = new ArrayList<ContributionMethod>();
 
     @OneToMany(mappedBy = "tile", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -60,11 +62,11 @@ public class Tile {
         return pointsPerTier;
     }
 
-    public Set<ContributionMethod> getContributionMethods() {
+    public List<ContributionMethod> getContributionMethods() {
         return contributionMethods;
     }
 
-    public void setContributionMethods(Set<ContributionMethod> contributionMethods) {
+    public void setContributionMethods(List<ContributionMethod> contributionMethods) {
         this.contributionMethods = contributionMethods;
     }
 

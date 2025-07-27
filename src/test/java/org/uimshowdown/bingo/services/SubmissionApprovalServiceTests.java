@@ -112,7 +112,7 @@ public class SubmissionApprovalServiceTests {
         ChallengeRelayComponent component2 = new ChallengeRelayComponent();
         component2.setName("Component 2");
         component2.setChallenge(relayChallenge);
-        Set<ChallengeRelayComponent> components = new HashSet<ChallengeRelayComponent>();
+        List<ChallengeRelayComponent> components = new ArrayList<ChallengeRelayComponent>();
         components.add(component1);
         components.add(component2);
         relayChallenge.setRelayComponents(components);
@@ -130,7 +130,7 @@ public class SubmissionApprovalServiceTests {
         
         Record recordWithHandicap = new Record();
         recordWithHandicap.setSkill(Player.Skill.WOODCUTTING);
-        Set<RecordHandicap> handicaps = new HashSet<RecordHandicap>();
+        List<RecordHandicap> handicaps = new ArrayList<RecordHandicap>();
         RecordHandicap handicap = new RecordHandicap();
         handicap.setName("Dragon Axe");
         handicap.setMultiplier(1.13);

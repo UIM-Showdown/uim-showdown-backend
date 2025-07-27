@@ -213,7 +213,7 @@ public class ScoreboardCalculationService {
     private void updateTileProgress(TileProgress tileProgress) {
         Team team = tileProgress.getTeam();
         Tile tile = tileProgress.getTile();
-        Set<ContributionMethod> methods = tile.getContributionMethods();
+        List<ContributionMethod> methods = tile.getContributionMethods();
         int tilePointsContributed = 0;
         for(ContributionMethod method : methods) {
             for(Player player : team.getPlayers()) {

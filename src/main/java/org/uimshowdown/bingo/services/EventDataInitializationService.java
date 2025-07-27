@@ -1,7 +1,9 @@
 package org.uimshowdown.bingo.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -123,7 +125,7 @@ public class EventDataInitializationService {
             Tile tile = new Tile();
             tile.setName(tileConfig.getName());
             tile.setAbbreviation(tileConfig.getAbbreviation());
-            Set<ContributionMethod> contributionMethods = new HashSet<ContributionMethod>();
+            List<ContributionMethod> contributionMethods = new ArrayList<ContributionMethod>();
             for(ContributionMethodConfig methodConfig : tileConfig.getContributionMethods()) {
                 ContributionMethod method = new ContributionMethod();
                 method.setName(methodConfig.getName());
@@ -183,7 +185,7 @@ public class EventDataInitializationService {
             challenge.setTeamSize(challengeConfig.getTeamSize());
             challenge.setDescription(challengeConfig.getDescription());
             challenge.setType(challengeConfig.getType());
-            Set<ChallengeRelayComponent> relayComponents = new HashSet<ChallengeRelayComponent>();
+            List<ChallengeRelayComponent> relayComponents = new ArrayList<ChallengeRelayComponent>();
             if(challengeConfig.getType().equals(Challenge.Type.RELAY)) {                
                 for(String relayComponentName : challengeConfig.getRelayComponents()) {
                     ChallengeRelayComponent relayComponent = new ChallengeRelayComponent();
@@ -205,7 +207,7 @@ public class EventDataInitializationService {
             Record record = new Record();
             record.setSkill(recordConfig.getSkill());
             record.setDescription(recordConfig.getDescription());
-            Set<RecordHandicap> recordHandicaps = new HashSet<RecordHandicap>();
+            List<RecordHandicap> recordHandicaps = new ArrayList<RecordHandicap>();
             if(recordConfig.getHandicaps() != null) {                
                 for(HandicapConfig handicapConfig : recordConfig.getHandicaps()) {
                     RecordHandicap recordHandicap = new RecordHandicap();
@@ -231,7 +233,7 @@ public class EventDataInitializationService {
             item.setDescription(itemConfig.getDescription());
             item.setPoints(itemConfig.getPoints());
             item.setType(itemConfig.getType());
-            Set<ItemOption> itemOptions = new HashSet<ItemOption>();
+            List<ItemOption> itemOptions = new ArrayList<ItemOption>();
             if(itemConfig.getItemOptions() != null) {                    
                 for(String optionName : itemConfig.getItemOptions()) {
                     ItemOption itemOption = new ItemOption();

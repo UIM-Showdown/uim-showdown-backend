@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -166,7 +165,7 @@ public class SubmissionController {
         CollectionLogItem item = collectionLogItemRepository.findByNameOrOption(itemName).get();
         ItemOption itemOption = null;
         if(item.getItemOptionNames() != null && item.getItemOptionNames().contains(itemName)) {
-            Set<ItemOption> itemOptions = item.getItemOptions();
+            List<ItemOption> itemOptions = item.getItemOptions();
             for(ItemOption option : itemOptions) {
                 if(option.getName().equals(itemName)) {
                     itemOption = option;

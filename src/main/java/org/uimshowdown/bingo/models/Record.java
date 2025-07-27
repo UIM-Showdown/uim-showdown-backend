@@ -1,6 +1,8 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,7 +38,7 @@ public class Record {
 
     @OneToMany(mappedBy = "record", cascade = CascadeType.ALL)
     @JsonProperty
-    private Set<RecordHandicap> handicaps = new HashSet<RecordHandicap>();
+    private List<RecordHandicap> handicaps = new ArrayList<RecordHandicap>();
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -67,11 +69,11 @@ public class Record {
         this.description = description;
     }
     
-    public Set<RecordHandicap> getHandicaps() {
+    public List<RecordHandicap> getHandicaps() {
         return handicaps;
     }
 
-    public void setHandicaps(Set<RecordHandicap> handicaps) {
+    public void setHandicaps(List<RecordHandicap> handicaps) {
         this.handicaps = handicaps;
     }
 

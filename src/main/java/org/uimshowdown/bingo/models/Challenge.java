@@ -1,6 +1,8 @@
 package org.uimshowdown.bingo.models;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -42,7 +44,7 @@ public class Challenge {
 
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL)
     @JsonProperty
-    private Set<ChallengeRelayComponent> relayComponents = new HashSet<ChallengeRelayComponent>();
+    private List<ChallengeRelayComponent> relayComponents = new ArrayList<ChallengeRelayComponent>();
 
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -73,11 +75,11 @@ public class Challenge {
         return name;
     }
 
-    public Set<ChallengeRelayComponent> getRelayComponents() {
+    public List<ChallengeRelayComponent> getRelayComponents() {
         return relayComponents;
     }
     
-    public void setRelayComponents(Set<ChallengeRelayComponent> relayComponents) {
+    public void setRelayComponents(List<ChallengeRelayComponent> relayComponents) {
         this.relayComponents = relayComponents;
     }
 
