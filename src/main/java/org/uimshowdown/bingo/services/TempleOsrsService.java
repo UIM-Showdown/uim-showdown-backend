@@ -11,7 +11,6 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClient;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration;
 import org.uimshowdown.bingo.models.Contribution;
@@ -43,7 +42,6 @@ public class TempleOsrsService {
     /**
      * @implNote Filtering out contribution methods that have null temple IDs is done to prevent a `IllegalStateException` due to duplicate keys during the map creation process.
      */
-    @Transactional
     public void updateCompetition() {
         // Producing a map of RSN/player key value pairs so that we can do constant time searches against the participants list
         Map<String, Player> players = StreamSupport

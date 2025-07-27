@@ -12,7 +12,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.TileGroupConfig;
 import org.uimshowdown.bingo.models.Challenge;
@@ -63,7 +62,6 @@ public class ScoreboardCalculationService {
     @Value("${discord.guildId}")
     long guildId;
     
-    @Transactional
     public void calculate() {
         List<Team> teams = new ArrayList<Team>();
         for(Team team : teamRepository.findAll()) {

@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -179,9 +178,12 @@ public class AdminController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Competition has not been initialized");
         }
         
+        long start = new Date().getTime();
         templeOsrsService.updateCompetition();
         scoreboardCalculationService.calculate();
         dataOutputService.outputData();
+        long end = new Date().getTime();
+        System.out.println("Performed a competition update in " + (end - start) + " ms");
         
         return ResponseEntity.ok().build();
     }
@@ -347,45 +349,6 @@ public class AdminController {
                 guild.removeRoleFromMember(member, captainRole).complete();
             }
         }
-    }
-    
-    /**
-     * Automatically calls the updateCompetition() endpoint method at the top of every minute.
-     * @throws Exception
-     */
-    @Scheduled(cron = "0 * * * * *")
-    public void updateCompetitionScheduled() throws Exception {
-        if(!teamRepository.findAll().iterator().hasNext()) {
-            return; // Comp has not been initialized; do nothing
-        }
-        for(String profile : environment.getActiveProfiles()) {
-            if(profile.equals("test")) { // We're in the middle of JUnit tests
-                return;
-            }
-        }
-        long start = new Date().getTime();
-        updateCompetition();
-        long end = new Date().getTime();
-        System.out.println("Completed a scheduled update in " + (end - start) + " ms");
-    }
-    
-    /**
-     * Automatically calls the updateCompetitorRole() endpoint method at the top of every hour.
-     */
-    @Scheduled(cron = "0 0 * * * *")
-    public void updateCompetitorRoleScheduled() throws Exception {
-        if(!teamRepository.findAll().iterator().hasNext()) {
-            return; // Comp has not been initialized; do nothing
-        }
-        for(String profile : environment.getActiveProfiles()) {
-            if(profile.equals("test")) { // We're in the middle of JUnit tests
-                return;
-            }
-        }
-        long start = new Date().getTime();
-        updateCompetitorRole();
-        long end = new Date().getTime();
-        System.out.println("Updated competitor role in " + (end - start) + " ms");
     }
 
 }
