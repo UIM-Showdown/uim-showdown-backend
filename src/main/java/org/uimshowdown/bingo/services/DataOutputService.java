@@ -684,6 +684,7 @@ public class DataOutputService {
         List<Object> titleRow = new ArrayList<Object>();
         titleRow.add("item");
         titleRow.add("collected");
+        titleRow.add("points");
         rows.add(titleRow);
         
         // Add detail rows
@@ -699,6 +700,7 @@ public class DataOutputService {
                     }
                 }
                 row.add(hasItem);
+                row.add(item.getPoints());
                 rows.add(row);
             }
         }
