@@ -98,7 +98,7 @@ public class TempleOsrsService {
             try { // Sometimes player_name_with_capitalization is null for some reason
                 templeRSN = participant.get("player_name_with_capitalization").asText().toLowerCase();
             } catch(Exception e) {}
-            if(templeRSN == null || templeRSN.equals("")) {
+            if(templeRSN == null || templeRSN.equals("") || templeRSN.equals("null")) {
                 templeRSN = participant.get("username").asText().toLowerCase();
             }
             Player player = players.get(templeRSN);
