@@ -94,7 +94,14 @@ public class TempleOsrsService {
         }
 
         for (JsonNode participant : competitionGains.get("data").get("participants")) {
-            Player player = players.get(participant.get("player_name_with_capitalization").asText().toLowerCase());
+            String templeRSN = null;
+            try { // Sometimes player_name_with_capitalization is null for some reason
+                templeRSN = participant.get("player_name_with_capitalization").asText().toLowerCase();
+            } catch(Exception e) {}
+            if(templeRSN == null) {
+                templeRSN = participant.get("username").asText().toLowerCase();
+            }
+            Player player = players.get(templeRSN);
             if (player == null) {
                 continue;
             }
