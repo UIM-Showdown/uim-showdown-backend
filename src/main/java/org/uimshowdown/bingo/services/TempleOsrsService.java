@@ -47,7 +47,7 @@ public class TempleOsrsService {
         Map<String, Player> players = StreamSupport
             .stream(playerRepository.findAll().spliterator(), false)
             .collect(Collectors.toMap(
-                player -> player.getRsn().toLowerCase(), // TempleOSRS uses OSRS chat capitalization logic (i.e. only one capital per word)
+                player -> player.getRsn().toLowerCase().replace("_", " "), // TempleOSRS uses OSRS chat capitalization logic (i.e. only one capital per word), also does weird char replacements
                 Function.identity()
             ));
 
