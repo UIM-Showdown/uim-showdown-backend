@@ -73,7 +73,7 @@ public class Submission {
     @JsonProperty
     private Type type;
     
-    @Column(name = "description", length = 64)
+    @Column(name = "description", length = 256)
     @JsonProperty
     private String description;
 
