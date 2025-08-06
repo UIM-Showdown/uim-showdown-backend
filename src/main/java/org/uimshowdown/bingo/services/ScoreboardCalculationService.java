@@ -441,6 +441,7 @@ public class ScoreboardCalculationService {
                     break;
                 }
                 pointsFromChallenges += points;
+                valuesUsed++;
             }
             team.getScoreboard().setEventPointsFromChallenges(pointsFromChallenges);
         }
