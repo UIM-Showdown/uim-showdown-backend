@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +34,7 @@ import org.uimshowdown.bingo.services.DataOutputService;
 import org.uimshowdown.bingo.services.EventDataInitializationService;
 import org.uimshowdown.bingo.services.GoogleSheetsService;
 import org.uimshowdown.bingo.services.ScoreboardCalculationService;
+import org.uimshowdown.bingo.services.StatsService;
 import org.uimshowdown.bingo.services.TempleOsrsService;
 
 import net.dv8tion.jda.api.JDA;
@@ -77,6 +79,9 @@ public class AdminController {
     
     @Autowired
     GoogleSheetsService googleSheetsService;
+    
+    @Autowired
+    StatsService statsService;
     
     @Autowired
     JDA discordClient;
@@ -349,6 +354,11 @@ public class AdminController {
                 guild.removeRoleFromMember(member, captainRole).complete();
             }
         }
+    }
+    
+    @GetMapping("/admin/stats")
+    public Map<String, Object> getStats() throws Exception {
+        return statsService.getStatsReport();
     }
 
 }
