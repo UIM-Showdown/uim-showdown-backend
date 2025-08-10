@@ -104,7 +104,7 @@ public class StatsService {
         for(Player player : playersSorted) {
             playerSubmissions.add(player.getRsn() + ": " + numberOfSubmissions.get(player));
         }
-        stats.put("numberOfSubmissions", numberOfSubmissions);
+        stats.put("numberOfSubmissions", playerSubmissions);
         
         // Players with most denied submissions
         Map<Player, Integer> deniedSubmissions = getNumberOfDeniedSubmissions();
@@ -185,8 +185,8 @@ public class StatsService {
         return totalSubmissions;
     }
     
-    public Map<ContributionMethod, String> getTopContributions() {
-        Map<ContributionMethod, String> topContributions = new HashMap<ContributionMethod, String>();
+    public Map<String, String> getTopContributions() {
+        Map<String, String> topContributions = new HashMap<String, String>();
         for(ContributionMethod method : contributionMethodRepository.findAll()) {
             int topContribution = 0;
             Player topPlayer = null;
@@ -196,7 +196,9 @@ public class StatsService {
                     topPlayer = contribution.getPlayer();
                 }
             }
-            topContributions.put(method, topContribution + " by " + topPlayer.getRsn());
+            if(topContribution > 0) {                
+                topContributions.put(method.getName(), topContribution + " by " + topPlayer.getRsn());
+            }
         }
         return topContributions;
     }
