@@ -152,7 +152,9 @@ public class StatsService {
     public Map<Player, Integer> getNumberOfSubmissions() {
         Map<Player, Integer> numberOfSubmissions = new HashMap<Player, Integer>();
         for(Player player : playerRepository.findAll()) {
-            numberOfSubmissions.put(player, player.getSubmissions().size());
+            if(player.getSubmissions().size() > 0) {                
+                numberOfSubmissions.put(player, player.getSubmissions().size());
+            }
         }
         return numberOfSubmissions;
     }
@@ -166,7 +168,9 @@ public class StatsService {
                     denied++;
                 }
             }
-            numberOfDeniedSubmissions.put(player, denied);
+            if(denied > 0) {                
+                numberOfDeniedSubmissions.put(player, denied);
+            }
         }
         return numberOfDeniedSubmissions;
     }
