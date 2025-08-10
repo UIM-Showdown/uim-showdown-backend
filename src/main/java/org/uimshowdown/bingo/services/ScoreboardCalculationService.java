@@ -214,21 +214,24 @@ public class ScoreboardCalculationService {
         List<ContributionMethod> methods = tile.getContributionMethods();
         int tilePointsContributed = 0;
         for(ContributionMethod method : methods) {
+            int unitsContributed = 0;
             for(Player player : team.getPlayers()) {
                 for(Contribution contribution : player.getContributions()) {
                     if(contribution.getContributionMethod().equals(method)) {
-                        if(method.getDiminishedThreshold() != -1 && contribution.getUnitsContributed() > method.getDiminishedThreshold()) {
-                            int pointsUntilThreshold = method.getDiminishedThreshold() * method.getTilePointsPerContribution();
-                            int pointsAfterThreshold = (int) ((contribution.getUnitsContributed() - method.getDiminishedThreshold()) * method.getTilePointsPerContribution() * method.getDiminishedMultiplier());
-                            tilePointsContributed += pointsUntilThreshold + pointsAfterThreshold;
-                        } else {                            
-                            tilePointsContributed += contribution.getUnitsContributed() * method.getTilePointsPerContribution();
-                        }
+                        unitsContributed += contribution.getUnitsContributed();
                         break;
                     }
                 }
             }
+            if(method.getDiminishedThreshold() != -1 && unitsContributed > method.getDiminishedThreshold()) {
+                int pointsUntilThreshold = method.getDiminishedThreshold() * method.getTilePointsPerContribution();
+                int pointsAfterThreshold = (int) ((unitsContributed - method.getDiminishedThreshold()) * method.getTilePointsPerContribution() * method.getDiminishedMultiplier());
+                tilePointsContributed += pointsUntilThreshold + pointsAfterThreshold;
+            } else {                            
+                tilePointsContributed += unitsContributed * method.getTilePointsPerContribution();
+            }
         }
+        
         tileProgress.setPoints(tilePointsContributed);
         int tier = tilePointsContributed / tile.getPointsPerTier();
         int tierCap = competitionConfiguration.getTierCap();
