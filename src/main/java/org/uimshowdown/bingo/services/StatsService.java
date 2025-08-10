@@ -75,19 +75,19 @@ public class StatsService {
         List<String> otherSubmissionEHTs = new ArrayList<String>();
         for(ContributionMethod method : methodsSorted) {
             if(method.getContributionMethodType() == ContributionMethod.Type.TEMPLE_KC) {                
-                templeBossEHTs.add(method.getName() + ": " + allEHTContributed.get(method));
+                templeBossEHTs.add(method.getName() + ": " + String.format("%.2f", allEHTContributed.get(method)));
             }
             if(method.getContributionMethodType() == ContributionMethod.Type.TEMPLE_XP) {                
-                templeSkillEHTs.add(method.getName() + ": " + allEHTContributed.get(method));
+                templeSkillEHTs.add(method.getName() + ": " + String.format("%.2f", allEHTContributed.get(method)));
             }
             if(method.getContributionMethodType() == ContributionMethod.Type.SUBMISSION_KC) {                
-                bossSubmissionEHTs.add(method.getName() + ": " + allEHTContributed.get(method));
+                bossSubmissionEHTs.add(method.getName() + ": " + String.format("%.2f", allEHTContributed.get(method)));
             }
             if(method.getContributionMethodType() == ContributionMethod.Type.SUBMISSION_ITEM_DROP) {                
-                itemDropSubmissionEHTs.add(method.getName() + ": " + allEHTContributed.get(method));
+                itemDropSubmissionEHTs.add(method.getName() + ": " + String.format("%.2f", allEHTContributed.get(method)));
             }
             if(method.getContributionMethodType() == ContributionMethod.Type.SUBMISSION_OTHER) {                
-                otherSubmissionEHTs.add(method.getName() + ": " + allEHTContributed.get(method));
+                otherSubmissionEHTs.add(method.getName() + ": " + String.format("%.2f", allEHTContributed.get(method)));
             }
         }
         stats.put("templeBossEHTs", templeBossEHTs);
