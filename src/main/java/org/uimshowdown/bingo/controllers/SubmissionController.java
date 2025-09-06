@@ -1,5 +1,6 @@
 package org.uimshowdown.bingo.controllers;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -91,6 +92,7 @@ public class SubmissionController {
         submission.setType(Submission.Type.CONTRIBUTION);
         submission.setDescription((String) requestBody.get("description"));
         submission.setScreenshotUrls((List<String>) requestBody.get("screenshotURLs"));
+        submission.setSubmittedAt(new Timestamp(System.currentTimeMillis()));
         
         Submission returnedSubmission = submissionRepository.save(submission);
         
@@ -120,6 +122,7 @@ public class SubmissionController {
             submission.setRelayComponent(relayComponent);
         }
         submission.setScreenshotUrls((List<String>) requestBody.get("screenshotURLs"));
+        submission.setSubmittedAt(new Timestamp(System.currentTimeMillis()));
         
         Submission returnedSubmission = submissionRepository.save(submission);
         
@@ -149,6 +152,7 @@ public class SubmissionController {
             submission.setHandicap(handicap);
         }
         submission.setScreenshotUrls(new ArrayList<String>());
+        submission.setSubmittedAt(new Timestamp(System.currentTimeMillis()));
         
         Submission returnedSubmission = submissionRepository.save(submission);
         
@@ -183,6 +187,7 @@ public class SubmissionController {
             submission.setItemOption(itemOption);
         }
         submission.setScreenshotUrls((List<String>) requestBody.get("screenshotURLs"));
+        submission.setSubmittedAt(new Timestamp(System.currentTimeMillis()));
         
         Submission returnedSubmission = submissionRepository.save(submission);
         
@@ -214,6 +219,7 @@ public class SubmissionController {
         submission.setType(Submission.Type.UNRANKED_STARTING_VALUE);
         submission.setDescription((String) requestBody.get("description"));
         submission.setScreenshotUrls((List<String>) requestBody.get("screenshotURLs"));
+        submission.setSubmittedAt(new Timestamp(System.currentTimeMillis()));
         
         Submission returnedSubmission = submissionRepository.save(submission);
         
