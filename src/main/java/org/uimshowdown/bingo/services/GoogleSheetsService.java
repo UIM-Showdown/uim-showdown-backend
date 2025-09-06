@@ -145,7 +145,7 @@ public class GoogleSheetsService {
             if(name.contains("Enter your Discord username")) {
                 continue; // This is the title row
             }
-            discordNames.add(name);
+            discordNames.add(name.trim());
         }
         return discordNames;
     }
