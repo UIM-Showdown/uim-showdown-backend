@@ -229,6 +229,7 @@ public class AdminController {
         Role eventStaffRole = guild.getRolesByName("Event staff", false).get(0);
         Role captainRole = guild.getRolesByName("Captain", false).get(0);
         Role cheerleaderRole = guild.getRolesByName("Cheerleader", false).get(0);
+        Role screenshotApproverRole = guild.getRolesByName("Screenshot Approver", false).get(0);
         Role defaultRole = guild.getPublicRole();
         List<String> namesNotFound = new ArrayList<String>();
         
@@ -252,6 +253,7 @@ public class AdminController {
                     .addRolePermissionOverride(eventStaffRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
                     .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.MESSAGE_ATTACH_FILES), null)
                     .addRolePermissionOverride(cheerleaderRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
+                    .addRolePermissionOverride(screenshotApproverRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                     .addRolePermissionOverride(captainRole.getIdLong(), Arrays.asList(Permission.MANAGE_CHANNEL, Permission.MESSAGE_MANAGE), null)
                     .complete();
             }
@@ -264,6 +266,7 @@ public class AdminController {
                     .addRolePermissionOverride(eventStaffRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
                     .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), Arrays.asList(Permission.MESSAGE_SEND))
                     .addRolePermissionOverride(cheerleaderRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
+                    .addRolePermissionOverride(screenshotApproverRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                     .addRolePermissionOverride(captainRole.getIdLong(), Arrays.asList(Permission.MESSAGE_SEND, Permission.MESSAGE_MANAGE), null)
                     .complete();
             }
@@ -276,6 +279,7 @@ public class AdminController {
                     .addRolePermissionOverride(eventStaffRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
                     .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), Arrays.asList(Permission.MESSAGE_SEND))
                     .addRolePermissionOverride(cheerleaderRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
+                    .addRolePermissionOverride(screenshotApproverRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                     .addRolePermissionOverride(captainRole.getIdLong(), null, Arrays.asList(Permission.MESSAGE_SEND, Permission.MANAGE_CHANNEL))
                     .complete();
             }
@@ -294,6 +298,7 @@ public class AdminController {
                 .addRolePermissionOverride(eventStaffRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
                 .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
                 .addRolePermissionOverride(cheerleaderRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
+                .addRolePermissionOverride(screenshotApproverRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                 .addRolePermissionOverride(captainRole.getIdLong(), null, null)
                 .complete();
             }
@@ -306,6 +311,7 @@ public class AdminController {
                     .addRolePermissionOverride(eventStaffRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
                     .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
                     .addRolePermissionOverride(cheerleaderRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
+                    .addRolePermissionOverride(screenshotApproverRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
                     .addRolePermissionOverride(captainRole.getIdLong(), null, Arrays.asList(Permission.MANAGE_CHANNEL))
                     .complete();
             }
