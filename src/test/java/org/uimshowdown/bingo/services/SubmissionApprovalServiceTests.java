@@ -125,11 +125,11 @@ public class SubmissionApprovalServiceTests {
         speedrunChallenge = challengeRepository.save(speedrunChallenge);
         
         Record recordWithoutHandicap = new Record();
-        recordWithoutHandicap.setSkill(Player.Skill.AGILITY);
+        recordWithoutHandicap.setName("Agility");
         recordWithoutHandicap = recordRepository.save(recordWithoutHandicap);
         
         Record recordWithHandicap = new Record();
-        recordWithHandicap.setSkill(Player.Skill.WOODCUTTING);
+        recordWithHandicap.setName("Woodcutting");
         List<RecordHandicap> handicaps = new ArrayList<RecordHandicap>();
         RecordHandicap handicap = new RecordHandicap();
         handicap.setName("Dragon Axe");
@@ -690,7 +690,7 @@ public class SubmissionApprovalServiceTests {
     @Transactional
     public void approveRecordSubmissionWithoutHandicap() throws Exception {
         Player player = playerRepository.findByDiscordName("Test Discord Name").get();
-        Record record = recordRepository.findBySkill(Player.Skill.AGILITY).get();
+        Record record = recordRepository.findByName("Agility").get();
         
         // No existing submissions
         RecordSubmission submission = new RecordSubmission();
@@ -784,7 +784,7 @@ public class SubmissionApprovalServiceTests {
     @Transactional
     public void approveRecordSubmissionWithHandicap() throws Exception {
         Player player = playerRepository.findByDiscordName("Test Discord Name").get();
-        Record record = recordRepository.findBySkill(Player.Skill.WOODCUTTING).get();
+        Record record = recordRepository.findByName("Woodcutting").get();
         RecordHandicap handicap = recordHandicapRepository.findByName("Dragon Axe").get();
         
         // No existing submissions

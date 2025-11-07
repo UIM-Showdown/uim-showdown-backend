@@ -133,7 +133,7 @@ public class TeamScoreboard {
     
     public RecordLeaderboardEntry getRecordLeaderboardEntry(Record record) {
         for(RecordLeaderboardEntry entry : recordLeaderboardEntries) {
-            if(entry.getSkill() == record.getSkill()) {
+            if(entry.getRecordName().equals(record.getName())) {
                 return entry;
             }
         }

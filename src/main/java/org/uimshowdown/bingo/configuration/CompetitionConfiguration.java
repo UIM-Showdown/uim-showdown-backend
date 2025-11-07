@@ -10,7 +10,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.ContributionMethod;
-import org.uimshowdown.bingo.models.Player;
 
 @Configuration
 @ConfigurationProperties("competition")
@@ -544,15 +543,15 @@ public class CompetitionConfiguration {
     }
     
     public static class RecordConfig {
-        private Player.Skill skill;
+        private String name;
         private String description;
         private List<HandicapConfig> handicaps;
         
-        public Player.Skill getSkill() {
-            return skill;
+        public String getName() {
+            return name;
         }
-        public void setSkill(Player.Skill skill) {
-            this.skill = skill;
+        public void setName(String name) {
+            this.name = name;
         }
         public String getDescription() {
             return description;

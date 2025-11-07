@@ -2,8 +2,6 @@ package org.uimshowdown.bingo.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,8 +26,7 @@ public class RecordLeaderboardEntry {
     private int place;
     
     @Column
-    @Enumerated(EnumType.STRING)
-    private Player.Skill skill;
+    private String recordName;
     
     @Column(name = "player_name", length = 64)
     private String playerName;
@@ -64,12 +61,12 @@ public class RecordLeaderboardEntry {
         this.place = place;
     }
 
-    public Player.Skill getSkill() {
-        return skill;
+    public String getRecordName() {
+        return recordName;
     }
 
-    public void setSkill(Player.Skill skill) {
-        this.skill = skill;
+    public void setRecordName(String recordName) {
+        this.recordName = recordName;
     }
 
     public String getPlayerName() {

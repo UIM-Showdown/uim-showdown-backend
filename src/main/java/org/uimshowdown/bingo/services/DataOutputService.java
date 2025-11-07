@@ -194,10 +194,10 @@ public class DataOutputService {
         titleRow.add("place");
         for(Record record : recordRepository.findByOrderByIdAsc()) {
             titleRow.addAll(Arrays.asList(
-                    "rsn: " + record.getSkill(),
-                    "team: " + record.getSkill(),
-                    "value: " + record.getSkill(),
-                    "points: " + record.getSkill()));
+                    "rsn: " + record.getName(),
+                    "team: " + record.getName(),
+                    "value: " + record.getName(),
+                    "points: " + record.getName()));
         }
         rows.add(titleRow);
         
@@ -207,7 +207,7 @@ public class DataOutputService {
             row.add(place);
             for(Record record : recordRepository.findByOrderByIdAsc()) {
                 List<RecordLeaderboardEntry> entries = new ArrayList<RecordLeaderboardEntry>();
-                for(RecordLeaderboardEntry entry : recordLeaderboardEntryRepository.findValidEntriesBySkillNameOrderByPlaceAsc(record.getSkill().toString())) {
+                for(RecordLeaderboardEntry entry : recordLeaderboardEntryRepository.findValidEntriesBySkillNameOrderByPlaceAsc(record.getName())) {
                     entries.add(entry);
                 }
                 if(entries.size() >= place) {
@@ -488,8 +488,8 @@ public class DataOutputService {
         List<Object> titleRow = new ArrayList<Object>();
         titleRow.add("place");
         for(Record record : records) {
-            titleRow.add("player: " + record.getSkill());
-            titleRow.add("value: " + record.getSkill());
+            titleRow.add("player: " + record.getName());
+            titleRow.add("value: " + record.getName());
         }
         rows.add(titleRow);
         

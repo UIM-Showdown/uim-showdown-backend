@@ -205,7 +205,7 @@ public class EventDataInitializationService {
     private void initializeRecords() {
         for(RecordConfig recordConfig : competitionConfiguration.getRecords()) {
             Record record = new Record();
-            record.setSkill(recordConfig.getSkill());
+            record.setName(recordConfig.getName());
             record.setDescription(recordConfig.getDescription());
             List<RecordHandicap> recordHandicaps = new ArrayList<RecordHandicap>();
             if(recordConfig.getHandicaps() != null) {                
@@ -445,7 +445,7 @@ public class EventDataInitializationService {
             entry.setPlace(-1);
             entry.setPlayerName(null);
             entry.setPoints(-1);
-            entry.setSkill(record.getSkill());
+            entry.setRecordName(record.getName());
             entry.setTeamScoreboard(scoreboard);
             entry.setValue(-1);
             entries.add(entry);

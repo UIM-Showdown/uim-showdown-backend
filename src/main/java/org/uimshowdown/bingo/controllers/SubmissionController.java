@@ -134,7 +134,7 @@ public class SubmissionController {
     @PostMapping("/submissions/record")
     public Map<String, Object> createRecordSubmission(@RequestBody Map<String, Object> requestBody) {
         Player player = playerRepository.findByRsn((String) requestBody.get("rsn")).get();
-        Record record = recordRepository.findBySkill(Player.Skill.valueOf((String) requestBody.get("skill"))).get();
+        Record record = recordRepository.findByName((String) requestBody.get("skill")).get();
         RecordHandicap handicap = null;
         if((String) requestBody.get("handicapName") != null) {
             handicap = recordHandicapRepository.findByName((String) requestBody.get("handicapName")).get();

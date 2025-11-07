@@ -11,8 +11,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,9 +39,8 @@ public class Record {
     private List<RecordHandicap> handicaps = new ArrayList<RecordHandicap>();
 
     @Column
-    @Enumerated(EnumType.STRING)
     @JsonProperty
-    private Player.Skill skill;
+    private String name;
 
     @OneToMany(mappedBy = "record", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -57,8 +54,8 @@ public class Record {
         return description;
     }
 
-    public Player.Skill getSkill() {
-        return skill;
+    public String getName() {
+        return name;
     }
 
     public Set<RecordSubmission> getSubmissions() {
@@ -77,8 +74,8 @@ public class Record {
         this.handicaps = handicaps;
     }
 
-    public void setSkill(Player.Skill skill) {
-        this.skill = skill;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

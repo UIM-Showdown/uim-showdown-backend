@@ -112,7 +112,7 @@ public class SharedTestVariables {
     public static Record makeTestRecord() {
         Record testRecord = new Record();
         testRecord.setDescription("Six hour woodcutting record");
-        testRecord.setSkill(Player.Skill.WOODCUTTING);
+        testRecord.setName("Woodcutting");
         return testRecord;
     }
 

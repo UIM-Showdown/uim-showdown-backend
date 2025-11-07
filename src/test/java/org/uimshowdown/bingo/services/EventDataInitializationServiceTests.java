@@ -230,7 +230,7 @@ public class EventDataInitializationServiceTests {
         assertTrue(speedrunChallenge.getRelayComponents().isEmpty());
         
         // Validate records
-        Record recordWithHandicaps = recordRepository.findBySkill(Player.Skill.WOODCUTTING).get();
+        Record recordWithHandicaps = recordRepository.findByName("Woodcutting").get();
         RecordHandicap handicap1 = recordHandicapRepository.findByName("Dragon axe").get();
         RecordHandicap handicap2 = recordHandicapRepository.findByName("Dragon 2h axe").get();
         assertNotNull(recordWithHandicaps);
@@ -238,7 +238,7 @@ public class EventDataInitializationServiceTests {
         assertNotNull(handicap2);
         
         // Validate record/handicap properties are populated correctly
-        assertEquals(Player.Skill.WOODCUTTING, recordWithHandicaps.getSkill());
+        assertEquals("Woodcutting", recordWithHandicaps.getName());
         assertEquals("Get as much woodcutting XP as you can in 6 hours!", recordWithHandicaps.getDescription());
         assertEquals("Dragon axe", handicap1.getName());
         assertTrue(Math.abs(handicap1.getMultiplier() - 1.13) < 0.0001); // multiplier == 1.13
