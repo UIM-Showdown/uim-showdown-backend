@@ -241,7 +241,7 @@ public class AdminController {
             if(!guild.getRolesByName(team.getName(), false).isEmpty()) {
                 teamRole = guild.getRolesByName(team.getName(), false).get(0);
             } else {
-                teamRole = guild.createRole().setName(team.getName()).setColor(Color.decode("#" + team.getColor())).complete();
+                teamRole = guild.createRole().setName(team.getName()).setColor(Color.decode("#" + team.getColor())).setMentionable(true).complete();
             }
             
             // Create team category
