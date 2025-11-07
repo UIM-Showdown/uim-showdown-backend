@@ -681,13 +681,13 @@ competition:
           description: "Complete a full 3-player 300+ invo TOA raid as quickly as possible!"
           type: "Speedrun"
     records:
-        - skill: "Agility"
+        - name: "Agility"
           description: "Get as much agility XP as you can in 6 hours!"
-        - skill: "Fishing"
+        - name: "Barbarian Fishing"
           description: "Get as much fishing XP as you can in 6 hours, ONLY using the barbarian fishing method!"
-        - skill: "Mining"
+        - name: "Mining"
           description: "Get as much mining XP as you can in 6 hours!"
-        - skill: "Thieving"
+        - name: "Thieving"
           description: "Get as much thieving XP as you can in 6 hours!"
     collectionLogItems:
         - name: "Any Blessed D'hide Coif"
