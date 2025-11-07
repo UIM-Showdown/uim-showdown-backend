@@ -207,11 +207,12 @@ public class AdminController {
     public Map<String, Object> updateCompetitorRole() throws Exception {
         Guild guild = discordClient.getGuildById(guildId);
         Role competitorRole = guild.getRolesByName("Competitor", false).get(0);
-        List<String> namesNotFound = new ArrayList<String>();
+        List<Map<String, String>> signupsNotFound = new ArrayList<Map<String, String>>();
         Map<String, Object> result = new HashMap<String, Object>();
-        for(String discordName : googleSheetsService.getSignupDiscordNames()) {
+        for(Map<String, String> signup : googleSheetsService.getSignups()) {
+            String discordName = signup.get("discordName");
             if(guild.getMembersByName(discordName, true).isEmpty()) {
-                namesNotFound.add(discordName);
+                signupsNotFound.add(signup);
             } else {
                 Member member = guild.getMembersByName(discordName, true).get(0);
                 if(!member.getRoles().contains(competitorRole)) {                    
@@ -219,7 +220,7 @@ public class AdminController {
                 }
             }
         }
-        result.put("namesNotFound", namesNotFound);
+        result.put("signupsNotFound", signupsNotFound);
         return result;
     }
     

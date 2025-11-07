@@ -3,7 +3,9 @@ package org.uimshowdown.bingo.services;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -133,21 +135,25 @@ public class GoogleSheetsService {
         }
     }
     
-    public List<String> getSignupDiscordNames() throws Exception {
+    public List<Map<String, String>> getSignups() throws Exception {
         Sheets service = getSheetsService();
         ValueRange values = service.spreadsheets().values().get(signupSheetID, "Summer2025Signups").execute();
-        List<String> discordNames = new ArrayList<String>();
+        List<Map<String, String>> signups = new ArrayList<Map<String, String>>();
         for(List<Object> row : values.getValues()) {
-            String name = (String) row.get(4);
-            if(name == null || name.isEmpty()) {
+            String discordName = (String) row.get(4);
+            String rsn = (String) row.get(3);
+            if(discordName == null || discordName.isEmpty()) {
                 continue;
             }
-            if(name.contains("Enter your Discord username")) {
+            if(discordName.contains("Enter your Discord username")) {
                 continue; // This is the title row
             }
-            discordNames.add(name.trim());
+            Map<String, String> signup = new HashMap<String, String>();
+            signup.put("discordName", discordName.trim());
+            signup.put("rsn", rsn.trim());
+            signups.add(signup);
         }
-        return discordNames;
+        return signups;
     }
 
 }
