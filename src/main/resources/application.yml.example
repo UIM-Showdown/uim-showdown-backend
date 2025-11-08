@@ -317,6 +317,7 @@ competition:
                 category: "Other"
                 ehtRate: 375
                 templeID: "Soul Wars Zeal"
+                rankingThreshold: 200
               - name: "Hard Clues"
                 type: "Temple_KC"
                 category: "Other"
