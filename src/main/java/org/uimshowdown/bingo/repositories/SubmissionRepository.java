@@ -13,6 +13,9 @@ public interface SubmissionRepository extends CrudRepository<Submission, Integer
     @Query(value = "SELECT * FROM submissions WHERE player_id = ?1 AND contribution_method_id = ?2 AND id != ?3 AND state = 'APPROVED' AND type = 'CONTRIBUTION' ORDER BY id DESC LIMIT 1", nativeQuery = true)
     Optional<Submission> getPreviousContributionSubmission(int playerId, int methodId, int currentSubmissionId);
     
+    @Query(value = "SELECT * FROM submissions WHERE player_id = ?1 AND contribution_method_id = ?2 AND id != ?3 AND state = 'APPROVED' AND type = 'CONTRIBUTION_INCREMENT' ORDER BY id DESC LIMIT 1", nativeQuery = true)
+    Optional<Submission> getPreviousContributionIncrementSubmission(int playerId, int methodId, int currentSubmissionId);
+    
     @Query(value = "SELECT * FROM submissions WHERE player_id = ?1 AND contribution_method_id = ?2 AND id != ?3 AND state = 'APPROVED' AND type = 'UNRANKED_STARTING_VALUE' ORDER BY id DESC LIMIT 1", nativeQuery = true)
     Optional<Submission> getPreviousUnrankedStartingValueSubmission(int playerId, int methodId, int currentSubmissionId);
     

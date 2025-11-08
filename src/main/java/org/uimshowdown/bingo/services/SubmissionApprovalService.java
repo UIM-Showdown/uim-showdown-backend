@@ -13,6 +13,7 @@ import org.uimshowdown.bingo.models.ChallengeSubmission;
 import org.uimshowdown.bingo.models.CollectionLogCompletion;
 import org.uimshowdown.bingo.models.CollectionLogSubmission;
 import org.uimshowdown.bingo.models.Contribution;
+import org.uimshowdown.bingo.models.ContributionIncrementSubmission;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.ContributionSubmission;
 import org.uimshowdown.bingo.models.Player;
@@ -80,6 +81,9 @@ public class SubmissionApprovalService {
         if(submission instanceof ContributionSubmission) {
             processContributionSubmission((ContributionSubmission) submission, false);
         }
+        if(submission instanceof ContributionIncrementSubmission) {
+            processContributionIncrementSubmission((ContributionIncrementSubmission) submission);
+        }
         if(submission instanceof UnrankedStartingValueSubmission) {
             processUnrankedStartingValueSubmission((UnrankedStartingValueSubmission) submission);
         }
@@ -117,6 +121,9 @@ public class SubmissionApprovalService {
         if(oldState == Submission.State.APPROVED) {            
             if(submission instanceof ContributionSubmission) {
                 undoContributionApproval((ContributionSubmission) submission);
+            }
+            if(submission instanceof ContributionIncrementSubmission) {
+                undoContributionIncrementApproval((ContributionIncrementSubmission) submission);
             }
             if(submission instanceof UnrankedStartingValueSubmission) {
                 undoUnrankedStartingValueApproval((UnrankedStartingValueSubmission) submission);
@@ -160,6 +167,31 @@ public class SubmissionApprovalService {
                 }
             }
             contribution.setFinalValue(submission.getValue());
+            if(submission.getScreenshotUrls().size() > 0) {
+                contribution.setFinalValueScreenshotUrl(submission.getScreenshotUrls().get(0));
+            }
+        }
+        playerRepository.save(player);
+    }
+    
+    /**
+     * Updates the player's contribution to increment the final value by the amount in the submission
+     * @param submission
+     * @throws Exception
+     */
+    private void processContributionIncrementSubmission(ContributionIncrementSubmission submission) throws Exception {
+        Player player = submission.getPlayer();
+        Contribution contribution = player.getContribution(submission.getContributionMethod());
+        if(contribution.getContributionMethod().equals(submission.getContributionMethod())) {
+            if(contribution.isEmpty()) {
+                contribution.setInitialValue(0);
+                contribution.setFinalValue(0);
+                contribution.setIsEmpty(false);
+                if(submission.getScreenshotUrls().size() > 0) {
+                    contribution.setInitialValueScreenshotUrl(submission.getScreenshotUrls().get(0));
+                }
+            }
+            contribution.setFinalValue(contribution.getFinalValue() + submission.getAmount());
             if(submission.getScreenshotUrls().size() > 0) {
                 contribution.setFinalValueScreenshotUrl(submission.getScreenshotUrls().get(0));
             }
@@ -305,6 +337,25 @@ public class SubmissionApprovalService {
             playerRepository.save(player);
         } else {
             processContributionSubmission((ContributionSubmission) previousSubmission, true);
+        }
+    }
+    
+    private void undoContributionIncrementApproval(ContributionIncrementSubmission submission) throws Exception {
+        Player player = submission.getPlayer();
+        ContributionMethod method = submission.getContributionMethod();
+        Contribution contribution = player.getContribution(method);
+        Submission previousSubmission = submissionRepository.getPreviousContributionIncrementSubmission(player.getId(), method.getId(), submission.getId()).orElse(null);
+        if(previousSubmission == null) {
+            contribution.setIsEmpty(true);
+            contribution.setInitialValue(0);
+            contribution.setFinalValue(0);
+            contribution.setInitialValueScreenshotUrl(null);
+            contribution.setFinalValueScreenshotUrl(null);
+            playerRepository.save(player);
+        } else {
+            contribution.setFinalValue(contribution.getFinalValue() - submission.getAmount());
+            contribution.setFinalValueScreenshotUrl(previousSubmission.getScreenshotUrls().get(0));
+            playerRepository.save(player);
         }
     }
     

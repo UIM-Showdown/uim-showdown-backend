@@ -151,7 +151,7 @@ competition:
                 ehtRate: 27
                 templeID: "Scorpia"
               - name: "Revenants: Ether"
-                type: "Submission_Item_Drop"
+                type: "Submission_Other"
                 category: "PVM"
                 ehtRate: 1200
               - name: "Chaos Elemental"
@@ -274,7 +274,7 @@ competition:
                 category: "PVM"
                 ehtRate: 0.95
               - name: "Nex: Nihil Shards"
-                type: "Submission_Item_Drop"
+                type: "Submission_Other"
                 category: "PVM"
                 ehtRate: 33.33
               - name: "Amoxliatl"

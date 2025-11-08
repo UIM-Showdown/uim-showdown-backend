@@ -32,7 +32,7 @@ public class Submission {
     
     public enum State { OPEN, APPROVED, DENIED }
     
-    public enum Type { RECORD, CHALLENGE, CONTRIBUTION, COLLECTION_LOG, UNRANKED_STARTING_VALUE }
+    public enum Type { RECORD, CHALLENGE, CONTRIBUTION, CONTRIBUTION_INCREMENT, COLLECTION_LOG, UNRANKED_STARTING_VALUE }
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

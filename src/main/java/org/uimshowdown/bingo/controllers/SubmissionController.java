@@ -19,6 +19,7 @@ import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.ChallengeSubmission;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.CollectionLogSubmission;
+import org.uimshowdown.bingo.models.ContributionIncrementSubmission;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.ContributionSubmission;
 import org.uimshowdown.bingo.models.ItemOption;
@@ -90,6 +91,39 @@ public class SubmissionController {
         submission.setSubmissionState(Submission.State.OPEN);
         submission.setValue((int) requestBody.get("value"));
         submission.setType(Submission.Type.CONTRIBUTION);
+        submission.setDescription((String) requestBody.get("description"));
+        submission.setScreenshotUrls((List<String>) requestBody.get("screenshotURLs"));
+        submission.setSubmittedAt(new Timestamp(System.currentTimeMillis()));
+        
+        Submission returnedSubmission = submissionRepository.save(submission);
+        
+        Map<String, Object> responseBody = new HashMap<String, Object>();
+        responseBody.put("id", returnedSubmission.getId());
+        return responseBody;
+    }
+    
+    @SuppressWarnings("unchecked")
+    @PostMapping("/submissions/contribution/increment")
+    public Map<String, Object> createContributionIncrementSubmission(@RequestBody Map<String, Object> requestBody) {
+        Player player = playerRepository.findByRsn((String) requestBody.get("rsn")).orElse(null);
+        ContributionMethod contributionMethod = contributionMethodRepository.findByName((String) requestBody.get("methodName")).orElse(null);
+        if(player == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found: " + (String) requestBody.get("rsn"));
+        }
+        if(contributionMethod == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Contribution not found: " + (String) requestBody.get("methodName"));
+        }
+        ContributionMethod.Type type = contributionMethod.getContributionMethodType();
+        if(type != ContributionMethod.Type.SUBMISSION_KC && type != ContributionMethod.Type.SUBMISSION_ITEM_DROP && type != ContributionMethod.Type.SUBMISSION_OTHER) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Contribution method is not a submission-based method: " + (String) requestBody.get("methodName"));
+        }
+        
+        ContributionIncrementSubmission submission = new ContributionIncrementSubmission();
+        submission.setContributionMethod(contributionMethod);
+        submission.setPlayer(player);
+        submission.setSubmissionState(Submission.State.OPEN);
+        submission.setAmount((int) requestBody.get("amount"));
+        submission.setType(Submission.Type.CONTRIBUTION_INCREMENT);
         submission.setDescription((String) requestBody.get("description"));
         submission.setScreenshotUrls((List<String>) requestBody.get("screenshotURLs"));
         submission.setSubmittedAt(new Timestamp(System.currentTimeMillis()));
