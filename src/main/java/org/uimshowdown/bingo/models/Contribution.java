@@ -40,6 +40,9 @@ public class Contribution {
 
     @Column(name = "staff_adjustment")
     private int staffAdjustment = 0;
+    
+    @Column(name = "purchase_amount")
+    private int purchaseAmount = 0;
 
     @Column(name = "unranked_starting_value")
     private int unrankedStartingValue = -1;
@@ -95,6 +98,10 @@ public class Contribution {
         return staffAdjustment;
     }
 
+    public int getPurchaseAmount() {
+        return purchaseAmount;
+    }
+
     public int getUnrankedStartingValue() {
         return unrankedStartingValue;
     }
@@ -130,6 +137,10 @@ public class Contribution {
     public void setStaffAdjustment(int staffAdjustment) {
         this.staffAdjustment = staffAdjustment;
     }
+    
+    public void setPurchaseAmount(int purchaseAmount) {
+        this.purchaseAmount = purchaseAmount;
+    }
 
     public void setUnrankedStartingValue(int unrankedStartingValue) {
         this.unrankedStartingValue = unrankedStartingValue;
@@ -150,9 +161,9 @@ public class Contribution {
             return 0;
         }
         if(unrankedStartingValue == -1) {
-            return finalValue - initialValue + staffAdjustment;
+            return finalValue - initialValue + staffAdjustment + purchaseAmount;
         } else {
-            return finalValue - unrankedStartingValue + staffAdjustment;
+            return finalValue - unrankedStartingValue + staffAdjustment + purchaseAmount;
         }
     }
     

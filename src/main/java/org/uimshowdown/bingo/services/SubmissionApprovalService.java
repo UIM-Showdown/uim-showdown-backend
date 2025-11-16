@@ -15,6 +15,7 @@ import org.uimshowdown.bingo.models.CollectionLogSubmission;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionIncrementSubmission;
 import org.uimshowdown.bingo.models.ContributionMethod;
+import org.uimshowdown.bingo.models.ContributionPurchaseSubmission;
 import org.uimshowdown.bingo.models.ContributionSubmission;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.PlayerChallengeCompletion;
@@ -84,6 +85,9 @@ public class SubmissionApprovalService {
         if(submission instanceof ContributionIncrementSubmission) {
             processContributionIncrementSubmission((ContributionIncrementSubmission) submission);
         }
+        if(submission instanceof ContributionPurchaseSubmission) {
+            processContributionPurchaseSubmission((ContributionPurchaseSubmission) submission);
+        }
         if(submission instanceof UnrankedStartingValueSubmission) {
             processUnrankedStartingValueSubmission((UnrankedStartingValueSubmission) submission);
         }
@@ -124,6 +128,9 @@ public class SubmissionApprovalService {
             }
             if(submission instanceof ContributionIncrementSubmission) {
                 undoContributionIncrementApproval((ContributionIncrementSubmission) submission);
+            }
+            if(submission instanceof ContributionPurchaseSubmission) {
+                undoContributionPurchaseApproval((ContributionPurchaseSubmission) submission);
             }
             if(submission instanceof UnrankedStartingValueSubmission) {
                 undoUnrankedStartingValueApproval((UnrankedStartingValueSubmission) submission);
@@ -195,6 +202,21 @@ public class SubmissionApprovalService {
             if(submission.getScreenshotUrls().size() > 0) {
                 contribution.setFinalValueScreenshotUrl(submission.getScreenshotUrls().get(0));
             }
+        }
+        playerRepository.save(player);
+    }
+    
+    /**
+     * Updates the player's contribution to decrease the final value by the amount in the submission, and increase the purchase amount by the same amount
+     * @param submission
+     * @throws Exception
+     */
+    private void processContributionPurchaseSubmission(ContributionPurchaseSubmission submission) throws Exception {
+        Player player = submission.getPlayer();
+        Contribution contribution = player.getContribution(submission.getContributionMethod());
+        if(contribution.getContributionMethod().equals(submission.getContributionMethod())) {
+            contribution.setPurchaseAmount(contribution.getPurchaseAmount() + submission.getAmount());
+            contribution.setFinalValue(contribution.getFinalValue() - submission.getAmount());
         }
         playerRepository.save(player);
     }
@@ -357,6 +379,15 @@ public class SubmissionApprovalService {
             contribution.setFinalValueScreenshotUrl(previousSubmission.getScreenshotUrls().get(0));
             playerRepository.save(player);
         }
+    }
+    
+    private void undoContributionPurchaseApproval(ContributionPurchaseSubmission submission) throws Exception {
+        Player player = submission.getPlayer();
+        ContributionMethod method = submission.getContributionMethod();
+        Contribution contribution = player.getContribution(method);
+        contribution.setFinalValue(contribution.getFinalValue() + submission.getAmount());
+        contribution.setPurchaseAmount(contribution.getPurchaseAmount() - submission.getAmount());
+        playerRepository.save(player);
     }
     
     private void undoUnrankedStartingValueApproval(UnrankedStartingValueSubmission submission) throws Exception {
