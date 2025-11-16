@@ -43,7 +43,7 @@ public class ContributionMethod {
     private Set<Contribution> playerContributions = new HashSet<Contribution>();
     
     @OneToMany(mappedBy = "contributionMethod", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @JsonProperty
     private List<ContributionPurchaseItem> purchaseItems = new ArrayList<ContributionPurchaseItem>();
 
     @ManyToOne(fetch = FetchType.LAZY)

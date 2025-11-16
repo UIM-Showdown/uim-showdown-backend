@@ -1,5 +1,6 @@
 package org.uimshowdown.bingo.configuration;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -434,7 +435,7 @@ public class CompetitionConfiguration {
         private int diminishedThreshold = -1;
         private double diminishedMultiplier = -1.0;
         private int rankingThreshold = 5;
-        private List<ContributionPurchaseItemConfig> purchaseItems;
+        private List<ContributionPurchaseItemConfig> purchaseItems = new ArrayList<ContributionPurchaseItemConfig>();
         
         public String getName() {
             return name;
