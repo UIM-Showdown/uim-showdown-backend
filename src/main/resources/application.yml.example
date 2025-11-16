@@ -198,6 +198,29 @@ competition:
                 type: "Submission_Other"
                 category: "Skilling"
                 ehtRate: 16000
+                purchaseItems:
+                    - name: "Apprentice potion pack"
+                      cost: 520
+                    - name: "Adept potion pack"
+                      cost: 690
+                    - name: "Expert potion pack"
+                      cost: 1210
+                    - name: "Prescription goggles"
+                      cost: 24950
+                    - name: "Alchemist labcoat"
+                      cost: 8750
+                    - name: "Alchemist pants"
+                      cost: 8750
+                    - name: "Alchemist gloves"
+                      cost: 8750
+                    - name: "Reagent pouch"
+                      cost: 40100
+                    - name: "Chugging barrel"
+                      cost: 49850
+                    - name: "Alchemist's amulet"
+                      cost: 19950
+                    - name: "Aldarium"
+                      cost: 230
               - name: "Cooking"
                 type: "Temple_XP"
                 category: "Skilling"
@@ -304,6 +327,35 @@ competition:
                 type: "Submission_Other"
                 category: "Skilling"
                 ehtRate: 110
+                purchaseItems:
+                    - name: "Farmer's strawhat"
+                      cost: 75
+                    - name: "Farmer's jacket/shirt"
+                      cost: 150
+                    - name: "Farmer's boro trousers"
+                      cost: 125
+                    - name: "Farmer's boots"
+                      cost: 50
+                    - name: "Compost"
+                      cost: 1
+                    - name: "Supercompost"
+                      cost: 5
+                    - name: "Grape seed"
+                      cost: 2
+                    - name: "Bologa's blessing (20 stack)"
+                      cost: 1
+                    - name: "Herb box"
+                      cost: 30
+                    - name: "Seed pack"
+                      cost: 30
+                    - name: "Seed box"
+                      cost: 250
+                    - name: "Herb sack"
+                      cost: 250
+                    - name: "Gricoller's can"
+                      cost: 200
+                    - name: "Auto-weed"
+                      cost: 50
               - name: "LMS: Kills"
                 type: "Submission_Other"
                 category: "Other"
@@ -517,6 +569,31 @@ competition:
                 type: "Submission_Other"
                 category: "Other"
                 ehtRate: 1200
+                purchaseItems:
+                  - name: "Level 2 Upgrade"
+                    cost: 200
+                  - name: "Level 3 Upgrade"
+                    cost: 300
+                  - name: "Level 4 Upgrade"
+                    cost: 400
+                  - name: "Level 5 Upgrade"
+                    cost: 500
+                  - name: "Fighter hat"
+                    cost: 1100
+                  - name: "Ranger hat"
+                    cost: 1100
+                  - name: "Runner hat"
+                    cost: 1100
+                  - name: "Fighter torso"
+                    cost: 1100
+                  - name: "Penance skirt"
+                    cost: 1500
+                  - name: "Runner boots"
+                    cost: 400
+                  - name: "Penance gloves"
+                    cost: 600
+                  - name: "High gamble"
+                    cost: 500
               - name: "TzTok-Jad"
                 type: "Temple_KC"
                 category: "PVM"
@@ -593,18 +670,118 @@ competition:
                 type: "Submission_Other"
                 category: "Other"
                 ehtRate: 340
+                purchaseItems:
+                  - name: "Infinity hat"
+                    cost: 400
+                  - name: "Infinity top"
+                    cost: 450
+                  - name: "Infinity bottoms"
+                    cost: 500
+                  - name: "Infinity gloves"
+                    cost: 225
+                  - name: "Infinity boots"
+                    cost: 120
+                  - name: "Beginner wand"
+                    cost: 30
+                  - name: "Apprentice wand"
+                    cost: 60
+                  - name: "Teacher wand"
+                    cost: 200
+                  - name: "Master wand"
+                    cost: 240
+                  - name: "Mage's book"
+                    cost: 550
+                  - name: "Rune pouch"
+                    cost: 200
+                  - name: "Bones to Peaches"
+                    cost: 300
               - name: "MTA: Creature Graveyard"
                 type: "Submission_Other"
                 category: "Other"
                 ehtRate: 1080
+                purchaseItems:
+                  - name: "Infinity hat"
+                    cost: 350
+                  - name: "Infinity top"
+                    cost: 400
+                  - name: "Infinity bottoms"
+                    cost: 450
+                  - name: "Infinity gloves"
+                    cost: 175
+                  - name: "Infinity boots"
+                    cost: 120
+                  - name: "Beginner wand"
+                    cost: 30
+                  - name: "Apprentice wand"
+                    cost: 60
+                  - name: "Teacher wand"
+                    cost: 120
+                  - name: "Master wand"
+                    cost: 240
+                  - name: "Mage's book"
+                    cost: 500
+                  - name: "Rune pouch"
+                    cost: 150
+                  - name: "Bones to Peaches"
+                    cost: 200
               - name: "MTA: Enchanting Chamber"
                 type: "Submission_Other"
                 category: "Other"
                 ehtRate: 15000
+                purchaseItems:
+                  - name: "Infinity hat"
+                    cost: 3000
+                  - name: "Infinity top"
+                    cost: 4000
+                  - name: "Infinity bottoms"
+                    cost: 5000
+                  - name: "Infinity gloves"
+                    cost: 1500
+                  - name: "Infinity boots"
+                    cost: 1200
+                  - name: "Beginner wand"
+                    cost: 300
+                  - name: "Apprentice wand"
+                    cost: 600
+                  - name: "Teacher wand"
+                    cost: 1500
+                  - name: "Master wand"
+                    cost: 2400
+                  - name: "Mage's book"
+                    cost: 6000
+                  - name: "Rune pouch"
+                    cost: 1500
+                  - name: "Bones to Peaches"
+                    cost: 2000
               - name: "MTA: Telekinetic Theatre"
                 type: "Submission_Other"
                 category: "Other"
                 ehtRate: 285
+                purchaseItems:
+                  - name: "Infinity hat"
+                    cost: 350
+                  - name: "Infinity top"
+                    cost: 400
+                  - name: "Infinity bottoms"
+                    cost: 450
+                  - name: "Infinity gloves"
+                    cost: 175
+                  - name: "Infinity boots"
+                    cost: 120
+                  - name: "Beginner wand"
+                    cost: 30
+                  - name: "Apprentice wand"
+                    cost: 60
+                  - name: "Teacher wand"
+                    cost: 120
+                  - name: "Master wand"
+                    cost: 240
+                  - name: "Mage's book"
+                    cost: 500
+                  - name: "Rune pouch"
+                    cost: 150
+                  - name: "Bones to Peaches"
+                    cost: 200
               - name: "Grotesque Guardians"
                 type: "Temple_KC"
                 category: "PVM"

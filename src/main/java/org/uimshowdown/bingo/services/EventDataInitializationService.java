@@ -14,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.ChallengeConfig;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.ContributionMethodConfig;
+import org.uimshowdown.bingo.configuration.CompetitionConfiguration.ContributionPurchaseItemConfig;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.HandicapConfig;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.CollectionLogItemConfig;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.RecordConfig;
@@ -26,6 +27,7 @@ import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
+import org.uimshowdown.bingo.models.ContributionPurchaseItem;
 import org.uimshowdown.bingo.models.ItemOption;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.PlayerScoreboard;
@@ -136,6 +138,15 @@ public class EventDataInitializationService {
                 method.setTile(tile);
                 method.setDiminishedThreshold(methodConfig.getDiminishedThreshold());
                 method.setDiminishedMultiplier(methodConfig.getDiminishedMultiplier());
+                List<ContributionPurchaseItem> purchaseItems = new ArrayList<ContributionPurchaseItem>();
+                for(ContributionPurchaseItemConfig itemConfig : methodConfig.getPurchaseItems()) {
+                    ContributionPurchaseItem item = new ContributionPurchaseItem();
+                    item.setContributionMethod(method);
+                    item.setName(itemConfig.getName());
+                    item.setCost(itemConfig.getCost());
+                    purchaseItems.add(item);
+                }
+                method.setPurchaseItems(purchaseItems);
                 contributionMethods.add(method);
             }
             tile.setContributionMethods(contributionMethods);

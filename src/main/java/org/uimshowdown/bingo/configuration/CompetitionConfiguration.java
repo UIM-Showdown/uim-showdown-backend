@@ -434,6 +434,7 @@ public class CompetitionConfiguration {
         private int diminishedThreshold = -1;
         private double diminishedMultiplier = -1.0;
         private int rankingThreshold = 5;
+        private List<ContributionPurchaseItemConfig> purchaseItems;
         
         public String getName() {
             return name;
@@ -482,6 +483,30 @@ public class CompetitionConfiguration {
         }
         public void setRankingThreshold(int rankingThreshold) {
             this.rankingThreshold = rankingThreshold;
+        }
+        public List<ContributionPurchaseItemConfig> getPurchaseItems() {
+            return purchaseItems;
+        }
+        public void setPurchaseItems(List<ContributionPurchaseItemConfig> purchaseItems) {
+            this.purchaseItems = purchaseItems;
+        }
+    }
+    
+    public static class ContributionPurchaseItemConfig {
+        private String name;
+        private String cost;
+        
+        public String getName() {
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+        public String getCost() {
+            return cost;
+        }
+        public void setCost(String cost) {
+            this.cost = cost;
         }
     }
     

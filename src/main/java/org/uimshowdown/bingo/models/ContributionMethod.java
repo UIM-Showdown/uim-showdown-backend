@@ -1,5 +1,7 @@
 package org.uimshowdown.bingo.models;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,6 +41,10 @@ public class ContributionMethod {
     @OneToMany(mappedBy = "contributionMethod", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Contribution> playerContributions = new HashSet<Contribution>();
+    
+    @OneToMany(mappedBy = "contributionMethod", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<ContributionPurchaseItem> purchaseItems = new ArrayList<ContributionPurchaseItem>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tile_id")
@@ -197,6 +203,14 @@ public class ContributionMethod {
 
     public void setRankingThreshold(int rankingThreshold) {
         this.rankingThreshold = rankingThreshold;
+    }
+
+    public List<ContributionPurchaseItem> getPurchaseItems() {
+        return purchaseItems;
+    }
+
+    public void setPurchaseItems(List<ContributionPurchaseItem> purchaseItems) {
+        this.purchaseItems = purchaseItems;
     }
 
     @Override
