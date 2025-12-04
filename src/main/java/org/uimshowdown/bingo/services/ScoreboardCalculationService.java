@@ -73,8 +73,7 @@ public class ScoreboardCalculationService {
         }
         
         // Because challenge/record points are dependent on other teams' points too, we have to do them all at once
-        calculateAllRecords();
-        calculateAllChallenges();
+        calculateAllRecordsAndChallenges();
         calculateAllTotalPoints();
         for(Team team : teams) {
             teamRepository.save(team);
@@ -301,30 +300,49 @@ public class ScoreboardCalculationService {
     }
     
     /**
-     * Updates event points from records and record leaderboard entries for all team scoreboards
+     * Updates event points from records/challenges and record/challenge leaderboard entries for all team scoreboards
      */
-    private void calculateAllRecords() {
+    private void calculateAllRecordsAndChallenges() {
+        
         // Assemble a leaderboard for each record
-        Map<Record, List<RecordCompletion>> completionLeaderboards = new HashMap<Record, List<RecordCompletion>>();
+        Map<Record, List<RecordCompletion>> recordCompletionLeaderboards = new HashMap<Record, List<RecordCompletion>>();
         for(Record record : recordRepository.findAll()) {            
-            List<RecordCompletion> leaderboard = new ArrayList<RecordCompletion>();
+            List<RecordCompletion> recordLeaderboard = new ArrayList<RecordCompletion>();
             for(Team team : teamRepository.findAll()) {
                 if(team.getName().equals(competitionConfiguration.getWaitlistTeamName())) {
                     continue; // Waitlist team isn't on the leaderboard
                 }
                 RecordCompletion bestRecord = team.getBestRecordCompletion(record);
                 if(bestRecord != null) {
-                    leaderboard.add(bestRecord);
+                    recordLeaderboard.add(bestRecord);
                 }
             }
-            leaderboard.sort((RecordCompletion c1, RecordCompletion c2) -> c2.getValue() - c1.getValue()); // Descending sort
-            completionLeaderboards.put(record, leaderboard);
+            recordLeaderboard.sort((RecordCompletion c1, RecordCompletion c2) -> c2.getValue() - c1.getValue()); // Descending sort
+            recordCompletionLeaderboards.put(record, recordLeaderboard);
+        }
+        
+        // Assemble a leaderboard for each challenge
+        Map<Challenge, List<ChallengeCompletion>> challengeCompletionLeaderboards = new HashMap<Challenge, List<ChallengeCompletion>>();
+        for(Challenge challenge : challengeRepository.findAll()) {
+            List<ChallengeCompletion> challengeLeaderboard = new ArrayList<ChallengeCompletion>();
+            for(Team team : teamRepository.findAll()) {
+                if(team.getName().equals(competitionConfiguration.getWaitlistTeamName())) {
+                    continue; // Waitlist team isn't on the leaderboard
+                }
+                ChallengeCompletion completion = team.getChallengeCompletion(challenge);
+                if(completion != null && completion.isComplete()) {
+                    challengeLeaderboard.add(completion);
+                }
+            }
+            challengeLeaderboard.sort((ChallengeCompletion c1, ChallengeCompletion c2) -> c1.getSeconds() - c2.getSeconds() < 0 ? -1 : 1); // Ascending sort
+            challengeCompletionLeaderboards.put(challenge, challengeLeaderboard);
         }
         
         for(Team team : teamRepository.findAll()) {
             if(team.getName().equals(competitionConfiguration.getWaitlistTeamName())) {
                 continue; // Waitlist team isn't on the leaderboard
             }
+            
             // Assemble a list of point values for each record
             List<Integer> recordPoints = new ArrayList<Integer>();
             for(Record record : recordRepository.findAll()) {
@@ -337,7 +355,7 @@ public class ScoreboardCalculationService {
                     leaderboardEntry.setValue(-1);
                     continue;
                 }
-                List<RecordCompletion> leaderboard = completionLeaderboards.get(record);
+                List<RecordCompletion> leaderboard = recordCompletionLeaderboards.get(record);
                 RecordCompletion firstPlaceCompletion = leaderboard.get(0);
                 if(teamCompletion.getValue() < firstPlaceCompletion.getValue() * competitionConfiguration.getRecordDistanceCutoffPercentage()) {
                     continue;
@@ -358,47 +376,7 @@ public class ScoreboardCalculationService {
                 leaderboardEntry.setValue(teamCompletion.getValue());
             }
             
-            // Take the top X point values based on configuration
-            Collections.sort(recordPoints, Collections.reverseOrder()); // Descending sort
-            int valuesUsed = 0;
-            int pointsFromRecords = 0;
-            for(Integer points : recordPoints) {
-                if(valuesUsed == competitionConfiguration.getTopNumberOfRecordsToUse()) {
-                    break;
-                }
-                pointsFromRecords += points;
-                valuesUsed++;
-            }
-            team.getScoreboard().setEventPointsFromRecords(pointsFromRecords);
-        }
-    }
-        
-    /**
-     * Updates event points from challenges for all team scoreboards
-     */
-    private void calculateAllChallenges() {
-        // Assemble a leaderboard for each record
-        Map<Challenge, List<ChallengeCompletion>> completionLeaderboards = new HashMap<Challenge, List<ChallengeCompletion>>();
-        for(Challenge challenge : challengeRepository.findAll()) {
-            List<ChallengeCompletion> leaderboard = new ArrayList<ChallengeCompletion>();
-            for(Team team : teamRepository.findAll()) {
-                if(team.getName().equals(competitionConfiguration.getWaitlistTeamName())) {
-                    continue; // Waitlist team isn't on the leaderboard
-                }
-                ChallengeCompletion completion = team.getChallengeCompletion(challenge);
-                if(completion != null && completion.isComplete()) {
-                    leaderboard.add(completion);
-                }
-            }
-            leaderboard.sort((ChallengeCompletion c1, ChallengeCompletion c2) -> c1.getSeconds() - c2.getSeconds() < 0 ? -1 : 1); // Ascending sort
-            completionLeaderboards.put(challenge, leaderboard);
-        }
-        
-        for(Team team : teamRepository.findAll()) {
-            if(team.getName().equals(competitionConfiguration.getWaitlistTeamName())) {
-                continue; // Waitlist team isn't on the leaderboard
-            }
-            // Assemble a list of point values for each record
+            // Assemble a list of point values for each challenge
             List<Integer> challengePoints = new ArrayList<Integer>();
             for(Challenge challenge : challengeRepository.findAll()) {
                 ChallengeCompletion teamCompletion = team.getChallengeCompletion(challenge);
@@ -410,7 +388,7 @@ public class ScoreboardCalculationService {
                     leaderboardEntry.setSeconds(-1.0);
                     continue;
                 }
-                List<ChallengeCompletion> leaderboard = completionLeaderboards.get(challenge);
+                List<ChallengeCompletion> leaderboard = challengeCompletionLeaderboards.get(challenge);
                 ChallengeCompletion firstPlaceCompletion = leaderboard.get(0);
                 if(teamCompletion.getSeconds() > firstPlaceCompletion.getSeconds() * competitionConfiguration.getChallengeDistanceCutoffPercentage()) {
                     continue;
@@ -436,17 +414,20 @@ public class ScoreboardCalculationService {
             }
             
             // Take the top X point values based on configuration
-            Collections.sort(challengePoints, Collections.reverseOrder()); // Descending sort
+            List<Integer> recordAndChallengePoints = new ArrayList<Integer>();
+            recordAndChallengePoints.addAll(recordPoints);
+            recordAndChallengePoints.addAll(challengePoints);
+            Collections.sort(recordAndChallengePoints, Collections.reverseOrder()); // Descending sort
             int valuesUsed = 0;
-            int pointsFromChallenges = 0;
-            for(Integer points : challengePoints) {
-                if(valuesUsed == competitionConfiguration.getTopNumberOfChallengesToUse()) {
+            int pointsFromRecordsAndChallenges = 0;
+            for(Integer points : recordAndChallengePoints) {
+                if(valuesUsed == competitionConfiguration.getNumberOfScoredRecordsAndChallenges()) {
                     break;
                 }
-                pointsFromChallenges += points;
+                pointsFromRecordsAndChallenges += points;
                 valuesUsed++;
             }
-            team.getScoreboard().setEventPointsFromChallenges(pointsFromChallenges);
+            team.getScoreboard().setEventPointsFromRecordsAndChallenges(pointsFromRecordsAndChallenges);
         }
     }
     
@@ -460,8 +441,7 @@ public class ScoreboardCalculationService {
             points += scoreboard.getEventPointsFromTiles();
             points += scoreboard.getEventPointsFromGroups();
             points += scoreboard.getEventPointsFromCollectionLogItems();
-            points += scoreboard.getEventPointsFromRecords();
-            points += scoreboard.getEventPointsFromChallenges();
+            points += scoreboard.getEventPointsFromRecordsAndChallenges();
             scoreboard.setEventPoints(points);
         }
     }

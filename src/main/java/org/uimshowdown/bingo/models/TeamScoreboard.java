@@ -30,17 +30,14 @@ public class TeamScoreboard {
     @Column(name = "event_points")
     private int eventPoints;
 
-    @Column(name = "event_points_from_challenges")
-    private int eventPointsFromChallenges;
-
     @Column(name = "event_points_from_collection_log_items")
     private int eventPointsFromCollectionLogItems;
 
     @Column(name = "event_points_from_groups")
     private int eventPointsFromGroups;
 
-    @Column(name = "event_points_from_records")
-    private int eventPointsFromRecords;
+    @Column(name = "event_points_from_records_and_challenges")
+    private int eventPointsFromRecordsAndChallenges;
 
     @Column(name = "event_points_from_tiles")
     private int eventPointsFromTiles;
@@ -67,10 +64,6 @@ public class TeamScoreboard {
         return eventPoints;
     }
 
-    public int getEventPointsFromChallenges() {
-        return eventPointsFromChallenges;
-    }
-
     public int getEventPointsFromCollectionLogItems() {
         return eventPointsFromCollectionLogItems;
     }
@@ -79,8 +72,8 @@ public class TeamScoreboard {
         return eventPointsFromGroups;
     }
 
-    public int getEventPointsFromRecords() {
-        return eventPointsFromRecords;
+    public int getEventPointsFromRecordsAndChallenges() {
+        return eventPointsFromRecordsAndChallenges;
     }
 
     public int getEventPointsFromTiles() {
@@ -95,10 +88,6 @@ public class TeamScoreboard {
         eventPoints = points;
     }
 
-    public void setEventPointsFromChallenges(int points) {
-        eventPointsFromChallenges = points;
-    }
-
     public void setEventPointsFromCollectionLogItems(int points) {
         eventPointsFromCollectionLogItems = points;
     }
@@ -107,8 +96,8 @@ public class TeamScoreboard {
         eventPointsFromGroups = points;
     }
 
-    public void setEventPointsFromRecords(int points) {
-        eventPointsFromRecords = points;
+    public void setEventPointsFromRecordsAndChallenges(int points) {
+        eventPointsFromRecordsAndChallenges = points;
     }
 
     public void setEventPointsFromTiles(int points) {

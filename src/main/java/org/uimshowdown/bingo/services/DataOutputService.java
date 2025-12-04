@@ -129,8 +129,7 @@ public class DataOutputService {
                 "eventPoints",
                 "eventPointsFromTileComp",
                 "eventPointsFromGroupBonuses",
-                "eventPointsFromRecords",
-                "eventPointsFromChallenges",
+                "eventPointsFromRecordsAndChallenges",
                 "eventPointsFromCollectionLog"));
         for(Tile tile : tileRepository.findByOrderByIdAsc()) {
             titleRow.add("tier: " + tile.getName());
@@ -175,8 +174,7 @@ public class DataOutputService {
             row.add(scoreboard.getEventPoints());
             row.add(scoreboard.getEventPointsFromTiles());
             row.add(scoreboard.getEventPointsFromGroups());
-            row.add(scoreboard.getEventPointsFromRecords());
-            row.add(scoreboard.getEventPointsFromChallenges());
+            row.add(scoreboard.getEventPointsFromRecordsAndChallenges());
             row.add(scoreboard.getEventPointsFromCollectionLogItems());
             for(Tile tile : tileRepository.findByOrderByIdAsc()) {
                 row.add(team.getTileProgress(tile).getTier());

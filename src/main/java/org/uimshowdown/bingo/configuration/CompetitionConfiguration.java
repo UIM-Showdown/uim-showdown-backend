@@ -36,7 +36,7 @@ public class CompetitionConfiguration {
     
     private boolean blackoutBonusEnabled;
     
-    private int topNumberOfRecordsToUse;
+    private int numberOfScoredRecordsAndChallenges;
     
     private int recordPlacePoints;
     
@@ -45,8 +45,6 @@ public class CompetitionConfiguration {
     private int recordDistancePoints;
     
     private double recordDistanceCutoffPercentage;
-    
-    private int topNumberOfChallengesToUse;
     
     private int challengePlacePoints;
     
@@ -156,12 +154,12 @@ public class CompetitionConfiguration {
         this.blackoutBonusEnabled = blackoutBonusEnabled;
     }
 
-    public int getTopNumberOfRecordsToUse() {
-        return topNumberOfRecordsToUse;
+    public int getNumberOfScoredRecordsAndChallenges() {
+        return numberOfScoredRecordsAndChallenges;
     }
 
-    public void setTopNumberOfRecordsToUse(int topNumberOfRecordsToUse) {
-        this.topNumberOfRecordsToUse = topNumberOfRecordsToUse;
+    public void setNumberOfScoredRecordsAndChallenges(int numberOfScoredRecordsAndChallenges) {
+        this.numberOfScoredRecordsAndChallenges = numberOfScoredRecordsAndChallenges;
     }
 
     public int getRecordPlacePoints() {
@@ -194,14 +192,6 @@ public class CompetitionConfiguration {
 
     public void setRecordDistanceCutoffPercentage(double recordDistanceCutoffPercentage) {
         this.recordDistanceCutoffPercentage = recordDistanceCutoffPercentage;
-    }
-
-    public int getTopNumberOfChallengesToUse() {
-        return topNumberOfChallengesToUse;
-    }
-
-    public void setTopNumberOfChallengesToUse(int topNumberOfChallengesToUse) {
-        this.topNumberOfChallengesToUse = topNumberOfChallengesToUse;
     }
 
     public int getChallengePlacePoints() {

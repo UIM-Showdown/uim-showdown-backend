@@ -8,12 +8,11 @@ competition:
     eventPointsPerTier: [25, 23, 21, 19, 17, 15]
     tierCap: -1
     blackoutBonusEnabled: true
-    topNumberOfRecordsToUse: 3
+    numberOfScoredRecordsAndChallenges: 6
     recordPlacePoints: 10
     recordPlacePointsFalloff: 2
     recordDistancePoints: 10
     recordDistanceCutoffPercentage: 0.5
-    topNumberOfChallengesToUse: 3
     challengePlacePoints: 10
     challengePlacePointsFalloff: 2
     challengeDistancePoints: 10
