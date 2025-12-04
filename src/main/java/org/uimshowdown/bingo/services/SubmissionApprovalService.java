@@ -23,7 +23,6 @@ import org.uimshowdown.bingo.models.Record;
 import org.uimshowdown.bingo.models.RecordCompletion;
 import org.uimshowdown.bingo.models.RecordSubmission;
 import org.uimshowdown.bingo.models.Submission;
-import org.uimshowdown.bingo.models.UnrankedStartingValueSubmission;
 import org.uimshowdown.bingo.repositories.CollectionLogCompletionRepository;
 import org.uimshowdown.bingo.repositories.PlayerChallengeCompletionRepository;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
@@ -88,9 +87,6 @@ public class SubmissionApprovalService {
         if(submission instanceof ContributionPurchaseSubmission) {
             processContributionPurchaseSubmission((ContributionPurchaseSubmission) submission);
         }
-        if(submission instanceof UnrankedStartingValueSubmission) {
-            processUnrankedStartingValueSubmission((UnrankedStartingValueSubmission) submission);
-        }
         if(submission instanceof ChallengeSubmission) {
             processChallengeSubmission((ChallengeSubmission) submission, false);
         }
@@ -131,9 +127,6 @@ public class SubmissionApprovalService {
             }
             if(submission instanceof ContributionPurchaseSubmission) {
                 undoContributionPurchaseApproval((ContributionPurchaseSubmission) submission);
-            }
-            if(submission instanceof UnrankedStartingValueSubmission) {
-                undoUnrankedStartingValueApproval((UnrankedStartingValueSubmission) submission);
             }
             if(submission instanceof ChallengeSubmission) {
                 undoChallengeApproval((ChallengeSubmission) submission);
@@ -217,22 +210,6 @@ public class SubmissionApprovalService {
         if(contribution.getContributionMethod().equals(submission.getContributionMethod())) {
             contribution.setPurchaseAmount(contribution.getPurchaseAmount() + submission.getAmount());
             contribution.setFinalValue(contribution.getFinalValue() - submission.getAmount());
-        }
-        playerRepository.save(player);
-    }
-    
-    /**
-     * Updates the player's contribution to have the new unranked starting value
-     * @param submission
-     * @throws Exception
-     */
-    private void processUnrankedStartingValueSubmission(UnrankedStartingValueSubmission submission) throws Exception {
-        Player player = submission.getPlayer();
-        for(Contribution contribution : player.getContributions()) {
-            if(contribution.getContributionMethod().equals(submission.getContributionMethod())) {
-                contribution.setUnrankedStartingValue(submission.getValue());
-                break;
-            }
         }
         playerRepository.save(player);
     }
@@ -388,19 +365,6 @@ public class SubmissionApprovalService {
         contribution.setFinalValue(contribution.getFinalValue() + submission.getAmount());
         contribution.setPurchaseAmount(contribution.getPurchaseAmount() - submission.getAmount());
         playerRepository.save(player);
-    }
-    
-    private void undoUnrankedStartingValueApproval(UnrankedStartingValueSubmission submission) throws Exception {
-        Player player = submission.getPlayer();
-        ContributionMethod method = submission.getContributionMethod();
-        Contribution contribution = player.getContribution(method);
-        Submission previousSubmission = submissionRepository.getPreviousUnrankedStartingValueSubmission(player.getId(), method.getId(), submission.getId()).orElse(null);
-        if(previousSubmission == null) {
-            contribution.setUnrankedStartingValue(-1);
-            playerRepository.save(player);
-        } else {
-            processUnrankedStartingValueSubmission((UnrankedStartingValueSubmission) previousSubmission);
-        }
     }
     
     private void undoChallengeApproval(ChallengeSubmission submission) throws Exception {

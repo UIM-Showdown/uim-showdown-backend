@@ -60,7 +60,7 @@ public class TempleOsrsService {
                 Function.identity()
             ));
 
-        updatePlayerContributions(players, contributionMethods, "/api/competition_info_v2.php?id={competition_id}&details=1&skill=obor&altunranked=1");
+        updatePlayerContributions(players, contributionMethods, "/api/competition_info_v2.php?id={competition_id}&details=1&skill=obor");
         updatePlayerContributions(players, contributionMethods, "/api/competition_info_v2.php?id={competition_id}&details=1");
         for(Player player : players.values()) {
             handleSlayerXPPenalties(player);
@@ -174,7 +174,7 @@ public class TempleOsrsService {
             }
             Contribution bossContribution = player.getContribution(bossMethod);
             int kcWithPenalty = bossContribution.getUnitsContributed();
-            if(methodName.equals("TzKal-Zuk") && bossContribution.getUnrankedStartingValue() == 0 && bossContribution.getFinalValue() > 0) { // Special case - first Zuk KC cannot be on task
+            if(methodName.equals("TzKal-Zuk") && bossContribution.getInitialValue() == 0 && bossContribution.getFinalValue() > 0) { // Special case - first Zuk KC cannot be on task
                 kcWithPenalty--;
             }
             Contribution slayerContribution = player.getContribution(slayerMethod);

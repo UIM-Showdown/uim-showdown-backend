@@ -144,7 +144,6 @@ public class SubmissionApprovalServiceTests {
         contribution.setInitialValue(0);
         contribution.setFinalValue(0);
         contribution.setStaffAdjustment(0);
-        contribution.setUnrankedStartingValue(-1);
         contribution.setIsEmpty(true);
         
         ChallengeCompletion relayCompletion = new ChallengeCompletion();
@@ -612,7 +611,6 @@ public class SubmissionApprovalServiceTests {
         assertEquals("Test URL", contribution.getInitialValueScreenshotUrl());
         assertEquals(1, contribution.getFinalValue());
         assertEquals("Test URL", contribution.getFinalValueScreenshotUrl());
-        assertEquals(-1, contribution.getUnrankedStartingValue());
         assertEquals(0, contribution.getStaffAdjustment());
         
         // Submit higher value - Should update contribution
@@ -647,7 +645,6 @@ public class SubmissionApprovalServiceTests {
         assertEquals("Test URL", contribution2.getInitialValueScreenshotUrl());
         assertEquals(2, contribution2.getFinalValue());
         assertEquals("Test URL 2", contribution2.getFinalValueScreenshotUrl());
-        assertEquals(-1, contribution2.getUnrankedStartingValue());
         assertEquals(0, contribution2.getStaffAdjustment());
         
         // Submit lower value - Should not update contribution
@@ -682,7 +679,6 @@ public class SubmissionApprovalServiceTests {
         assertEquals("Test URL", contribution3.getInitialValueScreenshotUrl());
         assertEquals(2, contribution3.getFinalValue());
         assertEquals("Test URL 2", contribution3.getFinalValueScreenshotUrl());
-        assertEquals(-1, contribution3.getUnrankedStartingValue());
         assertEquals(0, contribution3.getStaffAdjustment());
     }
     

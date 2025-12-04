@@ -51,10 +51,6 @@ public class ContributionMethod {
     @JsonIgnore
     private Tile tile;
 
-    @OneToMany(mappedBy = "contributionMethod", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<UnrankedStartingValueSubmission> unrankedStartingValueSubmissions = new HashSet<UnrankedStartingValueSubmission>();
-
     @Column(name = "category")
     @Enumerated(EnumType.STRING)
     @JsonProperty
@@ -88,10 +84,6 @@ public class ContributionMethod {
     @Column
     @JsonProperty
     private double diminishedMultiplier = -1.0;
-    
-    @Column
-    @JsonProperty
-    private int rankingThreshold = 5;
 
     public int getId() {
         return id;
@@ -107,10 +99,6 @@ public class ContributionMethod {
 
     public Tile getTile() {
         return tile;
-    }
-
-    public Set<UnrankedStartingValueSubmission> getUnrankedStartingValueSubmissions() {
-        return unrankedStartingValueSubmissions;
     }
 
     public Category getContributionMethodCategory() {
@@ -191,18 +179,6 @@ public class ContributionMethod {
 
     public void setPlayerContributions(Set<Contribution> playerContributions) {
         this.playerContributions = playerContributions;
-    }
-
-    public void setUnrankedStartingValueSubmissions(Set<UnrankedStartingValueSubmission> unrankedStartingValueSubmissions) {
-        this.unrankedStartingValueSubmissions = unrankedStartingValueSubmissions;
-    }
-
-    public int getRankingThreshold() {
-        return rankingThreshold;
-    }
-
-    public void setRankingThreshold(int rankingThreshold) {
-        this.rankingThreshold = rankingThreshold;
     }
 
     public List<ContributionPurchaseItem> getPurchaseItems() {

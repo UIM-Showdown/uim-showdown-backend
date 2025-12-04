@@ -236,7 +236,6 @@ competition:
                 category: "Other"
                 ehtRate: 40
                 templeID: "Clue_beginner"
-                rankingThreshold: 1
         - name: "Midgame Mastery"
           abbreviation: "MM"
           contributionMethods:
@@ -278,7 +277,6 @@ competition:
                 category: "Other"
                 ehtRate: 2.4
                 templeID: "Clue_master"
-                rankingThreshold: 1
         - name: "Forgotten Mines"
           abbreviation: "FM"
           contributionMethods:
@@ -310,7 +308,6 @@ competition:
                 category: "Other"
                 ehtRate: 5
                 templeID: "Clue_elite"
-                rankingThreshold: 1
         - name: "Contract Killers"
           abbreviation: "CK"
           contributionMethods:
@@ -369,13 +366,11 @@ competition:
                 category: "Other"
                 ehtRate: 375
                 templeID: "Soul Wars Zeal"
-                rankingThreshold: 200
               - name: "Hard Clues"
                 type: "Temple_KC"
                 category: "Other"
                 ehtRate: 7.5
                 templeID: "Clue_hard"
-                rankingThreshold: 1
         - name: "Demonic Dealings"
           abbreviation: "DDG"
           contributionMethods:
@@ -421,7 +416,6 @@ competition:
                 category: "Other"
                 ehtRate: 11
                 templeID: "Clue_medium"
-                rankingThreshold: 1
         - name: "Tick Perfect Laps"
           abbreviation: "TPL"
           contributionMethods:
@@ -505,7 +499,6 @@ competition:
                 category: "Other"
                 ehtRate: 25
                 templeID: "Clue_easy"
-                rankingThreshold: 1
         - name: "Deadliest Catch"
           abbreviation: "DC"
           contributionMethods:
@@ -604,7 +597,6 @@ competition:
                 category: "PVM"
                 ehtRate: 0.8
                 templeID: "TzKal-Zuk"
-                rankingThreshold: 1
               - name: "Sol Heredit"
                 type: "Temple_KC"
                 category: "PVM"

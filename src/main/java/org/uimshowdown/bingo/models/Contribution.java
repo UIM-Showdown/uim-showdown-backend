@@ -43,9 +43,6 @@ public class Contribution {
     
     @Column(name = "purchase_amount")
     private int purchaseAmount = 0;
-
-    @Column(name = "unranked_starting_value")
-    private int unrankedStartingValue = -1;
     
     @Column(name = "is_empty")
     private boolean isEmpty = true;
@@ -101,10 +98,6 @@ public class Contribution {
     public int getPurchaseAmount() {
         return purchaseAmount;
     }
-
-    public int getUnrankedStartingValue() {
-        return unrankedStartingValue;
-    }
     
     public boolean isEmpty() {
         return isEmpty;
@@ -141,10 +134,6 @@ public class Contribution {
     public void setPurchaseAmount(int purchaseAmount) {
         this.purchaseAmount = purchaseAmount;
     }
-
-    public void setUnrankedStartingValue(int unrankedStartingValue) {
-        this.unrankedStartingValue = unrankedStartingValue;
-    }
     
     public void setIsEmpty(boolean isEmpty) {
         this.isEmpty = isEmpty;
@@ -152,30 +141,14 @@ public class Contribution {
     
     /**
      * Returns the final number of units contributed, which is the difference between the final 
-     * and start values (with the start value overridden with the unranked starting value if needed), 
-     * plus the staff adjustment.
+     * and start values, plus the staff adjustment.
      * @return
      */
     public int getUnitsContributed() {
-        if(isEmpty || !isRanked()) {
+        if(isEmpty) {
             return 0;
         }
-        if(unrankedStartingValue == -1) {
-            return finalValue - initialValue + staffAdjustment + purchaseAmount;
-        } else {
-            return finalValue - unrankedStartingValue + staffAdjustment + purchaseAmount;
-        }
-    }
-    
-    /**
-     * Returns true if the contribution is enough to be ranked on the OSRS hiscores, or if this is not a hiscores-tracked boss
-     * @return
-     */
-    public boolean isRanked() {
-        if(contributionMethod.getContributionMethodType() != ContributionMethod.Type.TEMPLE_KC) {
-            return true;
-        }
-        return finalValue >= contributionMethod.getRankingThreshold();
+        return finalValue - initialValue + staffAdjustment + purchaseAmount;
     }
 
     @Override

@@ -203,7 +203,6 @@ public class StatsService {
         totalSubmissions.put(Submission.Type.COLLECTION_LOG, 0);
         totalSubmissions.put(Submission.Type.CONTRIBUTION, 0);
         totalSubmissions.put(Submission.Type.RECORD, 0);
-        totalSubmissions.put(Submission.Type.UNRANKED_STARTING_VALUE, 0);
         for(Submission submission : submissionRepository.findAll()) {
             Submission.Type type = submission.getType();
             totalSubmissions.put(type, totalSubmissions.get(type) + 1);

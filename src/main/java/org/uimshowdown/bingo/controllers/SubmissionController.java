@@ -29,7 +29,6 @@ import org.uimshowdown.bingo.models.Record;
 import org.uimshowdown.bingo.models.RecordHandicap;
 import org.uimshowdown.bingo.models.RecordSubmission;
 import org.uimshowdown.bingo.models.Submission;
-import org.uimshowdown.bingo.models.UnrankedStartingValueSubmission;
 import org.uimshowdown.bingo.repositories.ChallengeRelayComponentRepository;
 import org.uimshowdown.bingo.repositories.ChallengeRepository;
 import org.uimshowdown.bingo.repositories.CollectionLogItemRepository;
@@ -254,38 +253,6 @@ public class SubmissionController {
         if(itemOption != null) {
             submission.setItemOption(itemOption);
         }
-        submission.setScreenshotUrls((List<String>) requestBody.get("screenshotURLs"));
-        submission.setSubmittedAt(new Timestamp(System.currentTimeMillis()));
-        
-        Submission returnedSubmission = submissionRepository.save(submission);
-        
-        Map<String, Object> responseBody = new HashMap<String, Object>();
-        responseBody.put("id", returnedSubmission.getId());
-        return responseBody;
-    }
-    
-    @SuppressWarnings("unchecked")
-    @PostMapping("/submissions/unrankedstartingvalue")
-    public Map<String, Object> createUnrankedStartingValueSubmission(@RequestBody Map<String, Object> requestBody) {
-        Player player = playerRepository.findByRsn((String) requestBody.get("rsn")).orElse(null);
-        ContributionMethod contributionMethod = contributionMethodRepository.findByName((String) requestBody.get("methodName")).orElse(null);
-        if(player == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found: " + (String) requestBody.get("rsn"));
-        }
-        if(contributionMethod == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Contribution not found: " + (String) requestBody.get("methodName"));
-        }
-        if(contributionMethod.getContributionMethodType() != ContributionMethod.Type.TEMPLE_KC || contributionMethod.getTempleId() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Contribution method is not a Temple-tracked KC method: " + (String) requestBody.get("methodName"));
-        }
-        
-        UnrankedStartingValueSubmission submission = new UnrankedStartingValueSubmission();
-        submission.setContributionMethod(contributionMethod);
-        submission.setPlayer(player);
-        submission.setSubmissionState(Submission.State.OPEN);
-        submission.setValue((int) requestBody.get("value"));
-        submission.setType(Submission.Type.UNRANKED_STARTING_VALUE);
-        submission.setDescription((String) requestBody.get("description"));
         submission.setScreenshotUrls((List<String>) requestBody.get("screenshotURLs"));
         submission.setSubmittedAt(new Timestamp(System.currentTimeMillis()));
         

@@ -58,7 +58,6 @@ competition:
                 category: "Other"
                 ehtRate: 2.4
                 templeID: "Clue_master"
-                rankingThreshold: 1
               - name: "Basilisk Knights"
                 type: "Submission_KC"
                 category: "PVM"
@@ -105,7 +104,6 @@ competition:
                 category: "Other"
                 ehtRate: 5
                 templeID: "Clue_elite"
-                rankingThreshold: 1
     tileGroups:
         - name: "Row 1"
           tileNames: ["Test Tile 1", "Test Tile 2"]
