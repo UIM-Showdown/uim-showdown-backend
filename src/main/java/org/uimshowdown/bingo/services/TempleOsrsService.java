@@ -1,5 +1,6 @@
 package org.uimshowdown.bingo.services;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.Spliterator;
@@ -62,8 +63,9 @@ public class TempleOsrsService {
 
         updatePlayerContributions(players, contributionMethods, "/api/competition_info_v2.php?id={competition_id}&details=1&skill=obor");
         updatePlayerContributions(players, contributionMethods, "/api/competition_info_v2.php?id={competition_id}&details=1");
-        for(Player player : players.values()) {
-            handleSlayerXPPenalties(player);
+        handleSlayerXPPenalties(players); // If slayer XP is not on the board, then does nothing
+        
+        for(Player player : players.values()) {         
             playerRepository.save(player);
         }
     }
@@ -158,31 +160,38 @@ public class TempleOsrsService {
     }
     
     /**
-     * Applies a penalty to the final value of the player's Slayer contribution, which is required to not double-count slayer bosses and Jad/Zuk
-     * @param player
+     * Applies a penalty to the final value of each player's Slayer contribution, which is required to not double-count slayer bosses and Jad/Zuk
+     * @param players
      */
-    private void handleSlayerXPPenalties(Player player) {
-        ContributionMethod slayerMethod = contributionMethodRepository.findByName("Slayer").orElse(null);
-        if(slayerMethod == null) { // Slayer XP is not on the board
+    private void handleSlayerXPPenalties(Map<String, Player> players) {
+        ContributionMethod slayerXPMethod = contributionMethodRepository.findByName("Slayer").orElse(null);
+        if(slayerXPMethod == null) { // Slayer XP is not on the board
             return;
         }
         Map<String, Integer> slayerXPPenalties = competitionConfiguration.getSlayerXPPenalties();
+        Map<String, ContributionMethod> slayerBossMethods = new HashMap<String, ContributionMethod>();
         for(String methodName : slayerXPPenalties.keySet()) {
             ContributionMethod bossMethod = contributionMethodRepository.findByName(methodName).orElse(null);
-            if(bossMethod == null) { // The boss is not on the board
-                continue;
+            slayerBossMethods.put(methodName, bossMethod);
+        }
+        for(Player player : players.values()) {            
+            for(String methodName : slayerXPPenalties.keySet()) {
+                ContributionMethod bossMethod = slayerBossMethods.get(methodName);
+                if(bossMethod == null) { // The boss is not on the board
+                    continue;
+                }
+                Contribution bossContribution = player.getContribution(bossMethod);
+                int kcWithPenalty = bossContribution.getUnitsContributed();
+                if(methodName.equals("TzKal-Zuk") && bossContribution.getInitialValue() == 0 && bossContribution.getFinalValue() > 0) { // Special case - first Zuk KC cannot be on task
+                    kcWithPenalty--;
+                }
+                Contribution slayerContribution = player.getContribution(slayerXPMethod);
+                int value = slayerContribution.getFinalValue() - (kcWithPenalty * slayerXPPenalties.get(methodName));
+                if(value < slayerContribution.getInitialValue()) {
+                    value = slayerContribution.getInitialValue();
+                }
+                slayerContribution.setFinalValue(value);
             }
-            Contribution bossContribution = player.getContribution(bossMethod);
-            int kcWithPenalty = bossContribution.getUnitsContributed();
-            if(methodName.equals("TzKal-Zuk") && bossContribution.getInitialValue() == 0 && bossContribution.getFinalValue() > 0) { // Special case - first Zuk KC cannot be on task
-                kcWithPenalty--;
-            }
-            Contribution slayerContribution = player.getContribution(slayerMethod);
-            int value = slayerContribution.getFinalValue() - (kcWithPenalty * slayerXPPenalties.get(methodName));
-            if(value < slayerContribution.getInitialValue()) {
-                value = slayerContribution.getInitialValue();
-            }
-            slayerContribution.setFinalValue(value);
         }
     }
 }
