@@ -92,9 +92,6 @@ public class AdminController {
     @PostMapping("/admin/addPlayer")
     public ResponseEntity<Void> addPlayer(@RequestBody Map<String, Object> requestBody) throws Exception {
         Guild guild = discordClient.getGuildById(guildId);
-        if(guild.getMembersByName((String) requestBody.get("discordName"), true).isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Player not found in server with name: " + (String) requestBody.get("discordName"));
-        }
         
         eventDataInitializationService.addPlayer(
             (String) requestBody.get("discordName"),
@@ -102,7 +99,7 @@ public class AdminController {
             (String) requestBody.get("teamName")
         );
         
-        if(!guild.getRolesByName((String) requestBody.get("teamName"), true).isEmpty()) {
+        if(!guild.getRolesByName((String) requestBody.get("teamName"), true).isEmpty() && !guild.getMembersByName((String) requestBody.get("discordName"), true).isEmpty()) {
             Member member = guild.getMembersByName((String) requestBody.get("discordName"), true).get(0);
             Role teamRole = guild.getRolesByName((String) requestBody.get("teamName"), true).get(0);
             guild.addRoleToMember(member, teamRole).submit();

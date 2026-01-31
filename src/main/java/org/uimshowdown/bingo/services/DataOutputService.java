@@ -205,7 +205,7 @@ public class DataOutputService {
             row.add(place);
             for(Record record : recordRepository.findByOrderByIdAsc()) {
                 List<RecordLeaderboardEntry> entries = new ArrayList<RecordLeaderboardEntry>();
-                for(RecordLeaderboardEntry entry : recordLeaderboardEntryRepository.findValidEntriesBySkillNameOrderByPlaceAsc(record.getName())) {
+                for(RecordLeaderboardEntry entry : recordLeaderboardEntryRepository.findValidEntriesByRecordNameOrderByPlaceAsc(record.getName())) {
                     entries.add(entry);
                 }
                 if(entries.size() >= place) {

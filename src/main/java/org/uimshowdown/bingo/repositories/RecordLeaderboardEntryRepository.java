@@ -6,7 +6,7 @@ import org.uimshowdown.bingo.models.RecordLeaderboardEntry;
 
 public interface RecordLeaderboardEntryRepository extends CrudRepository<RecordLeaderboardEntry, Integer> {
     
-    @Query(value = "SELECT * FROM record_leaderboard_entries WHERE skill = ?1 AND value > 0 ORDER BY place ASC", nativeQuery = true)
-    Iterable<RecordLeaderboardEntry> findValidEntriesBySkillNameOrderByPlaceAsc(String skillName);
+    @Query(value = "SELECT * FROM record_leaderboard_entries WHERE record_name = ?1 AND value > 0 ORDER BY place ASC", nativeQuery = true)
+    Iterable<RecordLeaderboardEntry> findValidEntriesByRecordNameOrderByPlaceAsc(String recordName);
     
 }

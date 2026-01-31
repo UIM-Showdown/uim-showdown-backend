@@ -25,7 +25,7 @@ public class RecordLeaderboardEntry {
     @Column
     private int place;
     
-    @Column
+    @Column(name = "record_name", length = 64)
     private String recordName;
     
     @Column(name = "player_name", length = 64)
