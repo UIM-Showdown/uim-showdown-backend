@@ -813,7 +813,7 @@ competition:
           description: "Complete a full game of Barbarian Assault as quickly as possible! All players must be on your team."
           type: "Speedrun"
         - name: "Chambers of Xeric CM Trio"
-          teamSize: 5
+          teamSize: 3
           description: "Complete a full 3-player COX CM raid as quickly as possible!"
           type: "Speedrun"
         - name: "GM Quest Boss Relay"
