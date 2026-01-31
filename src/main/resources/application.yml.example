@@ -21,7 +21,7 @@ competition:
     eventName: "UIM Winter Showdown 2026"
     startDatetime: "2026-02-20T00:00:00.000+00:00"
     endDatetime: "2025-03-01T18:00:00.000+00:00"
-    templeCompetitionID: 31039
+    templeCompetitionID: 34033
     waitlistTeamName: "Wilderness Waitlisters"
     ehtPerTier: 25
     eventPointsPerTier: [25, 23, 21, 19, 17, 15, 13, 11]
