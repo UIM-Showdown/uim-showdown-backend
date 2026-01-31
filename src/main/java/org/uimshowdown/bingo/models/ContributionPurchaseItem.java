@@ -33,7 +33,7 @@ public class ContributionPurchaseItem {
     
     @Column
     @JsonProperty
-    private String cost;
+    private int cost;
 
     public int getId() {
         return id;
@@ -59,11 +59,11 @@ public class ContributionPurchaseItem {
         this.name = name;
     }
 
-    public String getCost() {
+    public int getCost() {
         return cost;
     }
 
-    public void setCost(String cost) {
+    public void setCost(int cost) {
         this.cost = cost;
     }
 
