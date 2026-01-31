@@ -76,6 +76,12 @@ competition:
           captains:
               - "Big Circ"
               - "Peak FeMale"
+        - name: "Grimstone Grumblers"
+          abbreviation: "GG"
+          color: "6D45A5"
+          captains:
+              - "weed lesbian"
+              - "Mitaka Asa"
         - name: "Moles Love Gulls"
           abbreviation: "MLG"
           color: "F6E2B3"
