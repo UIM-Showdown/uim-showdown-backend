@@ -252,7 +252,7 @@ public class AdminController {
                     .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.MESSAGE_ATTACH_FILES), null)
                     .addRolePermissionOverride(cheerleaderRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                     .addRolePermissionOverride(screenshotApproverRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
-                    .addRolePermissionOverride(captainRole.getIdLong(), Arrays.asList(Permission.PIN_MESSAGES), null)
+                    .addRolePermissionOverride(captainRole.getIdLong(), Arrays.asList(Permission.PIN_MESSAGES, Permission.MANAGE_CHANNEL), null)
                     .complete();
             }
             
@@ -265,7 +265,7 @@ public class AdminController {
                     .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), Arrays.asList(Permission.MESSAGE_SEND))
                     .addRolePermissionOverride(cheerleaderRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                     .addRolePermissionOverride(screenshotApproverRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
-                    .addRolePermissionOverride(captainRole.getIdLong(), Arrays.asList(Permission.MESSAGE_SEND, Permission.PIN_MESSAGES), null)
+                    .addRolePermissionOverride(captainRole.getIdLong(), Arrays.asList(Permission.MESSAGE_SEND, Permission.PIN_MESSAGES, Permission.MANAGE_CHANNEL), null)
                     .complete();
             }
             
@@ -278,7 +278,7 @@ public class AdminController {
                     .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), Arrays.asList(Permission.MESSAGE_SEND))
                     .addRolePermissionOverride(cheerleaderRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                     .addRolePermissionOverride(screenshotApproverRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
-                    .addRolePermissionOverride(captainRole.getIdLong(), null, Arrays.asList(Permission.MESSAGE_SEND, Permission.PIN_MESSAGES))
+                    .addRolePermissionOverride(captainRole.getIdLong(), null, Arrays.asList(Permission.MESSAGE_SEND, Permission.PIN_MESSAGES, Permission.MANAGE_CHANNEL))
                     .complete();
             }
             
@@ -310,7 +310,7 @@ public class AdminController {
                     .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
                     .addRolePermissionOverride(cheerleaderRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                     .addRolePermissionOverride(screenshotApproverRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
-                    .addRolePermissionOverride(captainRole.getIdLong(), null, Arrays.asList(Permission.PIN_MESSAGES))
+                    .addRolePermissionOverride(captainRole.getIdLong(), null, Arrays.asList(Permission.PIN_MESSAGES, Permission.MANAGE_CHANNEL))
                     .complete();
             }
             
