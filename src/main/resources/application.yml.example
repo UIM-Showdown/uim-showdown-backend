@@ -52,112 +52,81 @@ competition:
     petPointValues: [7, 5, 3, 1]
     jarPointValues: [4, 3, 2, 1]
     teams:
-        - name: "TODO"
-          abbreviation: "TODO"
-          color: "FF0000"
+        - name: "Top 3 Crabbers"
+          abbreviation: "TOP3"
+          color: "00C7AB"
           captains:
-              - "TODO"
+              - "Empty String"
+              - "MorbinThyme"
+        - name: "Milk Fans"
+          abbreviation: "MF"
+          color: "FFFFFF"
+          captains:
+              - "Lemoniuim"
+              - "Ms Sex"
+        - name: "Cozy Home Owners of Misthalin"
+          abbreviation: "CHOOM"
+          color: "DBE4EB"
+          captains:
+              - "Lily Annette"
+              - "Snowkittty"
+        - name: "Bringing Oomlie Omelettes To Yohnus"
+          abbreviation: "BOOTY"
+          color: "67B00B"
+          captains:
+              - "Big Circ"
+              - "Peak FeMale"
+        - name: "Moles Love Gulls"
+          abbreviation: "MLG"
+          color: "F6E2B3"
+          captains:
+              - "Shv"
+              - "I Win Bingo"
+        - name: "Laguna Locked-in"
+          abbreviation: "LL"
+          color: "47582C"
+          captains:
+              - "Kochininako"
+              - "KiwiIsKadult "
         - name: "Wilderness Waitlisters"
           abbreviation: "WW"
           color: "FFFFFF"
           captains:
               - "N/A"
     tiles:
-        - name: "Last Mole Sailing"
-          abbreviation: "LMS"
+        - name: "Build a Better Bugzapper"
+          abbreviation: "BBB"
           contributionMethods:
-              - name: "LMS: Kills"
-                type: "Submission_Other"
-                category: "Other"
-                ehtRate: 35
-              - name: "LMS: Wins"
-                type: "Submission_Other"
-                category: "Other"
-                ehtRate: 35
-              - name: "Sailing"
+              - name: "Woodcutting"
                 type: "Temple_XP"
                 category: "Skilling"
-                ehtRate: 240000
-                templeID: "Sailing"
-              - name: "Giant Mole"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 85
-                templeID: "Giant Mole"
-        - name: "2006 Honda Civic"
-          abbreviation: "HC"
-          contributionMethods:
-              - name: "Agility"
+                ehtRate: 204000
+                templeID: "Woodcutting"
+              - name: "Crafting"
                 type: "Temple_XP"
                 category: "Skilling"
-                ehtRate: 100000
-                templeID: "Agility"
-              - name: "General Graardor"
+                ehtRate: 165000
+                templeID: "Crafting"
+              - name: "Construction"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 225000
+                templeID: "Construction"
+              - name: "Thermonuclear Smoke Devil"
                 type: "Temple_KC"
                 category: "PVM"
-                ehtRate: 30
-                templeID: "General Graardor"
-              - name: "Commander Zilyana"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 29
-                templeID: "Commander Zilyana"
-              - name: "Spindel"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 30
-                templeID: "Spindel"
-        - name: "Notable Dragons"
-          abbreviation: "ND"
-          contributionMethods:
-              - name: "Chambers of Xeric"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 3
-                templeID: "Chambers of Xeric"
-              - name: "CoX: CM"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 2.5
-                templeID: "Chambers of Xeric Challenge Mode"
-              - name: "Soul Wars Zeal"
-                type: "Temple_KC"
-                category: "Other"
-                ehtRate: 375
-                templeID: "Soul Wars Zeal"
-              - name: "Vorkath"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 28
-                templeID: "Vorkath"
-        - name: "Frozen Terror"
-          abbreviation: "FT"
-          contributionMethods:
-              - name: "Duke Sucellus"
+                ehtRate: 100
+                templeID: "Thermonuclear Smoke Devil"
+              - name: "Araxxor"
                 type: "Temple_KC"
                 category: "PVM"
                 ehtRate: 35
-                templeID: "Duke Sucellus"
-              - name: "Amoxliatl"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 65
-                templeID: "Amoxliatl"
-              - name: "Elite Clues"
-                type: "Temple_KC"
-                category: "Other"
-                ehtRate: 5
-                templeID: "Clue_elite"
-              - name: "Vardorvis"
+                templeID: "Araxxor"
+              - name: "Kalphite Queen"
                 type: "Temple_KC"
                 category: "PVM"
                 ehtRate: 33
-                templeID: "Vardorvis"
-              - name: "Prayer"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 1000000
-                templeID: "Prayer"
+                templeID: "Kalphite Queen"
         - name: "Rune Sinks"
           abbreviation: "RS"
           contributionMethods:
@@ -184,387 +153,29 @@ competition:
                 category: "PVM"
                 ehtRate: 65
                 templeID: "Sarachnis"
-        - name: "Hunting by Moonlight"
-          abbreviation: "HBM"
+        - name: "Notable Dragons"
+          abbreviation: "ND"
           contributionMethods:
-              - name: "Hunter"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 240000
-                templeID: "Hunter"
-              - name: "Master Clues"
-                type: "Temple_KC"
-                category: "Other"
-                ehtRate: 2.4
-                templeID: "Clue_master"
-              - name: "Basilisk Knights"
-                type: "Submission_KC"
-                category: "PVM"
-                ehtRate: 93
-              - name: "Moons of Peril: Items"
-                type: "Submission_Item_Drop"
-                category: "PVM"
-                ehtRate: 0.95
-        - name: "Theatre of the Mind"
-          abbreviation: "TOTM"
-          contributionMethods:
-              - name: "Theatre of Blood"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 2.9
-                templeID: "Theatre of Blood"
-              - name: "ToB: Hard Mode"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 2.6
-                templeID: "Theatre of Blood Challenge Mode"
-              - name: "Medium Clues"
-                type: "Temple_KC"
-                category: "Other"
-                ehtRate: 11
-                templeID: "Clue_medium"
-              - name: "Grotesque Guardians"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 33
-                templeID: "Grotesque Guardians"
-              - name: "The Whisperer"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 20
-                templeID: "The Whisperer"
-        - name: "Forbidden Alchemy"
-          abbreviation: "FA"
-          contributionMethods:
-              - name: "Alchemical Hydra"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 26
-                templeID: "Alchemical Hydra"
-              - name: "Herblore"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 300000
-                templeID: "Herblore"
-              - name: "Mixology: Resin"
-                type: "Submission_Other"
-                category: "Skilling"
-                ehtRate: 16000
-                purchaseItems:
-                    - name: "Apprentice potion pack"
-                      cost: 520
-                    - name: "Adept potion pack"
-                      cost: 690
-                    - name: "Expert potion pack"
-                      cost: 1210
-                    - name: "Prescription goggles"
-                      cost: 24950
-                    - name: "Alchemist labcoat"
-                      cost: 8750
-                    - name: "Alchemist pants"
-                      cost: 8750
-                    - name: "Alchemist gloves"
-                      cost: 8750
-                    - name: "Reagent pouch"
-                      cost: 40100
-                    - name: "Chugging barrel"
-                      cost: 49850
-                    - name: "Alchemist's amulet"
-                      cost: 19950
-                    - name: "Aldarium"
-                      cost: 230
-              - name: "TzTok-Jad"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 2
-                templeID: "TzTok-Jad"
-              - name: "TzKal-Zuk"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 0.8
-                templeID: "TzKal-Zuk"
-        - name: "Build a Better Bugzapper"
-          abbreviation: "BBB"
-          contributionMethods:
-              - name: "Woodcutting"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 184050
-                templeID: "Woodcutting"
-              - name: "Crafting"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 170000
-                templeID: "Crafting"
-              - name: "Construction"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 200000
-                templeID: "Construction"
-              - name: "Thermonuclear Smoke Devil"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 100
-                templeID: "Thermonuclear Smoke Devil"
-              - name: "Araxxor"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 35
-                templeID: "Araxxor"
-              - name: "Kalphite Queen"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 33
-                templeID: "Kalphite Queen"
-        - name: "Ethically Acquired Shards"
-          abbreviation: "EAS"
-          contributionMethods:
-              - name: "Thieving"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 290000
-                templeID: "Thieving"
-              - name: "Tormented Demons"
-                type: "Submission_KC"
-                category: "PVM"
-                ehtRate: 65
-              - name: "Nex: Nihil Shards"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 33.33
-              - name: "Beginner Clues"
-                type: "Temple_KC"
-                category: "Other"
-                ehtRate: 40
-                templeID: "Clue_beginner"
-        - name: "Too Greedily and Too Deep"
-          abbreviation: "TGTD"
-          contributionMethods:
-              - name: "Mining"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 125000
-                templeID: "Mining"
-              - name: "Smithing"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 330000
-                templeID: "Smithing"
-              - name: "Demonic Gorillas"
-                type: "Submission_KC"
-                category: "PVM"
-                ehtRate: 85
-              - name: "Abyssal Sire"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 45
-                templeID: "Abyssal Sire"
-        - name: "Ancient Entities"
-          abbreviation: "AE"
-          contributionMethods:
-              - name: "Tombs of Amascut"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 3.75
-                templeID: "Tombs of Amascut"
-              - name: "ToA: Expert"
+              - name: "Chambers of Xeric"
                 type: "Temple_KC"
                 category: "PVM"
                 ehtRate: 3
-                templeID: "Tombs of Amascut Expert"
-              - name: "ToA: Purples"
-                type: "Submission_Item_Drop"
-                category: "PVM"
-                ehtRate: 0.3
-                diminishedThreshold: 5
-                diminishedMultiplier: 0.5
-              - name: "Phantom Muspah"
+                templeID: "Chambers of Xeric"
+              - name: "CoX: CM"
                 type: "Temple_KC"
                 category: "PVM"
-                ehtRate: 26
-                templeID: "Phantom Muspah"
-              - name: "Easy Clues"
+                ehtRate: 2.5
+                templeID: "Chambers of Xeric Challenge Mode"
+              - name: "Soul Wars Zeal"
                 type: "Temple_KC"
                 category: "Other"
-                ehtRate: 25
-                templeID: "Clue_easy"
-              - name: "The Royal Titans"
+                ehtRate: 375
+                templeID: "Soul Wars Zeal"
+              - name: "Vorkath"
                 type: "Temple_KC"
                 category: "PVM"
-                ehtRate: 55
-                templeID: "The Royal Titans"
-        - name: "Have a Heart"
-          abbreviation: "HH"
-          contributionMethods:
-              - name: "Slayer (Superior KC)"
-                type: "Submission_KC"
-                category: "PVM"
-                ehtRate: 4
-              - name: "Hueycoatl"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 43
-                templeID: "Hueycoatl"
-              - name: "Dagannoth Rex"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 100
-                templeID: "Dagannoth Rex"
-              - name: "Dagannoth Supreme"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 100
-                templeID: "Dagannoth Supreme"
-              - name: "Dagannoth Prime"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 100
-                templeID: "Dagannoth Prime"
-              - name: "The Corrupted Gauntlet"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 7.2
-                templeID: "The Corrupted Gauntlet"
-        - name: "Cooks and Kicks"
-          abbreviation: "CK"
-          contributionMethods:
-              - name: "Cerberus"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 48
-                templeID: "Cerberus"
-              - name: "Doom of Mokhaiotl - Delve Level 1"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 470.6
-              - name: "Doom of Mokhaiotl - Delve Level 2"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 235.3
-              - name: "Doom of Mokhaiotl - Delve Level 3"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 156.9
-              - name: "Doom of Mokhaiotl - Delve Level 4"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 117.6
-              - name: "Doom of Mokhaiotl - Delve Level 5"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 47.1
-              - name: "Doom of Mokhaiotl - Delve Level 6"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 23.5
-              - name: "Doom of Mokhaiotl - Delve Level 7"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 18.8
-              - name: "Doom of Mokhaiotl - Delve Level 8"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 13.4
-              - name: "Doom of Mokhaiotl - Delve Level 8+"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 13.4
-              - name: "Cooking"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 400000
-                templeID: "Cooking"
-              - name: "Barrows: Items"
-                type: "Submission_Item_Drop"
-                category: "PVM"
-                ehtRate: 1.3
-        - name: "Fishing Hole"
-          abbreviation: "FH"
-          contributionMethods:
-              - name: "Fishing"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 125000
-                templeID: "Fishing"
-              - name: "Tempoross"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 50
-                templeID: "Tempoross"
-              - name: "Zulrah"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 36
-                templeID: "Zulrah"
-              - name: "Artio"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 32
-                templeID: "Artio"
-              - name: "Calvar'ion"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 32
-                templeID: "Calvarion"
-        - name: "Solarflare"
-          abbreviation: "SF"
-          contributionMethods:
-              - name: "Firemaking"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 400000
-                templeID: "Firemaking"
-              - name: "Sol Heredit"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 2
-                templeID: "Sol Heredit"
-              - name: "Corporeal Beast"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 7.5
-                templeID: "Corporeal Beast"
-              - name: "Shellbane Gryphon"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 85
-                templeID: "Shellbane Gryphon"
-        - name: "Demonic Suppression"
-          abbreviation: "DS"
-          contributionMethods:
-              - name: "Yama"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 18
-                templeID: "Yama"
-              - name: "K'ril Tsutsaroth"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 30
-                templeID: "Kril Tsutsaroth"
-              - name: "Pest Control: Games"
-                type: "Submission_Other"
-                category: "Other"
-                ehtRate: 30
-              - name: "Hard Clues"
-                type: "Temple_KC"
-                category: "Other"
-                ehtRate: 7.5
-                templeID: "Clue_hard"
-              - name: "The Nightmare"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 17
-                templeID: "The Nightmare"
-              - name: "Phosani's Nightmare"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 9
-                templeID: "Phosanis Nightmare"
-              - name: "Revenants: Ether"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 1200
+                ehtRate: 28
+                templeID: "Vorkath"
         - name: "Minigames and also Large Aquatic Creatures (MAALAC)"
           abbreviation: "MAALAC"
           contributionMethods:
@@ -725,7 +336,7 @@ competition:
               - name: "Tithe Farm Points"
                 type: "Submission_Other"
                 category: "Skilling"
-                ehtRate: 110
+                ehtRate: 154
                 purchaseItems:
                     - name: "Farmer's strawhat"
                       cost: 75
@@ -764,9 +375,438 @@ competition:
                 type: "Temple_KC"
                 category: "PVM"
                 ehtRate: 27
+        - name: "Last Mole Sailing"
+          abbreviation: "LMS"
+          contributionMethods:
+              - name: "LMS: Kills"
+                type: "Submission_Other"
+                category: "Other"
+                ehtRate: 35
+              - name: "LMS: Wins"
+                type: "Submission_Other"
+                category: "Other"
+                ehtRate: 35
+              - name: "Sailing"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 245000
+                templeID: "Sailing"
+              - name: "Giant Mole"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 85
+                templeID: "Giant Mole"
+        - name: "Ancient Entities"
+          abbreviation: "AE"
+          contributionMethods:
+              - name: "Tombs of Amascut"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 3.75
+                templeID: "Tombs of Amascut"
+              - name: "ToA: Expert"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 3
+                templeID: "Tombs of Amascut Expert"
+              - name: "ToA: Purples"
+                type: "Submission_Item_Drop"
+                category: "PVM"
+                ehtRate: 0.3
+                diminishedThreshold: 5
+                diminishedMultiplier: 0.5
+              - name: "Phantom Muspah"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 26
+                templeID: "Phantom Muspah"
+              - name: "Easy Clues"
+                type: "Temple_KC"
+                category: "Other"
+                ehtRate: 25
+                templeID: "Clue_easy"
+              - name: "The Royal Titans"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 55
+                templeID: "The Royal Titans"
+        - name: "Fishing Hole"
+          abbreviation: "FH"
+          contributionMethods:
+              - name: "Fishing"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 125000
+                templeID: "Fishing"
+              - name: "Tempoross"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 25
+                templeID: "Tempoross"
+              - name: "Zulrah"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 36
+                templeID: "Zulrah"
+              - name: "Artio"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 32
+                templeID: "Artio"
+              - name: "Calvar'ion"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 32
+                templeID: "Calvarion"
+        - name: "Solarflare"
+          abbreviation: "SF"
+          contributionMethods:
+              - name: "Firemaking"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 440000
+                templeID: "Firemaking"
+              - name: "Sol Heredit"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 2
+                templeID: "Sol Heredit"
+              - name: "Corporeal Beast"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 7.5
+                templeID: "Corporeal Beast"
+              - name: "Shellbane Gryphon"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 85
+                templeID: "Shellbane Gryphon"
+        - name: "Have a Heart"
+          abbreviation: "HH"
+          contributionMethods:
+              - name: "Slayer (Superior KC)"
+                type: "Submission_KC"
+                category: "PVM"
+                ehtRate: 4
+              - name: "Hueycoatl: Hides"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 1
+              - name: "Dagannoth Rex"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 100
+                templeID: "Dagannoth Rex"
+              - name: "Dagannoth Supreme"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 100
+                templeID: "Dagannoth Supreme"
+              - name: "Dagannoth Prime"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 100
+                templeID: "Dagannoth Prime"
+              - name: "The Corrupted Gauntlet"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 7.2
+                templeID: "The Corrupted Gauntlet"
+        - name: "Theatre of the Mind"
+          abbreviation: "TOTM"
+          contributionMethods:
+              - name: "Theatre of Blood"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 2.9
+                templeID: "Theatre of Blood"
+              - name: "ToB: Hard Mode"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 2.6
+                templeID: "Theatre of Blood Challenge Mode"
+              - name: "Medium Clues"
+                type: "Temple_KC"
+                category: "Other"
+                ehtRate: 11
+                templeID: "Clue_medium"
+              - name: "Grotesque Guardians"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 33
+                templeID: "Grotesque Guardians"
+              - name: "The Whisperer"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 20
+                templeID: "The Whisperer"
+        - name: "Too Greedily and Too Deep"
+          abbreviation: "TGTD"
+          contributionMethods:
+              - name: "Mining"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 125000
+                templeID: "Mining"
+              - name: "Smithing"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 330000
+                templeID: "Smithing"
+              - name: "Demonic Gorillas"
+                type: "Submission_KC"
+                category: "PVM"
+                ehtRate: 85
+              - name: "Abyssal Sire"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 45
+                templeID: "Abyssal Sire"
+        - name: "Hunting by Moonlight"
+          abbreviation: "HBM"
+          contributionMethods:
+              - name: "Hunter"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 240000
+                templeID: "Hunter"
+              - name: "Master Clues"
+                type: "Temple_KC"
+                category: "Other"
+                ehtRate: 2.4
+                templeID: "Clue_master"
+              - name: "Basilisk Knights"
+                type: "Submission_KC"
+                category: "PVM"
+                ehtRate: 93
+              - name: "Moons of Peril: Items"
+                type: "Submission_Item_Drop"
+                category: "PVM"
+                ehtRate: 0.95
+        - name: "Demonic Suppression"
+          abbreviation: "DS"
+          contributionMethods:
+              - name: "Yama"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 18
+                templeID: "Yama"
+              - name: "K'ril Tsutsaroth"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 30
+                templeID: "Kril Tsutsaroth"
+              - name: "Pest Control: Games"
+                type: "Submission_Other"
+                category: "Other"
+                ehtRate: 30
+              - name: "Hard Clues"
+                type: "Temple_KC"
+                category: "Other"
+                ehtRate: 7.5
+                templeID: "Clue_hard"
+              - name: "The Nightmare"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 17
+                templeID: "The Nightmare"
+              - name: "Phosani's Nightmare"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 9
+                templeID: "Phosanis Nightmare"
+              - name: "Revenants: Ether"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 1200
+        - name: "Frozen Terror"
+          abbreviation: "FT"
+          contributionMethods:
+              - name: "Duke Sucellus"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 35
+                templeID: "Duke Sucellus"
+              - name: "Amoxliatl"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 65
+                templeID: "Amoxliatl"
+              - name: "Elite Clues"
+                type: "Temple_KC"
+                category: "Other"
+                ehtRate: 5
+                templeID: "Clue_elite"
+              - name: "Vardorvis"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 33
+                templeID: "Vardorvis"
+              - name: "Prayer"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 1000000
+                templeID: "Prayer"
+        - name: "2006 Honda Civic"
+          abbreviation: "HC"
+          contributionMethods:
+              - name: "Agility"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 100000
+                templeID: "Agility"
+              - name: "General Graardor"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 30
+                templeID: "General Graardor"
+              - name: "Commander Zilyana"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 29
+                templeID: "Commander Zilyana"
+              - name: "Spindel"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 30
+                templeID: "Spindel"
+        - name: "Ethically Acquired Shards"
+          abbreviation: "EAS"
+          contributionMethods:
+              - name: "Thieving"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 290000
+                templeID: "Thieving"
+              - name: "Tormented Demons"
+                type: "Submission_KC"
+                category: "PVM"
+                ehtRate: 65
+              - name: "Nex: Nihil Shards"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 33.33
+              - name: "Beginner Clues"
+                type: "Temple_KC"
+                category: "Other"
+                ehtRate: 40
+                templeID: "Clue_beginner"
+        - name: "Cooks and Kicks"
+          abbreviation: "CK"
+          contributionMethods:
+              - name: "Cerberus"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 48
+                templeID: "Cerberus"
+              - name: "Doom of Mokhaiotl - Delve Level 1"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 941.2
+              - name: "Doom of Mokhaiotl - Delve Level 2"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 470.6
+              - name: "Doom of Mokhaiotl - Delve Level 3"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 313.8
+              - name: "Doom of Mokhaiotl - Delve Level 4"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 235.2
+              - name: "Doom of Mokhaiotl - Delve Level 5"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 94.2
+              - name: "Doom of Mokhaiotl - Delve Level 6"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 47
+              - name: "Doom of Mokhaiotl - Delve Level 7"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 37.6
+              - name: "Doom of Mokhaiotl - Delve Level 8"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 26.8
+              - name: "Doom of Mokhaiotl - Delve Level 8+"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 26.8
+              - name: "Cooking"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 400000
+                templeID: "Cooking"
+              - name: "Barrows: Items"
+                type: "Submission_Item_Drop"
+                category: "PVM"
+                ehtRate: 1.3
+        - name: "Forbidden Alchemy"
+          abbreviation: "FA"
+          contributionMethods:
+              - name: "Alchemical Hydra"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 26
+                templeID: "Alchemical Hydra"
+              - name: "Herblore"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 300000
+                templeID: "Herblore"
+              - name: "Mixology: Resin"
+                type: "Submission_Other"
+                category: "Skilling"
+                ehtRate: 16000
+                purchaseItems:
+                    - name: "Apprentice potion pack"
+                      cost: 520
+                    - name: "Adept potion pack"
+                      cost: 690
+                    - name: "Expert potion pack"
+                      cost: 1210
+                    - name: "Prescription goggles"
+                      cost: 24950
+                    - name: "Alchemist labcoat"
+                      cost: 8750
+                    - name: "Alchemist pants"
+                      cost: 8750
+                    - name: "Alchemist gloves"
+                      cost: 8750
+                    - name: "Reagent pouch"
+                      cost: 40100
+                    - name: "Chugging barrel"
+                      cost: 49850
+                    - name: "Alchemist's amulet"
+                      cost: 19950
+                    - name: "Aldarium"
+                      cost: 230
+              - name: "TzTok-Jad"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 2
+                templeID: "TzTok-Jad"
+              - name: "TzKal-Zuk"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 0.8
+                templeID: "TzKal-Zuk"
     tileGroups:
-        - name: "TODO"
-          tileNames: ["Last Mole Sailing"]
+        - name: "Blue Group"
+          tileNames: ["Build a Better Bugzapper", "Rune Sinks", "Notable Dragons"]
+        - name: "Green Group"
+          tileNames: ["Minigames and also Large Aquatic Creatures (MAALAC)", "Last Mole Sailing", "Ancient Entities"]
+        - name: "Orange Group"
+          tileNames: ["Fishing Hole", "Solarflare", "Have a Heart"]
+        - name: "Purple Group"
+          tileNames: ["Theatre of the Mind", "Too Greedily and Too Deep", "Hunting by Moonlight"]
+        - name: "Yellow Group"
+          tileNames: ["Demonic Suppression", "Frozen Terror", "2006 Honda Civic"]
+        - name: "Red Group"
+          tileNames: ["Ethically Acquired Shards", "Cooks and Kicks", "Forbidden Alchemy"]
     challenges:
         - name: "Barbarian Assault"
           teamSize: 5
@@ -1355,6 +1395,12 @@ competition:
           points: 1
         - name: "Earthbound tecpatl"
           points: 1
+        - name: "Belle's folly (tarnished)"
+          points: 1
+        - name: "Dragon metal sheet"
+          points: 1
+        - name: "Barracuda paint"
+          points: 2
     pets:
         - "Abyssal orphan"
         - "Abyssal protector"
@@ -1368,6 +1414,7 @@ competition:
         - "Callisto cub"
         - "Dom"
         - "Giant squirrel"
+        - "Gull"
         - "Hellpuppy"
         - "Herbi"
         - "Heron"
@@ -1409,6 +1456,7 @@ competition:
         - "Skotos"
         - "Smolcano"
         - "Smol heredit"
+        - "Soup"
         - "Sraracha"
         - "Tangleroot"
         - "Tiny tempor"
@@ -1435,3 +1483,4 @@ competition:
         - "Jar of stone"
         - "Jar of swamp"
         - "Jar of venom"
+        - "Jar of feathers"
