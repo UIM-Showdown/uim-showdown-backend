@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration;
@@ -150,8 +151,7 @@ public class AdminController {
     
     @PostMapping("/admin/initializeCompetition")
     public ResponseEntity<Object> initializeCompetition() throws Exception {
-        Date now = new Date();
-        if(now.after(competitionConfiguration.getStartDatetime()) && now.before(competitionConfiguration.getEndDatetime())) {
+        if(eventInProgress()) {
             return ResponseEntity.badRequest().body("Event currently in progress");
         }
         eventDataInitializationService.initializeCompetition();
@@ -175,9 +175,13 @@ public class AdminController {
     }
     
     @PostMapping("/admin/updateCompetition")
-    public ResponseEntity<Void> updateCompetition() throws Exception {
-        if(!teamRepository.findAll().iterator().hasNext()) {
+    public ResponseEntity<String> updateCompetition(@RequestParam(defaultValue = "false", required = false) boolean force) throws Exception {
+        if(!eventInitialized()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Competition has not been initialized");
+        }
+        
+        if(!force && !eventInProgress()) {
+            return ResponseEntity.badRequest().body("Event not currently in progress");
         }
         
         long start = new Date().getTime();
@@ -369,6 +373,15 @@ public class AdminController {
     @GetMapping("/admin/stats")
     public Map<String, Object> getStats() throws Exception {
         return statsService.getStatsReport();
+    }
+    
+    private boolean eventInProgress() {
+        Date now = new Date();
+        return now.after(competitionConfiguration.getStartDatetime()) && now.before(competitionConfiguration.getEndDatetime());
+    }
+    
+    private boolean eventInitialized() {
+        return teamRepository.findAll().iterator().hasNext();
     }
 
 }
