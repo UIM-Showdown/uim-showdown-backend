@@ -159,7 +159,16 @@ public class DataOutputService {
                 captains = "None";
             }
             List<Player> players = new ArrayList<Player>(team.getPlayers());
-            players.sort((p1, p2) -> p2.getScoreboard().getTotalTileContribution() - p1.getScoreboard().getTotalTileContribution() < 0 ? -1 : 1); // Descending
+            players.sort((p1, p2) -> { // Descending, with a 0 case to account for floating point math
+                if(Math.abs(p2.getScoreboard().getTotalTileContribution() - p1.getScoreboard().getTotalTileContribution()) < 0.00000001) {
+                    return 0;
+                } else if(p2.getScoreboard().getTotalTileContribution() - p1.getScoreboard().getTotalTileContribution() < 0) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+               }
+            );
             String mvp;
             if(!players.isEmpty()) {
                 mvp = players.get(0).getRsn();
@@ -561,7 +570,16 @@ public class DataOutputService {
         
         // Add leaderboard
         List<Player> players = new ArrayList<Player>(team.getPlayers());
-        players.sort((p1, p2) -> p2.getScoreboard().getTotalTileContribution() - p1.getScoreboard().getTotalTileContribution() < 0 ? -1 : 1); // Descending
+        players.sort((p1, p2) -> { // Descending, with a 0 case to account for floating point math
+            if(Math.abs(p2.getScoreboard().getTotalTileContribution() - p1.getScoreboard().getTotalTileContribution()) < 0.00000001) {
+                return 0;
+            } else if(p2.getScoreboard().getTotalTileContribution() - p1.getScoreboard().getTotalTileContribution() < 0) {
+                return -1;
+            } else {
+                return 1;
+            }
+           }
+        );
         for(int place = 1; place <= players.size(); place++) {
             List<Object> row = new ArrayList<Object>();
             row.add(place);
@@ -595,16 +613,26 @@ public class DataOutputService {
             List<Object> row = new ArrayList<Object>();
             row.add(place);
             for(ChallengeRelayComponent component : components) {
-                players.sort((p1, p2) -> { // Descending
+                players.sort((p1, p2) -> { // Descending, with a 0 case to account for floating point math
                     PlayerChallengeCompletion c1 = p1.getBestPlayerChallengeCompletion(component.getChallenge(), component);
                     PlayerChallengeCompletion c2 = p2.getBestPlayerChallengeCompletion(component.getChallenge(), component);
+                    if(c1 == null && c2 == null) {
+                        return 0;
+                    }
                     if(c1 == null) {
                         return 1;
                     }
                     if(c2 == null) {
                         return -1;
                     }
-                    return c1.getSeconds() - c2.getSeconds() < 0 ? -1 : 1; // Ascending
+                    if(Math.abs(c1.getSeconds() - c2.getSeconds()) < 0.00000001) {
+                        return 0;
+                    }
+                    if(c1.getSeconds() - c2.getSeconds() < 0) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
                 });
                 PlayerChallengeCompletion completion = players.get(place - 1).getBestPlayerChallengeCompletion(component.getChallenge(), component);
                 if(completion != null) {                    
