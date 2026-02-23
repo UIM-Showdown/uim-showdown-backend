@@ -523,7 +523,7 @@ public class ScoreboardCalculationService {
         }
         for(String tileName : tileNames) {
             if(finalTiers.get(tileName) > initialTiers.get(tileName)) {
-                tierUpsTextChannel.sendMessage("Congratuluations! Your team has reached tier " + finalTiers.get(tileName) + " in " + tileName + "!").complete();
+                tierUpsTextChannel.sendMessage("Congratulations! Your team has reached tier " + finalTiers.get(tileName) + " in " + tileName + "!").complete();
             }
         }
         
@@ -534,13 +534,13 @@ public class ScoreboardCalculationService {
         }
         for(String groupName : groupNames) {
             if(finalTiers.get(groupName) > initialTiers.get(groupName)) {
-                tierUpsTextChannel.sendMessage("Congratuluations! Your team has reached tier " + finalTiers.get(groupName) + " in " + groupName + "!").complete();
+                tierUpsTextChannel.sendMessage("Congratulations! Your team has reached tier " + finalTiers.get(groupName) + " in " + groupName + "!").complete();
             }
         }
         
         // Blackout
         if(finalTiers.get("Blackout") > initialTiers.get("Blackout")) {
-            tierUpsTextChannel.sendMessage("Congratuluations! Your team has reached a tier " + finalTiers.get("Blackout") + " blackout!").complete();
+            tierUpsTextChannel.sendMessage("Congratulations! Your team has reached a tier " + finalTiers.get("Blackout") + " blackout!").complete();
         }
     }
 
