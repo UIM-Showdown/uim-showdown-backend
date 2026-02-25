@@ -381,6 +381,7 @@ competition:
                 type: "Temple_KC"
                 category: "PVM"
                 ehtRate: 27
+                templeID: "The Leviathan"
         - name: "Last Mole Sailing"
           abbreviation: "LMS"
           contributionMethods:
