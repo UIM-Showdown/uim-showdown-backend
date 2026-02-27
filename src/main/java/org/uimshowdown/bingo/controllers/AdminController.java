@@ -159,6 +159,12 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
     
+    @PostMapping("/admin/initializeTabs")
+    public ResponseEntity<Object> initializeTabs() throws Exception {
+        dataOutputService.initializeTabs();
+        return ResponseEntity.ok().build();
+    }
+    
     @PostMapping("/admin/setStaffAdjustment")
     public ResponseEntity<Void> setStaffAdjustment(@RequestBody Map<String, Object> requestBody) {
         Player player = playerRepository.findByRsn((String) requestBody.get("rsn")).get();
