@@ -261,7 +261,22 @@ public class StatsService {
         stats.put("approvalsByApprover", approverRankings);
         
         // Self-approvals by approver
-        // TODO
+        Map<String, Double> selfApprovalsByApprover = getSelfApprovalsByApprover();
+        approvers = new ArrayList<String>(selfApprovalsByApprover.keySet());
+        approvers.sort((a1, a2) -> {
+            if(Math.abs(selfApprovalsByApprover.get(a2) - selfApprovalsByApprover.get(a1)) < 0.00000001) {
+                return 0;
+            }else if(selfApprovalsByApprover.get(a2) - selfApprovalsByApprover.get(a1) < 0) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
+        List<String> selfApproverRankings = new ArrayList<String>();
+        for(String approver : approvers) {
+            selfApproverRankings.add(approver + ": " + Math.round(selfApprovalsByApprover.get(approver)));
+        }
+        stats.put("selfApprovalsByApprover", selfApproverRankings);
         
         return stats;
     }
@@ -581,6 +596,51 @@ public class StatsService {
             }
             String approver = submission.getReviewer();
             if(approver != null) {
+                if(approvalsByApprover.get(approver) != null) {
+                    approvalsByApprover.put(approver, approvalsByApprover.get(approver) + val);
+                } else {
+                    approvalsByApprover.put(approver, val);
+                }
+            }
+        }
+        return approvalsByApprover;
+    }
+    
+    public Map<String, Double> getSelfApprovalsByApprover() {
+        Map<String, String> approverAliases = new HashMap<String, String>();
+        approverAliases.put("trout#waitlister", "trout cooker");
+        approverAliases.put("Flashcards #CHOOM", "Flashcards");
+        approverAliases.put("DerekMK #BOOTY", "DerekMK");
+        approverAliases.put("finance king", "finance king");
+        approverAliases.put("Heiligtree #TOP3", "Heiligtree");
+        approverAliases.put("Zyb #CHOOM", "Zyb");
+        approverAliases.put("#WW UIM Dr4g0n", "UIM Dr4g0n");
+        approverAliases.put("Shy #MLG", "shv");
+        approverAliases.put("Mitaka Asa", "Mitaka Asa");
+        approverAliases.put("U 42 #MLH", null);
+        approverAliases.put("And Theatre of Mind", "Mitaka Asa");
+        approverAliases.put("naternaut #mlg", "naternaut");
+        approverAliases.put("Dan (bingo_doer) #GG", "bingo_doer");
+        approverAliases.put("McKennon #LL", "McKennon");
+        approverAliases.put("Theatre of Mind", "RinkoLover");
+        Map<String, Double> approvalsByApprover = new HashMap<String, Double>();
+        for(Submission submission : submissionRepository.findAll()) {
+            double val = 1.0;
+            // Handle multi-submissions
+            if(submission.getType() == Submission.Type.CONTRIBUTION) {
+                String methodName = ((ContributionSubmission) submission).getContributionMethod().getName();
+                if(methodName.contains("MTA")) {
+                    val /= 4.0;
+                }
+                if(methodName.contains("LMS")) {
+                    val /= 2.0;
+                }
+                if(methodName.contains("Doom of Mokhaiotl")) {
+                    val /= 9.0;
+                }
+            }
+            String approver = submission.getReviewer();
+            if(approver != null && submission.getPlayer().getRsn().equals(approverAliases.get(approver))) {
                 if(approvalsByApprover.get(approver) != null) {
                     approvalsByApprover.put(approver, approvalsByApprover.get(approver) + val);
                 } else {
