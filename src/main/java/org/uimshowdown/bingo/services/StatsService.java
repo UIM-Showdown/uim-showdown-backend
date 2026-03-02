@@ -619,7 +619,7 @@ public class StatsService {
         approverAliases.put("Mitaka Asa", "Mitaka Asa");
         approverAliases.put("U 42 #MLH", null);
         approverAliases.put("And Theatre of Mind", "Mitaka Asa");
-        approverAliases.put("naternaut #mlg", "naternaut");
+        approverAliases.put("naternaut #mlg", "trout cooker");
         approverAliases.put("Dan (bingo_doer) #GG", "bingo_doer");
         approverAliases.put("McKennon #LL", "McKennon");
         approverAliases.put("Theatre of Mind", "RinkoLover");
