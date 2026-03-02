@@ -14,6 +14,7 @@ import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.Submission;
 import org.uimshowdown.bingo.models.Team;
+import org.uimshowdown.bingo.models.Tile;
 import org.uimshowdown.bingo.repositories.CollectionLogItemRepository;
 import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
@@ -147,17 +148,17 @@ public class StatsService {
         Map<String, Map<String, Double>> teamPointsByCategory = getTeamPointsByCategory();
         
         // Team proportions for category
-        Map<String, Map<String, Double>> categoryProportionsByTeam = new HashMap<String, Map<String, Double>>();
+        Map<String, Map<String, String>> categoryProportionsByTeam = new HashMap<String, Map<String, String>>();
         for(String teamName : teamPointsByCategory.keySet()) {
-            Map<String, Double> categoryProportions = new HashMap<String, Double>();
+            Map<String, String> categoryProportions = new HashMap<String, String>();
             Map<String, Double> pointsByCategory = teamPointsByCategory.get(teamName);
             double pvmPoints = pointsByCategory.get("PVM");
             double skillingPoints = pointsByCategory.get("Skilling");
             double otherPoints = pointsByCategory.get("Other");
             double totalPoints = pvmPoints + skillingPoints + otherPoints;
-            categoryProportions.put("PVM", pvmPoints / totalPoints);
-            categoryProportions.put("Skilling", skillingPoints / totalPoints);
-            categoryProportions.put("Other", otherPoints / totalPoints);
+            categoryProportions.put("PVM", String.format("%.2f", pvmPoints / totalPoints));
+            categoryProportions.put("Skilling", String.format("%.2f", skillingPoints / totalPoints));
+            categoryProportions.put("Other", String.format("%.2f", otherPoints / totalPoints));
             categoryProportionsByTeam.put(teamName, categoryProportions);
         }
         stats.put("categoryProportionsByTeam", categoryProportionsByTeam);
@@ -177,7 +178,7 @@ public class StatsService {
         });
         List<String> pvmRankings = new ArrayList<String>();
         for(String teamName : teamNames) {
-            pvmRankings.add(teamName + ": " + teamPointsByCategory.get(teamName).get("PVM"));
+            pvmRankings.add(teamName + ": " + String.format("%.2f", teamPointsByCategory.get(teamName).get("PVM")));
         }
         categoryRankingsByTeam.put("PVM", pvmRankings);
         teamNames.sort((t1, t2) -> { // Descending by Skilling points
@@ -189,7 +190,7 @@ public class StatsService {
         });
         List<String> skillingRankings = new ArrayList<String>();
         for(String teamName : teamNames) {
-            skillingRankings.add(teamName + ": " + teamPointsByCategory.get(teamName).get("Skilling"));
+            skillingRankings.add(teamName + ": " + String.format("%.2f", teamPointsByCategory.get(teamName).get("Skilling")));
         }
         categoryRankingsByTeam.put("Skilling", skillingRankings);
         teamNames.sort((t1, t2) -> { // Descending by Other points
@@ -201,19 +202,36 @@ public class StatsService {
         });
         List<String> otherRankings = new ArrayList<String>();
         for(String teamName : teamNames) {
-            otherRankings.add(teamName + ": " + teamPointsByCategory.get(teamName).get("Other"));
+            otherRankings.add(teamName + ": " + String.format("%.2f", teamPointsByCategory.get(teamName).get("Other")));
         }
         categoryRankingsByTeam.put("Other", otherRankings);
         stats.put("categoryRankingsByTeam", categoryRankingsByTeam);
         
-        // Most-contributed-to tile for players
-        // TODO
-        
         // Diversity score
-        // TODO
+        Map<String, Double> diversityScores = getDiversityScores();
+        List<String> rsns = new ArrayList<String>(diversityScores.keySet());
+        rsns.sort((r1, r2) -> { // Descending by diversity score
+            if(diversityScores.get(r2) - diversityScores.get(r1) < 0) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
+        List<String> diversityRankings = new ArrayList<String>();
+        for(String rsn : rsns) {
+            diversityRankings.add(rsn + ": " + String.format("%.2f", diversityScores.get(rsn)));
+        }
+        stats.put("diversityScores", diversityRankings);
         
         // Approvals by approver
-        // TODO
+        Map<String, Integer> approvalsByApprover = getApprovalsByApprover();
+        List<String> approvers = new ArrayList<String>(approvalsByApprover.keySet());
+        approvers.sort((a1, a2) -> approvalsByApprover.get(a2) - approvalsByApprover.get(a1));
+        List<String> approverRankings = new ArrayList<String>();
+        for(String approver : approvers) {
+            approverRankings.add(approver + ": " + approvalsByApprover.get(approver));
+        }
+        stats.put("approvalsByApprover", approverRankings);
         
         // Self-approvals by approver
         // TODO
@@ -426,7 +444,7 @@ public class StatsService {
         return itemsNotObtained;
     }
     
-    private Map<String, Map<String, Double>> getTeamPointsByCategory() {
+    public Map<String, Map<String, Double>> getTeamPointsByCategory() {
         Map<String, Map<String, Double>> teamPointsByCategory = new HashMap<String, Map<String, Double>>();
         for(Team team : teamRepository.findAll()) {
             Map<String, Double> points = new HashMap<String, Double>();
@@ -444,6 +462,46 @@ public class StatsService {
             teamPointsByCategory.put(team.getName(), points);
         }
         return teamPointsByCategory;
+    }
+    
+    public Map<String, Double> getDiversityScores() {
+        Map<String, Double> diversityScores = new HashMap<String, Double>();
+        for(Player player : playerRepository.findAll()) {
+            Map<Tile, Double> ehtByTile = new HashMap<Tile, Double>();
+            for(Contribution contribution : player.getContributions()) {
+                Tile tile = contribution.getContributionMethod().getTile();
+                if(ehtByTile.get(tile) != null) {
+                    ehtByTile.put(tile, ehtByTile.get(tile) + contribution.getEHTValue());
+                } else {
+                    ehtByTile.put(tile, contribution.getEHTValue());
+                }
+            }
+            int tilesWith1EHT = 0;
+            int totalTiles = 0;
+            for(Tile tile : ehtByTile.keySet()) {
+                totalTiles++;
+                if(ehtByTile.get(tile) > 1.0) {
+                    tilesWith1EHT++;
+                }
+            }
+            diversityScores.put(player.getRsn(), player.getScoreboard().getTotalTileContribution() * tilesWith1EHT / totalTiles);
+        }
+        return diversityScores;
+    }
+    
+    public Map<String, Integer> getApprovalsByApprover() {
+        Map<String, Integer> approvalsByApprover = new HashMap<String, Integer>();
+        for(Submission submission : submissionRepository.findAll()) {
+            String approver = submission.getReviewer();
+            if(approver != null) {
+                if(approvalsByApprover.get(approver) != null) {
+                    approvalsByApprover.put(approver, approvalsByApprover.get(approver) + 1);
+                } else {
+                    approvalsByApprover.put(approver, 1);
+                }
+            }
+        }
+        return approvalsByApprover;
     }
 
 }

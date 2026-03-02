@@ -141,7 +141,7 @@ public class Contribution {
     
     /**
      * Returns the final number of units contributed, which is the difference between the final 
-     * and start values, plus the staff adjustment.
+     * and start values, plus the staff adjustment and purchase amount.
      * @return
      */
     public int getUnitsContributed() {
@@ -149,6 +149,14 @@ public class Contribution {
             return 0;
         }
         return finalValue - initialValue + staffAdjustment + purchaseAmount;
+    }
+    
+    /**
+     * Returns the final number of EHT contributed, which is the units contributed divided by the method's EHT rate
+     * @return
+     */
+    public double getEHTValue() {
+        return ((double) getUnitsContributed() / contributionMethod.getEhtRate());
     }
 
     @Override
