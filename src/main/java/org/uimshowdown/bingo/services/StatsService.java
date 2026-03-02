@@ -144,6 +144,80 @@ public class StatsService {
         // Items not obtained
         stats.put("itemsNotObtained", getItemsNotObtained());
         
+        Map<String, Map<String, Double>> teamPointsByCategory = getTeamPointsByCategory();
+        
+        // Team proportions for category
+        Map<String, Map<String, Double>> categoryProportionsByTeam = new HashMap<String, Map<String, Double>>();
+        for(String teamName : teamPointsByCategory.keySet()) {
+            Map<String, Double> categoryProportions = new HashMap<String, Double>();
+            Map<String, Double> pointsByCategory = teamPointsByCategory.get(teamName);
+            double pvmPoints = pointsByCategory.get("PVM");
+            double skillingPoints = pointsByCategory.get("Skilling");
+            double otherPoints = pointsByCategory.get("Other");
+            double totalPoints = pvmPoints + skillingPoints + otherPoints;
+            categoryProportions.put("PVM", pvmPoints / totalPoints);
+            categoryProportions.put("Skilling", skillingPoints / totalPoints);
+            categoryProportions.put("Other", otherPoints / totalPoints);
+            categoryProportionsByTeam.put(teamName, categoryProportions);
+        }
+        stats.put("categoryProportionsByTeam", categoryProportionsByTeam);
+        
+        // Team rankings for category
+        Map<String, List<String>> categoryRankingsByTeam = new HashMap<String, List<String>>();
+        List<String> teamNames = new ArrayList<String>();
+        for(Team team : teamRepository.findAll()) {
+            teamNames.add(team.getName());
+        }
+        teamNames.sort((t1, t2) -> { // Descending by PVM points
+            if(teamPointsByCategory.get(t2).get("PVM") - teamPointsByCategory.get(t1).get("PVM") < 0) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
+        List<String> pvmRankings = new ArrayList<String>();
+        for(String teamName : teamNames) {
+            pvmRankings.add(teamName + ": " + teamPointsByCategory.get(teamName).get("PVM"));
+        }
+        categoryRankingsByTeam.put("PVM", pvmRankings);
+        teamNames.sort((t1, t2) -> { // Descending by Skilling points
+            if(teamPointsByCategory.get(t2).get("Skilling") - teamPointsByCategory.get(t1).get("Skilling") < 0) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
+        List<String> skillingRankings = new ArrayList<String>();
+        for(String teamName : teamNames) {
+            skillingRankings.add(teamName + ": " + teamPointsByCategory.get(teamName).get("Skilling"));
+        }
+        categoryRankingsByTeam.put("Skilling", skillingRankings);
+        teamNames.sort((t1, t2) -> { // Descending by Other points
+            if(teamPointsByCategory.get(t2).get("Other") - teamPointsByCategory.get(t1).get("Other") < 0) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
+        List<String> otherRankings = new ArrayList<String>();
+        for(String teamName : teamNames) {
+            otherRankings.add(teamName + ": " + teamPointsByCategory.get(teamName).get("Other"));
+        }
+        categoryRankingsByTeam.put("Other", otherRankings);
+        stats.put("categoryRankingsByTeam", categoryRankingsByTeam);
+        
+        // Most-contributed-to tile for players
+        // TODO
+        
+        // Diversity score
+        // TODO
+        
+        // Approvals by approver
+        // TODO
+        
+        // Self-approvals by approver
+        // TODO
+        
         return stats;
     }
     
@@ -348,6 +422,26 @@ public class StatsService {
             }
         }
         return itemsNotObtained;
+    }
+    
+    private Map<String, Map<String, Double>> getTeamPointsByCategory() {
+        Map<String, Map<String, Double>> teamPointsByCategory = new HashMap<String, Map<String, Double>>();
+        for(Team team : teamRepository.findAll()) {
+            Map<String, Double> points = new HashMap<String, Double>();
+            double pvmPoints = 0.0;
+            double skillingPoints = 0.0;
+            double otherPoints = 0.0;
+            for(Player player : team.getPlayers()) {
+                pvmPoints += player.getScoreboard().getPvmTileContribution();
+                skillingPoints += player.getScoreboard().getSkillingTileContribution();
+                otherPoints += player.getScoreboard().getOtherTileContribution();
+            }
+            points.put("PVM", pvmPoints);
+            points.put("Skilling", skillingPoints);
+            points.put("Other", otherPoints);
+            teamPointsByCategory.put(team.getName(), points);
+        }
+        return teamPointsByCategory;
     }
 
 }
