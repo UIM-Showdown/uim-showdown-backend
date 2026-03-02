@@ -273,10 +273,12 @@ public class StatsService {
     
     public Map<Submission.Type, Integer> getTotalSubmissions() {
         Map<Submission.Type, Integer> totalSubmissions = new HashMap<Submission.Type, Integer>();
-        totalSubmissions.put(Submission.Type.CHALLENGE, 0);
-        totalSubmissions.put(Submission.Type.COLLECTION_LOG, 0);
-        totalSubmissions.put(Submission.Type.CONTRIBUTION, 0);
         totalSubmissions.put(Submission.Type.RECORD, 0);
+        totalSubmissions.put(Submission.Type.CHALLENGE, 0);
+        totalSubmissions.put(Submission.Type.CONTRIBUTION, 0);
+        totalSubmissions.put(Submission.Type.CONTRIBUTION_INCREMENT, 0);
+        totalSubmissions.put(Submission.Type.CONTRIBUTION_PURCHASE, 0);
+        totalSubmissions.put(Submission.Type.COLLECTION_LOG, 0);
         for(Submission submission : submissionRepository.findAll()) {
             Submission.Type type = submission.getType();
             totalSubmissions.put(type, totalSubmissions.get(type) + 1);
