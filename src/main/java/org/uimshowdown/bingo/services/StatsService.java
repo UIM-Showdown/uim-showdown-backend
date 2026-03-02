@@ -11,6 +11,7 @@ import org.uimshowdown.bingo.models.CollectionLogCompletion;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
+import org.uimshowdown.bingo.models.ContributionSubmission;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.Submission;
 import org.uimshowdown.bingo.models.Team;
@@ -105,22 +106,38 @@ public class StatsService {
         stats.put("otherSubmissionEHTs", otherSubmissionEHTs);
         
         // Players with most submissions
-        Map<Player, Integer> numberOfSubmissions = getNumberOfSubmissions();
+        Map<Player, Double> numberOfSubmissions = getNumberOfSubmissions();
         List<Player> playersSorted = new ArrayList<Player>(numberOfSubmissions.keySet());
-        playersSorted.sort((p1, p2) -> numberOfSubmissions.get(p2) - numberOfSubmissions.get(p1));
+        playersSorted.sort((p1, p2) -> {
+            if(Math.abs(numberOfSubmissions.get(p2) - numberOfSubmissions.get(p1)) < 0.00000001) {
+                return 0;  
+            } else if(numberOfSubmissions.get(p2) - numberOfSubmissions.get(p1) < 0) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
         List<String> playerSubmissions = new ArrayList<String>();
         for(Player player : playersSorted) {
-            playerSubmissions.add(player.getRsn() + ": " + numberOfSubmissions.get(player));
+            playerSubmissions.add(player.getRsn() + ": " + Math.round(numberOfSubmissions.get(player)));
         }
         stats.put("numberOfSubmissions", playerSubmissions);
         
         // Players with most denied submissions
-        Map<Player, Integer> deniedSubmissions = getNumberOfDeniedSubmissions();
+        Map<Player, Double> deniedSubmissions = getNumberOfDeniedSubmissions();
         playersSorted = new ArrayList<Player>(deniedSubmissions.keySet());
-        playersSorted.sort((p1, p2) -> deniedSubmissions.get(p2) - deniedSubmissions.get(p1));
+        playersSorted.sort((p1, p2) -> {
+            if(Math.abs(deniedSubmissions.get(p2) - deniedSubmissions.get(p1)) < 0.00000001) {
+                return 0;  
+            } else if(deniedSubmissions.get(p2) - deniedSubmissions.get(p1) < 0) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
         List<String> playerDeniedSubmissions = new ArrayList<String>();
         for(Player player : playersSorted) {
-            playerDeniedSubmissions.add(player.getRsn() + ": " + deniedSubmissions.get(player));
+            playerDeniedSubmissions.add(player.getRsn() + ": " + Math.round(deniedSubmissions.get(player)));
         }
         stats.put("deniedSubmissions", playerDeniedSubmissions);
         
@@ -226,12 +243,20 @@ public class StatsService {
         stats.put("diversityScores", diversityRankings);
         
         // Approvals by approver
-        Map<String, Integer> approvalsByApprover = getApprovalsByApprover();
+        Map<String, Double> approvalsByApprover = getApprovalsByApprover();
         List<String> approvers = new ArrayList<String>(approvalsByApprover.keySet());
-        approvers.sort((a1, a2) -> approvalsByApprover.get(a2) - approvalsByApprover.get(a1));
+        approvers.sort((a1, a2) -> {
+            if(Math.abs(approvalsByApprover.get(a2) - approvalsByApprover.get(a1)) < 0.00000001) {
+                return 0;
+            }else if(approvalsByApprover.get(a2) - approvalsByApprover.get(a1) < 0) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
         List<String> approverRankings = new ArrayList<String>();
         for(String approver : approvers) {
-            approverRankings.add(approver + ": " + approvalsByApprover.get(approver));
+            approverRankings.add(approver + ": " + Math.round(approvalsByApprover.get(approver)));
         }
         stats.put("approvalsByApprover", approverRankings);
         
@@ -265,23 +290,55 @@ public class StatsService {
         return allEHTContributed;
     }
     
-    public Map<Player, Integer> getNumberOfSubmissions() {
-        Map<Player, Integer> numberOfSubmissions = new HashMap<Player, Integer>();
+    public Map<Player, Double> getNumberOfSubmissions() {
+        Map<Player, Double> numberOfSubmissions = new HashMap<Player, Double>();
         for(Player player : playerRepository.findAll()) {
-            if(player.getSubmissions().size() > 0) {                
-                numberOfSubmissions.put(player, player.getSubmissions().size());
+            double submissions = 0.0;
+            for(Submission submission : player.getSubmissions()) {
+                double val = 1.0;
+                // Handle multi-submissions
+                if(submission.getType() == Submission.Type.CONTRIBUTION) {
+                    String methodName = ((ContributionSubmission) submission).getContributionMethod().getName();
+                    if(methodName.contains("MTA")) {
+                        val /= 4.0;
+                    }
+                    if(methodName.contains("LMS")) {
+                        val /= 2.0;
+                    }
+                    if(methodName.contains("Doom of Mokhaiotl")) {
+                        val /= 9.0;
+                    }
+                }
+                submissions += val;
+            }
+            if(submissions > 0) {
+                numberOfSubmissions.put(player, submissions);
             }
         }
         return numberOfSubmissions;
     }
     
-    public Map<Player, Integer> getNumberOfDeniedSubmissions() {
-        Map<Player, Integer> numberOfDeniedSubmissions = new HashMap<Player, Integer>();
+    public Map<Player, Double> getNumberOfDeniedSubmissions() {
+        Map<Player, Double> numberOfDeniedSubmissions = new HashMap<Player, Double>();
         for(Player player : playerRepository.findAll()) {
-            int denied = 0;
+            double denied = 0.0;
             for(Submission submission : player.getSubmissions()) {
                 if(submission.getState() == Submission.State.DENIED) {
-                    denied++;
+                    double val = 1.0;
+                    // Handle multi-submissions
+                    if(submission.getType() == Submission.Type.CONTRIBUTION) {
+                        String methodName = ((ContributionSubmission) submission).getContributionMethod().getName();
+                        if(methodName.contains("MTA")) {
+                            val /= 4.0;
+                        }
+                        if(methodName.contains("LMS")) {
+                            val /= 2.0;
+                        }
+                        if(methodName.contains("Doom of Mokhaiotl")) {
+                            val /= 9.0;
+                        }
+                    }
+                    denied += val;
                 }
             }
             if(denied > 0) {                
@@ -291,17 +348,31 @@ public class StatsService {
         return numberOfDeniedSubmissions;
     }
     
-    public Map<Submission.Type, Integer> getTotalSubmissions() {
-        Map<Submission.Type, Integer> totalSubmissions = new HashMap<Submission.Type, Integer>();
-        totalSubmissions.put(Submission.Type.RECORD, 0);
-        totalSubmissions.put(Submission.Type.CHALLENGE, 0);
-        totalSubmissions.put(Submission.Type.CONTRIBUTION, 0);
-        totalSubmissions.put(Submission.Type.CONTRIBUTION_INCREMENT, 0);
-        totalSubmissions.put(Submission.Type.CONTRIBUTION_PURCHASE, 0);
-        totalSubmissions.put(Submission.Type.COLLECTION_LOG, 0);
+    public Map<Submission.Type, Double> getTotalSubmissions() {
+        Map<Submission.Type, Double> totalSubmissions = new HashMap<Submission.Type, Double>();
+        totalSubmissions.put(Submission.Type.RECORD, 0.0);
+        totalSubmissions.put(Submission.Type.CHALLENGE, 0.0);
+        totalSubmissions.put(Submission.Type.CONTRIBUTION, 0.0);
+        totalSubmissions.put(Submission.Type.CONTRIBUTION_INCREMENT, 0.0);
+        totalSubmissions.put(Submission.Type.CONTRIBUTION_PURCHASE, 0.0);
+        totalSubmissions.put(Submission.Type.COLLECTION_LOG, 0.0);
         for(Submission submission : submissionRepository.findAll()) {
             Submission.Type type = submission.getType();
-            totalSubmissions.put(type, totalSubmissions.get(type) + 1);
+            double val = 1.0;
+            // Handle multi-submissions
+            if(submission.getType() == Submission.Type.CONTRIBUTION) {
+                String methodName = ((ContributionSubmission) submission).getContributionMethod().getName();
+                if(methodName.contains("MTA")) {
+                    val /= 4.0;
+                }
+                if(methodName.contains("LMS")) {
+                    val /= 2.0;
+                }
+                if(methodName.contains("Doom of Mokhaiotl")) {
+                    val /= 9.0;
+                }
+            }
+            totalSubmissions.put(type, totalSubmissions.get(type) + val);
         }
         return totalSubmissions;
     }
@@ -491,15 +562,29 @@ public class StatsService {
         return diversityScores;
     }
     
-    public Map<String, Integer> getApprovalsByApprover() {
-        Map<String, Integer> approvalsByApprover = new HashMap<String, Integer>();
+    public Map<String, Double> getApprovalsByApprover() {
+        Map<String, Double> approvalsByApprover = new HashMap<String, Double>();
         for(Submission submission : submissionRepository.findAll()) {
+            double val = 1.0;
+            // Handle multi-submissions
+            if(submission.getType() == Submission.Type.CONTRIBUTION) {
+                String methodName = ((ContributionSubmission) submission).getContributionMethod().getName();
+                if(methodName.contains("MTA")) {
+                    val /= 4.0;
+                }
+                if(methodName.contains("LMS")) {
+                    val /= 2.0;
+                }
+                if(methodName.contains("Doom of Mokhaiotl")) {
+                    val /= 9.0;
+                }
+            }
             String approver = submission.getReviewer();
             if(approver != null) {
                 if(approvalsByApprover.get(approver) != null) {
-                    approvalsByApprover.put(approver, approvalsByApprover.get(approver) + 1);
+                    approvalsByApprover.put(approver, approvalsByApprover.get(approver) + val);
                 } else {
-                    approvalsByApprover.put(approver, 1);
+                    approvalsByApprover.put(approver, val);
                 }
             }
         }
