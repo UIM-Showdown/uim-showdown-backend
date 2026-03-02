@@ -211,7 +211,9 @@ public class StatsService {
         Map<String, Double> diversityScores = getDiversityScores();
         List<String> rsns = new ArrayList<String>(diversityScores.keySet());
         rsns.sort((r1, r2) -> { // Descending by diversity score
-            if(diversityScores.get(r2) - diversityScores.get(r1) < 0) {
+            if(Math.abs(diversityScores.get(r2) - diversityScores.get(r1)) < 0.0000000001) {
+                return 0;
+            } else if(diversityScores.get(r2) - diversityScores.get(r1) < 0) {
                 return -1;
             } else {
                 return 1;
