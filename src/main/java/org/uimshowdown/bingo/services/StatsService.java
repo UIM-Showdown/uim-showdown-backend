@@ -278,6 +278,24 @@ public class StatsService {
         }
         stats.put("selfApprovalsByApprover", selfApproverRankings);
         
+        // EHT spent by players
+        Map<String, Double> ehtSpentByPlayers = getEHTSpentByPlayers();
+        List<String> spenders = new ArrayList<String>(ehtSpentByPlayers.keySet());
+        spenders.sort((s1, s2) -> {
+            if(Math.abs(ehtSpentByPlayers.get(s2) - ehtSpentByPlayers.get(s1)) < 0.00000001) {
+                return 0;
+            }else if(ehtSpentByPlayers.get(s2) - ehtSpentByPlayers.get(s1) < 0) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
+        List<String> spenderRankings = new ArrayList<String>();
+        for(String spender : spenders) {
+            spenderRankings.add(spender + ": " + String.format("%.2f", ehtSpentByPlayers.get(spender)));
+        }
+        stats.put("ehtSpentByPlayers", spenderRankings);
+        
         return stats;
     }
     
@@ -649,6 +667,20 @@ public class StatsService {
             }
         }
         return approvalsByApprover;
+    }
+    
+    public Map<String, Double> getEHTSpentByPlayers() {
+        Map<String, Double> ehtSpentByPlayers = new HashMap<String, Double>();
+        for(Player player : playerRepository.findAll()) {
+            Double ehtSpent = 0.0;
+            for(Contribution contribution : player.getContributions()) {
+                ehtSpent += ((double) contribution.getPurchaseAmount()) / contribution.getContributionMethod().getEhtRate();
+            }
+            if(ehtSpent > 0.0) {                
+                ehtSpentByPlayers.put(player.getRsn(), ehtSpent);
+            }
+        }
+        return ehtSpentByPlayers;
     }
 
 }
