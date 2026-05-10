@@ -306,14 +306,6 @@ competition:
                 category: "Other"
                 ehtRate: 1200
                 purchaseItems:
-                  - name: "Level 2 Upgrade"
-                    cost: 200
-                  - name: "Level 3 Upgrade"
-                    cost: 300
-                  - name: "Level 4 Upgrade"
-                    cost: 400
-                  - name: "Level 5 Upgrade"
-                    cost: 500
                   - name: "Fighter hat"
                     cost: 1100
                   - name: "Ranger hat"
