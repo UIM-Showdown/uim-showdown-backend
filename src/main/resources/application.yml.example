@@ -1068,7 +1068,7 @@ competition:
           points: 1
         - name: "Shield left half"
           points: 1
-        - name: "Uncut onyx"
+        - name: "Onyx (cut or uncut)"
           points: 1
         - name: "Saradomin's light"
           points: 1
@@ -1170,7 +1170,7 @@ competition:
           points: 1
         - name: "Glacial temotli"
           points: 1
-        - name: "Trident of the seas"
+        - name: "Trident of the seas (full or empty)"
           points: 1
         - name: "Fire cape"
           points: 1
