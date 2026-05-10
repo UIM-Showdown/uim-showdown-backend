@@ -235,6 +235,7 @@ public class AdminController {
     public Map<String, Object> setupDiscordServer() throws Exception {
         Guild guild = discordClient.getGuildById(guildId);
         Role eventStaffRole = guild.getRolesByName("Event staff", false).get(0);
+        Role technicalLeadRole = guild.getRolesByName("Technical Lead", false).get(0);
         Role captainRole = guild.getRolesByName("Captain", false).get(0);
         Role cheerleaderRole = guild.getRolesByName("Cheerleader", false).get(0);
         Role screenshotApproverRole = guild.getRolesByName("Screenshot Approver", false).get(0);
@@ -259,6 +260,7 @@ public class AdminController {
                 teamCategory = guild.createCategory(team.getAbbreviation())
                     .addRolePermissionOverride(defaultRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                     .addRolePermissionOverride(eventStaffRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
+                    .addRolePermissionOverride(technicalLeadRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
                     .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.MESSAGE_ATTACH_FILES), null)
                     .addRolePermissionOverride(cheerleaderRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                     .addRolePermissionOverride(screenshotApproverRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
@@ -272,6 +274,7 @@ public class AdminController {
                 teamCategory.createTextChannel(announcementsTextChannelName)
                     .addRolePermissionOverride(defaultRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                     .addRolePermissionOverride(eventStaffRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
+                    .addRolePermissionOverride(technicalLeadRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
                     .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), Arrays.asList(Permission.MESSAGE_SEND))
                     .addRolePermissionOverride(cheerleaderRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                     .addRolePermissionOverride(screenshotApproverRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
@@ -285,6 +288,7 @@ public class AdminController {
                 teamCategory.createTextChannel(tierUpsTextChannelName)
                     .addRolePermissionOverride(defaultRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                     .addRolePermissionOverride(eventStaffRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
+                    .addRolePermissionOverride(technicalLeadRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
                     .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), Arrays.asList(Permission.MESSAGE_SEND))
                     .addRolePermissionOverride(cheerleaderRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                     .addRolePermissionOverride(screenshotApproverRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
@@ -304,6 +308,7 @@ public class AdminController {
                 teamCategory.createVoiceChannel(generalVoiceChannelName)
                 .addRolePermissionOverride(defaultRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                 .addRolePermissionOverride(eventStaffRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
+                .addRolePermissionOverride(technicalLeadRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
                 .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
                 .addRolePermissionOverride(cheerleaderRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
                 .addRolePermissionOverride(screenshotApproverRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
@@ -317,6 +322,7 @@ public class AdminController {
                 teamCategory.createTextChannel(botSubmissionsTextChannelName)
                     .addRolePermissionOverride(defaultRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                     .addRolePermissionOverride(eventStaffRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
+                    .addRolePermissionOverride(technicalLeadRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
                     .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
                     .addRolePermissionOverride(cheerleaderRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
                     .addRolePermissionOverride(screenshotApproverRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
