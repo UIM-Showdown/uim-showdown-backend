@@ -255,7 +255,11 @@ public class ScoreboardCalculationService {
         // Add up all clog item points
         int clogPoints = 0;
         for(CollectionLogCompletion completion : player.getCollectionLogCompletions()) {
-            clogPoints += completion.getItem().getPoints();
+            if(completion.getItem().getType() == CollectionLogItem.Type.NORMAL) {
+                clogPoints += completion.getItem().getPoints();
+            } else { 
+                clogPoints += 1; // Pets and jars give a token lucky player point
+            }
         }
         scoreboard.setCollectionLogPoints(clogPoints);
         
