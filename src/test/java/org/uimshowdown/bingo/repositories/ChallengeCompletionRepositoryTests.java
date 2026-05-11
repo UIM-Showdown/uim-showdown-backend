@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.Challenge;
-import org.uimshowdown.bingo.models.ChallengeCompletion;
+import org.uimshowdown.bingo.models.SpeedChallengeCompletion;
 import org.uimshowdown.bingo.models.Team;
 
 @SpringBootTest
@@ -36,7 +36,7 @@ public class ChallengeCompletionRepositoryTests {
     private TeamRepository teamRepository;
 
     private Challenge testChallenge;
-    private ChallengeCompletion testChallengeCompletion;
+    private SpeedChallengeCompletion testChallengeCompletion;
     private Team testTeam;
 
     @BeforeAll
@@ -55,7 +55,7 @@ public class ChallengeCompletionRepositoryTests {
     @Test
     @Transactional
     public void Should_FindTestChallengeCompletion_When_GivenTestChallengeId() {
-        Iterable<ChallengeCompletion> challengeCompletions = challengeCompletionRepository.findAllByChallengeId(testChallenge.getId());
+        Iterable<SpeedChallengeCompletion> challengeCompletions = challengeCompletionRepository.findAllByChallengeId(testChallenge.getId());
 
         assertThat(challengeCompletions)
             .isNotNull()
@@ -66,7 +66,7 @@ public class ChallengeCompletionRepositoryTests {
     @Test
     @Transactional
     public void Should_NotFindTestChallengeCompletion_When_GivenWrongChallengeId() {
-        Iterable<ChallengeCompletion> challengeCompletions = challengeCompletionRepository.findAllByChallengeId(0);
+        Iterable<SpeedChallengeCompletion> challengeCompletions = challengeCompletionRepository.findAllByChallengeId(0);
 
         assertThat(challengeCompletions)
             .isNotNull()
@@ -76,7 +76,7 @@ public class ChallengeCompletionRepositoryTests {
     @Test
     @Transactional
     public void Should_FindTestChallengeCompletion_When_GivenTestTeamId() {
-        Iterable<ChallengeCompletion> challengeCompletions = challengeCompletionRepository.findAllByTeamId(testTeam.getId());
+        Iterable<SpeedChallengeCompletion> challengeCompletions = challengeCompletionRepository.findAllByTeamId(testTeam.getId());
 
         assertThat(challengeCompletions)
             .isNotNull()
@@ -87,7 +87,7 @@ public class ChallengeCompletionRepositoryTests {
     @Test
     @Transactional
     public void Should_NotFindTestChallengeCompletion_When_GivenWrongTeamId() {
-        Iterable<ChallengeCompletion> challengeCompletions = challengeCompletionRepository.findAllByTeamId(0);
+        Iterable<SpeedChallengeCompletion> challengeCompletions = challengeCompletionRepository.findAllByTeamId(0);
 
         assertThat(challengeCompletions)
             .isNotNull()

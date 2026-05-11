@@ -46,7 +46,10 @@ public class TeamScoreboard {
     private Set<RecordLeaderboardEntry> recordLeaderboardEntries = new HashSet<RecordLeaderboardEntry>();
     
     @OneToMany(mappedBy = "teamScoreboard", cascade = CascadeType.ALL)
-    private Set<ChallengeLeaderboardEntry> challengeLeaderboardEntries = new HashSet<ChallengeLeaderboardEntry>();
+    private Set<SpeedChallengeLeaderboardEntry> speedChallengeLeaderboardEntries = new HashSet<SpeedChallengeLeaderboardEntry>();
+    
+    @OneToMany(mappedBy = "teamScoreboard", cascade = CascadeType.ALL)
+    private Set<PointsChallengeLeaderboardEntry> pointsChallengeLeaderboardEntries = new HashSet<PointsChallengeLeaderboardEntry>();
 
     public int getId() {
         return id;
@@ -112,12 +115,20 @@ public class TeamScoreboard {
         this.recordLeaderboardEntries = recordLeaderboardEntries;
     }
 
-    public Set<ChallengeLeaderboardEntry> getChallengeLeaderboardEntries() {
-        return challengeLeaderboardEntries;
+    public Set<SpeedChallengeLeaderboardEntry> getSpeedChallengeLeaderboardEntries() {
+        return speedChallengeLeaderboardEntries;
     }
-
-    public void setChallengeLeaderboardEntries(Set<ChallengeLeaderboardEntry> challengeLeaderboardEntries) {
-        this.challengeLeaderboardEntries = challengeLeaderboardEntries;
+    
+    public Set<PointsChallengeLeaderboardEntry> getPointsChallengeLeaderboardEntries() {
+        return pointsChallengeLeaderboardEntries;
+    }
+    
+    public void setSpeedChallengeLeaderboardEntries(Set<SpeedChallengeLeaderboardEntry> speedChallengeLeaderboardEntries) {
+        this.speedChallengeLeaderboardEntries = speedChallengeLeaderboardEntries;
+    }
+    
+    public void setPointsChallengeLeaderboardEntries(Set<PointsChallengeLeaderboardEntry> pointsChallengeLeaderboardEntries) {
+        this.pointsChallengeLeaderboardEntries = pointsChallengeLeaderboardEntries;
     }
     
     public RecordLeaderboardEntry getRecordLeaderboardEntry(Record record) {
@@ -129,8 +140,17 @@ public class TeamScoreboard {
         return null;
     }
     
-    public ChallengeLeaderboardEntry getChallengeLeaderboardEntry(Challenge challenge) {
-        for(ChallengeLeaderboardEntry entry : challengeLeaderboardEntries) {
+    public SpeedChallengeLeaderboardEntry getSpeedChallengeLeaderboardEntry(Challenge challenge) {
+        for(SpeedChallengeLeaderboardEntry entry : speedChallengeLeaderboardEntries) {
+            if(entry.getChallengeName().equals(challenge.getName())) {
+                return entry;
+            }
+        }
+        return null;
+    }
+    
+    public PointsChallengeLeaderboardEntry getPointsChallengeLeaderboardEntry(Challenge challenge) {
+        for(PointsChallengeLeaderboardEntry entry : pointsChallengeLeaderboardEntries) {
             if(entry.getChallengeName().equals(challenge.getName())) {
                 return entry;
             }

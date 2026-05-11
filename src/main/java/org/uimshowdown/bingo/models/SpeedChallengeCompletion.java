@@ -19,8 +19,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "challenge_completions")
-public class ChallengeCompletion {
+@Table(name = "speed_challenge_completions")
+public class SpeedChallengeCompletion {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,10 +42,10 @@ public class ChallengeCompletion {
         return challenge;
     }
 
-    public Set<PlayerChallengeCompletion> getPlayerChallengeCompletions() {
-        Set<PlayerChallengeCompletion> completions = new HashSet<PlayerChallengeCompletion>();
+    public Set<PlayerSpeedChallengeCompletion> getPlayerSpeedChallengeCompletions() {
+        Set<PlayerSpeedChallengeCompletion> completions = new HashSet<PlayerSpeedChallengeCompletion>();
         for(Player player : team.getPlayers()) {
-            for(PlayerChallengeCompletion completion : player.getPlayerChallengeCompletions()) {
+            for(PlayerSpeedChallengeCompletion completion : player.getPlayerSpeedChallengeCompletions()) {
                 if(completion.getChallenge().equals(this.challenge)) {
                     completions.add(completion);
                 }
@@ -71,7 +71,7 @@ public class ChallengeCompletion {
     }
     
     private boolean hasRelayComponent(ChallengeRelayComponent component) {
-        for(PlayerChallengeCompletion completion : this.getPlayerChallengeCompletions()) {
+        for(PlayerSpeedChallengeCompletion completion : this.getPlayerSpeedChallengeCompletions()) {
             if(component.equals(completion.getChallengeRelayComponent())) {
                 return true;
             }
@@ -91,16 +91,16 @@ public class ChallengeCompletion {
      * @return
      */
     public double getSeconds() {
-        Set<PlayerChallengeCompletion> playerChallengeCompletions = getPlayerChallengeCompletions();
+        Set<PlayerSpeedChallengeCompletion> playerSpeedChallengeCompletions = getPlayerSpeedChallengeCompletions();
         if(challenge.getType() == Challenge.Type.SPEEDRUN) {
-            if(challenge.getTeamSize() > playerChallengeCompletions.size()) { // Not enough individual submissions
+            if(challenge.getTeamSize() > playerSpeedChallengeCompletions.size()) { // Not enough individual submissions
                 return -1.0;
             }
             // A player can only have one player challenge completion for a team speedrun (non-relay), so all our player completions 
             // are from separate players. This means we can do a hack here by returning the time of the X'th fastest time, where 
             // X is the team size. This accounts for having a slower but "complete" time, and a faster but "incomplete" time where 
             // not everyone has submitted (in which case the X'th fastest time is a part of the "complete" one).
-            PlayerChallengeCompletion[] completions = playerChallengeCompletions.toArray(new PlayerChallengeCompletion[0]);
+            PlayerSpeedChallengeCompletion[] completions = playerSpeedChallengeCompletions.toArray(new PlayerSpeedChallengeCompletion[0]);
             double[] times = new double[completions.length];
             for(int i = 0; i < completions.length; i++) {
                 times[i] = completions[i].getSeconds();
@@ -119,12 +119,12 @@ public class ChallengeCompletion {
             // Basically we get every possible ordering of completions and take the first X elements of each ordering, then 
             // see if that subset is valid as a relay completion. Then, find the minimum sum of all valid subsets.
             double fastestSum = -1.0;
-            Collection<List<PlayerChallengeCompletion>> orderings = Collections2.permutations(playerChallengeCompletions);
-            for(List<PlayerChallengeCompletion> ordering : orderings) {
-                List<PlayerChallengeCompletion> subset = ordering.subList(0, challenge.getTeamSize());
+            Collection<List<PlayerSpeedChallengeCompletion>> orderings = Collections2.permutations(playerSpeedChallengeCompletions);
+            for(List<PlayerSpeedChallengeCompletion> ordering : orderings) {
+                List<PlayerSpeedChallengeCompletion> subset = ordering.subList(0, challenge.getTeamSize());
                 boolean subsetIsValid = true;
-                for(PlayerChallengeCompletion completion1 : subset) {
-                    for(PlayerChallengeCompletion completion2 : subset) {
+                for(PlayerSpeedChallengeCompletion completion1 : subset) {
+                    for(PlayerSpeedChallengeCompletion completion2 : subset) {
                         if(!completion1.equals(completion2) && completion1.getPlayer().equals(completion2.getPlayer())) {
                             subsetIsValid = false;
                         }
@@ -135,7 +135,7 @@ public class ChallengeCompletion {
                 }
                 if(subsetIsValid) {
                     double sum = 0;
-                    for(PlayerChallengeCompletion completion : subset) {
+                    for(PlayerSpeedChallengeCompletion completion : subset) {
                         sum += completion.getSeconds();
                     }
                     if(fastestSum < 0 || sum < fastestSum) {
@@ -157,24 +157,20 @@ public class ChallengeCompletion {
      * @return
      */
     public List<Player> getPlayers() {
-        Set<PlayerChallengeCompletion> playerChallengeCompletions = getPlayerChallengeCompletions();
+        Set<PlayerSpeedChallengeCompletion> playerSpeedChallengeCompletions = getPlayerSpeedChallengeCompletions();
         if(challenge.getType() == Challenge.Type.SPEEDRUN) {
-            if(challenge.getTeamSize() > playerChallengeCompletions.size()) { // Not enough individual submissions
+            if(challenge.getTeamSize() > playerSpeedChallengeCompletions.size()) { // Not enough individual submissions
                 return null;
             }
-            // A player can only have one player challenge completion for a team speedrun (non-relay), so all our player completions 
-            // are from separate players. This means we can do a hack here by returning the time of the X'th fastest time, where 
-            // X is the team size. This accounts for having a slower but "complete" time, and a faster but "incomplete" time where 
-            // not everyone has submitted (in which case the X'th fastest time is a part of the "complete" one).
-            PlayerChallengeCompletion[] completions = playerChallengeCompletions.toArray(new PlayerChallengeCompletion[0]);
-            double[] times = new double[completions.length];
-            for(int i = 0; i < completions.length; i++) {
-                times[i] = completions[i].getSeconds();
+            // Get all players with a player challenge completion that is the best "complete" time we have, up to 
+            // the team size
+            if(challenge.getTeamSize() > playerSpeedChallengeCompletions.size()) { // Not enough individual submissions
+                return null;
             }
-            Arrays.sort(times);
+            double seconds = this.getSeconds();
             List<Player> players = new ArrayList<Player>();
-            for(PlayerChallengeCompletion completion : playerChallengeCompletions) {
-                if(Math.abs(completion.getSeconds() - times[challenge.getTeamSize() - 1]) < 0.001) { // This is one of the players who got that time
+            for(PlayerSpeedChallengeCompletion completion : playerSpeedChallengeCompletions) {
+                if(Math.abs(completion.getSeconds() - seconds) < 0.001 && players.size() < challenge.getTeamSize()) { // This is one of the players who got that time
                     players.add(completion.getPlayer());
                 }
             }
@@ -191,13 +187,13 @@ public class ChallengeCompletion {
             // Basically we get every possible ordering of completions and take the first X elements of each ordering, then 
             // see if that subset is valid as a relay completion. Then, find the minimum sum of all valid subsets.
             double fastestSum = -1.0;
-            List<PlayerChallengeCompletion> fastestSubset = null;
-            Collection<List<PlayerChallengeCompletion>> orderings = Collections2.permutations(playerChallengeCompletions);
-            for(List<PlayerChallengeCompletion> ordering : orderings) {
-                List<PlayerChallengeCompletion> subset = ordering.subList(0, challenge.getTeamSize());
+            List<PlayerSpeedChallengeCompletion> fastestSubset = null;
+            Collection<List<PlayerSpeedChallengeCompletion>> orderings = Collections2.permutations(playerSpeedChallengeCompletions);
+            for(List<PlayerSpeedChallengeCompletion> ordering : orderings) {
+                List<PlayerSpeedChallengeCompletion> subset = ordering.subList(0, challenge.getTeamSize());
                 boolean subsetIsValid = true;
-                for(PlayerChallengeCompletion completion1 : subset) {
-                    for(PlayerChallengeCompletion completion2 : subset) {
+                for(PlayerSpeedChallengeCompletion completion1 : subset) {
+                    for(PlayerSpeedChallengeCompletion completion2 : subset) {
                         if(!completion1.equals(completion2) && completion1.getPlayer().equals(completion2.getPlayer())) {
                             subsetIsValid = false;
                         }
@@ -208,7 +204,7 @@ public class ChallengeCompletion {
                 }
                 if(subsetIsValid) {
                     double sum = 0;
-                    for(PlayerChallengeCompletion completion : subset) {
+                    for(PlayerSpeedChallengeCompletion completion : subset) {
                         sum += completion.getSeconds();
                     }
                     if(fastestSum < 0 || sum < fastestSum) {
@@ -221,7 +217,7 @@ public class ChallengeCompletion {
                 return null;
             }
             List<Player> players = new ArrayList<Player>();
-            for(PlayerChallengeCompletion completion : fastestSubset) {
+            for(PlayerSpeedChallengeCompletion completion : fastestSubset) {
                 players.add(completion.getPlayer());
             }
             return players;
@@ -231,7 +227,7 @@ public class ChallengeCompletion {
 
     @Override
     public boolean equals(Object obj) {
-        return obj != null && obj instanceof ChallengeCompletion && ((ChallengeCompletion) obj).getId() == this.id;
+        return obj != null && obj instanceof SpeedChallengeCompletion && ((SpeedChallengeCompletion) obj).getId() == this.id;
     }
     
 }

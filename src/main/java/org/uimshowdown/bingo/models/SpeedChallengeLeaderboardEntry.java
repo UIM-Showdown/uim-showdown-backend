@@ -11,8 +11,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "challenge_leaderboard_entries")
-public class ChallengeLeaderboardEntry {
+@Table(name = "speed_challenge_leaderboard_entries")
+public class SpeedChallengeLeaderboardEntry {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +35,7 @@ public class ChallengeLeaderboardEntry {
     private double seconds;
     
     @Column
-    private int points;
+    private int eventPoints;
 
     public int getId() {
         return id;
@@ -85,12 +85,12 @@ public class ChallengeLeaderboardEntry {
         this.seconds = seconds;
     }
 
-    public int getPoints() {
-        return points;
+    public int getEventPoints() {
+        return eventPoints;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
+    public void setEventPoints(int eventPoints) {
+        this.eventPoints = eventPoints;
     }
 
 }

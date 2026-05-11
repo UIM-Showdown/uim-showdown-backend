@@ -1,9 +1,9 @@
 package org.uimshowdown.bingo.repositories;
 
 import org.uimshowdown.bingo.models.Challenge;
-import org.uimshowdown.bingo.models.ChallengeCompletion;
+import org.uimshowdown.bingo.models.SpeedChallengeCompletion;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
-import org.uimshowdown.bingo.models.ChallengeSubmission;
+import org.uimshowdown.bingo.models.SpeedChallengeSubmission;
 import org.uimshowdown.bingo.models.CollectionLogCompletion;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.CollectionLogSubmission;
@@ -11,7 +11,7 @@ import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.ContributionSubmission;
 import org.uimshowdown.bingo.models.Player;
-import org.uimshowdown.bingo.models.PlayerChallengeCompletion;
+import org.uimshowdown.bingo.models.PlayerSpeedChallengeCompletion;
 import org.uimshowdown.bingo.models.PlayerScoreboard;
 import org.uimshowdown.bingo.models.Record;
 import org.uimshowdown.bingo.models.RecordCompletion;
@@ -56,8 +56,8 @@ public class SharedTestVariables {
         return testChallenge;
     }
 
-    public static ChallengeCompletion makeTestChallengeCompletion(Challenge challenge, Team team) {
-        ChallengeCompletion challengeCompletion =  new ChallengeCompletion();
+    public static SpeedChallengeCompletion makeTestChallengeCompletion(Challenge challenge, Team team) {
+        SpeedChallengeCompletion challengeCompletion =  new SpeedChallengeCompletion();
         challengeCompletion.setChallenge(challenge);
         challengeCompletion.setTeam(team);
         return challengeCompletion;
@@ -70,8 +70,8 @@ public class SharedTestVariables {
         return testChallengeRelayComponent;
     }
 
-    public static ChallengeSubmission makeTestChallengeSubmission(Challenge challenge, ChallengeRelayComponent challengeRelayComponent, Player player) {
-        ChallengeSubmission testChallengeSubmission = new ChallengeSubmission();
+    public static SpeedChallengeSubmission makeTestChallengeSubmission(Challenge challenge, ChallengeRelayComponent challengeRelayComponent, Player player) {
+        SpeedChallengeSubmission testChallengeSubmission = new SpeedChallengeSubmission();
         testChallengeSubmission.setChallenge(challenge);
         testChallengeSubmission.setPlayer(player);
         testChallengeSubmission.setRelayComponent(challengeRelayComponent);
@@ -157,8 +157,8 @@ public class SharedTestVariables {
         return testPlayer;
     }
 
-    public static PlayerChallengeCompletion makeTestPlayerChallengeCompletion(ChallengeRelayComponent challengeRelayComponent, Player player) {
-        PlayerChallengeCompletion testPlayerChallengeCompletion = new PlayerChallengeCompletion();
+    public static PlayerSpeedChallengeCompletion makeTestPlayerChallengeCompletion(ChallengeRelayComponent challengeRelayComponent, Player player) {
+        PlayerSpeedChallengeCompletion testPlayerChallengeCompletion = new PlayerSpeedChallengeCompletion();
         testPlayerChallengeCompletion.setPlayer(player);
         testPlayerChallengeCompletion.setRelayComponent(challengeRelayComponent);
         testPlayerChallengeCompletion.setChallenge(challengeRelayComponent.getChallenge());
@@ -178,8 +178,8 @@ public class SharedTestVariables {
         return testPlayerScoreboard;
     }
 
-    public static ChallengeSubmission makeTestSubmission(Player player, Challenge challenge) {
-        ChallengeSubmission testSubmission = new ChallengeSubmission();
+    public static SpeedChallengeSubmission makeTestSubmission(Player player, Challenge challenge) {
+        SpeedChallengeSubmission testSubmission = new SpeedChallengeSubmission();
         testSubmission.setSubmissionState(Submission.State.OPEN);
         testSubmission.setPlayer(player);
         testSubmission.setChallenge(challenge);

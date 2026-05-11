@@ -16,7 +16,7 @@ import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.Player;
-import org.uimshowdown.bingo.models.PlayerChallengeCompletion;
+import org.uimshowdown.bingo.models.PlayerSpeedChallengeCompletion;
 import org.uimshowdown.bingo.models.Team;
 
 @SpringBootTest
@@ -38,7 +38,7 @@ public class PlayerChallengeCompletionRespositoryTests {
     private PlayerRepository playerRepository;
 
     @Autowired
-    private PlayerChallengeCompletionRepository playerChallengeCompletionRepository;
+    private PlayerSpeedChallengeCompletionRepository playerChallengeCompletionRepository;
 
     @Autowired
     private TeamRepository teamRepository;
@@ -46,7 +46,7 @@ public class PlayerChallengeCompletionRespositoryTests {
     private Challenge testChallenge;
     private ChallengeRelayComponent testChallengeRelayComponent;
     private Player testPlayer;
-    private PlayerChallengeCompletion testPlayerChallengeCompletion;
+    private PlayerSpeedChallengeCompletion testPlayerChallengeCompletion;
     private Team testTeam;
 
     @BeforeAll
@@ -67,7 +67,7 @@ public class PlayerChallengeCompletionRespositoryTests {
     @Test
     @Transactional
     public void Should_FindTestPlayerChallengeCompletion_When_GivenTestPlayerId() {
-        Iterable<PlayerChallengeCompletion> playerChallengeCompletions = playerChallengeCompletionRepository.findAllByPlayerId(testPlayer.getId());
+        Iterable<PlayerSpeedChallengeCompletion> playerChallengeCompletions = playerChallengeCompletionRepository.findAllByPlayerId(testPlayer.getId());
 
         assertThat(playerChallengeCompletions)
             .isNotNull()
@@ -78,7 +78,7 @@ public class PlayerChallengeCompletionRespositoryTests {
     @Test
     @Transactional
     public void Should_NotFindTestPlayerChallengeCompletion_When_GivenWrongPlayerId() {
-        Iterable<PlayerChallengeCompletion> playerChallengeCompletions = playerChallengeCompletionRepository.findAllByPlayerId(0);
+        Iterable<PlayerSpeedChallengeCompletion> playerChallengeCompletions = playerChallengeCompletionRepository.findAllByPlayerId(0);
 
         assertThat(playerChallengeCompletions)
             .isNotNull()
@@ -88,7 +88,7 @@ public class PlayerChallengeCompletionRespositoryTests {
     @Test
     @Transactional
     public void Should_FindTestPlayerChallengeCompletion_When_GivenTestRelayComponentId() {
-        Iterable<PlayerChallengeCompletion> playerChallengeCompletions = playerChallengeCompletionRepository.findAllByRelayComponentId(testChallengeRelayComponent.getId());
+        Iterable<PlayerSpeedChallengeCompletion> playerChallengeCompletions = playerChallengeCompletionRepository.findAllByRelayComponentId(testChallengeRelayComponent.getId());
 
         assertThat(playerChallengeCompletions)
             .isNotNull()
@@ -99,7 +99,7 @@ public class PlayerChallengeCompletionRespositoryTests {
     @Test
     @Transactional
     public void Should_NotFindTestPlayerChallengeCompletion_When_GivenWrongRelayComponentId() {
-        Iterable<PlayerChallengeCompletion> playerChallengeCompletions = playerChallengeCompletionRepository.findAllByRelayComponentId(0);
+        Iterable<PlayerSpeedChallengeCompletion> playerChallengeCompletions = playerChallengeCompletionRepository.findAllByRelayComponentId(0);
 
         assertThat(playerChallengeCompletions)
             .isNotNull()

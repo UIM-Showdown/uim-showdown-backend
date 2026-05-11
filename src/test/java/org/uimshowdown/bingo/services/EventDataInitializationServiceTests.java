@@ -36,7 +36,7 @@ import org.uimshowdown.bingo.repositories.CollectionLogItemRepository;
 import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
 import org.uimshowdown.bingo.repositories.ContributionRepository;
 import org.uimshowdown.bingo.repositories.ItemOptionRepository;
-import org.uimshowdown.bingo.repositories.PlayerChallengeCompletionRepository;
+import org.uimshowdown.bingo.repositories.PlayerSpeedChallengeCompletionRepository;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
 import org.uimshowdown.bingo.repositories.PlayerScoreboardRepository;
 import org.uimshowdown.bingo.repositories.RecordCompletionRepository;
@@ -68,7 +68,7 @@ public class EventDataInitializationServiceTests {
     @Autowired CollectionLogItemRepository collectionLogItemRepository;
     @Autowired ContributionMethodRepository contributionMethodRepository;
     @Autowired ContributionRepository contributionRepository;
-    @Autowired PlayerChallengeCompletionRepository playerChallengeCompletionRepository;
+    @Autowired PlayerSpeedChallengeCompletionRepository playerChallengeCompletionRepository;
     @Autowired PlayerRepository playerRepository;
     @Autowired PlayerScoreboardRepository playerScoreboardRepository;
     @Autowired RecordCompletionRepository recordCompletionRepository;

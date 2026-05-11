@@ -15,14 +15,16 @@ import org.springframework.stereotype.Component;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.TileGroupConfig;
 import org.uimshowdown.bingo.models.Challenge;
-import org.uimshowdown.bingo.models.ChallengeCompletion;
-import org.uimshowdown.bingo.models.ChallengeLeaderboardEntry;
+import org.uimshowdown.bingo.models.SpeedChallengeCompletion;
+import org.uimshowdown.bingo.models.SpeedChallengeLeaderboardEntry;
 import org.uimshowdown.bingo.models.CollectionLogCompletion;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.PlayerScoreboard;
+import org.uimshowdown.bingo.models.PointsChallengeCompletion;
+import org.uimshowdown.bingo.models.PointsChallengeLeaderboardEntry;
 import org.uimshowdown.bingo.models.Record;
 import org.uimshowdown.bingo.models.RecordCompletion;
 import org.uimshowdown.bingo.models.RecordLeaderboardEntry;
@@ -326,20 +328,36 @@ public class ScoreboardCalculationService {
         }
         
         // Assemble a leaderboard for each challenge
-        Map<Challenge, List<ChallengeCompletion>> challengeCompletionLeaderboards = new HashMap<Challenge, List<ChallengeCompletion>>();
+        Map<Challenge, List<SpeedChallengeCompletion>> speedChallengeCompletionLeaderboards = new HashMap<Challenge, List<SpeedChallengeCompletion>>();
+        Map<Challenge, List<PointsChallengeCompletion>> pointsChallengeCompletionLeaderboards = new HashMap<Challenge, List<PointsChallengeCompletion>>();
         for(Challenge challenge : challengeRepository.findAll()) {
-            List<ChallengeCompletion> challengeLeaderboard = new ArrayList<ChallengeCompletion>();
-            for(Team team : teamRepository.findAll()) {
-                if(team.getName().equals(competitionConfiguration.getWaitlistTeamName())) {
-                    continue; // Waitlist team isn't on the leaderboard
+            if(challenge.getType() == Challenge.Type.SPEEDRUN || challenge.getType() == Challenge.Type.RELAY) {                
+                List<SpeedChallengeCompletion> challengeLeaderboard = new ArrayList<SpeedChallengeCompletion>();
+                for(Team team : teamRepository.findAll()) {
+                    if(team.getName().equals(competitionConfiguration.getWaitlistTeamName())) {
+                        continue; // Waitlist team isn't on the leaderboard
+                    }
+                    SpeedChallengeCompletion completion = team.getSpeedChallengeCompletion(challenge);
+                    if(completion != null && completion.isComplete()) {
+                        challengeLeaderboard.add(completion);
+                    }
                 }
-                ChallengeCompletion completion = team.getChallengeCompletion(challenge);
-                if(completion != null && completion.isComplete()) {
-                    challengeLeaderboard.add(completion);
+                challengeLeaderboard.sort((SpeedChallengeCompletion c1, SpeedChallengeCompletion c2) -> c1.getSeconds() - c2.getSeconds() < 0 ? -1 : 1); // Ascending sort
+                speedChallengeCompletionLeaderboards.put(challenge, challengeLeaderboard);
+            } else {
+                List<PointsChallengeCompletion> challengeLeaderboard = new ArrayList<PointsChallengeCompletion>();
+                for(Team team : teamRepository.findAll()) {
+                    if(team.getName().equals(competitionConfiguration.getWaitlistTeamName())) {
+                        continue; // Waitlist team isn't on the leaderboard
+                    }
+                    PointsChallengeCompletion completion = team.getPointsChallengeCompletion(challenge);
+                    if(completion != null && completion.isComplete()) {
+                        challengeLeaderboard.add(completion);
+                    }
                 }
+                challengeLeaderboard.sort((PointsChallengeCompletion c1, PointsChallengeCompletion c2) -> c2.getPoints() - c1.getPoints() < 0 ? -1 : 1); // Descending sort
+                pointsChallengeCompletionLeaderboards.put(challenge, challengeLeaderboard);
             }
-            challengeLeaderboard.sort((ChallengeCompletion c1, ChallengeCompletion c2) -> c1.getSeconds() - c2.getSeconds() < 0 ? -1 : 1); // Ascending sort
-            challengeCompletionLeaderboards.put(challenge, challengeLeaderboard);
         }
         
         for(Team team : teamRepository.findAll()) {
@@ -369,8 +387,11 @@ public class ScoreboardCalculationService {
                 if(pointsFromPlace < 0) { // Can happen if recordPlacePoints is low and there are lots of teams on the board
                     pointsFromPlace = 0;
                 }
-                int distanceFromFirstPlace = firstPlaceCompletion.getValue() - teamCompletion.getValue();
-                int pointsFromDistance = (int) ((double) competitionConfiguration.getRecordDistancePoints() * (1.0 - ((double)distanceFromFirstPlace / ((double) firstPlaceCompletion.getValue() * competitionConfiguration.getRecordDistanceCutoffPercentage()))));
+                double distanceFromFirstPlace = (double) firstPlaceCompletion.getValue() - (double) teamCompletion.getValue();
+                double cutoff = (double) firstPlaceCompletion.getValue() * competitionConfiguration.getRecordDistanceCutoffPercentage();
+                double distanceBetweenFirstPlaceAndCutoff = (double) firstPlaceCompletion.getValue() - cutoff;
+                double percentageFromCutoffToFirstPlace = (distanceBetweenFirstPlaceAndCutoff - distanceFromFirstPlace) / distanceBetweenFirstPlaceAndCutoff;
+                int pointsFromDistance = (int) (percentageFromCutoffToFirstPlace * competitionConfiguration.getRecordDistancePoints());
                 int totalPoints = pointsFromPlace + pointsFromDistance;
                 recordPoints.add(totalPoints);
                 RecordLeaderboardEntry leaderboardEntry = team.getScoreboard().getRecordLeaderboardEntry(record);
@@ -383,38 +404,76 @@ public class ScoreboardCalculationService {
             // Assemble a list of point values for each challenge
             List<Integer> challengePoints = new ArrayList<Integer>();
             for(Challenge challenge : challengeRepository.findAll()) {
-                ChallengeCompletion teamCompletion = team.getChallengeCompletion(challenge);
-                if(teamCompletion == null || !teamCompletion.isComplete()) {
-                    ChallengeLeaderboardEntry leaderboardEntry = team.getScoreboard().getChallengeLeaderboardEntry(challenge);
-                    leaderboardEntry.setPlace(-1);
-                    leaderboardEntry.setPlayerNames(null);
-                    leaderboardEntry.setPoints(-1);
-                    leaderboardEntry.setSeconds(-1.0);
-                    continue;
+                if(challenge.getType() == Challenge.Type.SPEEDRUN || challenge.getType() == Challenge.Type.RELAY) {                    
+                    SpeedChallengeCompletion teamCompletion = team.getSpeedChallengeCompletion(challenge);
+                    if(teamCompletion == null || !teamCompletion.isComplete()) {
+                        SpeedChallengeLeaderboardEntry leaderboardEntry = team.getScoreboard().getSpeedChallengeLeaderboardEntry(challenge);
+                        leaderboardEntry.setPlace(-1);
+                        leaderboardEntry.setPlayerNames(null);
+                        leaderboardEntry.setEventPoints(-1);
+                        leaderboardEntry.setSeconds(-1.0);
+                        continue;
+                    }
+                    List<SpeedChallengeCompletion> leaderboard = speedChallengeCompletionLeaderboards.get(challenge);
+                    SpeedChallengeCompletion firstPlaceCompletion = leaderboard.get(0);
+                    if(teamCompletion.getSeconds() > firstPlaceCompletion.getSeconds() * competitionConfiguration.getSpeedChallengeDistanceCutoffPercentage()) {
+                        continue;
+                    }
+                    int place = leaderboard.indexOf(teamCompletion) + 1;
+                    int pointsFromPlace = competitionConfiguration.getSpeedChallengePlacePoints() - ((place - 1) * competitionConfiguration.getSpeedChallengePlacePointsFalloff());
+                    if(pointsFromPlace < 0) { // Can happen if challengePlacePoints is low and there are lots of teams on the board
+                        pointsFromPlace = 0;
+                    }
+                    double distanceFromFirstPlace = teamCompletion.getSeconds() - firstPlaceCompletion.getSeconds();
+                    int pointsFromDistance = (int) (competitionConfiguration.getRecordDistancePoints() * (1 - (distanceFromFirstPlace / ((firstPlaceCompletion.getSeconds() * competitionConfiguration.getSpeedChallengeDistanceCutoffPercentage()) - firstPlaceCompletion.getSeconds()))));
+                    int totalPoints = pointsFromPlace + pointsFromDistance;
+                    challengePoints.add(totalPoints);
+                    List<String> playerNames = new ArrayList<String>();
+                    for(Player player : teamCompletion.getPlayers()) {
+                        playerNames.add(player.getRsn());
+                    }
+                    SpeedChallengeLeaderboardEntry leaderboardEntry = team.getScoreboard().getSpeedChallengeLeaderboardEntry(challenge);
+                    leaderboardEntry.setPlayerNames(String.join(", ", playerNames));
+                    leaderboardEntry.setEventPoints(totalPoints);
+                    leaderboardEntry.setSeconds(teamCompletion.getSeconds());
+                    leaderboardEntry.setPlace(place);
+                } else {
+                    PointsChallengeCompletion teamCompletion = team.getPointsChallengeCompletion(challenge);
+                    if(teamCompletion == null || !teamCompletion.isComplete()) {
+                        PointsChallengeLeaderboardEntry leaderboardEntry = team.getScoreboard().getPointsChallengeLeaderboardEntry(challenge);
+                        leaderboardEntry.setPlace(-1);
+                        leaderboardEntry.setPlayerNames(null);
+                        leaderboardEntry.setPoints(-1);
+                        leaderboardEntry.setEventPoints(-1);
+                        continue;
+                    }
+                    List<PointsChallengeCompletion> leaderboard = pointsChallengeCompletionLeaderboards.get(challenge);
+                    PointsChallengeCompletion firstPlaceCompletion = leaderboard.get(0);
+                    if(teamCompletion.getPoints() < firstPlaceCompletion.getPoints() * competitionConfiguration.getPointsChallengeDistanceCutoffPercentage()) {
+                        continue;
+                    }
+                    int place = leaderboard.indexOf(teamCompletion) + 1;
+                    int pointsFromPlace = competitionConfiguration.getPointsChallengePlacePoints() - ((place - 1) * competitionConfiguration.getPointsChallengePlacePointsFalloff());
+                    if(pointsFromPlace < 0) { // Can happen if challengePlacePoints is low and there are lots of teams on the board
+                        pointsFromPlace = 0;
+                    }
+                    double distanceFromFirstPlace = (double) firstPlaceCompletion.getPoints() - (double) teamCompletion.getPoints();
+                    double cutoff = (double) firstPlaceCompletion.getPoints() * competitionConfiguration.getPointsChallengeDistanceCutoffPercentage();
+                    double distanceBetweenFirstPlaceAndCutoff = (double) firstPlaceCompletion.getPoints() - cutoff;
+                    double percentageFromCutoffToFirstPlace = (distanceBetweenFirstPlaceAndCutoff - distanceFromFirstPlace) / distanceBetweenFirstPlaceAndCutoff;
+                    int pointsFromDistance = (int) (percentageFromCutoffToFirstPlace * competitionConfiguration.getPointsChallengeDistancePoints());
+                    int totalPoints = pointsFromPlace + pointsFromDistance;
+                    challengePoints.add(totalPoints);
+                    List<String> playerNames = new ArrayList<String>();
+                    for(Player player : teamCompletion.getPlayers()) {
+                        playerNames.add(player.getRsn());
+                    }
+                    PointsChallengeLeaderboardEntry leaderboardEntry = team.getScoreboard().getPointsChallengeLeaderboardEntry(challenge);
+                    leaderboardEntry.setPlayerNames(String.join(", ", playerNames));
+                    leaderboardEntry.setEventPoints(totalPoints);
+                    leaderboardEntry.setPoints(teamCompletion.getPoints());
+                    leaderboardEntry.setPlace(place);
                 }
-                List<ChallengeCompletion> leaderboard = challengeCompletionLeaderboards.get(challenge);
-                ChallengeCompletion firstPlaceCompletion = leaderboard.get(0);
-                if(teamCompletion.getSeconds() > firstPlaceCompletion.getSeconds() * competitionConfiguration.getChallengeDistanceCutoffPercentage()) {
-                    continue;
-                }
-                int place = leaderboard.indexOf(teamCompletion) + 1;
-                int pointsFromPlace = competitionConfiguration.getChallengePlacePoints() - ((place - 1) * competitionConfiguration.getChallengePlacePointsFalloff());
-                if(pointsFromPlace < 0) { // Can happen if challengePlacePoints is low and there are lots of teams on the board
-                    pointsFromPlace = 0;
-                }
-                double distanceFromFirstPlace = teamCompletion.getSeconds() - firstPlaceCompletion.getSeconds();
-                int pointsFromDistance = (int) (competitionConfiguration.getRecordDistancePoints() * (1 - (distanceFromFirstPlace / ((firstPlaceCompletion.getSeconds() * competitionConfiguration.getChallengeDistanceCutoffPercentage()) - firstPlaceCompletion.getSeconds()))));
-                int totalPoints = pointsFromPlace + pointsFromDistance;
-                challengePoints.add(totalPoints);
-                List<String> playerNames = new ArrayList<String>();
-                for(Player player : teamCompletion.getPlayers()) {
-                    playerNames.add(player.getRsn());
-                }
-                ChallengeLeaderboardEntry leaderboardEntry = team.getScoreboard().getChallengeLeaderboardEntry(challenge);
-                leaderboardEntry.setPlayerNames(String.join(", ", playerNames));
-                leaderboardEntry.setPoints(totalPoints);
-                leaderboardEntry.setSeconds(teamCompletion.getSeconds());
-                leaderboardEntry.setPlace(place);
             }
             
             // Take the top X point values based on configuration

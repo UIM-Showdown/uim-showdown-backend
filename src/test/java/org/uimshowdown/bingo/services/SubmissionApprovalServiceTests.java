@@ -23,9 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.models.Challenge;
-import org.uimshowdown.bingo.models.ChallengeCompletion;
+import org.uimshowdown.bingo.models.SpeedChallengeCompletion;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
-import org.uimshowdown.bingo.models.ChallengeSubmission;
+import org.uimshowdown.bingo.models.SpeedChallengeSubmission;
 import org.uimshowdown.bingo.models.CollectionLogCompletion;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.CollectionLogSubmission;
@@ -33,7 +33,7 @@ import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.ContributionSubmission;
 import org.uimshowdown.bingo.models.Player;
-import org.uimshowdown.bingo.models.PlayerChallengeCompletion;
+import org.uimshowdown.bingo.models.PlayerSpeedChallengeCompletion;
 import org.uimshowdown.bingo.models.Record;
 import org.uimshowdown.bingo.models.RecordCompletion;
 import org.uimshowdown.bingo.models.RecordHandicap;
@@ -48,7 +48,7 @@ import org.uimshowdown.bingo.repositories.CollectionLogItemRepository;
 import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
 import org.uimshowdown.bingo.repositories.ContributionRepository;
 import org.uimshowdown.bingo.repositories.ItemOptionRepository;
-import org.uimshowdown.bingo.repositories.PlayerChallengeCompletionRepository;
+import org.uimshowdown.bingo.repositories.PlayerSpeedChallengeCompletionRepository;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
 import org.uimshowdown.bingo.repositories.PlayerScoreboardRepository;
 import org.uimshowdown.bingo.repositories.RecordCompletionRepository;
@@ -77,7 +77,7 @@ public class SubmissionApprovalServiceTests {
     @Autowired CollectionLogItemRepository collectionLogItemRepository;
     @Autowired ContributionMethodRepository contributionMethodRepository;
     @Autowired ContributionRepository contributionRepository;
-    @Autowired PlayerChallengeCompletionRepository playerChallengeCompletionRepository;
+    @Autowired PlayerSpeedChallengeCompletionRepository playerChallengeCompletionRepository;
     @Autowired PlayerRepository playerRepository;
     @Autowired PlayerScoreboardRepository playerScoreboardRepository;
     @Autowired RecordCompletionRepository recordCompletionRepository;
@@ -146,9 +146,9 @@ public class SubmissionApprovalServiceTests {
         contribution.setStaffAdjustment(0);
         contribution.setIsEmpty(true);
         
-        ChallengeCompletion relayCompletion = new ChallengeCompletion();
+        SpeedChallengeCompletion relayCompletion = new SpeedChallengeCompletion();
         relayCompletion.setChallenge(relayChallenge);
-        ChallengeCompletion speedrunCompletion = new ChallengeCompletion();
+        SpeedChallengeCompletion speedrunCompletion = new SpeedChallengeCompletion();
         speedrunCompletion.setChallenge(speedrunChallenge);
         
 
@@ -156,10 +156,10 @@ public class SubmissionApprovalServiceTests {
         team.setName("Test Team");
         relayCompletion.setTeam(team);
         speedrunCompletion.setTeam(team);
-        Set<ChallengeCompletion> completions = new HashSet<ChallengeCompletion>();
+        Set<SpeedChallengeCompletion> completions = new HashSet<SpeedChallengeCompletion>();
         completions.add(relayCompletion);
         completions.add(speedrunCompletion);
-        team.setChallengeCompletions(completions);
+        team.setSpeedChallengeCompletions(completions);
         Player player = new Player();
         player.setRsn("Test RSN");
         player.setDiscordName("Test Discord Name");
@@ -262,13 +262,13 @@ public class SubmissionApprovalServiceTests {
         Player player = playerRepository.findByDiscordName("Test Discord Name").get();
                 
         // No existing submissions
-        ChallengeSubmission submission = new ChallengeSubmission();
+        SpeedChallengeSubmission submission = new SpeedChallengeSubmission();
         submission.setChallenge(challenge);
         submission.setRelayComponent(component);
         submission.setPlayer(player);
         submission.setSubmissionState(Submission.State.OPEN);
         submission.setSeconds(5);
-        submission.setType(Submission.Type.CHALLENGE);
+        submission.setType(Submission.Type.CHALLENGE_SPEED);
         List<String> urls = new ArrayList<String>();
         urls.add("Test URL");
         submission.setScreenshotUrls(urls);
@@ -277,22 +277,22 @@ public class SubmissionApprovalServiceTests {
         
         submissionApprovalService.approveSubmission(id, "Test Reviewer");
         
-        submission = (ChallengeSubmission) submissionRepository.findById(id).get();
+        submission = (SpeedChallengeSubmission) submissionRepository.findById(id).get();
         player = playerRepository.findById(player.getId()).get();
         Team team = teamRepository.findByName("Test Team").get();
-        ChallengeCompletion challengeCompletion = null;
-        for(ChallengeCompletion completion : team.getChallengeCompletions()) {
+        SpeedChallengeCompletion challengeCompletion = null;
+        for(SpeedChallengeCompletion completion : team.getSpeedChallengeCompletions()) {
             if(completion.getChallenge().equals(challenge)) {
                 challengeCompletion = completion;
             }
         }
-        PlayerChallengeCompletion playerCompletion = player.getPlayerChallengeCompletions().toArray(new PlayerChallengeCompletion[0])[0];
+        PlayerSpeedChallengeCompletion playerCompletion = player.getPlayerSpeedChallengeCompletions().toArray(new PlayerSpeedChallengeCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission.getSubmissionState());
         assertEquals("Test Reviewer", submission.getReviewer());
         assertTrue(Math.abs(submission.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertEquals(1, player.getPlayerChallengeCompletions().size());
+        assertEquals(1, player.getPlayerSpeedChallengeCompletions().size());
         assertNotNull(playerCompletion);
         assertEquals("Test URL", playerCompletion.getScreenshotUrl());
         assertEquals(challenge, playerCompletion.getChallenge());
@@ -303,13 +303,13 @@ public class SubmissionApprovalServiceTests {
         
         // Submit something better than the existing one - Should change completion
         player = playerRepository.findByDiscordName("Test Discord Name").get();
-        ChallengeSubmission submission2 = new ChallengeSubmission();
+        SpeedChallengeSubmission submission2 = new SpeedChallengeSubmission();
         submission2.setChallenge(challenge);
         submission2.setRelayComponent(component);
         submission2.setPlayer(player);
         submission2.setSubmissionState(Submission.State.OPEN);
         submission2.setSeconds(4);
-        submission2.setType(Submission.Type.CHALLENGE);
+        submission2.setType(Submission.Type.CHALLENGE_SPEED);
         List<String> urls2 = new ArrayList<String>();
         urls2.add("Test URL 2");
         submission2.setScreenshotUrls(urls2);
@@ -318,22 +318,22 @@ public class SubmissionApprovalServiceTests {
         
         submissionApprovalService.approveSubmission(id2, "Test Reviewer");
         
-        submission2 = (ChallengeSubmission) submissionRepository.findById(id2).get();
+        submission2 = (SpeedChallengeSubmission) submissionRepository.findById(id2).get();
         player = playerRepository.findById(player.getId()).get();
         team = teamRepository.findByName("Test Team").get();
         challengeCompletion = null;
-        for(ChallengeCompletion completion : team.getChallengeCompletions()) {
+        for(SpeedChallengeCompletion completion : team.getSpeedChallengeCompletions()) {
             if(completion.getChallenge().equals(challenge)) {
                 challengeCompletion = completion;
             }
         }
-        PlayerChallengeCompletion playerCompletion2 = player.getPlayerChallengeCompletions().toArray(new PlayerChallengeCompletion[0])[0];
+        PlayerSpeedChallengeCompletion playerCompletion2 = player.getPlayerSpeedChallengeCompletions().toArray(new PlayerSpeedChallengeCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission2.getSubmissionState());
         assertEquals("Test Reviewer", submission2.getReviewer());
         assertTrue(Math.abs(submission2.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertEquals(1, player.getPlayerChallengeCompletions().size());
+        assertEquals(1, player.getPlayerSpeedChallengeCompletions().size());
         assertNotNull(playerCompletion2);
         assertEquals("Test URL 2", playerCompletion2.getScreenshotUrl());
         assertEquals(challenge, playerCompletion2.getChallenge());
@@ -344,13 +344,13 @@ public class SubmissionApprovalServiceTests {
         
         // Submit something worse than the existing one - Shouldn't change completion
         player = playerRepository.findByDiscordName("Test Discord Name").get();
-        ChallengeSubmission submission3 = new ChallengeSubmission();
+        SpeedChallengeSubmission submission3 = new SpeedChallengeSubmission();
         submission3.setChallenge(challenge);
         submission3.setRelayComponent(component);
         submission3.setPlayer(player);
         submission3.setSubmissionState(Submission.State.OPEN);
         submission3.setSeconds(6);
-        submission3.setType(Submission.Type.CHALLENGE);
+        submission3.setType(Submission.Type.CHALLENGE_SPEED);
         List<String> urls3 = new ArrayList<String>();
         urls3.add("Test URL 3");
         submission3.setScreenshotUrls(urls3);
@@ -359,22 +359,22 @@ public class SubmissionApprovalServiceTests {
         
         submissionApprovalService.approveSubmission(id3, "Test Reviewer");
         
-        submission3 = (ChallengeSubmission) submissionRepository.findById(id3).get();
+        submission3 = (SpeedChallengeSubmission) submissionRepository.findById(id3).get();
         player = playerRepository.findById(player.getId()).get();
         team = teamRepository.findByName("Test Team").get();
         challengeCompletion = null;
-        for(ChallengeCompletion completion : team.getChallengeCompletions()) {
+        for(SpeedChallengeCompletion completion : team.getSpeedChallengeCompletions()) {
             if(completion.getChallenge().equals(challenge)) {
                 challengeCompletion = completion;
             }
         }
-        PlayerChallengeCompletion playerCompletion3 = player.getPlayerChallengeCompletions().toArray(new PlayerChallengeCompletion[0])[0];
+        PlayerSpeedChallengeCompletion playerCompletion3 = player.getPlayerSpeedChallengeCompletions().toArray(new PlayerSpeedChallengeCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission3.getSubmissionState());
         assertEquals("Test Reviewer", submission3.getReviewer());
         assertTrue(Math.abs(submission3.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertEquals(1, player.getPlayerChallengeCompletions().size());
+        assertEquals(1, player.getPlayerSpeedChallengeCompletions().size());
         assertNotNull(playerCompletion3);
         assertEquals("Test URL 2", playerCompletion3.getScreenshotUrl());
         assertEquals(challenge, playerCompletion3.getChallenge());
@@ -391,12 +391,12 @@ public class SubmissionApprovalServiceTests {
         Player player = playerRepository.findByDiscordName("Test Discord Name").get();
                 
         // No existing submissions
-        ChallengeSubmission submission = new ChallengeSubmission();
+        SpeedChallengeSubmission submission = new SpeedChallengeSubmission();
         submission.setChallenge(challenge);
         submission.setPlayer(player);
         submission.setSubmissionState(Submission.State.OPEN);
         submission.setSeconds(5);
-        submission.setType(Submission.Type.CHALLENGE);
+        submission.setType(Submission.Type.CHALLENGE_SPEED);
         List<String> urls = new ArrayList<String>();
         urls.add("Test URL");
         submission.setScreenshotUrls(urls);
@@ -405,22 +405,22 @@ public class SubmissionApprovalServiceTests {
         
         submissionApprovalService.approveSubmission(id, "Test Reviewer");
         
-        submission = (ChallengeSubmission) submissionRepository.findById(id).get();
+        submission = (SpeedChallengeSubmission) submissionRepository.findById(id).get();
         player = playerRepository.findById(player.getId()).get();
         Team team = teamRepository.findByName("Test Team").get();
-        ChallengeCompletion challengeCompletion = null;
-        for(ChallengeCompletion completion : team.getChallengeCompletions()) {
+        SpeedChallengeCompletion challengeCompletion = null;
+        for(SpeedChallengeCompletion completion : team.getSpeedChallengeCompletions()) {
             if(completion.getChallenge().equals(challenge)) {
                 challengeCompletion = completion;
             }
         }
-        PlayerChallengeCompletion playerCompletion = player.getPlayerChallengeCompletions().toArray(new PlayerChallengeCompletion[0])[0];
+        PlayerSpeedChallengeCompletion playerCompletion = player.getPlayerSpeedChallengeCompletions().toArray(new PlayerSpeedChallengeCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission.getSubmissionState());
         assertEquals("Test Reviewer", submission.getReviewer());
         assertTrue(Math.abs(submission.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertEquals(1, player.getPlayerChallengeCompletions().size());
+        assertEquals(1, player.getPlayerSpeedChallengeCompletions().size());
         assertNotNull(playerCompletion);
         assertEquals("Test URL", playerCompletion.getScreenshotUrl());
         assertEquals(challenge, playerCompletion.getChallenge());
@@ -430,12 +430,12 @@ public class SubmissionApprovalServiceTests {
         
         // Submit something better than the existing one - Should change completion
         player = playerRepository.findByDiscordName("Test Discord Name").get();
-        ChallengeSubmission submission2 = new ChallengeSubmission();
+        SpeedChallengeSubmission submission2 = new SpeedChallengeSubmission();
         submission2.setChallenge(challenge);
         submission2.setPlayer(player);
         submission2.setSubmissionState(Submission.State.OPEN);
         submission2.setSeconds(4);
-        submission2.setType(Submission.Type.CHALLENGE);
+        submission2.setType(Submission.Type.CHALLENGE_SPEED);
         List<String> urls2 = new ArrayList<String>();
         urls2.add("Test URL 2");
         submission2.setScreenshotUrls(urls2);
@@ -444,22 +444,22 @@ public class SubmissionApprovalServiceTests {
         
         submissionApprovalService.approveSubmission(id2, "Test Reviewer");
         
-        submission2 = (ChallengeSubmission) submissionRepository.findById(id2).get();
+        submission2 = (SpeedChallengeSubmission) submissionRepository.findById(id2).get();
         player = playerRepository.findById(player.getId()).get();
         team = teamRepository.findByName("Test Team").get();
         challengeCompletion = null;
-        for(ChallengeCompletion completion : team.getChallengeCompletions()) {
+        for(SpeedChallengeCompletion completion : team.getSpeedChallengeCompletions()) {
             if(completion.getChallenge().equals(challenge)) {
                 challengeCompletion = completion;
             }
         }
-        PlayerChallengeCompletion playerCompletion2 = player.getPlayerChallengeCompletions().toArray(new PlayerChallengeCompletion[0])[0];
+        PlayerSpeedChallengeCompletion playerCompletion2 = player.getPlayerSpeedChallengeCompletions().toArray(new PlayerSpeedChallengeCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission2.getSubmissionState());
         assertEquals("Test Reviewer", submission2.getReviewer());
         assertTrue(Math.abs(submission2.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertEquals(1, player.getPlayerChallengeCompletions().size());
+        assertEquals(1, player.getPlayerSpeedChallengeCompletions().size());
         assertNotNull(playerCompletion2);
         assertEquals("Test URL 2", playerCompletion2.getScreenshotUrl());
         assertEquals(challenge, playerCompletion2.getChallenge());
@@ -469,12 +469,12 @@ public class SubmissionApprovalServiceTests {
         
         // Submit something worse than the existing one - Shouldn't change completion
         player = playerRepository.findByDiscordName("Test Discord Name").get();
-        ChallengeSubmission submission3 = new ChallengeSubmission();
+        SpeedChallengeSubmission submission3 = new SpeedChallengeSubmission();
         submission3.setChallenge(challenge);
         submission3.setPlayer(player);
         submission3.setSubmissionState(Submission.State.OPEN);
         submission3.setSeconds(6);
-        submission3.setType(Submission.Type.CHALLENGE);
+        submission3.setType(Submission.Type.CHALLENGE_SPEED);
         List<String> urls3 = new ArrayList<String>();
         urls3.add("Test URL 3");
         submission3.setScreenshotUrls(urls3);
@@ -483,22 +483,22 @@ public class SubmissionApprovalServiceTests {
         
         submissionApprovalService.approveSubmission(id3, "Test Reviewer");
         
-        submission3 = (ChallengeSubmission) submissionRepository.findById(id3).get();
+        submission3 = (SpeedChallengeSubmission) submissionRepository.findById(id3).get();
         player = playerRepository.findById(player.getId()).get();
         team = teamRepository.findByName("Test Team").get();
         challengeCompletion = null;
-        for(ChallengeCompletion completion : team.getChallengeCompletions()) {
+        for(SpeedChallengeCompletion completion : team.getSpeedChallengeCompletions()) {
             if(completion.getChallenge().equals(challenge)) {
                 challengeCompletion = completion;
             }
         }
-        PlayerChallengeCompletion playerCompletion3 = player.getPlayerChallengeCompletions().toArray(new PlayerChallengeCompletion[0])[0];
+        PlayerSpeedChallengeCompletion playerCompletion3 = player.getPlayerSpeedChallengeCompletions().toArray(new PlayerSpeedChallengeCompletion[0])[0];
         
         assertEquals(Submission.State.APPROVED, submission3.getSubmissionState());
         assertEquals("Test Reviewer", submission3.getReviewer());
         assertTrue(Math.abs(submission3.getReviewedAt().getTime() - new Date().getTime()) < 5000);
         
-        assertEquals(1, player.getPlayerChallengeCompletions().size());
+        assertEquals(1, player.getPlayerSpeedChallengeCompletions().size());
         assertNotNull(playerCompletion3);
         assertEquals("Test URL 2", playerCompletion3.getScreenshotUrl());
         assertEquals(challenge, playerCompletion3.getChallenge());

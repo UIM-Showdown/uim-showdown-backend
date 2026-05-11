@@ -37,11 +37,11 @@ public class ChallengeRelayComponent {
 
     @OneToMany(mappedBy = "relayComponent", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<PlayerChallengeCompletion> playerChallengeCompletions = new HashSet<PlayerChallengeCompletion>();
+    private Set<PlayerSpeedChallengeCompletion> playerSpeedChallengeCompletions = new HashSet<PlayerSpeedChallengeCompletion>();
 
     @OneToMany(mappedBy = "relayComponent", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<ChallengeSubmission> submissions = new HashSet<ChallengeSubmission>();
+    private Set<SpeedChallengeSubmission> submissions = new HashSet<SpeedChallengeSubmission>();
 
     public int getId() {
         return id;
@@ -55,11 +55,11 @@ public class ChallengeRelayComponent {
         return name;
     }
 
-    public Set<PlayerChallengeCompletion> getPlayerChallengeCompletions() {
-        return playerChallengeCompletions;
+    public Set<PlayerSpeedChallengeCompletion> getPlayerSpeedChallengeCompletions() {
+        return playerSpeedChallengeCompletions;
     }
 
-    public Set<ChallengeSubmission> getSubmissions() {
+    public Set<SpeedChallengeSubmission> getSubmissions() {
         return submissions;
     }
 

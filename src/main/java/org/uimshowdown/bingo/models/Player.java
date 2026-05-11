@@ -42,7 +42,11 @@ public class Player {
 
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<PlayerChallengeCompletion> playerChallengeCompletions = new HashSet<PlayerChallengeCompletion>();
+    private Set<PlayerSpeedChallengeCompletion> playerSpeedChallengeCompletions = new HashSet<PlayerSpeedChallengeCompletion>();
+    
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<PlayerPointsChallengeCompletion> playerPointsChallengeCompletions = new HashSet<PlayerPointsChallengeCompletion>();
 
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -85,8 +89,8 @@ public class Player {
         return collectionLogCompletions;
     }
 
-    public Set<PlayerChallengeCompletion> getPlayerChallengeCompletions() {
-        return playerChallengeCompletions;
+    public Set<PlayerSpeedChallengeCompletion> getPlayerSpeedChallengeCompletions() {
+        return playerSpeedChallengeCompletions;
     }
 
     public Set<RecordCompletion> getRecordCompletions() {
@@ -113,8 +117,8 @@ public class Player {
         this.contributions = contributions;
     }
     
-    public void setPlayerChallengeCompletions(Set<PlayerChallengeCompletion> playerChallengeCompletions) {
-        this.playerChallengeCompletions = playerChallengeCompletions;
+    public void setPlayerSpeedChallengeCompletions(Set<PlayerSpeedChallengeCompletion> playerSpeedChallengeCompletions) {
+        this.playerSpeedChallengeCompletions = playerSpeedChallengeCompletions;
     }
     
     public void setRecordCompletions(Set<RecordCompletion> recordCompletions) {
@@ -161,10 +165,26 @@ public class Player {
         return null;
     }
     
+    public Set<PlayerPointsChallengeCompletion> getPlayerPointsChallengeCompletions() {
+        return playerPointsChallengeCompletions;
+    }
+
+    public void setPlayerPointsChallengeCompletions(Set<PlayerPointsChallengeCompletion> playerPointsChallengeCompletions) {
+        this.playerPointsChallengeCompletions = playerPointsChallengeCompletions;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setSubmissions(Set<Submission> submissions) {
+        this.submissions = submissions;
+    }
+
     @JsonIgnore
-    public PlayerChallengeCompletion getBestPlayerChallengeCompletion(Challenge challenge, ChallengeRelayComponent relayComponent) {
-        PlayerChallengeCompletion bestCompletion = null;
-        for(PlayerChallengeCompletion completion : playerChallengeCompletions) {
+    public PlayerSpeedChallengeCompletion getBestPlayerSpeedChallengeCompletion(Challenge challenge, ChallengeRelayComponent relayComponent) {
+        PlayerSpeedChallengeCompletion bestCompletion = null;
+        for(PlayerSpeedChallengeCompletion completion : playerSpeedChallengeCompletions) {
             if(completion.getChallenge().equals(challenge) && ((relayComponent == null && completion.getChallengeRelayComponent() == null) || completion.getChallengeRelayComponent().equals(relayComponent))) {
                 if(bestCompletion == null || completion.getSeconds() < bestCompletion.getSeconds()) {
                     bestCompletion = completion;

@@ -33,7 +33,11 @@ public class Team {
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<ChallengeCompletion> challengeCompletions = new HashSet<ChallengeCompletion>();
+    private Set<SpeedChallengeCompletion> speedChallengeCompletions = new HashSet<SpeedChallengeCompletion>();
+    
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<PointsChallengeCompletion> pointsChallengeCompletions = new HashSet<PointsChallengeCompletion>();
 
     @Column(length = 6)
     @JsonProperty
@@ -63,8 +67,12 @@ public class Team {
         return abbreviation;
     }
 
-    public Set<ChallengeCompletion> getChallengeCompletions() {
-        return challengeCompletions;
+    public Set<SpeedChallengeCompletion> getSpeedChallengeCompletions() {
+        return speedChallengeCompletions;
+    }
+    
+    public Set<PointsChallengeCompletion> getPointsChallengeCompletions() {
+        return pointsChallengeCompletions;
     }
 
     public String getColor() {
@@ -111,8 +119,12 @@ public class Team {
         this.name = name;
     }
     
-    public void setChallengeCompletions(Set<ChallengeCompletion> challengeCompletions) {
-        this.challengeCompletions = challengeCompletions;
+    public void setSpeedChallengeCompletions(Set<SpeedChallengeCompletion> speedChallengeCompletions) {
+        this.speedChallengeCompletions = speedChallengeCompletions;
+    }
+    
+    public void setPointsChallengeCompletions(Set<PointsChallengeCompletion> pointsChallengeCompletions) {
+        this.pointsChallengeCompletions = pointsChallengeCompletions;
     }
     
     public void setScoreboard(TeamScoreboard scoreboard) {
@@ -144,8 +156,18 @@ public class Team {
     }
     
     @JsonIgnore
-    public ChallengeCompletion getChallengeCompletion(Challenge challenge) {
-        for(ChallengeCompletion completion : challengeCompletions) {
+    public SpeedChallengeCompletion getSpeedChallengeCompletion(Challenge challenge) {
+        for(SpeedChallengeCompletion completion : speedChallengeCompletions) {
+            if(completion.getChallenge().equals(challenge)) {
+                return completion;
+            }
+        }
+        return null;
+    }
+    
+    @JsonIgnore
+    public PointsChallengeCompletion getPointsChallengeCompletion(Challenge challenge) {
+        for(PointsChallengeCompletion completion : pointsChallengeCompletions) {
             if(completion.getChallenge().equals(challenge)) {
                 return completion;
             }

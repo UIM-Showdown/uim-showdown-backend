@@ -46,13 +46,21 @@ public class CompetitionConfiguration {
     
     private double recordDistanceCutoffPercentage;
     
-    private int challengePlacePoints;
+    private int speedChallengePlacePoints;
     
-    private int challengePlacePointsFalloff;
+    private int speedChallengePlacePointsFalloff;
     
-    private int challengeDistancePoints;
+    private int speedChallengeDistancePoints;
     
-    private double challengeDistanceCutoffPercentage;
+    private double speedChallengeDistanceCutoffPercentage;
+    
+    private int pointsChallengePlacePoints;
+    
+    private int pointsChallengePlacePointsFalloff;
+    
+    private int pointsChallengeDistancePoints;
+    
+    private double pointsChallengeDistanceCutoffPercentage;
     
     private List<TeamConfig> teams;
     
@@ -194,38 +202,70 @@ public class CompetitionConfiguration {
         this.recordDistanceCutoffPercentage = recordDistanceCutoffPercentage;
     }
 
-    public int getChallengePlacePoints() {
-        return challengePlacePoints;
+    public double getSpeedChallengeDistanceCutoffPercentage() {
+        return speedChallengeDistanceCutoffPercentage;
     }
 
-    public void setChallengePlacePoints(int challengePlacePoints) {
-        this.challengePlacePoints = challengePlacePoints;
-    }
-
-    public int getChallengePlacePointsFalloff() {
-        return challengePlacePointsFalloff;
-    }
-
-    public void setChallengePlacePointsFalloff(int challengePlacePointsFalloff) {
-        this.challengePlacePointsFalloff = challengePlacePointsFalloff;
-    }
-
-    public int getChallengeDistancePoints() {
-        return challengeDistancePoints;
-    }
-
-    public void setChallengeDistancePoints(int challengeDistancePoints) {
-        this.challengeDistancePoints = challengeDistancePoints;
-    }
-
-    public double getChallengeDistanceCutoffPercentage() {
-        return challengeDistanceCutoffPercentage;
-    }
-
-    public void setChallengeDistanceCutoffPercentage(double challengeDistanceCutoffPercentage) {
-        this.challengeDistanceCutoffPercentage = challengeDistanceCutoffPercentage;
+    public void setSpeedChallengeDistanceCutoffPercentage(double speedChallengeDistanceCutoffPercentage) {
+        this.speedChallengeDistanceCutoffPercentage = speedChallengeDistanceCutoffPercentage;
     }
     
+    public double getPointsChallengeDistanceCutoffPercentage() {
+        return pointsChallengeDistanceCutoffPercentage;
+    }
+
+    public void setPointsChallengeDistanceCutoffPercentage(double pointsChallengeDistanceCutoffPercentage) {
+        this.pointsChallengeDistanceCutoffPercentage = pointsChallengeDistanceCutoffPercentage;
+    }
+    
+    public int getSpeedChallengePlacePoints() {
+        return speedChallengePlacePoints;
+    }
+
+    public void setSpeedChallengePlacePoints(int speedChallengePlacePoints) {
+        this.speedChallengePlacePoints = speedChallengePlacePoints;
+    }
+
+    public int getSpeedChallengePlacePointsFalloff() {
+        return speedChallengePlacePointsFalloff;
+    }
+
+    public void setSpeedChallengePlacePointsFalloff(int speedChallengePlacePointsFalloff) {
+        this.speedChallengePlacePointsFalloff = speedChallengePlacePointsFalloff;
+    }
+
+    public int getSpeedChallengeDistancePoints() {
+        return speedChallengeDistancePoints;
+    }
+
+    public void setSpeedChallengeDistancePoints(int speedChallengeDistancePoints) {
+        this.speedChallengeDistancePoints = speedChallengeDistancePoints;
+    }
+
+    public int getPointsChallengePlacePoints() {
+        return pointsChallengePlacePoints;
+    }
+
+    public void setPointsChallengePlacePoints(int pointsChallengePlacePoints) {
+        this.pointsChallengePlacePoints = pointsChallengePlacePoints;
+    }
+
+    public int getPointsChallengePlacePointsFalloff() {
+        return pointsChallengePlacePointsFalloff;
+    }
+
+    public void setPointsChallengePlacePointsFalloff(int pointsChallengePlacePointsFalloff) {
+        this.pointsChallengePlacePointsFalloff = pointsChallengePlacePointsFalloff;
+    }
+
+    public int getPointsChallengeDistancePoints() {
+        return pointsChallengeDistancePoints;
+    }
+
+    public void setPointsChallengeDistancePoints(int pointsChallengeDistancePoints) {
+        this.pointsChallengeDistancePoints = pointsChallengeDistancePoints;
+    }
+
     public List<TeamConfig> getTeams() {
         return teams;
     }

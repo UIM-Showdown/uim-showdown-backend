@@ -384,7 +384,7 @@ public class StatsService {
     public Map<Submission.Type, Double> getTotalSubmissions() {
         Map<Submission.Type, Double> totalSubmissions = new HashMap<Submission.Type, Double>();
         totalSubmissions.put(Submission.Type.RECORD, 0.0);
-        totalSubmissions.put(Submission.Type.CHALLENGE, 0.0);
+        totalSubmissions.put(Submission.Type.CHALLENGE_SPEED, 0.0);
         totalSubmissions.put(Submission.Type.CONTRIBUTION, 0.0);
         totalSubmissions.put(Submission.Type.CONTRIBUTION_INCREMENT, 0.0);
         totalSubmissions.put(Submission.Type.CONTRIBUTION_PURCHASE, 0.0);

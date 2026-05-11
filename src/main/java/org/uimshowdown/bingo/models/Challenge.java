@@ -23,7 +23,7 @@ import jakarta.persistence.Table;
 @Table(name = "challenges")
 public class Challenge {
     
-    public enum Type { RELAY, SPEEDRUN }
+    public enum Type { RELAY, SPEEDRUN, POINTS }
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class Challenge {
 
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<ChallengeCompletion> completions = new HashSet<ChallengeCompletion>();
+    private Set<SpeedChallengeCompletion> completions = new HashSet<SpeedChallengeCompletion>();
 
     @Column(length = 512)
     @JsonProperty
@@ -48,7 +48,7 @@ public class Challenge {
 
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<ChallengeSubmission> submissions = new HashSet<ChallengeSubmission>();
+    private Set<SpeedChallengeSubmission> submissions = new HashSet<SpeedChallengeSubmission>();
 
     @Column(name = "team_size")
     @JsonProperty
@@ -63,7 +63,7 @@ public class Challenge {
         return id;
     }
 
-    public Set<ChallengeCompletion> getCompletions() {
+    public Set<SpeedChallengeCompletion> getCompletions() {
         return completions;
     }
 

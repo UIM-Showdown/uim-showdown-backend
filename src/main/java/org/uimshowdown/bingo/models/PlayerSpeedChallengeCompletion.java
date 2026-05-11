@@ -13,8 +13,8 @@ import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "player_challenge_completions")
-public class PlayerChallengeCompletion {
+@Table(name = "player_speed_challenge_completions")
+public class PlayerSpeedChallengeCompletion {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,14 +40,14 @@ public class PlayerChallengeCompletion {
     
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "submission_id")
-    private ChallengeSubmission submission;
+    private SpeedChallengeSubmission submission;
 
     public int getId() {
         return id;
     }
 
-    public ChallengeCompletion getChallengeCompletion() {
-        return player.getTeam().getChallengeCompletion(challenge);
+    public SpeedChallengeCompletion getChallengeCompletion() {
+        return player.getTeam().getSpeedChallengeCompletion(challenge);
     }
 
     public Player getPlayer() {
@@ -90,11 +90,11 @@ public class PlayerChallengeCompletion {
         this.challenge = challenge;
     }
 
-    public ChallengeSubmission getSubmission() {
+    public SpeedChallengeSubmission getSubmission() {
         return submission;
     }
 
-    public void setSubmission(ChallengeSubmission submission) {
+    public void setSubmission(SpeedChallengeSubmission submission) {
         this.submission = submission;
     }
 
@@ -116,7 +116,7 @@ public class PlayerChallengeCompletion {
 
     @Override
     public boolean equals(Object obj) {
-        return obj != null && obj instanceof PlayerChallengeCompletion && ((PlayerChallengeCompletion) obj).getId() == this.id;
+        return obj != null && obj instanceof PlayerSpeedChallengeCompletion && ((PlayerSpeedChallengeCompletion) obj).getId() == this.id;
     }
     
 }

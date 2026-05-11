@@ -12,13 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration;
 import org.uimshowdown.bingo.models.Challenge;
-import org.uimshowdown.bingo.models.ChallengeLeaderboardEntry;
+import org.uimshowdown.bingo.models.SpeedChallengeLeaderboardEntry;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.CollectionLogCompletion;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
-import org.uimshowdown.bingo.models.PlayerChallengeCompletion;
+import org.uimshowdown.bingo.models.PlayerSpeedChallengeCompletion;
+import org.uimshowdown.bingo.models.PointsChallengeLeaderboardEntry;
 import org.uimshowdown.bingo.models.PlayerScoreboard;
 import org.uimshowdown.bingo.models.Record;
 import org.uimshowdown.bingo.models.RecordCompletion;
@@ -27,13 +28,14 @@ import org.uimshowdown.bingo.models.Team;
 import org.uimshowdown.bingo.models.TeamScoreboard;
 import org.uimshowdown.bingo.models.Tile;
 import org.uimshowdown.bingo.models.TileProgress;
-import org.uimshowdown.bingo.repositories.ChallengeLeaderboardEntryRepository;
+import org.uimshowdown.bingo.repositories.SpeedChallengeLeaderboardEntryRepository;
 import org.uimshowdown.bingo.repositories.ChallengeRelayComponentRepository;
 import org.uimshowdown.bingo.repositories.ChallengeRepository;
 import org.uimshowdown.bingo.repositories.CollectionLogCompletionRepository;
 import org.uimshowdown.bingo.repositories.CollectionLogItemRepository;
 import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
 import org.uimshowdown.bingo.repositories.PlayerScoreboardRepository;
+import org.uimshowdown.bingo.repositories.PointsChallengeLeaderboardEntryRepository;
 import org.uimshowdown.bingo.repositories.RecordLeaderboardEntryRepository;
 import org.uimshowdown.bingo.repositories.RecordRepository;
 import org.uimshowdown.bingo.repositories.TeamRepository;
@@ -54,7 +56,8 @@ public class DataOutputService {
     @Autowired RecordRepository recordRepository;
     @Autowired ChallengeRepository challengeRepository;
     @Autowired RecordLeaderboardEntryRepository recordLeaderboardEntryRepository;
-    @Autowired ChallengeLeaderboardEntryRepository challengeLeaderboardEntryRepository;
+    @Autowired SpeedChallengeLeaderboardEntryRepository speedChallengeLeaderboardEntryRepository;
+    @Autowired PointsChallengeLeaderboardEntryRepository pointsChallengeLeaderboardEntryRepository;
     @Autowired PlayerScoreboardRepository playerScoreboardRepository;
     @Autowired TeamScoreboardRepository teamScoreboardRepository;
     @Autowired CollectionLogCompletionRepository collectionLogCompletionRepository;
@@ -242,11 +245,19 @@ public class DataOutputService {
         List<Object> titleRow = new ArrayList<Object>();
         titleRow.add("place");
         for(Challenge challenge : challengeRepository.findByOrderByIdAsc()) {
-            titleRow.addAll(Arrays.asList(
-                    "players: " + challenge.getName(),
-                    "team: " + challenge.getName(),
-                    "time: " + challenge.getName(),
-                    "points: " + challenge.getName()));
+            if(challenge.getType() == Challenge.Type.SPEEDRUN || challenge.getType() == Challenge.Type.RELAY) {                
+                titleRow.addAll(Arrays.asList(
+                        "players: " + challenge.getName(),
+                        "team: " + challenge.getName(),
+                        "time: " + challenge.getName(),
+                        "eventPoints: " + challenge.getName()));
+            } else {
+                titleRow.addAll(Arrays.asList(
+                        "players: " + challenge.getName(),
+                        "team: " + challenge.getName(),
+                        "points: " + challenge.getName(),
+                        "eventPoints: " + challenge.getName()));
+            }
         }
         rows.add(titleRow);
         
@@ -255,21 +266,40 @@ public class DataOutputService {
             List<Object> row = new ArrayList<Object>();
             row.add(place);
             for(Challenge challenge : challengeRepository.findByOrderByIdAsc()) {
-                List<ChallengeLeaderboardEntry> entries = new ArrayList<ChallengeLeaderboardEntry>();
-                for(ChallengeLeaderboardEntry entry : challengeLeaderboardEntryRepository.findValidEntriesByChallengeNameOrderByPlaceAsc(challenge.getName())) {
-                    entries.add(entry);
-                }
-                if(entries.size() >= place) {
-                    ChallengeLeaderboardEntry entry = entries.get(place - 1);
-                    row.add(entry.getPlayerNames());
-                    row.add(entry.getTeamScoreboard().getTeam().getAbbreviation());
-                    row.add(entry.getSeconds() / 86400.0); // Convert to sheets format - unit is one day
-                    row.add(entry.getPoints());
+                if(challenge.getType() == Challenge.Type.SPEEDRUN || challenge.getType() == Challenge.Type.RELAY) {
+                    List<SpeedChallengeLeaderboardEntry> entries = new ArrayList<SpeedChallengeLeaderboardEntry>();
+                    for(SpeedChallengeLeaderboardEntry entry : speedChallengeLeaderboardEntryRepository.findValidEntriesByChallengeNameOrderByPlaceAsc(challenge.getName())) {
+                        entries.add(entry);
+                    }
+                    if(entries.size() >= place) {
+                        SpeedChallengeLeaderboardEntry entry = entries.get(place - 1);
+                        row.add(entry.getPlayerNames());
+                        row.add(entry.getTeamScoreboard().getTeam().getAbbreviation());
+                        row.add(entry.getSeconds() / 86400.0); // Convert to sheets format - unit is one day
+                        row.add(entry.getEventPoints());
+                    } else {
+                        row.add("");
+                        row.add("");
+                        row.add("");
+                        row.add("");
+                    }
                 } else {
-                    row.add("");
-                    row.add("");
-                    row.add("");
-                    row.add("");
+                    List<PointsChallengeLeaderboardEntry> entries = new ArrayList<PointsChallengeLeaderboardEntry>();
+                    for(PointsChallengeLeaderboardEntry entry : pointsChallengeLeaderboardEntryRepository.findValidEntriesByChallengeNameOrderByPlaceAsc(challenge.getName())) {
+                        entries.add(entry);
+                    }
+                    if(entries.size() >= place) {
+                        PointsChallengeLeaderboardEntry entry = entries.get(place - 1);
+                        row.add(entry.getPlayerNames());
+                        row.add(entry.getTeamScoreboard().getTeam().getAbbreviation());
+                        row.add(entry.getPoints());
+                        row.add(entry.getEventPoints());
+                    } else {
+                        row.add("");
+                        row.add("");
+                        row.add("");
+                        row.add("");
+                    }
                 }
             }
             rows.add(row);
@@ -544,12 +574,12 @@ public class DataOutputService {
             for(Challenge challenge : challengeRepository.findByOrderByIdAsc()) {
                 List<Object> row = new ArrayList<Object>();
                 row.add(challenge.getName());
-                if(team.getScoreboard().getChallengeLeaderboardEntry(challenge).getSeconds() < 0) {
+                if(team.getScoreboard().getSpeedChallengeLeaderboardEntry(challenge).getSeconds() < 0) {
                     row.add("");
                     row.add("");
                 } else {
-                    row.add(team.getScoreboard().getChallengeLeaderboardEntry(challenge).getPlayerNames());
-                    row.add(team.getScoreboard().getChallengeLeaderboardEntry(challenge).getSeconds() / 86400.0); // Convert to sheets format - unit is one day
+                    row.add(team.getScoreboard().getSpeedChallengeLeaderboardEntry(challenge).getPlayerNames());
+                    row.add(team.getScoreboard().getSpeedChallengeLeaderboardEntry(challenge).getSeconds() / 86400.0); // Convert to sheets format - unit is one day
                 }
                 rows.add(row);
             }
@@ -614,8 +644,8 @@ public class DataOutputService {
             row.add(place);
             for(ChallengeRelayComponent component : components) {
                 players.sort((p1, p2) -> { // Descending, with a 0 case to account for floating point math
-                    PlayerChallengeCompletion c1 = p1.getBestPlayerChallengeCompletion(component.getChallenge(), component);
-                    PlayerChallengeCompletion c2 = p2.getBestPlayerChallengeCompletion(component.getChallenge(), component);
+                    PlayerSpeedChallengeCompletion c1 = p1.getBestPlayerSpeedChallengeCompletion(component.getChallenge(), component);
+                    PlayerSpeedChallengeCompletion c2 = p2.getBestPlayerSpeedChallengeCompletion(component.getChallenge(), component);
                     if(c1 == null && c2 == null) {
                         return 0;
                     }
@@ -634,7 +664,7 @@ public class DataOutputService {
                         return 1;
                     }
                 });
-                PlayerChallengeCompletion completion = players.get(place - 1).getBestPlayerChallengeCompletion(component.getChallenge(), component);
+                PlayerSpeedChallengeCompletion completion = players.get(place - 1).getBestPlayerSpeedChallengeCompletion(component.getChallenge(), component);
                 if(completion != null) {                    
                     row.add(completion.getPlayer().getRsn());
                     row.add(completion.getSeconds() / 86400.0); // Convert to sheets format - unit is one day

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
-import org.uimshowdown.bingo.models.ChallengeSubmission;
+import org.uimshowdown.bingo.models.SpeedChallengeSubmission;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.CollectionLogSubmission;
 import org.uimshowdown.bingo.models.ContributionIncrementSubmission;
@@ -25,6 +25,7 @@ import org.uimshowdown.bingo.models.ContributionPurchaseSubmission;
 import org.uimshowdown.bingo.models.ContributionSubmission;
 import org.uimshowdown.bingo.models.ItemOption;
 import org.uimshowdown.bingo.models.Player;
+import org.uimshowdown.bingo.models.PointsChallengeSubmission;
 import org.uimshowdown.bingo.models.Record;
 import org.uimshowdown.bingo.models.RecordHandicap;
 import org.uimshowdown.bingo.models.RecordSubmission;
@@ -178,24 +179,42 @@ public class SubmissionController {
             relayComponent = challengeRelayComponentRepository.findByName((String) requestBody.get("relayComponentName")).get();
         }
         
-        ChallengeSubmission submission = new ChallengeSubmission();
-        submission.setChallenge(challenge);
-        submission.setPlayer(player);
-        submission.setSubmissionState(Submission.State.OPEN);
-        submission.setSeconds((double) requestBody.get("seconds"));
-        submission.setType(Submission.Type.CHALLENGE);
-        submission.setDescription((String) requestBody.get("description"));
-        if(relayComponent != null) {
-            submission.setRelayComponent(relayComponent);
-        }
-        submission.setScreenshotUrls((List<String>) requestBody.get("screenshotURLs"));
-        submission.setSubmittedAt(new Timestamp(System.currentTimeMillis()));
-        
-        Submission returnedSubmission = submissionRepository.save(submission);
-        
-        Map<String, Object> responseBody = new HashMap<String, Object>();
-        responseBody.put("id", returnedSubmission.getId());
-        return responseBody;
+        if(challenge.getType() == Challenge.Type.SPEEDRUN || challenge.getType() == Challenge.Type.RELAY) {            
+            SpeedChallengeSubmission submission = new SpeedChallengeSubmission();
+            submission.setChallenge(challenge);
+            submission.setPlayer(player);
+            submission.setSubmissionState(Submission.State.OPEN);
+            submission.setSeconds((double) requestBody.get("seconds"));
+            submission.setType(Submission.Type.CHALLENGE_SPEED);
+            submission.setDescription((String) requestBody.get("description"));
+            if(relayComponent != null) {
+                submission.setRelayComponent(relayComponent);
+            }
+            submission.setScreenshotUrls((List<String>) requestBody.get("screenshotURLs"));
+            submission.setSubmittedAt(new Timestamp(System.currentTimeMillis()));
+            
+            Submission returnedSubmission = submissionRepository.save(submission);
+            
+            Map<String, Object> responseBody = new HashMap<String, Object>();
+            responseBody.put("id", returnedSubmission.getId());
+            return responseBody;
+        } else {
+            PointsChallengeSubmission submission = new PointsChallengeSubmission();
+            submission.setChallenge(challenge);
+            submission.setPlayer(player);
+            submission.setSubmissionState(Submission.State.OPEN);
+            submission.setPoints((int) requestBody.get("points"));
+            submission.setType(Submission.Type.CHALLENGE_POINTS);
+            submission.setDescription((String) requestBody.get("description"));
+            submission.setScreenshotUrls((List<String>) requestBody.get("screenshotURLs"));
+            submission.setSubmittedAt(new Timestamp(System.currentTimeMillis()));
+            
+            Submission returnedSubmission = submissionRepository.save(submission);
+            
+            Map<String, Object> responseBody = new HashMap<String, Object>();
+            responseBody.put("id", returnedSubmission.getId());
+            return responseBody;
+        } 
     }
     
     @PostMapping("/submissions/record")

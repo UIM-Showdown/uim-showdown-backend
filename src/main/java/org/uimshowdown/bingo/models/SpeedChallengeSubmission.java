@@ -12,8 +12,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
-@DiscriminatorValue("CHALLENGE")
-public class ChallengeSubmission extends Submission {
+@DiscriminatorValue("CHALLENGE_SPEED")
+public class SpeedChallengeSubmission extends Submission {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "challenge_id")
@@ -30,7 +30,7 @@ public class ChallengeSubmission extends Submission {
     private double seconds;
     
     @OneToOne(mappedBy = "submission", cascade = CascadeType.ALL)
-    private PlayerChallengeCompletion completion;
+    private PlayerSpeedChallengeCompletion completion;
 
     public Challenge getChallenge() {
         return challenge;
@@ -58,18 +58,18 @@ public class ChallengeSubmission extends Submission {
     
     @Override
     public void setType(Submission.Type type) throws IllegalArgumentException {
-        if(type != Submission.Type.CHALLENGE) {
-            throw new IllegalArgumentException("Challenge submission type must be set to 'CHALLENGE'");
+        if(type != Submission.Type.CHALLENGE_SPEED) {
+            throw new IllegalArgumentException("Challenge submission type must be set to 'CHALLENGE_SPEED'");
         }
         
         super.setType(type);
     }
 
-    public PlayerChallengeCompletion getCompletion() {
+    public PlayerSpeedChallengeCompletion getCompletion() {
         return completion;
     }
 
-    public void setCompletion(PlayerChallengeCompletion completion) {
+    public void setCompletion(PlayerSpeedChallengeCompletion completion) {
         this.completion = completion;
     }
     

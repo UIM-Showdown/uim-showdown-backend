@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import org.uimshowdown.bingo.models.Challenge;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
-import org.uimshowdown.bingo.models.ChallengeSubmission;
+import org.uimshowdown.bingo.models.SpeedChallengeSubmission;
 import org.uimshowdown.bingo.models.CollectionLogCompletion;
 import org.uimshowdown.bingo.models.CollectionLogSubmission;
 import org.uimshowdown.bingo.models.Contribution;
@@ -18,13 +18,16 @@ import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.ContributionPurchaseSubmission;
 import org.uimshowdown.bingo.models.ContributionSubmission;
 import org.uimshowdown.bingo.models.Player;
-import org.uimshowdown.bingo.models.PlayerChallengeCompletion;
+import org.uimshowdown.bingo.models.PlayerPointsChallengeCompletion;
+import org.uimshowdown.bingo.models.PlayerSpeedChallengeCompletion;
+import org.uimshowdown.bingo.models.PointsChallengeSubmission;
 import org.uimshowdown.bingo.models.Record;
 import org.uimshowdown.bingo.models.RecordCompletion;
 import org.uimshowdown.bingo.models.RecordSubmission;
 import org.uimshowdown.bingo.models.Submission;
 import org.uimshowdown.bingo.repositories.CollectionLogCompletionRepository;
-import org.uimshowdown.bingo.repositories.PlayerChallengeCompletionRepository;
+import org.uimshowdown.bingo.repositories.PlayerPointsChallengeCompletionRepository;
+import org.uimshowdown.bingo.repositories.PlayerSpeedChallengeCompletionRepository;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
 import org.uimshowdown.bingo.repositories.RecordCompletionRepository;
 import org.uimshowdown.bingo.repositories.SubmissionRepository;
@@ -36,7 +39,8 @@ public class SubmissionApprovalService {
     @Autowired SubmissionRepository submissionRepository;
     @Autowired PlayerRepository playerRepository;
     @Autowired TeamRepository teamRepository;
-    @Autowired PlayerChallengeCompletionRepository playerChallengeCompletionRepository;
+    @Autowired PlayerSpeedChallengeCompletionRepository playerSpeedChallengeCompletionRepository;
+    @Autowired PlayerPointsChallengeCompletionRepository playerPointsChallengeCompletionRepository;
     @Autowired RecordCompletionRepository recordCompletionRepository;
     @Autowired CollectionLogCompletionRepository collectionLogCompletionRepository;
     
@@ -87,8 +91,11 @@ public class SubmissionApprovalService {
         if(submission instanceof ContributionPurchaseSubmission) {
             processContributionPurchaseSubmission((ContributionPurchaseSubmission) submission);
         }
-        if(submission instanceof ChallengeSubmission) {
-            processChallengeSubmission((ChallengeSubmission) submission, false);
+        if(submission instanceof SpeedChallengeSubmission) {
+            processSpeedChallengeSubmission((SpeedChallengeSubmission) submission, false);
+        }
+        if(submission instanceof PointsChallengeSubmission) {
+            processPointsChallengeSubmission((PointsChallengeSubmission) submission, false);
         }
         if(submission instanceof RecordSubmission) {
             processRecordSubmission((RecordSubmission) submission, false);
@@ -128,8 +135,11 @@ public class SubmissionApprovalService {
             if(submission instanceof ContributionPurchaseSubmission) {
                 undoContributionPurchaseApproval((ContributionPurchaseSubmission) submission);
             }
-            if(submission instanceof ChallengeSubmission) {
-                undoChallengeApproval((ChallengeSubmission) submission);
+            if(submission instanceof SpeedChallengeSubmission) {
+                undoSpeedChallengeApproval((SpeedChallengeSubmission) submission);
+            }
+            if(submission instanceof PointsChallengeSubmission) {
+                undoPointsChallengeApproval((PointsChallengeSubmission) submission);
             }
             if(submission instanceof RecordSubmission) {
                 undoRecordApproval((RecordSubmission) submission);
@@ -217,37 +227,37 @@ public class SubmissionApprovalService {
     /**
      * Adds a challenge completion to the player or replaces one, and does the same for the team's challenge completion
      * @param submission
-     * @param overwriteBetterValue If false, will silently do nothing if the existing time of the contribution is better than the time in the submission
+     * @param overwriteBetterValue If false, will silently do nothing if the existing time of the completion is better than the time in the submission
      * @throws Exception
      */
-    private void processChallengeSubmission(ChallengeSubmission submission, boolean overwriteBetterValue) throws Exception {
+    private void processSpeedChallengeSubmission(SpeedChallengeSubmission submission, boolean overwriteBetterValue) throws Exception {
         Player player = submission.getPlayer();
         
         // Remove the old player challenge completion if it exists
-        PlayerChallengeCompletion existingPlayerChallengeCompletion = null;
-        for(PlayerChallengeCompletion completion : player.getPlayerChallengeCompletions()) {
+        PlayerSpeedChallengeCompletion existingPlayerSpeedChallengeCompletion = null;
+        for(PlayerSpeedChallengeCompletion completion : player.getPlayerSpeedChallengeCompletions()) {
             boolean sameChallenge = completion.getChallenge().equals(submission.getChallenge());
             boolean sameComponent = completion.getChallengeRelayComponent() == null && submission.getRelayComponent() == null
                     || (completion.getChallengeRelayComponent() != null && completion.getChallengeRelayComponent().equals(submission.getRelayComponent()));
             if(sameChallenge && sameComponent) {
-                existingPlayerChallengeCompletion = completion;
-                if(!overwriteBetterValue && existingPlayerChallengeCompletion.getSeconds() < submission.getSeconds()) { // Submissions were approved out of order and this is an out-of-date one
+                existingPlayerSpeedChallengeCompletion = completion;
+                if(!overwriteBetterValue && existingPlayerSpeedChallengeCompletion.getSeconds() < submission.getSeconds()) { // Submissions were approved out of order and this is an out-of-date one
                     return;
                 }
                 break;
             }
         }
-        if(existingPlayerChallengeCompletion != null) { // Update the existing one
+        if(existingPlayerSpeedChallengeCompletion != null) { // Update the existing one
             if(submission.getScreenshotUrls().size() > 0) {
-                existingPlayerChallengeCompletion.setScreenshotUrl(submission.getScreenshotUrls().get(0));
+                existingPlayerSpeedChallengeCompletion.setScreenshotUrl(submission.getScreenshotUrls().get(0));
             }
-            existingPlayerChallengeCompletion.setSeconds(submission.getSeconds());
+            existingPlayerSpeedChallengeCompletion.setSeconds(submission.getSeconds());
             playerRepository.save(player);
             return;
         }
         
         // Old one didn't exist, so make a new one
-        PlayerChallengeCompletion playerCompletion = new PlayerChallengeCompletion();
+        PlayerSpeedChallengeCompletion playerCompletion = new PlayerSpeedChallengeCompletion();
         playerCompletion.setChallenge(submission.getChallenge());
         playerCompletion.setPlayer(player);
         playerCompletion.setRelayComponent(submission.getRelayComponent());
@@ -256,7 +266,49 @@ public class SubmissionApprovalService {
             playerCompletion.setScreenshotUrl(submission.getScreenshotUrls().get(0));
         }
         playerCompletion.setSeconds(submission.getSeconds());
-        player.getPlayerChallengeCompletions().add(playerCompletion);
+        player.getPlayerSpeedChallengeCompletions().add(playerCompletion);
+        playerRepository.save(player);
+    }
+    
+    /**
+     * Adds a challenge completion to the player or replaces one, and does the same for the team's challenge completion
+     * @param submission
+     * @param overwriteBetterValue If false, will silently do nothing if the existing points of the completion is better than the points in the submission
+     * @throws Exception
+     */
+    private void processPointsChallengeSubmission(PointsChallengeSubmission submission, boolean overwriteBetterValue) throws Exception {
+        Player player = submission.getPlayer();
+        
+        // Remove the old player challenge completion if it exists
+        PlayerPointsChallengeCompletion existingPlayerPointsChallengeCompletion = null;
+        for(PlayerPointsChallengeCompletion completion : player.getPlayerPointsChallengeCompletions()) {
+            if(completion.getChallenge().equals(submission.getChallenge())) {
+                existingPlayerPointsChallengeCompletion = completion;
+                if(!overwriteBetterValue && existingPlayerPointsChallengeCompletion.getPoints() > submission.getPoints()) { // Submissions were approved out of order and this is an out-of-date one
+                    return;
+                }
+                break;
+            }
+        }
+        if(existingPlayerPointsChallengeCompletion != null) { // Update the existing one
+            if(submission.getScreenshotUrls().size() > 0) {
+                existingPlayerPointsChallengeCompletion.setScreenshotUrl(submission.getScreenshotUrls().get(0));
+            }
+            existingPlayerPointsChallengeCompletion.setPoints(submission.getPoints());
+            playerRepository.save(player);
+            return;
+        }
+        
+        // Old one didn't exist, so make a new one
+        PlayerPointsChallengeCompletion playerCompletion = new PlayerPointsChallengeCompletion();
+        playerCompletion.setChallenge(submission.getChallenge());
+        playerCompletion.setPlayer(player);
+        playerCompletion.setSubmission(submission);
+        if(submission.getScreenshotUrls().size() > 0) {
+            playerCompletion.setScreenshotUrl(submission.getScreenshotUrls().get(0));
+        }
+        playerCompletion.setPoints(submission.getPoints());
+        player.getPlayerPointsChallengeCompletions().add(playerCompletion);
         playerRepository.save(player);
     }
     
@@ -367,7 +419,7 @@ public class SubmissionApprovalService {
         playerRepository.save(player);
     }
     
-    private void undoChallengeApproval(ChallengeSubmission submission) throws Exception {
+    private void undoSpeedChallengeApproval(SpeedChallengeSubmission submission) throws Exception {
         Player player = submission.getPlayer();
         Challenge challenge = submission.getChallenge();
         Submission previousSubmission = null;
@@ -378,9 +430,21 @@ public class SubmissionApprovalService {
             previousSubmission = submissionRepository.getPreviousRelayChallengeSubmission(player.getId(), challenge.getId(), relayComponent.getId(), submission.getId()).orElse(null);
         }
         if(previousSubmission == null) {
-            playerChallengeCompletionRepository.deleteById(submission.getCompletion().getId());
+            playerSpeedChallengeCompletionRepository.deleteById(submission.getCompletion().getId());
         } else {
-            processChallengeSubmission((ChallengeSubmission) previousSubmission, true);
+            processSpeedChallengeSubmission((SpeedChallengeSubmission) previousSubmission, true);
+        }
+    }
+    
+    private void undoPointsChallengeApproval(PointsChallengeSubmission submission) throws Exception {
+        Player player = submission.getPlayer();
+        Challenge challenge = submission.getChallenge();
+        Submission previousSubmission = null;
+        previousSubmission = submissionRepository.getPreviousPointsChallengeSubmission(player.getId(), challenge.getId(), submission.getId()).orElse(null);
+        if(previousSubmission == null) {
+            playerPointsChallengeCompletionRepository.deleteById(submission.getCompletion().getId());
+        } else {
+            processPointsChallengeSubmission((PointsChallengeSubmission) previousSubmission, true);
         }
     }
     

@@ -21,8 +21,8 @@ import org.uimshowdown.bingo.configuration.CompetitionConfiguration.RecordConfig
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.TeamConfig;
 import org.uimshowdown.bingo.configuration.CompetitionConfiguration.TileConfig;
 import org.uimshowdown.bingo.models.Challenge;
-import org.uimshowdown.bingo.models.ChallengeCompletion;
-import org.uimshowdown.bingo.models.ChallengeLeaderboardEntry;
+import org.uimshowdown.bingo.models.SpeedChallengeCompletion;
+import org.uimshowdown.bingo.models.SpeedChallengeLeaderboardEntry;
 import org.uimshowdown.bingo.models.ChallengeRelayComponent;
 import org.uimshowdown.bingo.models.CollectionLogItem;
 import org.uimshowdown.bingo.models.Contribution;
@@ -31,6 +31,8 @@ import org.uimshowdown.bingo.models.ContributionPurchaseItem;
 import org.uimshowdown.bingo.models.ItemOption;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.PlayerScoreboard;
+import org.uimshowdown.bingo.models.PointsChallengeCompletion;
+import org.uimshowdown.bingo.models.PointsChallengeLeaderboardEntry;
 import org.uimshowdown.bingo.models.Record;
 import org.uimshowdown.bingo.models.RecordHandicap;
 import org.uimshowdown.bingo.models.RecordLeaderboardEntry;
@@ -45,7 +47,7 @@ import org.uimshowdown.bingo.repositories.CollectionLogCompletionRepository;
 import org.uimshowdown.bingo.repositories.CollectionLogItemRepository;
 import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
 import org.uimshowdown.bingo.repositories.ContributionRepository;
-import org.uimshowdown.bingo.repositories.PlayerChallengeCompletionRepository;
+import org.uimshowdown.bingo.repositories.PlayerSpeedChallengeCompletionRepository;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
 import org.uimshowdown.bingo.repositories.PlayerScoreboardRepository;
 import org.uimshowdown.bingo.repositories.RecordCompletionRepository;
@@ -70,7 +72,7 @@ public class EventDataInitializationService {
     @Autowired CollectionLogItemRepository collectionLogItemRepository;
     @Autowired ContributionMethodRepository contributionMethodRepository;
     @Autowired ContributionRepository contributionRepository;
-    @Autowired PlayerChallengeCompletionRepository playerChallengeCompletionRepository;
+    @Autowired PlayerSpeedChallengeCompletionRepository playerSpeedChallengeCompletionRepository;
     @Autowired PlayerRepository playerRepository;
     @Autowired PlayerScoreboardRepository playerScoreboardRepository;
     @Autowired RecordCompletionRepository recordCompletionRepository;
@@ -103,7 +105,7 @@ public class EventDataInitializationService {
         collectionLogCompletionRepository.deleteAll();
         contributionRepository.deleteAll();
         playerRepository.deleteAll();
-        playerChallengeCompletionRepository.deleteAll();
+        playerSpeedChallengeCompletionRepository.deleteAll();
         playerScoreboardRepository.deleteAll();
         recordCompletionRepository.deleteAll();
         recordHandicapRepository.deleteAll();
@@ -280,13 +282,15 @@ public class EventDataInitializationService {
             team.setAbbreviation(teamConfig.getAbbreviation());
             team.setColor(teamConfig.getColor());
             team.setCaptainRsns(teamConfig.getCaptains());
-            team.setChallengeCompletions(generateEmptyChallengeCompletions(team));
+            team.setSpeedChallengeCompletions(generateEmptySpeedChallengeCompletions(team));
+            team.setPointsChallengeCompletions(generateEmptyPointsChallengeCompletions(team));
             team.setTileProgresses(generateEmptyTileProgresses(team));
             TeamScoreboard scoreboard = new TeamScoreboard();
             scoreboard.setTeam(team);
             if(!team.getName().equals(competitionConfiguration.getWaitlistTeamName())) { // Waitlist team doesn't get leaderboard entries       
                 scoreboard.setRecordLeaderboardEntries(generateEmptyRecordLeaderboardEntries(scoreboard));
-                scoreboard.setChallengeLeaderboardEntries(generateEmptyChallengeLeaderboardEntries(scoreboard));
+                scoreboard.setSpeedChallengeLeaderboardEntries(generateEmptySpeedChallengeLeaderboardEntries(scoreboard));
+                scoreboard.setPointsChallengeLeaderboardEntries(generateEmptyPointsChallengeLeaderboardEntries(scoreboard));
             }
             team.setScoreboard(scoreboard);
             teamRepository.save(team);
@@ -427,13 +431,28 @@ public class EventDataInitializationService {
         return contributions;
     }
     
-    private Set<ChallengeCompletion> generateEmptyChallengeCompletions(Team team) {
-        Set<ChallengeCompletion> completions = new HashSet<ChallengeCompletion>();
+    private Set<SpeedChallengeCompletion> generateEmptySpeedChallengeCompletions(Team team) {
+        Set<SpeedChallengeCompletion> completions = new HashSet<SpeedChallengeCompletion>();
         for(Challenge challenge : challengeRepository.findAll()) {
-            ChallengeCompletion completion = new ChallengeCompletion();
-            completion.setChallenge(challenge);
-            completion.setTeam(team);
-            completions.add(completion);
+            if(challenge.getType() == Challenge.Type.SPEEDRUN || challenge.getType() == Challenge.Type.RELAY) {                
+                SpeedChallengeCompletion completion = new SpeedChallengeCompletion();
+                completion.setChallenge(challenge);
+                completion.setTeam(team);
+                completions.add(completion);
+            }
+        }
+        return completions;
+    }
+    
+    private Set<PointsChallengeCompletion> generateEmptyPointsChallengeCompletions(Team team) {
+        Set<PointsChallengeCompletion> completions = new HashSet<PointsChallengeCompletion>();
+        for(Challenge challenge : challengeRepository.findAll()) {
+            if(challenge.getType() == Challenge.Type.POINTS) {                
+                PointsChallengeCompletion completion = new PointsChallengeCompletion();
+                completion.setChallenge(challenge);
+                completion.setTeam(team);
+                completions.add(completion);
+            }
         }
         return completions;
     }
@@ -464,15 +483,30 @@ public class EventDataInitializationService {
         return entries;
     }
     
-    private Set<ChallengeLeaderboardEntry> generateEmptyChallengeLeaderboardEntries(TeamScoreboard scoreboard) {
-        Set<ChallengeLeaderboardEntry> entries = new HashSet<ChallengeLeaderboardEntry>();
+    private Set<SpeedChallengeLeaderboardEntry> generateEmptySpeedChallengeLeaderboardEntries(TeamScoreboard scoreboard) {
+        Set<SpeedChallengeLeaderboardEntry> entries = new HashSet<SpeedChallengeLeaderboardEntry>();
         for(Challenge challenge: challengeRepository.findAll()) {
-            ChallengeLeaderboardEntry entry = new ChallengeLeaderboardEntry();
+            SpeedChallengeLeaderboardEntry entry = new SpeedChallengeLeaderboardEntry();
             entry.setChallengeName(challenge.getName());
             entry.setPlace(-1);
             entry.setPlayerNames(null);
-            entry.setPoints(-1);
+            entry.setEventPoints(-1);
             entry.setSeconds(-1.0);
+            entry.setTeamScoreboard(scoreboard);
+            entries.add(entry);
+        }
+        return entries;
+    }
+    
+    private Set<PointsChallengeLeaderboardEntry> generateEmptyPointsChallengeLeaderboardEntries(TeamScoreboard scoreboard) {
+        Set<PointsChallengeLeaderboardEntry> entries = new HashSet<PointsChallengeLeaderboardEntry>();
+        for(Challenge challenge: challengeRepository.findAll()) {
+            PointsChallengeLeaderboardEntry entry = new PointsChallengeLeaderboardEntry();
+            entry.setChallengeName(challenge.getName());
+            entry.setPlace(-1);
+            entry.setPlayerNames(null);
+            entry.setEventPoints(-1);
+            entry.setPoints(-1);
             entry.setTeamScoreboard(scoreboard);
             entries.add(entry);
         }

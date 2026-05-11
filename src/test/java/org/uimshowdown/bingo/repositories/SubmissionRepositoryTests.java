@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.uimshowdown.bingo.TestUtils;
 import org.uimshowdown.bingo.constants.TestTag;
 import org.uimshowdown.bingo.models.Challenge;
-import org.uimshowdown.bingo.models.ChallengeSubmission;
+import org.uimshowdown.bingo.models.SpeedChallengeSubmission;
 import org.uimshowdown.bingo.models.Player;
 import org.uimshowdown.bingo.models.Submission;
 import org.uimshowdown.bingo.models.Team;
@@ -42,7 +42,7 @@ public class SubmissionRepositoryTests {
 
     private Team testTeam;
     private Player testPlayer;
-    private ChallengeSubmission testSubmission;
+    private SpeedChallengeSubmission testSubmission;
     private Challenge testChallenge;
 
     @BeforeAll
