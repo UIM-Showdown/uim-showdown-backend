@@ -26,6 +26,8 @@ public class CompetitionConfiguration {
     
     private int templeCompetitionID;
     
+    private String templeCompetitionEditKey;
+    
     private String waitlistTeamName;
     
     private int ehtPerTier;
@@ -120,6 +122,14 @@ public class CompetitionConfiguration {
 
     public void setTempleCompetitionID(int templeCompetitionID) {
         this.templeCompetitionID = templeCompetitionID;
+    }
+
+    public String getTempleCompetitionEditKey() {
+        return templeCompetitionEditKey;
+    }
+
+    public void setTempleCompetitionEditKey(String templeCompetitionEditKey) {
+        this.templeCompetitionEditKey = templeCompetitionEditKey;
     }
 
     public String getWaitlistTeamName() {

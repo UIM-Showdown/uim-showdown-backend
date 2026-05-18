@@ -91,7 +91,8 @@ public class AdminController {
     long guildId;
 
     @PostMapping("/admin/addPlayer")
-    public ResponseEntity<Void> addPlayer(@RequestBody Map<String, Object> requestBody) throws Exception {
+    public ResponseEntity<Void> addPlayer(@RequestBody Map<String, Object> requestBody, 
+            @RequestParam(defaultValue = "true", required = false) boolean synchronizeTempleComp) throws Exception {
         Guild guild = discordClient.getGuildById(guildId);
         
         eventDataInitializationService.addPlayer(
@@ -106,11 +107,16 @@ public class AdminController {
             guild.addRoleToMember(member, teamRole).submit();
         }
         
+        if(synchronizeTempleComp) {
+            templeOsrsService.synchronizeRosters();
+        }
+        
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/admin/changePlayerTeam")
-    public ResponseEntity<Void> changePlayerTeam(@RequestBody Map<String, Object> requestBody) {
+    public ResponseEntity<Void> changePlayerTeam(@RequestBody Map<String, Object> requestBody,
+            @RequestParam(defaultValue = "true", required = false) boolean synchronizeTempleComp) {
         
         Player player = playerRepository.findByRsn((String) requestBody.get("rsn")).get();
         Team oldTeam = player.getTeam();
@@ -128,14 +134,29 @@ public class AdminController {
             guild.addRoleToMember(member, newTeamRole).submit();
         }
         
+        if(synchronizeTempleComp) {
+            templeOsrsService.synchronizeRosters();
+        }
+        
+        return ResponseEntity.ok().build();
+    }
+    
+    @PostMapping("/admin/synchronizeTempleComp")
+    public ResponseEntity<Void> synchronizeTempleComp() {
+        templeOsrsService.synchronizeRosters();
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/admin/changePlayerRsn")
-    public ResponseEntity<Void> changePlayerRsn(@RequestBody Map<String, Object> requestBody) {
+    public ResponseEntity<Void> changePlayerRsn(@RequestBody Map<String, Object> requestBody,
+            @RequestParam(defaultValue = "true", required = false) boolean synchronizeTempleComp) {
         Player player = playerRepository.findByRsn((String) requestBody.get("oldRsn")).get();
         player.setRsn((String) requestBody.get("newRsn"));
         playerRepository.save(player);
+        
+        if(synchronizeTempleComp) {
+            templeOsrsService.synchronizeRosters();
+        }
         
         return ResponseEntity.ok().build();
     }

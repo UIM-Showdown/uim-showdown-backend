@@ -1,6 +1,8 @@
 package org.uimshowdown.bingo.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Spliterator;
@@ -39,6 +41,105 @@ public class TempleOsrsService {
 
     @Autowired
     private PlayerRepository playerRepository;
+    
+    public void synchronizeRosters() {
+        // Establish maps for:
+        // RSN in "true" format, according to our DB -> Team name
+        // RSN in "Temple-style" format, according to our DB -> Team name
+        // RSN in "Temple-style" format, according to Temple -> Team name
+        Map<String, String> trueRSNFromDBToTeamName = new HashMap<String, String>();
+        Map<String, String> templeStyleRSNFromDBToTeamName = new HashMap<String, String>();
+        for(Player player : playerRepository.findAll()) {
+            String teamName = player.getTeam().getName();
+            if(!teamName.equals(competitionConfiguration.getWaitlistTeamName())) { // Waitlisted players are not "in the competition" for this
+                trueRSNFromDBToTeamName.put(player.getRsn(), teamName);
+                templeStyleRSNFromDBToTeamName.put(player.getRsn().toLowerCase().replace("_", " "), teamName);
+            }
+        }
+        Map<String, String> templeStyleRSNFromTempleToTeamName = new HashMap<String, String>();
+        JsonNode competitionGains = this.getCompetitionGains("/api/competition_info_v2.php?id={competition_id}&details=1");
+        for(JsonNode participant : competitionGains.get("data").get("participants")) {
+            String templeRSN = null;
+            try { // Sometimes player_name_with_capitalization is null for some reason
+                templeRSN = participant.get("player_name_with_capitalization").asText().toLowerCase();
+            } catch(Exception e) {}
+            if(templeRSN == null || templeRSN.equals("") || templeRSN.equals("null")) {
+                templeRSN = participant.get("username").asText().toLowerCase();
+            }
+            templeStyleRSNFromTempleToTeamName.put(templeRSN, participant.get("team_name").asText());
+        }
+        
+        // Handle removals for players whose Temple record has an incorrect team or is no longer in the competition
+        List<String> removals = new ArrayList<String>();
+        for(String templeStyleRSN : templeStyleRSNFromTempleToTeamName.keySet()) {
+            String templeTeamName = templeStyleRSNFromTempleToTeamName.get(templeStyleRSN);
+            String dbTeamName = templeStyleRSNFromDBToTeamName.get(templeStyleRSN);
+            if(dbTeamName == null || !dbTeamName.equals(templeTeamName)) {
+                removals.add(templeStyleRSN);
+            }
+        }
+        if(!removals.isEmpty()) {            
+            Map<String, Object> body = new HashMap<String, Object>();
+            body.put("id", competitionConfiguration.getTempleCompetitionID());
+            body.put("key", competitionConfiguration.getTempleCompetitionEditKey());
+            String removalCSV = String.join(",", removals);
+            body.put("players", removalCSV);
+            for(int attempt = 1; attempt <= 3; attempt++) {            
+                try {
+                    restClient
+                        .post()
+                        .uri("/api/competition_remove_participant.php")
+                        .body(body)
+                        .retrieve()
+                        .body(JsonNode.class);
+                    break;
+                } catch(Exception e) {
+                    if(attempt == 3) {
+                        throw e;
+                    }
+                }
+            }
+        }
+        
+        // Handle additions for players whose Temple record is nonexistent or has the wrong team
+        List<String> additions = new ArrayList<String>();
+        for(String trueRSN : trueRSNFromDBToTeamName.keySet()) {
+            String templeStyleRSN = trueRSN.toLowerCase().replace("_", " ");
+            String dbTeamName = trueRSNFromDBToTeamName.get(trueRSN);
+            String templeTeamName = templeStyleRSNFromTempleToTeamName.get(templeStyleRSN);
+            if(templeTeamName == null || !dbTeamName.equals(templeTeamName)) {
+                additions.add(trueRSN);
+            }
+        }
+        if(!additions.isEmpty()) {
+            Map<String, Object> body = new HashMap<String, Object>();
+            body.put("id", competitionConfiguration.getTempleCompetitionID());
+            body.put("key", competitionConfiguration.getTempleCompetitionEditKey());
+            Map<String, String> additionsObject = new HashMap<String, String>();
+            String additionsCSV = String.join(",", additions);
+            for(String trueRSN : additions) {
+                String teamName = trueRSNFromDBToTeamName.get(trueRSN);
+                additionsObject.put(trueRSN, teamName);
+            }
+            body.put("players", additionsCSV);
+            body.put("teams", additionsObject);
+            for(int attempt = 1; attempt <= 3; attempt++) {            
+                try {
+                    restClient
+                        .post()
+                        .uri("/api/competition_add_participant.php")
+                        .body(body)
+                        .retrieve()
+                        .body(JsonNode.class);
+                    break;
+                } catch(Exception e) {
+                    if(attempt == 3) {
+                        throw e;
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * @implNote Filtering out contribution methods that have null temple IDs is done to prevent a `IllegalStateException` due to duplicate keys during the map creation process.
@@ -71,30 +172,7 @@ public class TempleOsrsService {
     }
 
     private void updatePlayerContributions(Map<String, Player> players, Map<String, ContributionMethod> contributionMethods, String uri) throws IllegalArgumentException {
-        JsonNode competitionGains = null;
-        for(int attempt = 1; attempt <= 3; attempt++) {            
-            try {
-                competitionGains = restClient
-                        .get()
-                        .uri(uri, competitionConfiguration.getTempleCompetitionID())
-                        .retrieve()
-                        .body(JsonNode.class);
-                break;
-            } catch(Exception e) {
-                if(attempt == 3) {
-                    throw e;
-                }
-            }
-        }
-        
-        if (competitionGains == null) {
-            throw new IllegalStateException("Expected a response body, but received nothing!");
-        }
-
-        if (competitionGains.get("data").get("participants").isArray() == false) {
-            throw new IllegalStateException(String.format("Expected `data.participants` to be a JSON array! Instead received: `%s`", competitionGains.asText()));
-        }
-
+        JsonNode competitionGains = this.getCompetitionGains(uri);
         for (JsonNode participant : competitionGains.get("data").get("participants")) {
             String templeRSN = null;
             try { // Sometimes player_name_with_capitalization is null for some reason
@@ -193,5 +271,32 @@ public class TempleOsrsService {
                 slayerContribution.setFinalValue(value);
             }
         }
+    }
+    
+    private JsonNode getCompetitionGains(String uri) throws IllegalStateException {
+        JsonNode competitionGains = null;
+        for(int attempt = 1; attempt <= 3; attempt++) {            
+            try {
+                competitionGains = restClient
+                        .get()
+                        .uri(uri, competitionConfiguration.getTempleCompetitionID())
+                        .retrieve()
+                        .body(JsonNode.class);
+                break;
+            } catch(Exception e) {
+                if(attempt == 3) {
+                    throw e;
+                }
+            }
+        }
+        
+        if (competitionGains == null) {
+            throw new IllegalStateException("Expected a response body, but received nothing!");
+        }
+
+        if (competitionGains.get("data").get("participants").isArray() == false) {
+            throw new IllegalStateException(String.format("Expected `data.participants` to be a JSON array! Instead received: `%s`", competitionGains.asText()));
+        }
+        return competitionGains;
     }
 }
