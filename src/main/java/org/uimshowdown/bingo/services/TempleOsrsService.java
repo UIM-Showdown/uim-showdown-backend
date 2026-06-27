@@ -19,8 +19,10 @@ import org.uimshowdown.bingo.configuration.CompetitionConfiguration;
 import org.uimshowdown.bingo.models.Contribution;
 import org.uimshowdown.bingo.models.ContributionMethod;
 import org.uimshowdown.bingo.models.Player;
+import org.uimshowdown.bingo.models.Team;
 import org.uimshowdown.bingo.repositories.ContributionMethodRepository;
 import org.uimshowdown.bingo.repositories.PlayerRepository;
+import org.uimshowdown.bingo.repositories.TeamRepository;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -42,21 +44,25 @@ public class TempleOsrsService {
     @Autowired
     private PlayerRepository playerRepository;
     
+    @Autowired
+    private TeamRepository teamRepository;
+    
     public void synchronizeRosters() {
         // Establish maps for:
-        // RSN in "true" format, according to our DB -> Team name
-        // RSN in "Temple-style" format, according to our DB -> Team name
-        // RSN in "Temple-style" format, according to Temple -> Team name
-        Map<String, String> trueRSNFromDBToTeamName = new HashMap<String, String>();
-        Map<String, String> templeStyleRSNFromDBToTeamName = new HashMap<String, String>();
+        // RSN in "true" format, according to our DB -> Team abbreviation
+        // RSN in "Temple-style" format, according to our DB -> Team abbreviation
+        // RSN in "Temple-style" format, according to Temple -> Team abbreviation
+        Map<String, String> trueRSNFromDBToTeamAbbreviation = new HashMap<String, String>();
+        Map<String, String> templeStyleRSNFromDBToTeamAbbreviation = new HashMap<String, String>();
+        Team waitlistTeam = teamRepository.findByName(competitionConfiguration.getWaitlistTeamName()).get();
         for(Player player : playerRepository.findAll()) {
-            String teamName = player.getTeam().getName();
-            if(!teamName.equals(competitionConfiguration.getWaitlistTeamName())) { // Waitlisted players are not "in the competition" for this
-                trueRSNFromDBToTeamName.put(player.getRsn(), teamName);
-                templeStyleRSNFromDBToTeamName.put(player.getRsn().toLowerCase().replace("_", " "), teamName);
+            String teamAbbreviation = player.getTeam().getAbbreviation();
+            if(!teamAbbreviation.equals(waitlistTeam.getAbbreviation())) { // Waitlisted players are not "in the competition" for this
+                trueRSNFromDBToTeamAbbreviation.put(player.getRsn(), teamAbbreviation);
+                templeStyleRSNFromDBToTeamAbbreviation.put(player.getRsn().toLowerCase().replace("_", " "), teamAbbreviation);
             }
         }
-        Map<String, String> templeStyleRSNFromTempleToTeamName = new HashMap<String, String>();
+        Map<String, String> templeStyleRSNFromTempleToTeamAbbreviation = new HashMap<String, String>();
         JsonNode competitionGains = this.getCompetitionGains("/api/competition_info_v2.php?id={competition_id}&details=1");
         for(JsonNode participant : competitionGains.get("data").get("participants")) {
             String templeRSN = null;
@@ -66,15 +72,15 @@ public class TempleOsrsService {
             if(templeRSN == null || templeRSN.equals("") || templeRSN.equals("null")) {
                 templeRSN = participant.get("username").asText().toLowerCase();
             }
-            templeStyleRSNFromTempleToTeamName.put(templeRSN, participant.get("team_name").asText());
+            templeStyleRSNFromTempleToTeamAbbreviation.put(templeRSN, participant.get("team_name").asText()); // Using abbreviations as the Temple team names
         }
         
         // Handle removals for players whose Temple record has an incorrect team or is no longer in the competition
         List<String> removals = new ArrayList<String>();
-        for(String templeStyleRSN : templeStyleRSNFromTempleToTeamName.keySet()) {
-            String templeTeamName = templeStyleRSNFromTempleToTeamName.get(templeStyleRSN);
-            String dbTeamName = templeStyleRSNFromDBToTeamName.get(templeStyleRSN);
-            if(dbTeamName == null || !dbTeamName.equals(templeTeamName)) {
+        for(String templeStyleRSN : templeStyleRSNFromTempleToTeamAbbreviation.keySet()) {
+            String templeTeamAbbreviation = templeStyleRSNFromTempleToTeamAbbreviation.get(templeStyleRSN);
+            String dbTeamAbbreviation = templeStyleRSNFromDBToTeamAbbreviation.get(templeStyleRSN);
+            if(dbTeamAbbreviation == null || !dbTeamAbbreviation.equals(templeTeamAbbreviation)) {
                 removals.add(templeStyleRSN);
             }
         }
@@ -103,11 +109,11 @@ public class TempleOsrsService {
         
         // Handle additions for players whose Temple record is nonexistent or has the wrong team
         List<String> additions = new ArrayList<String>();
-        for(String trueRSN : trueRSNFromDBToTeamName.keySet()) {
+        for(String trueRSN : trueRSNFromDBToTeamAbbreviation.keySet()) {
             String templeStyleRSN = trueRSN.toLowerCase().replace("_", " ");
-            String dbTeamName = trueRSNFromDBToTeamName.get(trueRSN);
-            String templeTeamName = templeStyleRSNFromTempleToTeamName.get(templeStyleRSN);
-            if(templeTeamName == null || !dbTeamName.equals(templeTeamName)) {
+            String dbTeamAbbreviation = trueRSNFromDBToTeamAbbreviation.get(trueRSN);
+            String templeTeamAbbreviation = templeStyleRSNFromTempleToTeamAbbreviation.get(templeStyleRSN);
+            if(templeTeamAbbreviation == null || !dbTeamAbbreviation.equals(templeTeamAbbreviation)) {
                 additions.add(trueRSN);
             }
         }
@@ -118,8 +124,8 @@ public class TempleOsrsService {
             Map<String, String> additionsObject = new HashMap<String, String>();
             String additionsCSV = String.join(",", additions);
             for(String trueRSN : additions) {
-                String teamName = trueRSNFromDBToTeamName.get(trueRSN);
-                additionsObject.put(trueRSN, teamName);
+                String teamAbbreviation = trueRSNFromDBToTeamAbbreviation.get(trueRSN);
+                additionsObject.put(trueRSN, teamAbbreviation);
             }
             body.put("players", additionsCSV);
             body.put("teams", additionsObject);
