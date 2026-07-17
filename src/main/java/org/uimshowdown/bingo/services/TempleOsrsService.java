@@ -180,14 +180,13 @@ public class TempleOsrsService {
     private void updatePlayerContributions(Map<String, Player> players, Map<String, ContributionMethod> contributionMethods, String uri) throws IllegalArgumentException {
         JsonNode competitionGains = this.getCompetitionGains(uri);
         for (JsonNode participant : competitionGains.get("data").get("participants")) {
-            String templeRSN = null;
+            Player player = null;
             try { // Sometimes player_name_with_capitalization is null for some reason
-                templeRSN = participant.get("player_name_with_capitalization").asText().toLowerCase();
+                player = players.get(participant.get("player_name_with_capitalization").asText().toLowerCase());
             } catch(Exception e) {}
-            if(templeRSN == null || templeRSN.equals("") || templeRSN.equals("null")) {
-                templeRSN = participant.get("username").asText().toLowerCase();
+            if(player == null) {
+                player = players.get(participant.get("username").asText().toLowerCase());
             }
-            Player player = players.get(templeRSN);
             if (player == null) {
                 continue;
             }
