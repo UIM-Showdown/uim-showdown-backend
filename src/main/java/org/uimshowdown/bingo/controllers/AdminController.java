@@ -126,7 +126,9 @@ public class AdminController {
         playerRepository.save(player);
         
         Guild guild = discordClient.getGuildById(guildId);
-        if(!guild.getRolesByName(oldTeam.getName(), false).isEmpty() && !guild.getRolesByName(newTeam.getName(), false).isEmpty()) {
+        if(!guild.getRolesByName(oldTeam.getName(), false).isEmpty()
+                && !guild.getRolesByName(newTeam.getName(), false).isEmpty()
+                && !guild.getMembersByName(player.getDiscordName(), true).isEmpty()) {
             Role oldTeamRole = guild.getRolesByName(oldTeam.getName(), false).get(0);
             Role newTeamRole = guild.getRolesByName(newTeam.getName(), false).get(0);
             Member member = guild.getMembersByName(player.getDiscordName(), true).get(0);
