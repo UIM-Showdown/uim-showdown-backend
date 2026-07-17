@@ -190,6 +190,7 @@ public class TempleOsrsService {
             if (player == null) {
                 continue;
             }
+            Player p1 = player; // Fix weird compile bug with non-final var in lambda later on
 
             JsonNode detailedPlayerGains = participant.get("detailed_gains");
             if (detailedPlayerGains == null) {
@@ -220,7 +221,7 @@ public class TempleOsrsService {
                         Contribution currentPlayerContribution = currentPlayerContributions.get(contributionMethod);
                         if (currentPlayerContribution == null) {
                             return new Contribution(
-                                player,
+                                p1,
                                 contributionMethod,
                                 playerGain.getValue().get("start_xp").asInt(),
                                 playerGain.getValue().get("end_xp").asInt(),
