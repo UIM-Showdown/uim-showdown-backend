@@ -498,12 +498,12 @@ public class DataOutputService {
                 row.add(0);
             } else {
                 int points = 0;
-                int indexForPoints = progress.getTier() - 1;
-                if(indexForPoints > pointsPerTier.length - 1) {
-                    indexForPoints = pointsPerTier.length - 1;
-                }
-                for(int i = 0; i <= indexForPoints; i++) {
-                    points += pointsPerTier[i];
+                for(int i = 0; i <= progress.getTier() - 1; i++) {
+                    if(i > pointsPerTier.length - 1) {
+                        points += pointsPerTier[pointsPerTier.length - 1];
+                    } else {
+                        points += pointsPerTier[i];
+                    }
                 }
                 row.add(points);
             }

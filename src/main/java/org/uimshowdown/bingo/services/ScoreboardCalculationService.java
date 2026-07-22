@@ -125,12 +125,12 @@ public class ScoreboardCalculationService {
             if(progress.getTier() == 0) {
                 continue;
             }
-            int indexForPoints = progress.getTier() - 1;
-            if(indexForPoints > pointsPerTier.length - 1) {
-                indexForPoints = pointsPerTier.length - 1;
-            }
-            for(int i = 0; i <= indexForPoints; i++) {
-                pointsFromTiles += pointsPerTier[i];
+            for(int i = 0; i <= progress.getTier() - 1; i++) {
+                if(i > pointsPerTier.length - 1) {
+                    pointsFromTiles += pointsPerTier[pointsPerTier.length - 1];
+                } else {
+                    pointsFromTiles += pointsPerTier[i];
+                }
             }
         }
         scoreboard.setEventPointsFromTiles(pointsFromTiles);
