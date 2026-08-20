@@ -19,13 +19,13 @@ discord:
     token: "<value>"
 competition:
     eventName: "UIM Summer Showdown 2026"
-    startDatetime: "2026-08-01T00:00:00.000+00:00"
-    endDatetime: "2026-08-11T18:00:00.000+00:00"
-    templeCompetitionID: 35213
+    startDatetime: "2026-07-17T00:00:00.000+00:00"
+    endDatetime: "2026-07-26T18:00:00.000+00:00"
+    templeCompetitionID: 38312
     templeCompetitionEditKey: "<value>"
     waitlistTeamName: "Wilderness Waitlisters"
-    ehtPerTier: 25
-    eventPointsPerTier: [25, 23, 21, 19, 17, 15, 13, 11]
+    ehtPerTier: 20
+    eventPointsPerTier: [20, 18, 16, 14, 12, 10]
     tierCap: -1
     blackoutBonusEnabled: true
     numberOfScoredRecordsAndChallenges: 6
@@ -57,109 +57,128 @@ competition:
     petPointValues: [7, 5, 3, 1]
     jarPointValues: [4, 3, 2, 1]
     teams:
-        - name: "Team A"
-          abbreviation: "TA"
-          color: "00C7AB"
+        - name: "Gwenith Sugar Gliders"
+          abbreviation: "GSG"
+          color: "CAF5F7"
           captains:
-              - "Captain A1"
-              - "Captain A2"
-        - name: "Team B"
-          abbreviation: "TB"
-          color: "FFFFFF"
+              - "Chxwy"
+              - "finance king"
+        - name: "Guild Of Overworked Goblin Lamplighters and Electricians"
+          abbreviation: "GOOGLE"
+          color: "5F554B"
           captains:
-              - "Captain B1"
-              - "Captain B2"
+              - "Luna Lanaa"
+              - "DoctorKebbit"
+        - name: "Gillie's Unbelievably Large Livestock"
+          abbreviation: "GULL"
+          color: "7F7F7F"
+          captains:
+              - "Pink Mareep"
+              - "what switchs"
+        - name: "Da Varrock Sewer Rats"
+          abbreviation: "RATS"
+          color: "50402C"
+          captains:
+              - "Kochininako"
+              - "Pathardo"
+        - name: "Rellekkian Army: Invasion Division"
+          abbreviation: "RAID"
+          color: "5555BA"
+          captains:
+              - "Bag Account"
+              - "FACESlTTER"
+        - name: "Chichilihui Rose Chuggers"
+          abbreviation: "CRC"
+          color: "C3A4AC"
+          captains:
+              - "RinkoLover"
+              - "llerblore"
+        - name: "Senntisten Noobs Overtly Rigging Bingo"
+          abbreviation: "SNORB"
+          color: "6495ED"
+          captains:
+              - "Zalc Ceo"
+              - "Freddo Cake"
         - name: "Wilderness Waitlisters"
           abbreviation: "WW"
           color: "FFFFFF"
           captains:
               - "N/A"
     tiles:
-        - name: "Build a Better Bugzapper"
+        - name: "Big Bad Buddies"
           abbreviation: "BBB"
           contributionMethods:
-              - name: "Woodcutting"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 204000
-                templeID: "Woodcutting"
-              - name: "Crafting"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 165000
-                templeID: "Crafting"
-              - name: "Construction"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 225000
-                templeID: "Construction"
-              - name: "Thermonuclear Smoke Devil"
+              - name: "Corporeal Beast"
                 type: "Temple_KC"
                 category: "PVM"
-                ehtRate: 100
-                templeID: "Thermonuclear Smoke Devil"
-              - name: "Araxxor"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 35
-                templeID: "Araxxor"
-              - name: "Kalphite Queen"
+                ehtRate: 7.5
+                templeID: "Corporeal Beast"
+              - name: "Vardorvis"
                 type: "Temple_KC"
                 category: "PVM"
                 ehtRate: 33
-                templeID: "Kalphite Queen"
-        - name: "Rune Sinks"
-          abbreviation: "RS"
+                templeID: "Vardorvis"
+              - name: "Zulrah"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 36
+                templeID: "Zulrah"
+              - name: "General Graardor"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 30
+                templeID: "General Graardor"
+              - name: "Kree'Arra"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 25
+                templeID: "KreeArra"
+              - name: "Yama"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 16
+                templeID: "Yama"
+              - name: "Phantom Muspah"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 25
+                templeID: "Phantom Muspah"
+        - name: "Lords and Lackeys"
+          abbreviation: "LL"
           contributionMethods:
-              - name: "Runecraft"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 77000
-                templeID: "Runecraft"
+              - name: "Dagannoth Rex"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 85
+                templeID: "Dagannoth Rex"
+              - name: "Dagannoth Supreme"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 85
+                templeID: "Dagannoth Supreme"
+              - name: "Dagannoth Prime"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 85
+                templeID: "Dagannoth Prime"
               - name: "Lizardman Shamans"
                 type: "Submission_KC"
                 category: "PVM"
                 ehtRate: 150
-              - name: "Kree'Arra"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 27
-                templeID: "KreeArra"
               - name: "Scurrius: Spines"
                 type: "Submission_Item_Drop"
                 category: "PVM"
                 ehtRate: 1.8
-              - name: "Sarachnis"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 65
-                templeID: "Sarachnis"
-        - name: "Notable Dragons"
-          abbreviation: "ND"
-          contributionMethods:
-              - name: "Chambers of Xeric"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 3
-                templeID: "Chambers of Xeric"
-              - name: "CoX: CM"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 2.5
-                templeID: "Chambers of Xeric Challenge Mode"
-              - name: "Soul Wars Zeal"
+              - name: "Medium Clues"
                 type: "Temple_KC"
                 category: "Other"
-                ehtRate: 375
-                templeID: "Soul Wars Zeal"
-              - name: "Vorkath"
+                ehtRate: 20
+                templeID: "Clue_medium"
+              - name: "Kraken"
                 type: "Temple_KC"
                 category: "PVM"
-                ehtRate: 28
-                templeID: "Vorkath"
-        - name: "Minigames and also Large Aquatic Creatures (MAALAC)"
-          abbreviation: "MAALAC"
-          contributionMethods:
+                ehtRate: 72
+                templeID: "Kraken"
               - name: "MTA: Alchemist's Playground"
                 type: "Submission_Other"
                 category: "Other"
@@ -276,10 +295,218 @@ competition:
                     cost: 150
                   - name: "Bones to Peaches"
                     cost: 200
+              - name: "TzTok-Jad"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 2
+                templeID: "TzTok-Jad"
+        - name: "3-Tick Mistakes"
+          abbreviation: "3TM"
+          contributionMethods:
+              - name: "Herblore"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 600000
+                templeID: "Herblore"
+              - name: "Mixology: Resin"
+                type: "Submission_Other"
+                category: "Skilling"
+                ehtRate: 12760
+                purchaseItems:
+                    - name: "Apprentice potion pack"
+                      cost: 520
+                    - name: "Adept potion pack"
+                      cost: 690
+                    - name: "Expert potion pack"
+                      cost: 1210
+                    - name: "Prescription goggles"
+                      cost: 24950
+                    - name: "Alchemist labcoat"
+                      cost: 8750
+                    - name: "Alchemist pants"
+                      cost: 8750
+                    - name: "Alchemist gloves"
+                      cost: 8750
+                    - name: "Reagent pouch"
+                      cost: 40100
+                    - name: "Chugging barrel"
+                      cost: 49850
+                    - name: "Alchemist's amulet"
+                      cost: 19950
+                    - name: "Aldarium"
+                      cost: 230
+              - name: "Woodcutting"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 220000
+                templeID: "Woodcutting"
+              - name: "Hunter"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 240000
+                templeID: "Hunter"
+        - name: "Dungeons and a Dragon"
+          abbreviation: "DD"
+          contributionMethods:
+              - name: "The Nightmare"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 11
+                templeID: "The Nightmare"
+              - name: "Phosani's Nightmare"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 8.5
+                templeID: "Phosanis Nightmare"
+              - name: "Nex: Nihil Shards"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 33.33
+              - name: "The Whisperer"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 20
+                templeID: "The Whisperer"
+              - name: "The Corrupted Gauntlet"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 7.2
+                templeID: "The Corrupted Gauntlet"
+              - name: "Vorkath"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 28
+                templeID: "Vorkath"
+              - name: "Commander Zilyana"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 29
+                templeID: "Commander Zilyana"
+        - name: "Toiling for Tephra"
+          abbreviation: "TT"
+          contributionMethods:
+              - name: "Mining"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 125000
+                templeID: "Mining"
+              - name: "Smithing"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 330000
+                templeID: "Smithing"
+              - name: "Runecraft"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 80000
+                templeID: "Runecraft"
+        - name: "Scribbled Scriptures"
+          abbreviation: "SS"
+          contributionMethods:
+              - name: "Chambers of Xeric"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 3
+                templeID: "Chambers of Xeric"
+              - name: "CoX: CM"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 2.5
+                templeID: "Chambers of Xeric Challenge Mode"
+              - name: "Master Clues"
+                type: "Temple_KC"
+                category: "Other"
+                ehtRate: 4
+                templeID: "Clue_master"
+              - name: "Alchemical Hydra"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 24
+                templeID: "Alchemical Hydra"
+        - name: "Vampyre Variety"
+          abbreviation: "VV"
+          contributionMethods:
+              - name: "Agility"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 100000
+                templeID: "Agility"
+              - name: "Thieving"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 300000
+                templeID: "Thieving"
+              - name: "Prayer"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 1000000
+                templeID: "Prayer"
+        - name: "Frozen and Demonic"
+          abbreviation: "FD"
+          contributionMethods:
+              - name: "Cerberus"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 44
+                templeID: "Cerberus"
+              - name: "Duke Sucellus"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 35
+                templeID: "Duke Sucellus"
+              - name: "Abyssal Sire"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 35
+                templeID: "Abyssal Sire"
+              - name: "K'ril Tsutsaroth"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 28
+                templeID: "Kril Tsutsaroth"
+              - name: "Doom of Mokhaiotl - Delve Level 1"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 941.2
+              - name: "Doom of Mokhaiotl - Delve Level 2"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 470.6
+              - name: "Doom of Mokhaiotl - Delve Level 3"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 313.8
+              - name: "Doom of Mokhaiotl - Delve Level 4"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 235.2
+              - name: "Doom of Mokhaiotl - Delve Level 5"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 94.2
+              - name: "Doom of Mokhaiotl - Delve Level 6"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 47
+              - name: "Doom of Mokhaiotl - Delve Level 7"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 37.6
+              - name: "Doom of Mokhaiotl - Delve Level 8"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 26.8
+              - name: "Doom of Mokhaiotl - Delve Level 8+"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 26.8
+        - name: "1337 Content"
+          abbreviation: "1337"
+          contributionMethods:
               - name: "Barbarian Assault Points"
                 type: "Submission_Other"
                 category: "Other"
-                ehtRate: 1200
+                ehtRate: 1600
                 purchaseItems:
                   - name: "Fighter hat"
                     cost: 1100
@@ -297,6 +524,78 @@ competition:
                     cost: 600
                   - name: "High gamble"
                     cost: 500
+              - name: "Elite Clues"
+                type: "Temple_KC"
+                category: "Other"
+                ehtRate: 7
+                templeID: "Clue_elite"
+              - name: "Barrows: Items"
+                type: "Submission_Item_Drop"
+                category: "PVM"
+                ehtRate: 1.3
+              - name: "Artio"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 32
+                templeID: "Artio"
+              - name: "Amoxliatl"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 65
+                templeID: "Amoxliatl"
+              - name: "King Black Dragon"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 55
+                templeID: "King Black Dragon"
+              - name: "Shellbane Gryphon"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 77
+                templeID: "Shellbane Gryphon"
+        - name: "Chasing Chores"
+          abbreviation: "CCH"
+          contributionMethods:
+              - name: "Hueycoatl: Hides"
+                type: "Submission_Other"
+                category: "PVM"
+                ehtRate: 1
+              - name: "Hard Clues"
+                type: "Temple_KC"
+                category: "Other"
+                ehtRate: 10
+                templeID: "Clue_hard"
+              - name: "Sarachnis"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 65
+                templeID: "Sarachnis"
+              - name: "The Royal Titans"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 55
+                templeID: "The Royal Titans"
+              - name: "Spindel"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 30
+                templeID: "Spindel"
+              - name: "Tormented Demons"
+                type: "Submission_KC"
+                category: "PVM"
+                ehtRate: 65
+              - name: "Demonic Gorillas"
+                type: "Submission_KC"
+                category: "PVM"
+                ehtRate: 85
+        - name: "Zeah Only"
+          abbreviation: "ZO"
+          contributionMethods:
+              - name: "Firemaking"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 440000
+                templeID: "Firemaking"
               - name: "Farming Exp"
                 type: "Temple_XP"
                 category: "Skilling"
@@ -339,44 +638,82 @@ competition:
                       cost: 200
                     - name: "Auto-weed"
                       cost: 50
-              - name: "Kraken"
+              - name: "Cooking"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 400000
+                templeID: "Cooking"
+        - name: "Morytania Menagerie"
+          abbreviation: "MM"
+          contributionMethods:
+              - name: "Grotesque Guardians"
                 type: "Temple_KC"
                 category: "PVM"
-                ehtRate: 100
-                templeID: "Kraken"
+                ehtRate: 29
+                templeID: "Grotesque Guardians"
+              - name: "Theatre of Blood"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 2.9
+                templeID: "Theatre of Blood"
+              - name: "ToB: Hard Mode"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 2.6
+                templeID: "Theatre of Blood Challenge Mode"
+              - name: "Araxxor"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 32
+                templeID: "Araxxor"
               - name: "The Leviathan"
                 type: "Temple_KC"
                 category: "PVM"
-                ehtRate: 27
+                ehtRate: 23
                 templeID: "The Leviathan"
-        - name: "Last Mole Sailing"
-          abbreviation: "LMS"
+        - name: "Cavern Collective"
+          abbreviation: "CCL"
           contributionMethods:
-              - name: "LMS: Kills"
-                type: "Submission_Other"
+              - name: "Moons of Peril: Items"
+                type: "Submission_Item_Drop"
+                category: "PVM"
+                ehtRate: 0.95
+              - name: "Easy Clues"
+                type: "Temple_KC"
                 category: "Other"
-                ehtRate: 35
-              - name: "LMS: Wins"
-                type: "Submission_Other"
-                category: "Other"
-                ehtRate: 35
-              - name: "Sailing"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 245000
-                templeID: "Sailing"
+                ehtRate: 37
+                templeID: "Clue_easy"
+              - name: "Calvar'ion"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 32
+                templeID: "Calvarion"
+              - name: "Thermonuclear Smoke Devil"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 80
+                templeID: "Thermonuclear Smoke Devil"
               - name: "Giant Mole"
                 type: "Temple_KC"
                 category: "PVM"
                 ehtRate: 85
                 templeID: "Giant Mole"
-        - name: "Ancient Entities"
-          abbreviation: "AE"
+              - name: "Pest Control: Games"
+                type: "Submission_Other"
+                category: "Other"
+                ehtRate: 30
+              - name: "Deranged Archaeologist"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 85
+                templeID: "Deranged Archaeologist"
+        - name: "Beachfront Property"
+          abbreviation: "BP"
           contributionMethods:
               - name: "Tombs of Amascut"
                 type: "Temple_KC"
                 category: "PVM"
-                ehtRate: 3.75
+                ehtRate: 3.8
                 templeID: "Tombs of Amascut"
               - name: "ToA: Expert"
                 type: "Temple_KC"
@@ -389,427 +726,282 @@ competition:
                 ehtRate: 0.3
                 diminishedThreshold: 5
                 diminishedMultiplier: 0.5
-              - name: "Phantom Muspah"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 26
-                templeID: "Phantom Muspah"
-              - name: "Easy Clues"
-                type: "Temple_KC"
-                category: "Other"
-                ehtRate: 25
-                templeID: "Clue_easy"
-              - name: "The Royal Titans"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 55
-                templeID: "The Royal Titans"
-        - name: "Fishing Hole"
-          abbreviation: "FH"
-          contributionMethods:
-              - name: "Fishing"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 125000
-                templeID: "Fishing"
-              - name: "Tempoross"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 25
-                templeID: "Tempoross"
-              - name: "Zulrah"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 36
-                templeID: "Zulrah"
-              - name: "Artio"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 32
-                templeID: "Artio"
-              - name: "Calvar'ion"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 32
-                templeID: "Calvarion"
-        - name: "Solarflare"
-          abbreviation: "SF"
-          contributionMethods:
-              - name: "Firemaking"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 440000
-                templeID: "Firemaking"
               - name: "Sol Heredit"
                 type: "Temple_KC"
                 category: "PVM"
                 ehtRate: 2
                 templeID: "Sol Heredit"
-              - name: "Corporeal Beast"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 7.5
-                templeID: "Corporeal Beast"
-              - name: "Shellbane Gryphon"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 85
-                templeID: "Shellbane Gryphon"
-        - name: "Have a Heart"
-          abbreviation: "HH"
-          contributionMethods:
-              - name: "Slayer (Superior KC)"
-                type: "Submission_KC"
-                category: "PVM"
-                ehtRate: 4
-              - name: "Hueycoatl: Hides"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 1
-              - name: "Dagannoth Rex"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 100
-                templeID: "Dagannoth Rex"
-              - name: "Dagannoth Supreme"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 100
-                templeID: "Dagannoth Supreme"
-              - name: "Dagannoth Prime"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 100
-                templeID: "Dagannoth Prime"
-              - name: "The Corrupted Gauntlet"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 7.2
-                templeID: "The Corrupted Gauntlet"
-        - name: "Theatre of the Mind"
-          abbreviation: "TOTM"
-          contributionMethods:
-              - name: "Theatre of Blood"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 2.9
-                templeID: "Theatre of Blood"
-              - name: "ToB: Hard Mode"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 2.6
-                templeID: "Theatre of Blood Challenge Mode"
-              - name: "Medium Clues"
-                type: "Temple_KC"
-                category: "Other"
-                ehtRate: 11
-                templeID: "Clue_medium"
-              - name: "Grotesque Guardians"
+              - name: "Kalphite Queen"
                 type: "Temple_KC"
                 category: "PVM"
                 ehtRate: 33
-                templeID: "Grotesque Guardians"
-              - name: "The Whisperer"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 20
-                templeID: "The Whisperer"
-        - name: "Too Greedily and Too Deep"
-          abbreviation: "TGTD"
-          contributionMethods:
-              - name: "Mining"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 125000
-                templeID: "Mining"
-              - name: "Smithing"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 330000
-                templeID: "Smithing"
-              - name: "Demonic Gorillas"
-                type: "Submission_KC"
-                category: "PVM"
-                ehtRate: 85
-              - name: "Abyssal Sire"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 45
-                templeID: "Abyssal Sire"
-        - name: "Hunting by Moonlight"
-          abbreviation: "HBM"
-          contributionMethods:
-              - name: "Hunter"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 240000
-                templeID: "Hunter"
-              - name: "Master Clues"
-                type: "Temple_KC"
-                category: "Other"
-                ehtRate: 2.4
-                templeID: "Clue_master"
-              - name: "Basilisk Knights"
-                type: "Submission_KC"
-                category: "PVM"
-                ehtRate: 93
-              - name: "Moons of Peril: Items"
-                type: "Submission_Item_Drop"
-                category: "PVM"
-                ehtRate: 0.95
-        - name: "Demonic Suppression"
-          abbreviation: "DS"
-          contributionMethods:
-              - name: "Yama"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 18
-                templeID: "Yama"
-              - name: "K'ril Tsutsaroth"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 30
-                templeID: "Kril Tsutsaroth"
-              - name: "Pest Control: Games"
-                type: "Submission_Other"
-                category: "Other"
-                ehtRate: 30
-              - name: "Hard Clues"
-                type: "Temple_KC"
-                category: "Other"
-                ehtRate: 7.5
-                templeID: "Clue_hard"
-              - name: "The Nightmare"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 17
-                templeID: "The Nightmare"
-              - name: "Phosani's Nightmare"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 9
-                templeID: "Phosanis Nightmare"
-              - name: "Revenants: Ether"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 1200
-        - name: "Frozen Terror"
-          abbreviation: "FT"
-          contributionMethods:
-              - name: "Duke Sucellus"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 35
-                templeID: "Duke Sucellus"
-              - name: "Amoxliatl"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 65
-                templeID: "Amoxliatl"
-              - name: "Elite Clues"
-                type: "Temple_KC"
-                category: "Other"
-                ehtRate: 5
-                templeID: "Clue_elite"
-              - name: "Vardorvis"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 33
-                templeID: "Vardorvis"
-              - name: "Prayer"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 1000000
-                templeID: "Prayer"
-        - name: "2006 Honda Civic"
-          abbreviation: "HC"
-          contributionMethods:
-              - name: "Agility"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 100000
-                templeID: "Agility"
-              - name: "General Graardor"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 30
-                templeID: "General Graardor"
-              - name: "Commander Zilyana"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 29
-                templeID: "Commander Zilyana"
-              - name: "Spindel"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 30
-                templeID: "Spindel"
-        - name: "Ethically Acquired Shards"
-          abbreviation: "EAS"
-          contributionMethods:
-              - name: "Thieving"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 290000
-                templeID: "Thieving"
-              - name: "Tormented Demons"
-                type: "Submission_KC"
-                category: "PVM"
-                ehtRate: 65
-              - name: "Nex: Nihil Shards"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 33.33
-              - name: "Beginner Clues"
-                type: "Temple_KC"
-                category: "Other"
-                ehtRate: 40
-                templeID: "Clue_beginner"
-        - name: "Cooks and Kicks"
-          abbreviation: "CK"
-          contributionMethods:
-              - name: "Cerberus"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 48
-                templeID: "Cerberus"
-              - name: "Doom of Mokhaiotl - Delve Level 1"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 941.2
-              - name: "Doom of Mokhaiotl - Delve Level 2"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 470.6
-              - name: "Doom of Mokhaiotl - Delve Level 3"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 313.8
-              - name: "Doom of Mokhaiotl - Delve Level 4"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 235.2
-              - name: "Doom of Mokhaiotl - Delve Level 5"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 94.2
-              - name: "Doom of Mokhaiotl - Delve Level 6"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 47
-              - name: "Doom of Mokhaiotl - Delve Level 7"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 37.6
-              - name: "Doom of Mokhaiotl - Delve Level 8"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 26.8
-              - name: "Doom of Mokhaiotl - Delve Level 8+"
-                type: "Submission_Other"
-                category: "PVM"
-                ehtRate: 26.8
-              - name: "Cooking"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 400000
-                templeID: "Cooking"
-              - name: "Barrows: Items"
-                type: "Submission_Item_Drop"
-                category: "PVM"
-                ehtRate: 1.3
-        - name: "Forbidden Alchemy"
-          abbreviation: "FA"
-          contributionMethods:
-              - name: "Alchemical Hydra"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 26
-                templeID: "Alchemical Hydra"
-              - name: "Herblore"
-                type: "Temple_XP"
-                category: "Skilling"
-                ehtRate: 300000
-                templeID: "Herblore"
-              - name: "Mixology: Resin"
-                type: "Submission_Other"
-                category: "Skilling"
-                ehtRate: 16000
-                purchaseItems:
-                    - name: "Apprentice potion pack"
-                      cost: 520
-                    - name: "Adept potion pack"
-                      cost: 690
-                    - name: "Expert potion pack"
-                      cost: 1210
-                    - name: "Prescription goggles"
-                      cost: 24950
-                    - name: "Alchemist labcoat"
-                      cost: 8750
-                    - name: "Alchemist pants"
-                      cost: 8750
-                    - name: "Alchemist gloves"
-                      cost: 8750
-                    - name: "Reagent pouch"
-                      cost: 40100
-                    - name: "Chugging barrel"
-                      cost: 49850
-                    - name: "Alchemist's amulet"
-                      cost: 19950
-                    - name: "Aldarium"
-                      cost: 230
-              - name: "TzTok-Jad"
-                type: "Temple_KC"
-                category: "PVM"
-                ehtRate: 2
-                templeID: "TzTok-Jad"
+                templeID: "Kalphite Queen"
               - name: "TzKal-Zuk"
                 type: "Temple_KC"
                 category: "PVM"
                 ehtRate: 0.8
                 templeID: "TzKal-Zuk"
+              - name: "Maggot King"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 24
+                templeID: "Maggot King"
+        - name: "Shipwright or Shipwreck"
+          abbreviation: "SOS"
+          contributionMethods:
+              - name: "Fishing"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 137500
+                templeID: "Fishing"
+              - name: "Tempoross"
+                type: "Temple_KC"
+                category: "PVM"
+                ehtRate: 22
+                templeID: "Tempoross"
+              - name: "Sailing"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 245000
+                templeID: "Sailing"
+              - name: "Construction"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 247500
+                templeID: "Construction"
+              - name: "Crafting"
+                type: "Temple_XP"
+                category: "Skilling"
+                ehtRate: 181500
+                templeID: "Crafting"
     tileGroups:
-        - name: "Blue Group"
-          tileNames: ["Build a Better Bugzapper", "Rune Sinks", "Notable Dragons"]
-        - name: "Green Group"
-          tileNames: ["Minigames and also Large Aquatic Creatures (MAALAC)", "Last Mole Sailing", "Ancient Entities"]
-        - name: "Orange Group"
-          tileNames: ["Fishing Hole", "Solarflare", "Have a Heart"]
-        - name: "Purple Group"
-          tileNames: ["Theatre of the Mind", "Too Greedily and Too Deep", "Hunting by Moonlight"]
         - name: "Yellow Group"
-          tileNames: ["Demonic Suppression", "Frozen Terror", "2006 Honda Civic"]
+          tileNames: ["Big Bad Buddies", "Lords and Lackeys", "3-Tick Mistakes"]
+        - name: "Blue Group"
+          tileNames: ["Dungeons and a Dragon", "Toiling for Tephra", "Scribbled Scriptures"]
+        - name: "Purple Group"
+          tileNames: ["Vampyre Variety", "Frozen and Demonic", "1337 Content"]
+        - name: "Green Group"
+          tileNames: ["Chasing Chores", "Zeah Only", "Morytania Menagerie"]
         - name: "Red Group"
-          tileNames: ["Ethically Acquired Shards", "Cooks and Kicks", "Forbidden Alchemy"]
+          tileNames: ["Cavern Collective", "Beachfront Property", "Shipwright or Shipwreck"]
     challenges:
-        - name: "Barbarian Assault"
-          teamSize: 5
-          description: "Complete a full game of Barbarian Assault as quickly as possible! All players must be on your team."
-          type: "Speedrun"
+        - name: "Glory PB"
+          teamSize: 1
+          description: "Complete the Fortis Colosseum with as much glory as possible!"
+          type: "Points"
         - name: "Deepest Delve"
           teamSize: 1
-          description: "Complete the deepest delve possible at the Doom of Mokhaiotl!"
+          description: "Reach the deepest delve level you can at the Doom of Mokhaiotl!"
           type: "Points"
-        - name: "GM Quest Boss Relay"
+        - name: "Trio Hueycoatl Speedrun"
           teamSize: 3
-          description: "Three separate players kill Glough, Galvek, and the Fragment of Seren as quickly as possible!"
-          type: "Relay"
-          relayComponents: ["Glough", "Galvek", "Fragment of Seren"]
-        - name: "Barracuda Trial Marlin Relay"
-          teamSize: 3
-          description: "Three separate players complete each Barracuda Trial on the Marlin difficulty as quickly as possible!"
-          type: "Relay"
-          relayComponents: ["Tempor Tantrum", "Jubbly Jive", "Gwenith Glide"]
+          description: "Kill the Hueycoatl as quickly as possible in a group of three! All players must be on your team."
+          type: "Speedrun"
+        - name: "Corrupted Gauntlet Speedrun"
+          teamSize: 1
+          description: "Complete the Corrupted Gauntlet as quickly as possible!"
+          type: "Speedrun"
     records:
-        - name: "Agility"
-          description: "Get as much agility XP as you can in 6 hours!"
-        - name: "Barbarian Fishing"
-          description: "Get as much fishing XP as you can in 6 hours, ONLY using the barbarian fishing method!"
-        - name: "Thieving"
-          description: "Get as much thieving XP as you can in 6 hours!"
-        - name: "Sailing"
-          description: "Get as much sailing XP as you can in 6 hours!"
+        - name: "Mining (No charged celestial ring)"
+          description: "Get as much mining XP as you can in 6 hours! The charged celestial ring is not allowed."
+        - name: "Sailing (Trials only)"
+          description: "Get as much sailing XP as you can in 6 hours, ONLY completing Barracuda Trials!"
+        - name: "Hunter (Red chins only, no horn of plenty)"
+          description: "Get as much hunter XP as you can in 6 hours, ONLY catching red chinchompas! The horn of plenty is not allowed."
+        - name: "Woodcutting"
+          description: "Get as much woodcutting XP as you can in 6 hours!"
     collectionLogItems:
+        - name: "Abyssal Bludgeon Piece 1"
+          points: 1
+          description: "Any abyssal bludgeon piece - Make sure to submit one that your team has not yet submitted!"
+        - name: "Abyssal Bludgeon Piece 2"
+          points: 1
+          description: "Any abyssal bludgeon piece - Make sure to submit one that your team has not yet submitted!"
+        - name: "Abyssal Bludgeon Piece 3"
+          points: 1
+          description: "Any abyssal bludgeon piece - Make sure to submit one that your team has not yet submitted!"
+        - name: "Abyssal Head"
+          points: 1
+        - name: "Abyssal whip"
+          points: 1
+        - name: "Abyssal dagger"
+          points: 1
+        - name: "Golden tench"
+          points: 2
+        - name: "Alchemical hydra heads"
+          points: 1
+        - name: "Hydra leather"
+          points: 2
+        - name: "Hydra's claw"
+          points: 3
+        - name: "Brimstone Ring Piece 1"
+          points: 1
+          description: "Any brimstone ring piece - Make sure to submit one that your team has not yet submitted!"
+        - name: "Brimstone Ring Piece 2"
+          points: 1
+          description: "Any brimstone ring piece - Make sure to submit one that your team has not yet submitted!"
+        - name: "Brimstone Ring Piece 3"
+          points: 1
+          description: "Any brimstone ring piece - Make sure to submit one that your team has not yet submitted!"
+        - name: "Hydra tail"
+          points: 1
+        - name: "Glacial temotli"
+          points: 1
+        - name: "Araxyte head"
+          points: 1
+        - name: "Noxious Halberd Piece 1"
+          points: 1
+          description: "Any noxious halberd piece - Make sure to submit one that your team has not yet submitted!"
+        - name: "Noxious Halberd Piece 2"
+          points: 1
+          description: "Any noxious halberd piece - Make sure to submit one that your team has not yet submitted!"
+        - name: "Noxious Halberd Piece 3"
+          points: 1
+          description: "Any noxious halberd piece - Make sure to submit one that your team has not yet submitted!"
+        - name: "Araxyte fang"
+          points: 2
+        - name: "Angler's paint"
+          points: 2
+        - name: "Inky paint"
+          points: 2
+        - name: "Shark paint"
+          points: 1
+        - name: "Barracuda paint"
+          points: 2
+        - name: "Claws of callisto"
+          points: 1
+        - name: "Voidwaker hilt"
+          points: 2
+        - name: "Tyrannical ring"
+          points: 1
+        - name: "Dragon pickaxe or Dragon pickaxe (broken)"
+          points: 1
+        - name: "Dragon 2h sword"
+          points: 1
+        - name: "Primordial crystal"
+          points: 2
+        - name: "Smouldering stone"
+          points: 1
+        - name: "Eternal crystal"
+          points: 2
+        - name: "Pegasian crystal"
+          points: 2
+        - name: "Dexterous prayer scroll"
+          points: 1
+        - name: "Arcane prayer scroll"
+          points: 1
+        - name: "Twisted buckler"
+          points: 1
+        - name: "Dragon hunter crossbow"
+          points: 1
+        - name: "Dragon claws"
+          points: 2
+        - name: "Dinh's bulwark"
+          points: 1
+        - name: "Ancestral hat"
+          points: 3
+        - name: "Ancestral robe top"
+          points: 3
+        - name: "Ancestral robe bottom"
+          points: 3
+        - name: "Twisted ancestral colour kit"
+          points: 1
+        - name: "Onyx or Uncut onyx"
+          points: 1
+        - name: "Twisted bow"
+          points: 4
+        - name: "Elder maul"
+          points: 4
+        - name: "Kodai insignia"
+          points: 4
+        - name: "Metamorphic dust"
+          points: 3
+        - name: "Saradomin sword"
+          points: 1
+        - name: "Saradomin's light"
+          points: 1
+        - name: "Armadyl crossbow"
+          points: 2
+        - name: "Any Godsword Hilt"
+          points: 2
+          itemOptions: ["Ancient hilt", "Armadyl hilt", "Bandos hilt", "Saradomin hilt", "Zamorak hilt"]
+        - name: "Godsword shard 1"
+          points: 1
+        - name: "Godsword shard 2"
+          points: 1
+        - name: "Godsword shard 3"
+          points: 1
+        - name: "Spirit shield"
+          points: 1
+        - name: "Holy elixir"
+          points: 2
+        - name: "Spectral sigil"
+          points: 3
+        - name: "Arcane sigil"
+          points: 3
+        - name: "Elysian sigil"
+          points: 4
+        - name: "Berserker ring"
+          points: 1
+        - name: "Warrior ring"
+          points: 1
+        - name: "Archers ring"
+          points: 1
+        - name: "Seers ring"
+          points: 1
+        - name: "Mud battlestaff"
+          points: 1
+        - name: "Seercull"
+          points: 1
+        - name: "Dragon axe"
+          points: 1
+        - name: "Steel ring"
+          points: 1
+        - name: "Mokhaiotl cloth"
+          points: 2
+        - name: "Avernic treads"
+          points: 3
+        - name: "Eye of ayak (uncharged)"
+          points: 2
+        - name: "Ice quartz"
+          points: 1
+        - name: "Eye of the duke"
+          points: 2
+        - name: "Gold ring from Duke Sucellus or Magus vestige - 1"
+          points: 1
+        - name: "Gold ring from Duke Sucellus or Magus vestige - 2"
+          points: 1
+        - name: "Gold ring from Duke Sucellus or Magus vestige - 3"
+          points: 1
+        - name: "Awakener's orb"
+          points: 1
+        - name: "Chromium ingot"
+          points: 1
+        - name: "Virtus mask"
+          points: 3
+        - name: "Virtus robe top"
+          points: 3
+        - name: "Virtus robe bottom"
+          points: 3
+        - name: "Any Vestment Robe Top"
+          points: 1
+          itemOptions: ["Ancient robe top", "Armadyl robe top", "Bandos robe top", "Guthix robe top", "Saradomin robe top", "Zamorak robe top"]
+        - name: "Any Vestment Robe Legs"
+          points: 1
+          itemOptions: ["Ancient robe legs", "Armadyl robe legs", "Bandos robe legs", "Guthix robe legs", "Saradomin robe legs", "Zamorak robe legs"]
+        - name: "Any Vestment Cloak"
+          points: 1
+          itemOptions: ["Ancient cloak", "Armadyl cloak", "Bandos cloak", "Guthix cloak", "Saradomin cloak", "Zamorak cloak"]
+        - name: "Any Vestment Crozier"
+          points: 1
+          itemOptions: ["Ancient crozier", "Armadyl crozier", "Bandos crozier", "Guthix crozier", "Saradomin crozier", "Zamorak crozier"]
+        - name: "Any Vestment Mitre"
+          points: 1
+          itemOptions: ["Ancient mitre", "Armadyl mitre", "Bandos mitre", "Guthix mitre", "Saradomin mitre", "Zamorak mitre"]
+        - name: "Any Vestment Stole"
+          points: 1
+          itemOptions: ["Ancient stole", "Armadyl stole", "Bandos stole", "Guthix stole", "Saradomin stole", "Zamorak stole"]
         - name: "Any Blessed D'hide Coif"
           points: 1
           itemOptions: ["Ancient coif", "Armadyl coif", "Bandos coif", "Guthix coif", "Saradomin coif", "Zamorak coif"]
@@ -823,159 +1015,14 @@ competition:
           points: 1
           itemOptions: ["Ancient bracers", "Armadyl bracers", "Bandos bracers", "Guthix bracers", "Saradomin bracers", "Zamorak bracers"]
         - name: "Any Blessed D'hide Shield"
-          points: 1
+          points: 2
           itemOptions: ["Ancient d'hide shield", "Armadyl d'hide shield", "Bandos d'hide shield", "Guthix d'hide shield", "Saradomin d'hide shield", "Zamorak d'hide shield"]
         - name: "Any Blessed D'hide Boots"
           points: 1
           itemOptions: ["Ancient d'hide boots", "Armadyl d'hide boots", "Bandos d'hide boots", "Guthix d'hide boots", "Saradomin d'hide boots", "Zamorak d'hide boots"]
-        - name: "Any Vestment Mitre"
+        - name: "Any Kiteshield (g)"
           points: 1
-          itemOptions: ["Ancient mitre", "Armadyl mitre", "Bandos mitre", "Guthix mitre", "Saradomin mitre", "Zamorak mitre"]
-        - name: "Any Vestment Stole"
-          points: 1
-          itemOptions: ["Ancient stole", "Armadyl stole", "Bandos stole", "Guthix stole", "Saradomin stole", "Zamorak stole"]
-        - name: "Any Vestment Robe Top"
-          points: 1
-          itemOptions: ["Ancient robe top", "Armadyl robe top", "Bandos robe top", "Guthix robe top", "Saradomin robe top", "Zamorak robe top"]
-        - name: "Any Vestment Robe Legs"
-          points: 1
-          itemOptions: ["Ancient robe legs", "Armadyl robe legs", "Bandos robe legs", "Guthix robe legs", "Saradomin robe legs", "Zamorak robe legs"]
-        - name: "Any Vestment Cloak"
-          points: 1
-          itemOptions: ["Ancient cloak", "Armadyl cloak", "Bandos cloak", "Guthix cloak", "Saradomin cloak", "Zamorak cloak"]
-        - name: "Any Vestment Crozier"
-          points: 1
-          itemOptions: ["Ancient crozier", "Armadyl crozier", "Bandos crozier", "Guthix crozier", "Saradomin crozier", "Zamorak crozier"]
-        - name: "Sunfire fanatic helm"
-          points: 2
-        - name: "Sunfire fanatic curiass"
-          points: 2
-        - name: "Sunfire fanatic chausses"
-          points: 2
-        - name: "Holy elixir"
-          points: 1
-        - name: "Arcane sigil"
-          points: 2
-        - name: "Elysian sigil"
-          points: 3
-        - name: "Spectral sigil"
-          points: 2
-        - name: "Voidwaker blade"
-          points: 2
-        - name: "Voidwaker gem"
-          points: 2
-        - name: "Voidwaker hilt"
-          points: 2
-        - name: "Executioner's axe head"
-          points: 2
-        - name: "Siren's staff"
-          points: 2
-        - name: "Leviathan's lure"
-          points: 2
-        - name: "Eye of the duke"
-          points: 2
-        - name: "Gold ring from The Whisperer or Bellator vestige - 1"
-          points: 1
-        - name: "Gold ring from The Whisperer or Bellator vestige - 2"
-          points: 1
-        - name: "Gold ring from The Whisperer or Bellator vestige - 3"
-          points: 1
-        - name: "Gold ring from Duke Sucellus or Magus vestige - 1"
-          points: 1
-        - name: "Gold ring from Duke Sucellus or Magus vestige - 2"
-          points: 1
-        - name: "Gold ring from Duke Sucellus or Magus vestige - 3"
-          points: 1
-        - name: "Gold ring from Vardorvis or Ultor vestige - 1"
-          points: 1
-        - name: "Gold ring from Vardorvis or Ultor vestige - 2"
-          points: 1
-        - name: "Gold ring from Vardorvis or Ultor vestige - 3"
-          points: 1
-        - name: "Gold ring from The Leviathan or Venator vestige - 1"
-          points: 1
-        - name: "Gold ring from The Leviathan or Venator vestige - 2"
-          points: 1
-        - name: "Gold ring from The Leviathan or Venator vestige - 3"
-          points: 1
-        - name: "Godsword shard 1"
-          points: 1
-        - name: "Godsword shard 2"
-          points: 1
-        - name: "Godsword shard 3"
-          points: 1
-        - name: "Any Godsword Hilt"
-          points: 1
-          itemOptions: ["Ancient hilt", "Armadyl hilt", "Bandos hilt", "Saradomin hilt", "Zamorak hilt"]
-        - name: "Any Godsword Ornament Kit"
-          points: 3
-          itemOptions: ["Armadyl godsword ornament kit", "Bandos godsword ornament kit", "Saradomin godsword ornament kit", "Zamorak godsword ornament kit"]
-        - name: "Berserker ring"
-          points: 1
-        - name: "Archers ring"
-          points: 1
-        - name: "Seers ring"
-          points: 1
-        - name: "Warrior ring"
-          points: 1
-        - name: "Tyrannical ring"
-          points: 1
-        - name: "Treasonous ring"
-          points: 1
-        - name: "Ring of the gods"
-          points: 1
-        - name: "Granite ring"
-          points: 1
-        - name: "Ring of endurance"
-          points: 1
-        - name: "Lightbearer"
-          points: 1
-        - name: "Elven signet"
-          points: 1
-        - name: "Chromium ingot"
-          points: 1
-        - name: "Ranger boots"
-          points: 2
-        - name: "Holy sandals"
-          points: 2
-        - name: "Wizard boots"
-          points: 2
-        - name: "Spiked manacles"
-          points: 2
-        - name: "Dragon boots"
-          points: 1
-        - name: "Mole slippers"
-          points: 1
-        - name: "Frog slippers"
-          points: 1
-        - name: "Ballista limbs"
-          points: 1
-        - name: "Ballista spring"
-          points: 1
-        - name: "Heavy frame"
-          points: 2
-        - name: "Light frame"
-          points: 1
-        - name: "Monkey tail"
-          points: 2
-        - name: "Zenyte shard"
-          points: 2
-        - name: "Big shark"
-          points: 1
-        - name: "Big bass"
-          points: 1
-        - name: "Big swordfish"
-          points: 1
-        - name: "Big harpoonfish"
-          points: 2
-        - name: "Golden tench"
-          points: 2
-        - name: "Any Full Helm (g)"
-          points: 1
-          itemOptions: ["Bronze full helm (g)", "Iron full helm (g)", "Steel full helm (g)", "Black full helm (g)", "Mithril full helm (g)", "Adamant full helm (g)", "Rune full helm (g)"]
-        - name: "Any Platebody (g)"
-          points: 1
-          itemOptions: ["Bronze platebody (g)", "Iron platebody (g)", "Steel platebody (g)", "Black platebody (g)", "Mithril platebody (g)", "Adamant platebody (g)", "Rune platebody (g)"]
+          itemOptions: ["Bronze kiteshield (g)", "Iron kiteshield (g)", "Steel kiteshield (g)", "Black kiteshield (g)", "Mithril kiteshield (g)", "Adamant kiteshield (g)", "Rune kiteshield (g)"]
         - name: "Any Platelegs/Plateskirt (g)"
           points: 1
           itemOptions:
@@ -993,61 +1040,240 @@ competition:
               - "Mithril plateskirt (g)"
               - "Adamant plateskirt (g)"
               - "Rune plateskirt (g)"
-        - name: "Any Kiteshield (g)"
+        - name: "Any Platebody (g)"
           points: 1
-          itemOptions: ["Bronze kiteshield (g)", "Iron kiteshield (g)", "Steel kiteshield (g)", "Black kiteshield (g)", "Mithril kiteshield (g)", "Adamant kiteshield (g)", "Rune kiteshield (g)"]
-        - name: "Twisted ancestral kit"
+          itemOptions: ["Bronze platebody (g)", "Iron platebody (g)", "Steel platebody (g)", "Black platebody (g)", "Mithril platebody (g)", "Adamant platebody (g)", "Rune platebody (g)"]
+        - name: "Any Full Helm (g)"
           points: 1
-        - name: "Sanguine ornament kit"
-          points: 2
-        - name: "Holy ornament kit"
-          points: 2
-        - name: "Metamorphic dust"
-          points: 2
-        - name: "Sanguine dust"
-          points: 2
-        - name: "Burning claw"
-          points: 1
-        - name: "Granite maul"
-          points: 1
-        - name: "Dark bow"
-          points: 1
-        - name: "Dragon spear"
-          points: 1
-        - name: "Dragon warhammer"
-          points: 2
-        - name: "Tonalztics of ralos"
-          points: 2
-        - name: "Staff of the dead"
-          points: 1
+          itemOptions: ["Bronze full helm (g)", "Iron full helm (g)", "Steel full helm (g)", "Black full helm (g)", "Mithril full helm (g)", "Adamant full helm (g)", "Rune full helm (g)"]
         - name: "Any Hard Ornament Kit"
           points: 1
           itemOptions: ["Rune defender ornament kit", "Berserker necklace ornament kit", "Tzhaar-ket-om ornament kit", "Dragon boots ornament kit"]
         - name: "Any Elite Ornament Kit"
-          points: 1
+          points: 2
           itemOptions: ["Dragon full helm ornament kit", "Dragon chainbody ornament kit", "Dragon legs/skirt ornament kit", "Dragon sq shield ornament kit", "Dragon scimitar ornament kit", "Fury ornament kit", "Light infinity ornament kit", "Dark infinity ornament kit"]
         - name: "Any Master Ornament Kit"
-          points: 1
+          points: 2
           itemOptions: ["Occult ornament kit", "Torture ornament kit", "Anguish ornament kit", "Tormented ornament kit", "Dragon defender ornament kit", "Dragon platebody ornament kit", "Dragon kiteshield ornament kit"]
-        - name: "Seercull"
-          points: 1
-        - name: "Dragon chainbody"
-          points: 1
-        - name: "Shield left half"
-          points: 1
-        - name: "Onyx (cut or uncut)"
-          points: 1
-        - name: "Saradomin's light"
+        - name: "Dizana's quiver (uncharged)"
           points: 1
         - name: "Echo crystal"
           points: 1
-        - name: "Blood quartz"
+        - name: "Sunfire fanatic helm"
+          points: 2
+        - name: "Sunfire fanatic curiass"
+          points: 2
+        - name: "Sunfire fanatic chausses"
+          points: 2
+        - name: "Tonalztics of ralos (uncharged)"
+          points: 3
+        - name: "Bandos chestplate"
+          points: 2
+        - name: "Bandos tassets"
+          points: 2
+        - name: "Bandos boots"
           points: 1
-        - name: "Ice quartz"
+        - name: "Immaculate mole skin"
           points: 1
-        - name: "Shadow quartz"
+        - name: "Zenyte shard"
+          points: 1
+        - name: "Ballista limbs"
+          points: 1
+        - name: "Ballista spring"
+          points: 1
+        - name: "Heavy frame"
+          points: 2
+        - name: "Light frame"
+          points: 1
+        - name: "Monkey tail"
+          points: 2
+        - name: "Granite gloves"
+          points: 1
+        - name: "Granite ring"
+          points: 1
+        - name: "Granite hammer"
+          points: 1
+        - name: "Black tourmaline core"
+          points: 2
+        - name: "Abyssal lantern"
+          points: 2
+        - name: "Abyssal blue dye"
+          points: 1
+        - name: "Abyssal red dye"
+          points: 1
+        - name: "Abyssal green dye"
+          points: 1
+        - name: "Strange old lockpick (full)"
+          points: 1
+        - name: "Ring of endurance"
+          points: 2
+        - name: "Bottomless compost bucket"
+          points: 1
+        - name: "Zamorakian spear"
+          points: 2
+        - name: "Steam battlestaff"
+          points: 1
+        - name: "Staff of the dead"
+          points: 2
+        - name: "Kq head"
+          points: 1
+        - name: "Dragon chainbody"
+          points: 1
+        - name: "Kbd heads"
+          points: 1
+        - name: "Draconic visage"
+          points: 3
+        - name: "Trident of the seas (full or empty)"
+          points: 1
+        - name: "Kraken tentacle"
+          points: 1
+        - name: "Armadyl helmet"
+          points: 1
+        - name: "Armadyl chestplate"
+          points: 2
+        - name: "Armadyl chainskirt"
+          points: 2
+        - name: "Ranger boots"
+          points: 2
+        - name: "Wizard boots"
+          points: 1
+        - name: "Holy sandals"
+          points: 1
+        - name: "Spiked manacles"
+          points: 1
+        - name: "Climbing boots (g)"
+          points: 1
+        - name: "Pharaoh's sceptre (uncharged)"
+          points: 1
+        - name: "Enhanced crystal teleport seed"
+          points: 1
+        - name: "Dragon warhammer"
+          points: 2
+        - name: "Elven signet"
+          points: 1
+        - name: "Zaryte vambraces"
+          points: 2
+        - name: "Torva full helm (damaged)"
+          points: 3
+        - name: "Torva platebody (damaged)"
+          points: 3
+        - name: "Torva platelegs (damaged)"
+          points: 3
+        - name: "Nihil horn"
+          points: 4
+        - name: "Ancient icon"
+          points: 1
+        - name: "Venator shard"
+          points: 1
+        - name: "Fire element staff crown"
+          points: 2
+        - name: "Ice element staff crown"
+          points: 2
+        - name: "Bottled storm"
+          points: 1
+        - name: "Dragon cannon barrel"
+          points: 1
+        - name: "Broken dragon hook"
+          points: 1
+        - name: "Giant egg sac(full)"
+          points: 1
+        - name: "Sarachnis cudgel"
+          points: 2
+        - name: "Pristine spider silk"
+          points: 1
+        - name: "Mouldy doll"
+          points: 1
+        - name: "Belle's folly (tarnished)"
+          points: 1
+        - name: "Granite maul"
+          points: 1
+        - name: "Blood shard"
+          points: 2
+        - name: "Fish barrel"
+          points: 1
+        - name: "Tackle box"
+          points: 1
+        - name: "Tome of water (empty)"
+          points: 1
+        - name: "Big harpoonfish"
+          points: 1
+        - name: "Dragon harpoon"
+          points: 2
+        - name: "Fire cape"
+          points: 1
+        - name: "Crystal weapon seed"
+          points: 1
+        - name: "Crystal armour seed"
+          points: 2
+        - name: "Enhanced crystal weapon seed"
+          points: 3
+        - name: "Hueycoatl hide"
+          points: 1
+        - name: "Tome of earth (empty)"
+          points: 1
+        - name: "Dragon hunter wand"
+          points: 2
+        - name: "Infernal cape"
           points: 1
         - name: "Smoke quartz"
+          points: 1
+        - name: "Leviathan's lure"
+          points: 2
+        - name: "Gold ring from The Leviathan or Venator vestige - 1"
+          points: 1
+        - name: "Gold ring from The Leviathan or Venator vestige - 2"
+          points: 1
+        - name: "Gold ring from The Leviathan or Venator vestige - 3"
+          points: 1
+        - name: "Nightmare staff"
+          points: 2
+        - name: "Inquisitor's great helm"
+          points: 3
+        - name: "Inquisitor's hauberk"
+          points: 3
+        - name: "Inquisitor's plateskirt"
+          points: 3
+        - name: "Inquisitor's mace"
+          points: 4
+        - name: "Volatile orb"
+          points: 3
+        - name: "Harmonized orb"
+          points: 3
+        - name: "Eldritch orb"
+          points: 3
+        - name: "Shadow quartz"
+          points: 1
+        - name: "Siren's staff"
+          points: 2
+        - name: "Gold ring from The Whisperer or Bellator vestige - 1"
+          points: 1
+        - name: "Gold ring from The Whisperer or Bellator vestige - 2"
+          points: 1
+        - name: "Gold ring from The Whisperer or Bellator vestige - 3"
+          points: 1
+        - name: "Avernic defender hilt"
+          points: 1
+        - name: "Ghrazi rapier"
+          points: 2
+        - name: "Justiciar faceguard"
+          points: 3
+        - name: "Justiciar chestguard"
+          points: 3
+        - name: "Justiciar legguards"
+          points: 3
+        - name: "Sanguinesti staff (uncharged)"
+          points: 2
+        - name: "Scythe of vitur (uncharged)"
+          points: 4
+        - name: "Sanguine ornament kit"
+          points: 2
+        - name: "Holy ornament kit"
+          points: 2
+        - name: "Sanguine dust"
+          points: 3
+        - name: "Smoke battlestaff"
+          points: 1
+        - name: "Occult necklace"
           points: 1
         - name: "Eye of the corruptor"
           points: 1
@@ -1057,324 +1283,80 @@ competition:
           points: 1
         - name: "Jewel of amascut"
           points: 1
-        - name: "Blood shard"
-          points: 1
-        - name: "Enhanced crystal teleport seed"
-          points: 1
-        - name: "Abyssal head"
-          points: 1
-        - name: "Kbd heads"
-          points: 1
-        - name: "Kq head"
-          points: 1
-        - name: "Vorkath's head"
-          points: 1
-        - name: "Alchemical hydra heads"
-          points: 1
-        - name: "Hydra tail"
-          points: 1
-        - name: "Brimstone Ring Piece 1"
-          points: 1
-          description: "Any brimstone ring piece - Make sure to submit one that your team has not yet submitted!"
-        - name: "Brimstone Ring Piece 2"
-          points: 1
-          description: "Any brimstone ring piece - Make sure to submit one that your team has not yet submitted!"
-        - name: "Brimstone Ring Piece 3"
-          points: 1
-          description: "Any brimstone ring piece - Make sure to submit one that your team has not yet submitted!"
-        - name: "Dragon hunter wand"
-          points: 1
-        - name: "Hueycoatl hide"
-          points: 1
-        - name: "Brine sabre"
-          points: 1
-        - name: "Araxyte head"
-          points: 1
-        - name: "Giant egg sac (full)"
-          points: 1
-        - name: "Scurrius' spine"
-          points: 1
-        - name: "Parasitic egg"
-          points: 1
-        - name: "Venator shard"
-          points: 1
-        - name: "Hydra leather"
-          points: 1
-        - name: "Dragonbone necklace"
-          points: 1
-        - name: "Sarachnis cudgel"
-          points: 1
-        - name: "Dark claw"
-          points: 1
-        - name: "Warped sceptre"
-          points: 1
-        - name: "Araxyte fang"
-          points: 1
-        - name: "Noxious Halberd Piece 1"
-          points: 1
-          description: "Any noxious halberd piece - Make sure to submit one that your team has not yet submitted!"
-        - name: "Noxious Halberd Piece 2"
-          points: 1
-          description: "Any noxious halberd piece - Make sure to submit one that your team has not yet submitted!"
-        - name: "Noxious Halberd Piece 3"
-          points: 1
-          description: "Any noxious halberd piece - Make sure to submit one that your team has not yet submitted!"
-        - name: "Aranea boots"
-          points: 1
-        - name: "Abyssal whip"
-          points: 1
-        - name: "Hydra claw"
+        - name: "Osmumten's fang"
           points: 2
-        - name: "Armadyl crossbow"
-          points: 1
-        - name: "Saradomin sword"
-          points: 1
-        - name: "Zamorakian spear"
-          points: 1
-        - name: "Tanzanite fang"
-          points: 1
-        - name: "Magic fang"
-          points: 1
-        - name: "Glacial temotli"
-          points: 1
-        - name: "Trident of the seas (full or empty)"
-          points: 1
-        - name: "Fire cape"
-          points: 1
-        - name: "Crystal weapon seed"
-          points: 1
-        - name: "Enhanced crystal weapon seed"
+        - name: "Lightbearer"
           points: 2
-        - name: "Crystal armour seed"
-          points: 1
-        - name: "Basilisk jaw"
+        - name: "Elidinis' ward"
           points: 2
-        - name: "Serpentine visage"
-          points: 1
-        - name: "Broken zombie helmet"
-          points: 1
-        - name: "Bottomless compost bucket"
-          points: 1
-        - name: "Dragon axe"
-          points: 1
-        - name: "Crystal tool seed"
-          points: 2
-        - name: "Dragon harpoon"
-          points: 1
-        - name: "Smouldering stone"
-          points: 1
-        - name: "Pharaoh's sceptre (uncharged)"
-          points: 1
-        - name: "Tome of earth (empty)"
-          points: 1
-        - name: "Tome of water (empty)"
-          points: 1
-        - name: "Tome of fire (empty)"
-          points: 1
-        - name: "Zalcano shard"
-          points: 1
-        - name: "Steam battlestaff"
-          points: 1
-        - name: "Mud battlestaff"
-          points: 1
-        - name: "Abyssal lantern"
-          points: 1
-        - name: "Ancestral hat"
-          points: 2
-        - name: "Ancestral robe top"
-          points: 2
-        - name: "Ancestral robe bottom"
-          points: 2
-        - name: "Justiciar faceguard"
-          points: 2
-        - name: "Justiciar chestguard"
-          points: 2
-        - name: "Justiciar legguards"
-          points: 2
-        - name: "Dizana's quiver"
-          points: 1
-        - name: "Infernal cape"
-          points: 1
         - name: "Masori mask"
-          points: 2
+          points: 3
         - name: "Masori body"
-          points: 2
+          points: 3
         - name: "Masori chaps"
+          points: 3
+        - name: "Tumeken's shadow (uncharged)"
+          points: 4
+        - name: "Tormented synapse"
           points: 2
-        - name: "Torva full helm (damaged)"
+        - name: "Burning claw"
           points: 2
-        - name: "Torva platebody (damaged)"
+        - name: "Blood quartz"
+          points: 1
+        - name: "Executioner's axe head"
           points: 2
-        - name: "Torva platelegs (damaged)"
-          points: 2
-        - name: "Zaryte vambraces"
-          points: 2
-        - name: "Nihil horn"
-          points: 2
-        - name: "Dragon pickaxe"
+        - name: "Gold ring from Vardorvis or Ultor vestige - 1"
           points: 1
-        - name: "Dragon 2h sword"
+        - name: "Gold ring from Vardorvis or Ultor vestige - 2"
           points: 1
-        - name: "Dagon'hai hat"
+        - name: "Gold ring from Vardorvis or Ultor vestige - 3"
           points: 1
-        - name: "Dagon'hai robe top"
-          points: 1
-        - name: "Dagon'hai robe bottom"
-          points: 1
-        - name: "Fedora"
-          points: 1
-        - name: "Any Odium Shard"
-          points: 1
-          itemOptions: ["Odium shard 1", "Odium shard 2", "Odium shard 3"]
-        - name: "Any Malediction Shard"
-          points: 1
-          itemOptions: ["Malediction shard 1", "Malediction shard 2", "Malediction shard 3"]
         - name: "Fangs of venenatis"
+          points: 1
+        - name: "Voidwaker gem"
+          points: 2
+        - name: "Treasonous ring"
           points: 1
         - name: "Skull of vet'ion"
           points: 1
-        - name: "Claws of callisto"
-          points: 1
-        - name: "Any Revenant Weapon"
+        - name: "Voidwaker blade"
           points: 2
-          itemOptions: ["Craw's bow (u)", "Thammaron's sceptre (u)", "Viggora's chainmace (u)"]
-        - name: "Sanguinesti staff (uncharged)"
-          points: 2
-        - name: "Ghrazi rapier"
-          points: 2
-        - name: "Avernic defender hilt"
+        - name: "Ring of the gods"
           points: 1
-        - name: "Osmumten's fang"
+        - name: "Vorkath's head"
           points: 1
-        - name: "Elidinis' ward"
-          points: 2
-        - name: "Dragon claws"
-          points: 2
-        - name: "Dinh's bulwark"
-          points: 2
-        - name: "Elder maul"
-          points: 3
-        - name: "Kodai insignia"
-          points: 3
-        - name: "Dragon hunter crossbow"
-          points: 2
-        - name: "Arcane prayer scroll"
-          points: 1
-        - name: "Dexterous prayer scroll"
-          points: 1
-        - name: "Twisted buckler"
-          points: 2
-        - name: "Black mask"
-          points: 1
-        - name: "Abyssal Bludgeon Piece 1"
-          points: 1
-          description: "Any abyssal bludgeon piece - Make sure to submit one that your team has not yet submitted!"
-        - name: "Abyssal Bludgeon Piece 2"
-          points: 1
-          description: "Any abyssal bludgeon piece - Make sure to submit one that your team has not yet submitted!"
-        - name: "Abyssal Bludgeon Piece 3"
-          points: 1
-          description: "Any abyssal bludgeon piece - Make sure to submit one that your team has not yet submitted!"
-        - name: "Abyssal dagger"
-          points: 1
-        - name: "Kraken tentacle"
-          points: 1
-        - name: "Broken zombie axe"
-          points: 1
-        - name: "Occult necklace"
-          points: 1
-        - name: "Tormented synapse"
-          points: 1
-        - name: "Eternal crystal"
-          points: 1
-        - name: "Pegasian crystal"
-          points: 1
-        - name: "Primordial crystal"
-          points: 1
-        - name: "Black tourmaline core"
-          points: 1
-        - name: "Smoke battlestaff"
-          points: 1
-        - name: "Eternal gem"
-          points: 3
-        - name: "Imbued heart"
-          points: 3
-        - name: "Volatile orb"
-          points: 3
-        - name: "Harmonized orb"
-          points: 3
-        - name: "Eldritch orb"
-          points: 3
-        - name: "Inquisitor's mace"
-          points: 2
-        - name: "Magma mutagen"
-          points: 2
-        - name: "Tanzanite mutagen"
-          points: 2
-        - name: "Scythe of vitur (uncharged)"
-          points: 3
-        - name: "Twisted bow"
-          points: 3
-        - name: "Tumeken's shadow (uncharged)"
-          points: 3
-        - name: "Draconic visage"
+        - name: "Dragonbone necklace"
           points: 2
         - name: "Skeletal visage"
-          points: 2
-        - name: "Wyvern visage"
-          points: 2
-        - name: "Armadyl helmet"
-          points: 2
-        - name: "Armadyl chestplate"
-          points: 2
-        - name: "Armadyl chainskirt"
-          points: 2
-        - name: "Bandos chestplate"
-          points: 2
-        - name: "Bandos tassets"
-          points: 2
-        - name: "Bandos boots"
-          points: 2
-        - name: "Inquisitor's great helm"
-          points: 2
-        - name: "Inquisitor's hauberk"
-          points: 2
-        - name: "Inquisitor's plateskirt"
-          points: 2
-        - name: "Virtus mask"
-          points: 2
-        - name: "Virtus robe top"
-          points: 2
-        - name: "Virtus robe bottom"
-          points: 2
-        - name: "Fire element staff crown"
-          points: 1
-        - name: "Ice element staff crown"
+          points: 3
+        - name: "Tome of fire (empty)"
           points: 1
         - name: "Soulflame horn"
           points: 2
         - name: "Oathplate helm"
-          points: 2
+          points: 3
         - name: "Oathplate chest"
-          points: 2
+          points: 3
         - name: "Oathplate legs"
-          points: 2
-        - name: "Eye of ayak (uncharged)"
-          points: 2
-        - name: "Avernic treads"
-          points: 2
-        - name: "Mokhaiotl cloth"
-          points: 2
-        - name: "Antler guard"
+          points: 3
+        - name: "Zalcano shard"
           points: 1
-        - name: "Earthbound tecpatl"
-          points: 1
-        - name: "Belle's folly (tarnished)"
-          points: 1
-        - name: "Dragon metal sheet"
-          points: 1
-        - name: "Barracuda paint"
+        - name: "Crystal tool seed"
+          points: 3
+        - name: "Tanzanite fang"
           points: 2
+        - name: "Magic fang"
+          points: 2
+        - name: "Serpentine visage"
+          points: 2
+        - name: "Magma mutagen"
+          points: 3
+        - name: "Tanzanite mutagen"
+          points: 3
+        - name: "Elder venator fang"
+          points: 2
+        - name: "Crimson kisten"
+          points: 3
     pets:
         - "Abyssal orphan"
         - "Abyssal protector"
@@ -1400,6 +1382,7 @@ competition:
         - "Lil' zik"
         - "Lil'viathan"
         - "Little nightmare"
+        - "Maggot marquess"
         - "Moxi"
         - "Muphin"
         - "Nexling"
@@ -1449,6 +1432,7 @@ competition:
         - "Jar of dirt"
         - "Jar of dreams"
         - "Jar of eyes"
+        - "Jar of feathers"
         - "Jar of miasma"
         - "Jar of sand"
         - "Jar of smoke"
@@ -1457,4 +1441,3 @@ competition:
         - "Jar of stone"
         - "Jar of swamp"
         - "Jar of venom"
-        - "Jar of feathers"
