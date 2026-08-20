@@ -18,11 +18,11 @@ google:
 discord:
     token: "<value>"
 competition:
-    eventName: "UIM Winter Showdown 2026"
-    startDatetime: "2026-02-20T00:00:00.000+00:00"
-    endDatetime: "2025-03-01T18:00:00.000+00:00"
-    templeCompetitionID: 34033
-    templeCompetitionEditKey: "<value>"
+    eventName: "UIM Summer Showdown 2026"
+    startDatetime: "2026-08-01T00:00:00.000+00:00"
+    endDatetime: "2026-08-11T18:00:00.000+00:00"
+    templeCompetitionID: 35213
+    templeCompetitionEditKey: "vJls1I9707WzsCLJGn2opUtzp"
     waitlistTeamName: "Wilderness Waitlisters"
     ehtPerTier: 25
     eventPointsPerTier: [25, 23, 21, 19, 17, 15, 13, 11]
@@ -33,10 +33,14 @@ competition:
     recordPlacePointsFalloff: 1
     recordDistancePoints: 20
     recordDistanceCutoffPercentage: 0.5
-    challengePlacePoints: 5
-    challengePlacePointsFalloff: 1
-    challengeDistancePoints: 20
-    challengeDistanceCutoffPercentage: 1.5
+    speedChallengePlacePoints: 5
+    speedChallengePlacePointsFalloff: 1
+    speedChallengeDistancePoints: 20
+    speedChallengeDistanceCutoffPercentage: 1.5
+    pointsChallengePlacePoints: 5
+    pointsChallengePlacePointsFalloff: 1
+    pointsChallengeDistancePoints: 20
+    pointsChallengeDistanceCutoffPercentage: 0.666
     maxRoundingErrorForContributionPoints: 0.05
     sigFigsForContributionPoints: 3
     sigFigsForTilePointsPerTier: 3
@@ -53,48 +57,18 @@ competition:
     petPointValues: [7, 5, 3, 1]
     jarPointValues: [4, 3, 2, 1]
     teams:
-        - name: "Top 3 Crabbers"
-          abbreviation: "TOP3"
+        - name: "Team A"
+          abbreviation: "TA"
           color: "00C7AB"
           captains:
-              - "Empty String"
-              - "MorbinThyme"
-        - name: "Milk Fans"
-          abbreviation: "MF"
+              - "Captain A1"
+              - "Captain A2"
+        - name: "Team B"
+          abbreviation: "TB"
           color: "FFFFFF"
           captains:
-              - "Lemoniuim"
-              - "Ms Sex"
-        - name: "Cozy Home Owners of Misthalin"
-          abbreviation: "CHOOM"
-          color: "DBE4EB"
-          captains:
-              - "Lily Annette"
-              - "Snowkittty"
-        - name: "Bringing Oomlie Omelettes To Yohnus"
-          abbreviation: "BOOTY"
-          color: "67B00B"
-          captains:
-              - "Big Circ"
-              - "Peak FeMale"
-        - name: "Grimstone Grumblers"
-          abbreviation: "GG"
-          color: "6D45A5"
-          captains:
-              - "weed lesbian"
-              - "Mitaka Asa"
-        - name: "Moles Love Gulls"
-          abbreviation: "MLG"
-          color: "F6E2B3"
-          captains:
-              - "Shv"
-              - "I Win Bingo"
-        - name: "Laguna Locked-in"
-          abbreviation: "LL"
-          color: "47582C"
-          captains:
-              - "Kochininako"
-              - "KiwiIsKadult"
+              - "Captain B1"
+              - "Captain B2"
         - name: "Wilderness Waitlisters"
           abbreviation: "WW"
           color: "FFFFFF"
@@ -812,10 +786,10 @@ competition:
           teamSize: 5
           description: "Complete a full game of Barbarian Assault as quickly as possible! All players must be on your team."
           type: "Speedrun"
-        - name: "Chambers of Xeric CM Trio"
-          teamSize: 3
-          description: "Complete a full 3-player COX CM raid as quickly as possible!"
-          type: "Speedrun"
+        - name: "Deepest Delve"
+          teamSize: 1
+          description: "Complete the deepest delve possible at the Doom of Mokhaiotl!"
+          type: "Points"
         - name: "GM Quest Boss Relay"
           teamSize: 3
           description: "Three separate players kill Glough, Galvek, and the Fragment of Seren as quickly as possible!"
