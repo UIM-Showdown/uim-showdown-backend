@@ -172,9 +172,7 @@ public class TempleOsrsService {
         updatePlayerContributions(players, contributionMethods, "/api/competition_info_v2.php?id={competition_id}&details=1");
         handleSlayerXPPenalties(players); // If slayer XP is not on the board, then does nothing
         
-        for(Player player : players.values()) {         
-            playerRepository.save(player);
-        }
+        playerRepository.saveAll(players.values());
     }
 
     private void updatePlayerContributions(Map<String, Player> players, Map<String, ContributionMethod> contributionMethods, String uri) throws IllegalArgumentException {
