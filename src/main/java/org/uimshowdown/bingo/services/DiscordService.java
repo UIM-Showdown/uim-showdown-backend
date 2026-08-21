@@ -176,7 +176,7 @@ public class DiscordService {
                 .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
                 .addRolePermissionOverride(cheerleaderRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
                 .addRolePermissionOverride(screenshotApproverRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
-                .addRolePermissionOverride(captainRole.getIdLong(), null, null)
+                .addRolePermissionOverride(captainRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.MANAGE_CHANNEL), null)
                 .complete();
             }
             
