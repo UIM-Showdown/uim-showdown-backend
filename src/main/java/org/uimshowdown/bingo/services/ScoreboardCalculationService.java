@@ -42,9 +42,6 @@ import org.uimshowdown.bingo.repositories.TeamScoreboardRepository;
 import org.uimshowdown.bingo.repositories.TileProgressRepository;
 import org.uimshowdown.bingo.repositories.TileRepository;
 
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 
 @Component
 public class ScoreboardCalculationService {
@@ -59,7 +56,7 @@ public class ScoreboardCalculationService {
     @Autowired RecordRepository recordRepository;
     @Autowired ChallengeRepository challengeRepository;
     @Autowired TileRepository tileRepository;
-    @Autowired JDA discordClient;
+    @Autowired DiscordService discordService;
     
     @Value("${discord.guildId}")
     long guildId;
@@ -572,12 +569,7 @@ public class ScoreboardCalculationService {
         if(new Date().before(startDate) || new Date().after(endDate)) { // Not within the event boundaries, so likely in sheet validation mode, so we don't want messages
             return;
         }
-        Guild guild = discordClient.getGuildById(guildId);
         String tierUpsTextChannelName = team.getAbbreviation().toLowerCase() + "-tier-ups";
-        if(guild.getTextChannelsByName(tierUpsTextChannelName, false).isEmpty()) { // Discord server has not been set up
-            return;
-        }
-        TextChannel tierUpsTextChannel = guild.getTextChannelsByName(tierUpsTextChannelName, false).get(0);
         
         // Individual tiles
         List<String> tileNames = new ArrayList<String>();
@@ -586,7 +578,7 @@ public class ScoreboardCalculationService {
         }
         for(String tileName : tileNames) {
             if(finalTiers.get(tileName) > initialTiers.get(tileName)) {
-                tierUpsTextChannel.sendMessage("Congratulations! Your team has reached tier " + finalTiers.get(tileName) + " in " + tileName + "!").complete();
+                discordService.sendMessage(tierUpsTextChannelName, "Congratulations! Your team has reached tier " + finalTiers.get(tileName) + " in " + tileName + "!");
             }
         }
         
@@ -597,13 +589,13 @@ public class ScoreboardCalculationService {
         }
         for(String groupName : groupNames) {
             if(finalTiers.get(groupName) > initialTiers.get(groupName)) {
-                tierUpsTextChannel.sendMessage("Congratulations! Your team has reached tier " + finalTiers.get(groupName) + " in " + groupName + "!").complete();
+                discordService.sendMessage(tierUpsTextChannelName, "Congratulations! Your team has reached tier " + finalTiers.get(groupName) + " in " + groupName + "!");
             }
         }
         
         // Blackout
         if(finalTiers.get("Blackout") > initialTiers.get("Blackout")) {
-            tierUpsTextChannel.sendMessage("Congratulations! Your team has reached a tier " + finalTiers.get("Blackout") + " blackout!").complete();
+            discordService.sendMessage(tierUpsTextChannelName, "Congratulations! Your team has reached a tier " + finalTiers.get("Blackout") + " blackout!");
         }
     }
 

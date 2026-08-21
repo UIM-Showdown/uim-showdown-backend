@@ -1,8 +1,6 @@
 package org.uimshowdown.bingo.controllers;
 
-import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -32,19 +30,12 @@ import org.uimshowdown.bingo.repositories.PlayerRepository;
 import org.uimshowdown.bingo.repositories.TeamRepository;
 import org.uimshowdown.bingo.repositories.TileRepository;
 import org.uimshowdown.bingo.services.DataOutputService;
+import org.uimshowdown.bingo.services.DiscordService;
 import org.uimshowdown.bingo.services.EventDataInitializationService;
 import org.uimshowdown.bingo.services.GoogleSheetsService;
 import org.uimshowdown.bingo.services.ScoreboardCalculationService;
 import org.uimshowdown.bingo.services.StatsService;
 import org.uimshowdown.bingo.services.TempleOsrsService;
-
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.channel.concrete.Category;
-import net.dv8tion.jda.api.entities.channel.middleman.GuildChannel;
 
 @RestController
 public class AdminController {
@@ -85,7 +76,7 @@ public class AdminController {
     StatsService statsService;
     
     @Autowired
-    JDA discordClient;
+    DiscordService discordService;
     
     @Value("${discord.guildId}")
     long guildId;
@@ -93,19 +84,14 @@ public class AdminController {
     @PostMapping("/admin/addPlayer")
     public ResponseEntity<Void> addPlayer(@RequestBody Map<String, Object> requestBody, 
             @RequestParam(defaultValue = "true", required = false) boolean synchronizeTempleComp) throws Exception {
-        Guild guild = discordClient.getGuildById(guildId);
         
         eventDataInitializationService.addPlayer(
-            (String) requestBody.get("discordName"),
-            (String) requestBody.get("rsn"),
-            (String) requestBody.get("teamName")
-        );
+                (String) requestBody.get("discordName"),
+                (String) requestBody.get("rsn"),
+                (String) requestBody.get("teamName")
+            );
         
-        if(!guild.getRolesByName((String) requestBody.get("teamName"), true).isEmpty() && !guild.getMembersByName((String) requestBody.get("discordName"), true).isEmpty()) {
-            Member member = guild.getMembersByName((String) requestBody.get("discordName"), true).get(0);
-            Role teamRole = guild.getRolesByName((String) requestBody.get("teamName"), true).get(0);
-            guild.addRoleToMember(member, teamRole).submit();
-        }
+        discordService.addRoleToUser((String) requestBody.get("teamName"), (String) requestBody.get("discordName"));
         
         if(synchronizeTempleComp) {
             templeOsrsService.synchronizeRosters();
@@ -116,7 +102,7 @@ public class AdminController {
 
     @PatchMapping("/admin/changePlayerTeam")
     public ResponseEntity<Void> changePlayerTeam(@RequestBody Map<String, Object> requestBody,
-            @RequestParam(defaultValue = "true", required = false) boolean synchronizeTempleComp) {
+            @RequestParam(defaultValue = "true", required = false) boolean synchronizeTempleComp) throws Exception {
         
         Player player = playerRepository.findByRsn((String) requestBody.get("rsn")).get();
         Team oldTeam = player.getTeam();
@@ -125,16 +111,8 @@ public class AdminController {
         player.setTeam(newTeam);
         playerRepository.save(player);
         
-        Guild guild = discordClient.getGuildById(guildId);
-        if(!guild.getRolesByName(oldTeam.getName(), false).isEmpty()
-                && !guild.getRolesByName(newTeam.getName(), false).isEmpty()
-                && !guild.getMembersByName(player.getDiscordName(), true).isEmpty()) {
-            Role oldTeamRole = guild.getRolesByName(oldTeam.getName(), false).get(0);
-            Role newTeamRole = guild.getRolesByName(newTeam.getName(), false).get(0);
-            Member member = guild.getMembersByName(player.getDiscordName(), true).get(0);
-            guild.removeRoleFromMember(member, oldTeamRole).submit();
-            guild.addRoleToMember(member, newTeamRole).submit();
-        }
+        discordService.removeRoleFromUser(oldTeam.getName(), player.getDiscordName());
+        discordService.addRoleToUser(newTeam.getName(), player.getDiscordName());
         
         if(synchronizeTempleComp) {
             templeOsrsService.synchronizeRosters();
@@ -235,19 +213,14 @@ public class AdminController {
     
     @PostMapping("/admin/updateCompetitorRole")
     public Map<String, Object> updateCompetitorRole() throws Exception {
-        Guild guild = discordClient.getGuildById(guildId);
-        Role competitorRole = guild.getRolesByName("Competitor", false).get(0);
         List<Map<String, String>> signupsNotFound = new ArrayList<Map<String, String>>();
         Map<String, Object> result = new HashMap<String, Object>();
         for(Map<String, String> signup : googleSheetsService.getSignups()) {
             String discordName = signup.get("discordName");
-            if(guild.getMembersByName(discordName, true).isEmpty()) {
+            if(!discordService.isUserInServer(discordName)) {
                 signupsNotFound.add(signup);
             } else {
-                Member member = guild.getMembersByName(discordName, true).get(0);
-                if(!member.getRoles().contains(competitorRole)) {                    
-                    guild.addRoleToMember(member, competitorRole).complete();
-                }
+                discordService.addRoleToUser("Competitor", discordName);
             }
         }
         result.put("signupsNotFound", signupsNotFound);
@@ -256,116 +229,19 @@ public class AdminController {
     
     @PostMapping("/admin/setupDiscordServer")
     public Map<String, Object> setupDiscordServer() throws Exception {
-        Guild guild = discordClient.getGuildById(guildId);
-        Role eventStaffRole = guild.getRolesByName("Event staff", false).get(0);
-        Role technicalLeadRole = guild.getRolesByName("Technical Lead", false).get(0);
-        Role captainRole = guild.getRolesByName("Captain", false).get(0);
-        Role cheerleaderRole = guild.getRolesByName("Cheerleader", false).get(0);
-        Role screenshotApproverRole = guild.getRolesByName("Screenshot Approver", false).get(0);
-        Role defaultRole = guild.getPublicRole();
-        List<String> namesNotFound = new ArrayList<String>();
         
+        List<String> namesNotFound = new ArrayList<String>();
+        List<Team> teams = new ArrayList<Team>();
         for(Team team : teamRepository.findByOrderByIdAsc()) {
-            
-            // Create team role
-            Role teamRole = null;
-            if(!guild.getRolesByName(team.getName(), false).isEmpty()) {
-                teamRole = guild.getRolesByName(team.getName(), false).get(0);
-            } else {
-                teamRole = guild.createRole().setName(team.getName()).setColor(Color.decode("#" + team.getColor())).setMentionable(true).complete();
-            }
-            
-            // Create team category
-            Category teamCategory = null;
-            if(!guild.getCategoriesByName(team.getAbbreviation(), false).isEmpty()) {
-                teamCategory = guild.getCategoriesByName(team.getAbbreviation(), false).get(0);
-            } else {
-                teamCategory = guild.createCategory(team.getAbbreviation())
-                    .addRolePermissionOverride(defaultRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
-                    .addRolePermissionOverride(eventStaffRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
-                    .addRolePermissionOverride(technicalLeadRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
-                    .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.MESSAGE_ATTACH_FILES), null)
-                    .addRolePermissionOverride(cheerleaderRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
-                    .addRolePermissionOverride(screenshotApproverRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
-                    .addRolePermissionOverride(captainRole.getIdLong(), Arrays.asList(Permission.PIN_MESSAGES, Permission.MANAGE_CHANNEL), null)
-                    .complete();
-            }
-            
-            // Create announcements text channel
-            String announcementsTextChannelName = team.getAbbreviation().toLowerCase() + "-announcements";
-            if(guild.getTextChannelsByName(announcementsTextChannelName, false).isEmpty()) {
-                teamCategory.createTextChannel(announcementsTextChannelName)
-                    .addRolePermissionOverride(defaultRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
-                    .addRolePermissionOverride(eventStaffRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
-                    .addRolePermissionOverride(technicalLeadRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
-                    .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), Arrays.asList(Permission.MESSAGE_SEND))
-                    .addRolePermissionOverride(cheerleaderRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
-                    .addRolePermissionOverride(screenshotApproverRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
-                    .addRolePermissionOverride(captainRole.getIdLong(), Arrays.asList(Permission.MESSAGE_SEND, Permission.PIN_MESSAGES, Permission.MANAGE_CHANNEL), null)
-                    .complete();
-            }
-            
-            // Create tier-ups text channel
-            String tierUpsTextChannelName = team.getAbbreviation().toLowerCase() + "-tier-ups";
-            if(guild.getTextChannelsByName(tierUpsTextChannelName, false).isEmpty()) {
-                teamCategory.createTextChannel(tierUpsTextChannelName)
-                    .addRolePermissionOverride(defaultRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
-                    .addRolePermissionOverride(eventStaffRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
-                    .addRolePermissionOverride(technicalLeadRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
-                    .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), Arrays.asList(Permission.MESSAGE_SEND))
-                    .addRolePermissionOverride(cheerleaderRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
-                    .addRolePermissionOverride(screenshotApproverRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
-                    .addRolePermissionOverride(captainRole.getIdLong(), null, Arrays.asList(Permission.MESSAGE_SEND, Permission.PIN_MESSAGES, Permission.MANAGE_CHANNEL))
-                    .complete();
-            }
-            
-            // Create general text channel
-            String generalTextChannelName = team.getAbbreviation().toLowerCase() + "-general";
-            if(guild.getTextChannelsByName(generalTextChannelName, false).isEmpty()) {
-                teamCategory.createTextChannel(generalTextChannelName).complete();
-            }
-            
-            // Create general voice channel
-            String generalVoiceChannelName = team.getAbbreviation().toLowerCase() + "-general";
-            if(guild.getVoiceChannelsByName(generalVoiceChannelName, false).isEmpty()) {
-                teamCategory.createVoiceChannel(generalVoiceChannelName)
-                .addRolePermissionOverride(defaultRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
-                .addRolePermissionOverride(eventStaffRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
-                .addRolePermissionOverride(technicalLeadRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
-                .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
-                .addRolePermissionOverride(cheerleaderRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
-                .addRolePermissionOverride(screenshotApproverRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
-                .addRolePermissionOverride(captainRole.getIdLong(), null, null)
-                .complete();
-            }
-            
-            // Create bot submissions text channel
-            String botSubmissionsTextChannelName = team.getAbbreviation().toLowerCase() + "-bot-submissions";
-            if(guild.getTextChannelsByName(botSubmissionsTextChannelName, false).isEmpty()) {
-                teamCategory.createTextChannel(botSubmissionsTextChannelName)
-                    .addRolePermissionOverride(defaultRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
-                    .addRolePermissionOverride(eventStaffRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
-                    .addRolePermissionOverride(technicalLeadRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL, Permission.ADMINISTRATOR), null)
-                    .addRolePermissionOverride(teamRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
-                    .addRolePermissionOverride(cheerleaderRole.getIdLong(), null, Arrays.asList(Permission.VIEW_CHANNEL))
-                    .addRolePermissionOverride(screenshotApproverRole.getIdLong(), Arrays.asList(Permission.VIEW_CHANNEL), null)
-                    .addRolePermissionOverride(captainRole.getIdLong(), null, Arrays.asList(Permission.PIN_MESSAGES, Permission.MANAGE_CHANNEL))
-                    .complete();
-            }
-            
-            // Assign team role to players
             for(Player player : team.getPlayers()) {
-                if(guild.getMembersByName(player.getDiscordName(), true).isEmpty()) {
+                if(!discordService.isUserInServer(player.getDiscordName())) {
                     namesNotFound.add(player.getDiscordName());
-                } else {
-                    Member member = guild.getMembersByName(player.getDiscordName(), true).get(0);
-                    if(!member.getRoles().contains(teamRole)) {                        
-                        guild.addRoleToMember(member, teamRole).complete();
-                    }
                 }
             }
-            
+            teams.add(team);
         }
+        discordService.setupDiscordServer(teams);
+        
         
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("namesNotFound", namesNotFound);
@@ -374,35 +250,11 @@ public class AdminController {
     
     @PostMapping("/admin/teardownDiscordServer")
     public void teardownDiscordServer() throws Exception {
-        Guild guild = discordClient.getGuildById(guildId);
-        Role captainRole = guild.getRolesByName("Captain", false).get(0);
-        Role competitorRole = guild.getRolesByName("Competitor", false).get(0);
-        
-        // Delete team channels and role
+        List<Team> teams = new ArrayList<Team>();
         for(Team team : teamRepository.findByOrderByIdAsc()) {
-            if(!guild.getCategoriesByName(team.getAbbreviation(), false).isEmpty()) {
-                Category teamCategory = guild.getCategoriesByName(team.getAbbreviation(), false).get(0);
-                for(GuildChannel channel : teamCategory.getChannels()) {
-                    channel.delete().complete();
-                }
-                teamCategory.delete().complete();
-            }
-            if(!guild.getRolesByName(team.getName(), false).isEmpty()) {
-                Role teamRole = guild.getRolesByName(team.getName(), false).get(0);
-                teamRole.delete().complete();
-            }
+            teams.add(team);
         }
-        
-        // De-assign competitor and captain role
-        List<Member> members = guild.getMembers();
-        for(Member member : members) {
-            if(member.getRoles().contains(competitorRole)) {
-                guild.removeRoleFromMember(member, competitorRole).complete();
-            }
-            if(member.getRoles().contains(captainRole)) {
-                guild.removeRoleFromMember(member, captainRole).complete();
-            }
-        }
+        discordService.teardownDiscordServer(teams);
     }
     
     @GetMapping("/admin/stats")
