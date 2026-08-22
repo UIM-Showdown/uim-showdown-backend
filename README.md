@@ -52,10 +52,10 @@ If you manually switch to a different parent and actually want the inheritance, 
 docker-compose up --build
 ```
 
-2. Navigate to the `src/main/resources/` directory. Make a copy of `application.properties.example` and rename it to `application.properties`.
+2. Navigate to the `src/main/resources/` directory. Make a copy of `application.yml.example` and rename it to `application.yml`.
 ```
 cd src/main/resources/
-cp application.properties.example application.properties
+cp application.yml.example application.yml
 ```
 
 The example properties file is already configured to use the configured Docker environment. Feel free to change any pre-existing settings to match your setup.
