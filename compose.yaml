@@ -1,13 +1,4 @@
 services:
-  showdown-java:
-    # the name of this image has the following format: `{name}:{version}`
-    # the values for `name` and `version` are fields set in `pom.xml` file
-    image: "bingo:0.0.1-SNAPSHOT"
-    depends_on:
-      showdown-mysql:
-        condition: service_healthy
-    ports:
-      - "3000:8080"
   showdown-mysql:
     image: "mysql:8.4.4"
     environment:

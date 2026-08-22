@@ -5,11 +5,9 @@ For further reference, please consider the following sections:
 
 * [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
 * [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/3.4.3/maven-plugin)
-* [Create an OCI image](https://docs.spring.io/spring-boot/3.4.3/maven-plugin/build-image.html)
 * [Spring Web](https://docs.spring.io/spring-boot/3.4.3/reference/web/servlet.html)
 * [Spring Security](https://docs.spring.io/spring-boot/3.4.3/reference/web/spring-security.html)
 * [Spring Data JPA](https://docs.spring.io/spring-boot/3.4.3/reference/data/sql.html#data.sql.jpa-and-spring-data)
-* [Docker Compose Support](https://docs.spring.io/spring-boot/3.4.3/reference/features/dev-services.html#features.dev-services.docker-compose)
 * [Spring Boot DevTools](https://docs.spring.io/spring-boot/3.4.3/reference/using/devtools.html)
 
 ### Guides
@@ -24,13 +22,13 @@ The following guides illustrate how to use some features concretely:
 * [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
 * [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
 
-### Docker Compose support
+### Docker support
 This project contains a Docker Compose file named `compose.yaml`.
 In this file, the following services have been defined:
 
 * mysql: [`mysql:8.4.4`](https://hub.docker.com/layers/library/mysql/8.4.4/images/sha256-60832e27fa98532ef7b75e634b065dd3809fcfbbe0dc591d6adf30a386d4dcbe)
 
-Please review the tags of the used images and set them to the same as you're running in production.
+**Please review the version tag of images to match our production environment.**
 
 ### Maven Parent overrides
 
@@ -42,37 +40,27 @@ If you manually switch to a different parent and actually want the inheritance, 
 # Local Development
 
 ### Dependencies
-- [Java SE 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) or [OpenJDK 17](https://formulae.brew.sh/formula/openjdk@17)
-- [Docker Desktop](https://www.docker.com/get-started/)
-- [MySQL 8.4.4](https://dev.mysql.com/downloads/mysql/8.4.html) (if not using Docker)
+- Your choice of distro for JDK 17
+- [Docker Desktop](https://www.docker.com/get-started/) (if using Docker)
+- [MySQL 8.4.4 LTS](https://dev.mysql.com/downloads/mysql/8.4.html) (if not using Docker)
 
-## Docker
 ### Serving the Application
 **NOTE:** Everytime changes are made, a new image build and container build are required.
 
-1. Navigate to the `src/main/resources/` directory. Make a copy of `application.properties.example` and rename it to `application.properties`.
-```
-cd src/main/resources/
-cp application.properties.example application.properties
-```
-
-The example properties file is already configured to use the configured Docker environment. Feel free to change any pre-existing settings to match your setup.
-
-2. Build the application image using the [`build-image` maven plugin](https://docs.spring.io/spring-boot/maven-plugin/build-image.html)
-```
-./mvnw spring-boot:build-image -DskipTests
-```
-
-3. Spin up running containers for dependencies (including the image created in the previous step)
+1. Spin up the MySQL container OR setup a local database
 ```
 docker-compose up --build
 ```
 
-### Troubleshooting
-
-I recently ran into the following issue:
+2. Navigate to the `src/main/resources/` directory. Make a copy of `application.yml.example` and rename it to `application.yml`.
 ```
-Execution default-cli of goal org.springframework.boot:spring-boot-maven-plugin:3.4.3:build-image failed: OS must not be empty
+cd src/main/resources/
+cp application.yml.example application.yml
 ```
 
-Sometimes stale cache layers cause strange issues. Using `docker system prune -af` addressed the issue above and will clean the Docker build cache. **Be careful — this removes all stopped containers, unused networks, and dangling images.**
+The example properties file is already configured to use the configured Docker environment. Feel free to change any pre-existing settings to match your setup.
+
+3. Compile and run the application
+```
+./mvnw spring-boot:run
+```

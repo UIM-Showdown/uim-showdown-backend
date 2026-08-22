@@ -6,9 +6,6 @@ spring:
         username: "bingo_admin"
         password: "secret"
         driver-class-name: "com.mysql.cj.jdbc.Driver"
-    docker:
-        compose:
-            enabled: true
     jpa:
         hibernate:
             ddl-auto: "update"
@@ -16,6 +13,7 @@ google:
     outputSheetID: "<value>"
     signupSheetID: "<value>"
 discord:
+    guildId: "<value>"
     token: "<value>"
 competition:
     eventName: "UIM Summer Showdown 2026"
