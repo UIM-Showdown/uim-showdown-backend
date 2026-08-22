@@ -13,6 +13,7 @@ google:
     outputSheetID: "<value>"
     signupSheetID: "<value>"
 discord:
+    guildId: "<value>"
     token: "<value>"
 competition:
     eventName: "UIM Summer Showdown 2026"
