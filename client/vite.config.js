@@ -15,4 +15,15 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: import.meta.env.VITE_SERVER_URL,
+        changeOrigin: true,
+        secure: false,
+        // backend is not expecting '/api' prefix
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    }
+  }
 })
