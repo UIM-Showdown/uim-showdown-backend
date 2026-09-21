@@ -554,10 +554,10 @@ competition:
         - name: "Chasing Chores"
           abbreviation: "CCH"
           contributionMethods:
-              - name: "Hueycoatl: Hides"
-                type: "Submission_Other"
+              - name: "Hueycoatl Hides (3x)"
+                type: "Submission_Item_Drop"
                 category: "PVM"
-                ehtRate: 1
+                ehtRate: 0.33
               - name: "Hard Clues"
                 type: "Temple_KC"
                 category: "Other"
