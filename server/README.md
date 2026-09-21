@@ -62,5 +62,7 @@ The example properties file is already configured to use the configured Docker e
 
 3. Compile and run the application
 ```
-./mvnw spring-boot:run
+./mvnw spring-boot:run -DskipTests
 ```
+
+**NOTE:** As of the time of writing, our tests need to be refactored and will prevent the application from starting. `-DskipTests` will help you get started locally.
