@@ -32,6 +32,13 @@ cp .env.example .env.local
 npm run dev
 ```
 
+#### Local Development Notes
+There is a proxy setup via Vite to allow the front end to communicate with the back end on port `8080` by default or whatever endpoint is specified in the `VITE_SERVER_URL` environment variable set in `.env.local` file without any CORS configuration.
+
+This is intended to simulate the final production environment where the front end is served via our Spring Boot back end.
+
+This proxy will also allow developers to use `npm run dev` to hot-reload changes without having to also rebuild the back end.
+
 ### Compile and Minify for Production
 
 ```sh
