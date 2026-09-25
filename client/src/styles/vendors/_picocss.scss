@@ -1,0 +1,26 @@
+/*
+  Lightweight Pico CSS
+  This version reduces the weight of Pico by ~50%.
+  Add/remove modules as needed.
+  @see https://picocss.com/docs/sass
+*/
+@forward 'pico' with (
+  $enable-semantic-container: true,
+  $enable-classes: false,
+  $modules: (
+    "content/code": false,
+    "forms/input-color": false,
+    "forms/input-date": false,
+    "forms/input-file": false,
+    "forms/input-range": false,
+    "forms/input-search": false,
+    "components/accordion": false,
+    "components/card": false,
+    "components/dropdown": false,
+    "components/loading": false,
+    "components/modal": false,
+    "components/nav": false,
+    "components/progress": false,
+    "components/tooltip": false
+  )
+);

@@ -28,6 +28,14 @@ export default defineConfig(({ mode }) => {
           rewrite: (path) => path.replace(/^\/api/, ''),
         },
       }
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          loadPaths: ['node_modules/@picocss/pico/scss'],
+          quietDeps: true,
+        }
+      }
     }
   };
 });
