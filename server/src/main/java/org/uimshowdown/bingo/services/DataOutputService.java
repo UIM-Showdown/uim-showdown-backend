@@ -574,12 +574,24 @@ public class DataOutputService {
             for(Challenge challenge : challengeRepository.findByOrderByIdAsc()) {
                 List<Object> row = new ArrayList<Object>();
                 row.add(challenge.getName());
-                if(team.getScoreboard().getSpeedChallengeLeaderboardEntry(challenge).getSeconds() < 0) {
-                    row.add("");
-                    row.add("");
+                if (challenge.getType() == Challenge.Type.POINTS) {
+                    // Point-based challenge
+                    if(team.getScoreboard().getPointsChallengeLeaderboardEntry(challenge).getPoints() < 0) {
+                        row.add("");
+                        row.add("");
+                    } else {
+                        row.add(team.getScoreboard().getPointsChallengeLeaderboardEntry(challenge).getPlayerNames());
+                        row.add(team.getScoreboard().getPointsChallengeLeaderboardEntry(challenge).getPoints());
+                    }
                 } else {
-                    row.add(team.getScoreboard().getSpeedChallengeLeaderboardEntry(challenge).getPlayerNames());
-                    row.add(team.getScoreboard().getSpeedChallengeLeaderboardEntry(challenge).getSeconds() / 86400.0); // Convert to sheets format - unit is one day
+                    // Relay or speedrun challenge
+                    if(team.getScoreboard().getSpeedChallengeLeaderboardEntry(challenge).getSeconds() < 0) {
+                        row.add("");
+                        row.add("");
+                    } else {
+                        row.add(team.getScoreboard().getSpeedChallengeLeaderboardEntry(challenge).getPlayerNames());
+                        row.add(team.getScoreboard().getSpeedChallengeLeaderboardEntry(challenge).getSeconds() / 86400.0); // Convert to sheets format - unit is one day
+                    }
                 }
                 rows.add(row);
             }
