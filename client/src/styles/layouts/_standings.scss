@@ -1,0 +1,10 @@
+.standings {
+  display: grid;
+  gap: var(--pico-spacing);
+  grid-template-areas:
+    "teams";
+}
+
+.standings__teams {
+  grid-area: teams;
+}

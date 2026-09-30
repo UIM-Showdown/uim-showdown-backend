@@ -1,0 +1,10 @@
+.team-information {
+  display: grid;
+  gap: var(--pico-spacing);
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+}
+
+.team-information * {
+  margin: 0;
+}

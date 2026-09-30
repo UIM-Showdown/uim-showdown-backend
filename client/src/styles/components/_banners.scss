@@ -1,0 +1,9 @@
+.event-banner {
+  background-color: var(--pico-primary-background);
+  padding: var(--pico-typography-spacing-vertical) 0;
+}
+
+.event-banner__name {
+  margin: 0 auto;
+  width: fit-content;
+}
