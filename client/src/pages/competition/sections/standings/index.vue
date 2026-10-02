@@ -13,7 +13,7 @@
         :captains="team.captains"
         :position="index + 1"
         :team-abbreviation="team.abbreviation"
-        :team-mvp="team.players.at(0).rsn || 'N/A'"
+        :team-mvp="team.mvp.rsn || 'N/A'"
         :team-name="team.name"
         :tile-points="team.tilePoints"
       />

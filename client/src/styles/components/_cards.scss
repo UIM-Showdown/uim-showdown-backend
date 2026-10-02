@@ -1,10 +1,37 @@
+@use '../abstracts' as *;
+
 .team-information {
-  display: grid;
-  gap: var(--pico-spacing);
-  grid-template-columns: 1fr 2fr 1fr;
-  align-items: center;
+  @extend %align-center-grid;
+  grid-template-columns: 1fr;
 }
 
-.team-information * {
-  margin: 0;
+@include mq(md) {
+	.team-information {
+	  grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
+	}
+}
+
+.team-information__summary {
+  @extend %align-center-grid;
+  grid-template-columns: 1fr;
+}
+
+@include mq(sm) {
+	.team-information__summary {
+	  grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@include mq(md) {
+	.team-information__summary {
+	  grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+.team-information__summary__data-point > *{
+  margin-bottom: 0;
+}
+
+.team-information__points {
+  margin-bottom: 0;
 }

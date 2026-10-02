@@ -4,6 +4,7 @@ import { getTeamStandings } from '@/services/api';
 
 export const useTeamsStore = defineStore('teams', () => {
   const isLoading = ref(false);
+  /** @type {import('vue').Ref<Array<import('@/services/api').Team>>} teams */
   const teams = ref([]);
 
   async function fetchTeamUpdates() {
