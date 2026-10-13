@@ -35,3 +35,9 @@
 .team-information__points {
   margin-bottom: 0;
 }
+
+.team-information__points th {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
