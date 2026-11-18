@@ -16,6 +16,7 @@
         :team-mvp="team.mvp.rsn || 'N/A'"
         :team-name="team.name"
         :tile-points="team.tilePoints"
+        :tile-progression="team.tileProgression"
       />
     </aside>
   </main>

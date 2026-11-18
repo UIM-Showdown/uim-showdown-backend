@@ -46,10 +46,18 @@
         </tr>
       </tbody>
     </table>
+    <team-mini-board
+      :columns="10"
+      :rows="10"
+      :height="240"
+      :width="320"
+      :team-tile-progress="props.tileProgression"
+    />
   </article>
 </template>
 
 <script setup>
+import teamMiniBoard from './team-mini-board.vue';
 /**
  * @typedef {Object} TeamInformation
  * @property {Array<String>} captains
@@ -58,6 +66,7 @@
  * @property {String} teamMvp
  * @property {String} teamName
  * @property {import('@/services/api').TilePoints} tilePoints
+ * @property {Array<import('@/services/api').TileProgress>} tileProgression
  */
 
 /** @type {TeamInformation} props */
@@ -87,6 +96,10 @@ const props = defineProps({
   },
   tilePoints: {
     type: Object,
+    required: true
+  },
+  tileProgression: {
+    type: Array,
     required: true
   }
 });
